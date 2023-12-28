@@ -153,3 +153,11 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,java
+
+
+
+
+
+# Spring 관련 폴더, 파일
+pom.properties
+MANIFEST.MF
