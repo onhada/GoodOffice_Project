@@ -1,7 +1,249 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ 
+<%
+    String ctxPath = request.getContextPath();
+%>
 
+ <script type="text/javascript">
 
+  $(document).ready(function(){
+	  
+	  loopshowNowTime();
+	  //출근 외근 버튼 누르면 ajax 실행해서 근무현황에 추가 ..근무내역에 insert까지
+	  //새로고침 할 경우 근무현황 그대로 있어야 함
+	  //똑같은 ajax를 쓰되 worktype은 const로 매번 달라짐
+	  //출력하는 거는 empid와 오늘 날짜 로 조회해서 만든다.
+	  work_status_print();
+	  
+	 // alert("dddddddks");
+	  
+	  $("button#vacationBtn").click(function(){
+		  
+		  
+		  //alert("dks"); 
+		  
+	  }); 
+	  
+	  
+	
+	  
+	 
+	
+	$('button#work_status').on('click', (e) => {
+		  console.log(e.target.value);
+		  const type=e.target.parentElement.value;
+		  alert(type);
+		  
+		  $.ajax({
+	          url : "<%= ctxPath%>/workstatus_insert.gw",
+	          type : "post",
+	          data : { "worktype":6  },
+	         // processData:false,  // 파일 전송시 설정 
+	          //contentType:false,  // 파일 전송시 설정 
+	          dataType:"json",
+	          success:function(json){
+	             // console.log("~~~ 확인용 : " + JSON.stringify(json));
+	              // ~~~ 확인용 : {"result":1}
+	              if(json.result == 1) {
+	                 alert("엑셀파일 업로드 성공했습니다.^^");
+	              }
+	              else {
+	                 alert("엑셀파일 업로드 실패했습니다.ㅜㅜ");
+	              }
+	          },
+	          error: function(request, status, error){
+	          alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	          }
+	      });
+		  
+		
+	 });
+	
+	
+	$('button#work_status_four').on('click', (e) => {
+		
+		
+		  console.log(e.target.value);
+		  const type=e.target.value;
+		  
+		  if(typeof type=="undefined"){
+			  
+			  
+			  const typeRe=e.target.parentElement.value;
+			  alert(typeRe);
+		  }
+		  else{
+			  
+			  alert(type);
+			  
+		  }
+		  
+		  
+		 
+		  
+		
+	 });
+	  
+	 //alert( $("span#tardy").text() );
+	 const idd=3;
+	 //$("span#tardy").text(idd);
+	 
+	 
+	 
+	 
+	 //alert("dks");
+	 /*  $("span#tardy").val();
+	  const frm = document.attendanceFrm;
+	   frm.tardy.value = 1; */
+	  
+	 const frm=document.attendanceFrm;
+	     
+	    <%--  frm.action=" <%= ctxPath %>/personal_index.gw"; --%>
+	    //frm.method="post";
+	   // frm.submit();
+	    
+  });// end of $(document).ready(function(){})------------
+  
+  
+
+	   /* 
+	   function start_img(){
+		   
+		   work_status_print();
+		   alert("dksㄴㄴㄴㄴs");
+		  
+	   }
+	   
+	function end_img(){
+		   
+		   alert("dend");
+		  
+	   } */
+	
+	function work_status_print(){
+		
+		$.ajax({
+	          url : "<%= ctxPath%>/workstatus_print.gw",
+	          type : "post",
+	          data : { "worktype":6  },
+	         
+	          dataType:"json",
+	          success:function(json){
+	              
+	              let v_html = "";
+	              
+	              
+	 			 if(json.length > 0) {
+	 				 
+	 				 $.each(json, function(index, item){
+	 					 
+		 					 v_html += "<li data-v-41cd5b14=''>						<span data-v-41cd5b14=''		class='time'>"; 
+		 					 v_html +=    item.resisterdaytime +"</span>		<span data-v-41cd5b14=''	 class='task'>";
+		 					
+		 				 	 
+		 				 if(item.worktype=="출근" || item.worktype=="퇴근"){
+		 					 
+		 					
+		 					v_html += item.worktype+"</span><span data-v-41cd5b14=''	 class='tag yellow'>"+item.worktype+"</span></li>";
+		 				 }
+		 				 else{
+		 					 
+		 					v_html += item.worktype+"</span>	</li>";
+		 					 
+		 				 }
+		 					  
+ 
+	 					        
+	 				 });      
+	 				 
+	 				 
+	 				 
+	 				 
+	 			 }
+	 			 else {
+	 				 
+	 			 }
+	 			 
+	 			 $("ol#statusOL").html(v_html);
+	             
+	          
+	          },
+	          error: function(request, status, error){
+	          alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	          }
+	      });
+		  
+		
+		
+	} 
+	
+	
+	
+
+	function showNowTime() {
+	      
+	      const now = new Date();
+	   
+	      let month = now.getMonth() + 1;
+	      if(month < 10) {
+	         month = "0"+month;
+	      }
+	      
+	      let date = now.getDate();
+	      if(date < 10) {
+	         date = "0"+date;
+	      }
+	      
+	      let strNow_back = now.getFullYear() + "-" + month + "-" + date;
+	      
+	      let hour = "";
+	       if(now.getHours() < 10) {
+	           hour = "0"+now.getHours();
+	       } 
+	       else {
+	          hour = now.getHours();
+	       }
+	      
+	       
+	      let minute = "";
+	      if(now.getMinutes() < 10) {
+	         minute = "0"+now.getMinutes();
+	      } else {
+	         minute = now.getMinutes();
+	      }
+	      
+	      let second = "";
+	      if(now.getSeconds() < 10) {
+	         second = "0"+now.getSeconds();
+	      } else {
+	         second = now.getSeconds();
+	      }
+	      
+	      let strNow = hour + " : " + minute + " : " + second;
+	      
+	      $("span#clock").html(strNow);
+	   
+	   }// end of function showNowTime() -----------------------------
+	   
+	   
+	   function loopshowNowTime() {
+		      showNowTime();
+		      
+		      const timejugi = 1000;   // 시간을 1초 마다 자동 갱신하려고.
+		      
+		      setTimeout(function() {
+		                  loopshowNowTime();   
+		               }, timejugi);
+		      
+	   }// end of loopshowNowTime() 
+	   
+
+</script>    
+ 
+ 
+ 
+  
 <div id="router_split_item" class="split-item right"
 	style="width: calc(100% - 276px);">
 	<div id="contents" class="contents-wrap">
@@ -16,15 +258,22 @@
 								class="gis gi-list gt-icon-solid-color mr-10"></i><span
 								data-v-52107848="">근태 현황</span>
 						</div>
+						<!--  /////////////////////-->
+						<form name="attendanceFrm">
+						<input type="hidden" name="empid" value="${requestScope.empid}" readonly /> 
+						<input type="hidden" name="sysdate" value="${requestScope.sysdate}" readonly /> 
+						
+						
+						
 						<div data-v-52107848="" class="box">
 							<ul data-v-52107848="" class="division-list">
 								<li data-v-4292f724="" data-v-52107848=""><div
 										data-v-4292f724="" class="font-weight-bold">
-										<span data-v-4292f724="">지각</span>
+										<span  data-v-4292f724="">지각</span>
 										<!---->
 									</div>
 									<div data-v-4292f724="" class="mt-20">
-										<span data-v-4292f724="">0</span>회
+										<span  id="tardy" data-v-4292f724="">${requestScope.empid}</span>회
 									</div></li>
 								<li data-v-4292f724="" data-v-52107848=""><div
 										data-v-4292f724="" class="font-weight-bold">
@@ -52,12 +301,15 @@
 									</div></li>
 							</ul>
 						</div>
+						
+						</form>
+						<!--  /////////////////////-->
 					</div>
 					<div data-v-ca725702="" data-v-63c5cb89="">
 						<div data-v-ca725702="" class="box-title">
 							<i data-v-ca725702=""
 								class="gis gi-calendar-check gt-icon-solid-color mr-10"></i><span
-								data-v-ca725702="">휴가 현황</span>
+								data-v-ca725702="">휴가 d현황</span>
 						</div>
 						<div data-v-ca725702=""
 							class="box d-flex align-items-center justify-content-between ph-30">
@@ -71,7 +323,7 @@
 							</div>
 							<div data-v-ca725702="" class="flex-grow-1 text-right">
 								<div data-v-ca725702="" class="d-inline-block">
-									<button data-v-f8d3258e="" data-v-ca725702="" type="button"
+									<button  id="vacationBtn"  data-v-f8d3258e="" data-v-ca725702="" type="button"
 										class="hw-button text">
 										<!---->
 										<span data-v-f8d3258e="" class="label">휴가 현황</span>
@@ -112,7 +364,7 @@
 									<div data-v-4292f724="" class="mt-20">
 										<span data-v-4292f724=""></span>
 										<div data-v-b43a2120="" data-v-4292f724="">
-											<span>0</span><span>시간</span>
+											<span>${requestScope.year_hour}</span><!-- <span>시간</span> -->
 										</div>
 									</div></li>
 								<li data-v-4292f724="" data-v-b43a2120=""><div
@@ -200,48 +452,51 @@
 						<div data-v-39e81d47=""
 							class="box flex-column justify-content-between">
 							<div data-v-39e81d47="" class="timer-wrapper">
-								<span data-v-39e81d47="" class="current-time">13 : 54 :
-									22</span><span data-v-39e81d47="" class="tag blue">근무 종료</span>
+								<span id="clock" data-v-39e81d47="" class="current-time">
+									</span><span data-v-39e81d47="" class="tag blue">근무 종료</span>
+									<!-- 현재시각 :&nbsp; <span  style="color:green; font-weight:bold;"></span> -->
 							</div>
 							<ul data-v-39e81d47="" class="division-list">
-								<li data-v-39e81d47=""><button data-v-39e81d47=""
-										type="button" disabled="disabled" class="inactive">
-										<img data-v-39e81d47="" src="/img/checkin.ac627d8a.svg"
-											alt="출근하기" class="icon-in-out">
-										<div data-v-39e81d47="" class="check-btn">출근하기</div>
+								<li data-v-39e81d47="" value="6"><button data-v-39e81d47=""
+										type="button" id="work_status"  value="6"  >
+										<!-- disabled="disabled" class="inactive"-->
+										  <img data-v-39e81d47="" src="<%= ctxPath%>/resources/image/icon/checkin.ac627d8a.svg"
+											alt="출근하기" class="icon-in-out"  > 
+										<div data-v-39e81d47="" class="check-btn"    >출근하기</div>
 										<div data-v-39e81d47="" class="check-time">01:53:56</div>
 									</button></li>
-								<li data-v-39e81d47=""><button data-v-39e81d47=""
-										type="button" disabled="disabled" class="inactive">
-										<img data-v-39e81d47="" src="/img/checkout.4919929e.svg"
-											alt="퇴근하기" class="icon-in-out">
+								<li data-v-39e81d47="" value="5"><button data-v-39e81d47=""
+										type="button"  id="work_status" value="5" >
+										<!-- disabled="disabled"  class="inactive" -->
+										  <img data-v-39e81d47="" src="<%= ctxPath%>/resources/image/icon/checkout.4919929e.svg"
+											alt="퇴근하기" class="icon-in-out"    >   
 										<div data-v-39e81d47="" class="check-btn">퇴근하기</div>
 										<div data-v-39e81d47="" class="check-time">13:44:58</div>
 									</button></li>
 							</ul>
 							<div data-v-39e81d47="" class="list-btns-wrap">
 								<div data-v-39e81d47="" class="list-btns">
-									<button data-v-cde747bc="" data-v-39e81d47="" type="button"
-										disabled="disabled" class="hu-button pill-shape-outline">
-										<!---->
-										<span data-v-cde747bc="" class="label">업무 </span>
+									<button data-v-cde747bc="" data-v-39e81d47="" type="button" id="work_status_four" value="1"
+										 class="hu-button pill-shape-outline">
+										<!--disabled="disabled"-->
+										<span data-v-cde747bc="" class="label" value="1">업무 </span>
 										<!---->
 									</button>
-									<button data-v-cde747bc="" data-v-39e81d47="" type="button"
-										disabled="disabled" class="hu-button pill-shape-outline">
-										<!---->
+									<button data-v-cde747bc="" data-v-39e81d47="" type="button" id="work_status_four" value="2"
+										 class="hu-button pill-shape-outline">
+										<!--disabled="disabled"-->
 										<span data-v-cde747bc="" class="label">외출 </span>
 										<!---->
 									</button>
-									<button data-v-cde747bc="" data-v-39e81d47="" type="button"
-										disabled="disabled" class="hu-button pill-shape-outline">
-										<!---->
+									<button data-v-cde747bc="" data-v-39e81d47="" type="button" id="work_status_four" value="3"
+										 class="hu-button pill-shape-outline">
+										<!--disabled="disabled"-->
 										<span data-v-cde747bc="" class="label">회의 </span>
 										<!---->
 									</button>
-									<button data-v-cde747bc="" data-v-39e81d47="" type="button"
-										disabled="disabled" class="hu-button pill-shape-outline">
-										<!---->
+									<button data-v-cde747bc="" data-v-39e81d47="" type="button" id="work_status_four" value="4"
+										 class="hu-button pill-shape-outline">
+										<!--disabled="disabled"-->
 										<span data-v-cde747bc="" class="label">외근 </span>
 										<!---->
 									</button>
@@ -262,19 +517,28 @@
 									style="width: auto; height: 230px; position: relative; overflow: hidden;">
 									<div class="vb-content"
 										style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 8px);">
-										<ol data-v-41cd5b14="" class="hw-timeline">
-											<li data-v-41cd5b14=""><span data-v-41cd5b14=""
-												class="time">01:53</span><span data-v-41cd5b14=""
-												class="task">출근</span><span data-v-41cd5b14=""
-												class="tag yellow">출근</span></li>
-											<li data-v-41cd5b14=""><span data-v-41cd5b14=""
-												class="time">01:54</span><span data-v-41cd5b14=""
-												class="task">회의</span>
-											<!----></li>
-											<li data-v-41cd5b14=""><span data-v-41cd5b14=""
-												class="time">13:44</span><span data-v-41cd5b14=""
-												class="task">퇴근</span><span data-v-41cd5b14=""
-												class="tag yellow">퇴근</span></li>
+										<ol data-v-41cd5b14="" id="statusOL" class="hw-timeline">
+										
+									 <!-- 
+											<li data-v-41cd5b14="">
+											<span data-v-41cd5b14=""		class="time">01:53</span>											
+												<span data-v-41cd5b14=""	 class="task">출근</span>
+													<span data-v-41cd5b14=""	 class="tag yellow">출근</span>
+												</li>
+												
+												
+											<li data-v-41cd5b14="">
+											<span data-v-41cd5b14=""		class="time">01:54</span>
+											<span data-v-41cd5b14=""	class="task">회의</span>
+											</li>
+											
+											
+											<li data-v-41cd5b14="">
+											<span data-v-41cd5b14="" class="time">13:44</span>
+												<span data-v-41cd5b14=""class="task">퇴근</span>
+												<span data-v-41cd5b14=""	class="tag yellow">퇴근</span>
+											</li>   -->
+												
 										</ol>
 									</div>
 									<div class="vb-dragger"
