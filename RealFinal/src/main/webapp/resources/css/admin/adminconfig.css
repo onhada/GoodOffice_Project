@@ -1,0 +1,141 @@
+.content_home {width:100%; height:100%; float:none;}
+
+#requestList {width: 100%;}
+#requestList img {float:none;}
+#requestList p {float:none; vertical-align:top; font-size:12px; }
+#requestList textarea {font-size:12px; }
+
+#alphaDiv {position:absolute; float:left; left:0px; top:0px; width:100%; height:500px; background-color:#ffffff; display:inline-block; z-index:20; }
+#InfoDiv {position:absolute; float:none; margin:10% auto auto -220px; width:440px; z-index:21; background-color:#ffffff; display:block; left:50%;}
+
+.orangeBold {color:#e97c1b; font-weight:bold;}
+.blueText {color:#15578B; }
+
+h3.bg {display:block; padding:0 0 0 20px; margin:0 0 10px 0; font-size:14px; background:url(/assets/images/common/icon/admin_icon04.gif) no-repeat; color:#424444;}
+h4.bg {display:block; padding:0 0 0 20px; margin:0 0 10px 0; font-size:12px; background:url(/assets/images/common/icon/sub_bullet_admin.gif) no-repeat 3px 4px; color:#424444;}
+h5 {display:block; padding:0 0 0 20px; margin: 0 0 10px 0; font-size:12px;}
+
+/* company info */
+#requestList #company_info {width:100%; float:left; border:none; margin-top:10px; border-top:3px solid #DBDBDB;}
+#requestList #company_info input {float:none; border: 1px solid #CCCCCC; margin: 5px;}
+#requestList #company_info iframe {width:95%; margin : 5px 5px; }
+#requestList #company_info th {width:20%; height:28px; font-weight:normal; background-color:#F9F9F9; font-size:12px; border-bottom:1px solid #EAEAEA; text-align:center;}
+#requestList #company_info td {width:80%; border-bottom:1px solid #EAEAEA; }
+#requestList #company_info td label {line-height:30px; height:30px; display:inline-block; *zoom:1; *display:inline;}
+#requestList #company_info td p {float:left;}
+#requestList #company_info td input {float:left;}
+#requestList #company_info #introduce {width:95%; height:200px; line-height:110%; font-size:12px; margin: 5px 5px; border: 1px solid #CCCCCC;}
+#requestList #company_info .company_name {width:150px;height:18px;}
+#requestList #company_info td.buttonTd {border:none; width:100%; text-align:center !important;}
+#requestList #company_info td.buttonTd img {margin:20px 0px; cursor:pointer;}
+
+/* basic info */
+#requestList {margin-bottom:20px; width:100%;}
+#requestList .basic_info_table {width:100%; display:block; border:none; margin:0px; padding:0px; margin-top:10px; border-top:3px solid #DBDBDB;}
+#requestList .basic_info_table input {float:none; border: 1px solid #CCCCCC; margin: 5px 5px; table-layout:fixed;}
+#requestList .basic_info_table tr {width:100%;}
+#requestList .basic_info_table th {width:20%; height:28px; font-weight:normal; background-color:#F9F9F9; font-size:12px; border-bottom:1px solid #EAEAEA;  border-right:1px solid #EAEAEA;line-height:120%;}
+/* #requestList .basic_info_table td {width:80%; border-bottom:1px solid #EAEAEA; margin:0px; padding:0px; line-height:120%;} */
+#requestList .basic_info_table td {width:79%; border-bottom:1px solid #EAEAEA; margin:0px; padding:0px; line-height:120%;}
+#requestList .basic_info_table td p {float:left; vertical-align:top;}
+#requestList .basic_info_table td p.marginP {float:left; vertical-align:top; margin:5px;}
+#requestList .basic_info_table td input {float:left; margin:5px; padding: 0;}
+#requestList .basic_info_table td.buttonTd {border:none; width:100%; margin:0px; padding:0px; text-align:center !important;}
+#requestList .basic_info_table td.buttonTd img {margin:10px 0px; float:none; cursor:pointer;}
+#requestList .basic_info_table td.buttonTd img.other {margin:10px 0px; margin-left:0px; cursor:pointer;}
+ .basic_info_table ul {width:80%; list-style: disc outside; display:inline-block; float:left; margin:0px; padding:0px 25px;}
+ .basic_info_table li {margin:5px 0px; padding:0px}
+
+#requestList .basic_info_table .basic_info_table_sub {width:99%; float:left; border:none; margin:0px 1%; border:1px solid #EAEAEA;}
+#requestList .basic_info_table .basic_info_table_sub th { border:none; border-right:1px solid #EAEAEA;}
+#requestList .basic_info_table .basic_info_table_sub td {border:none;}
+
+#requestList .basic_info_table .roundTable {width:99%; border:none; margin-top:10px;table-layout:fixed; margin:10px 1%;}
+#requestList .basic_info_table .roundTable td {border:none;}
+#requestList .basic_info_table .roundTable td.edge {width:5px; height;5px;}
+
+#requestList .basic_info_table select {margin:0px; margin-left:5px; float:left;}
+#requestList .basic_info_table .code_name {width:200px; height:18px; float:left;}
+#requestList .basic_info_table .code_list {width:242px; height:150px; border: 1px solid #CCCCCC; float:left;}
+
+#requestList .basic_info_table .blankTable {border:none; margin:0; padding:0; float:left;}
+#requestList .basic_info_table .blankTable td {border:none; width:100%;}
+#requestList .basic_info_table .blankTable td input {float:left;}
+#requestList .basic_info_table .blankTable td select {float:left; line-height:110%; font-size:12px;}
+#requestList .basic_info_table .blankTable td p {float:left;}
+#requestList .basic_info_table .blankTable td.blankButton img {float:left; margin:5px 0px 5px 5px; cursor:pointer;}
+
+/* 직무 직급 수정 창 */
+#requestList #changePosition {width:450px; border:none; position: absolute; z-index: 2;}
+#memberContainer {overflow: auto; height: 145px;}
+#memberContainer .memberList {width:100%; border:none; border-top:1px solid #BACFDF; border-left:1px solid #BACFDF; }
+#memberContainer .memberList th {height:30px; text-align:center; color:#0B57AC; background-color:#DDEAF5; border-bottom:1px solid #BACFDF; border-right:1px solid #BACFDF;}
+#memberContainer .memberList th.name {width:40%;}
+#memberContainer .memberList th.part {width:40%;}
+#memberContainer .memberList th.position {width:20%;}
+#memberContainer .memberList td {text-align:center; border-bottom:1px solid #BACFDF; border-right:1px solid #BACFDF;}
+
+/* 관리자 비밀번호 */
+#requestList .basic_info_table td input.managerPassword {width:200px; height:18px;}
+#requestList .basic_info_table td p.managerID {margin:5px 5px; color:#EC5F00}
+
+/* 관리자 설정 */
+#requestList .basic_info_table select.manager {width:200px; height:18px; float:none; top:0px;}
+#divTree img {float:left;}
+#requestList .basic_info_table #managerSetting {width:750px; float:left; padding:0px; margin:5px 0px 0px 0px; vertical-align:top;}
+#requestList .basic_info_table #managerSetting .setting_content {float:left;width:350px; vertical-align:top; top:0px;}
+#requestList .basic_info_table #managerSetting .setting_content input.keyword {width:160px; border:1px solid #eaeaea; height:17px; float:left; margin:2px; padding:0px;}
+#requestList .basic_info_table #managerSetting .setting_content p {float:left;}
+#requestList .basic_info_table #managerSetting .setting_content h3 {font-size:12px; width:auto; display:inline; float:left; padding:0px; margin:4px;}
+#requestList .basic_info_table #managerSetting .setting_content h3.blue {color:blue;}
+#requestList .basic_info_table #managerSetting .setting_content select {float:left; width:100%;  border: 1px solid #eaeaea; margin:0px; padding:0px;}
+#requestList .basic_info_table #managerSetting .setting_content #searchList {height:300px; vertical-align:top;}
+#requestList .basic_info_table #managerSetting .setting_content #managerList {height:130px;}
+#requestList .basic_info_table #managerSetting #selectButton {width:50px; padding:0px; margin:0px; float:left; vertical-align:top;}
+
+#requestList .basic_info_table #managerSetting .setting_content .guideTable {width:100%; float:left; border:none; margin-top:10px;}
+#requestList .basic_info_table #managerSetting .setting_content .guideTable td {border:none;}
+#requestList .basic_info_table #managerSetting .setting_content .guideTable ul.guide {width:95%; padding:0px 0px 0px 15px; margin:0px 0px 0px 5px; float:left; list-style:disc outside; border:none;}
+#requestList .basic_info_table #managerSetting .setting_content .guideTable li.guideLi {padding:0px; margin:0px;width:95%; border:none; vertical-align:top;}
+#requestList .basic_info_table #managerSetting .setting_content .guideTable h4 {padding:0px; margin:5px; font-size:12px;}
+#requestList .basic_info_table #managerSetting .setting_content .guideTable span.orange {color:#E97C1B;}
+
+/* 로고 스킨 설정 */
+#requestList ul.noStyle {width:100%; list-style: none outside; display:block; margin:5px 5px; padding:0px 0px; line-height:130%; }
+#requestList .basic_info_table #logoImage {margin: 5px;}
+#requestList .basic_info_table #logoInfo {margin:5px; width:100%; display:block;}
+#requestList .basic_info_table #thumbnailContainer {float:none; width:600px; display:block;}
+#requestList .basic_info_table #thumbnailContainer .thumb_skin {float:left; width:150px; margin:20px 0px 0px 20px; padding:0px;}
+#requestList .basic_info_table #thumbnailContainer .thumb_skin .radioType { margin:0px; padding:0px; margin-left:25px; border:none; float:left;}
+#requestList .basic_info_table #thumbnailContainer .thumb_skin img {border:1px solid; border-color:#DDDDDD #DDDDDD #939393 #DDDDDD; }
+#requestList .basic_info_table #inputCopy {width:400px; height:18px;}
+#requestList .basic_info_table .browserTitle {width:98%; height:18px;}
+#requestList .basic_info_table .footerMenuTitle { float:left; width:150px; height:18px;}
+#requestList .basic_info_table .footerMenuLink { float:left; width:230px; height:18px;}
+#requestList .basic_info_table select {margin:5px; padding:0px; border: 1px solid #CCCCCC; float:left; width:89px; }
+/*#requestList .basic_info_table ul.footerMenu {width:513px; margin:5px; padding:0px; list-style:none; float:left; border-top:3px solid #DBDBDB; display:inline-block; clear:both;}
+#requestList .basic_info_table li.footerMenuLI {list-style:none; float:left; width:510px; margin:0px; padding:0px; display:inline-block; border-bottom:1px solid #DBDBDB; clear:both;}
+#requestList .basic_info_table li.footerMenuTitleLI {list-style:none; float:left; width:510px; background-color:#F9F9F9;  margin:0px; padding:0px; display:inline-block; border-bottom:1px solid #DBDBDB; clear:both;}
+*/
+
+.api_user_list{clear:both; border-top:3px solid #dbdbdb; width:100%;}
+.api_user_list th{background-color:#f9f9f9; height:28px; border-right:1px solid #eaeaea; border-bottom:1px solid #eaeaea; text-align:center;}
+.api_user_list td{text-align:center; border-bottom:1px solid #eaeaea; height:28px;}
+.api_user_list td input{font-family:굴림; font-size:9pt; height:24px; width:100px;}
+.api_user_list td.apikey{font-family:굴림체;}
+.api_user_list td.url{text-align:left; padding-left:10px;}
+.api_user_list td.regist_date{font-family:돋움; font-size:8pt; letter-spacing:-1px; color:#666;}
+.api_user_list .btn{font-family:돋움; font-size:8pt; letter-spacing:-1px;}
+.api_user_list .hint{font-family:돋움; font-size:8pt; letter-spacing:-1px; color:#999;}
+
+.topMargion20 {margin:20px 0 5px 0 !important;}
+
+#requestList .basic_info_table .ip_access {table-layout: fixed;display: table;}
+#requestList .basic_info_table .ip_access td {width:auto;height:28px;text-align: center;}
+#requestList .basic_info_table .ip_access td input {float:none;margin:0;}
+#requestList .basic_info_table .ip_access .TITLE_TOP2 {height:38px;text-align: center;border-bottom:1px solid #969696}
+#requestList .basic_info_table .ip_access .weakgray {color:#999;}
+.contry-list {position:absolute;top:22px;left:0;z-index:10;width:212px;height:200px;overflow:auto;border:1px solid #a9a9a9;background:#fff;}
+.contry-list li{cursor: pointer;line-height:150%;list-style:none;}
+.contry-list li:hover {background: #c8c8c8;}
+.basic_info_table ul.comment {width:auto;list-style:none;display:inline-block;float:none;margin:0px;padding:4px 0 15px;}

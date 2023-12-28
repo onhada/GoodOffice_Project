@@ -1,0 +1,272 @@
+@charset "utf-8";
+
+/* --------------------------------------------
+ * mobile content
+/* ------------------------------------------ */
+#wrap {width:100%; overflow:hidden}
+.int_jogin{display:block;width:100%;height:70px;margin:0 auto;color:#fff;cursor:pointer;line-height:70px;text-align:center;border:none;border-radius:2px;background:#2c86dc;-webkit-appearance:none;/*Safari/Chrome*/-webkit-transition: all 0.25s;-moz-transition: all 0.25s;transition: all 0.25s}
+.int_jogin:hover,.int_jogin:focus{background:#1277d5}
+
+/* office login */
+input.type-J[type="text"], input.type-J[type="password"]{border:1px solid #c8c8c8;display:block;text-indent:10px;margin-top:12px;background:#fff; width:100%;font-size:inherit;color:inherit;line-height:56px;height:56px;box-sizing:border-box}
+input.sv[type="text"]{border:none;color:#333;background:none}
+.loginWrap-ofc{background:#fff}
+.loginBox-ofc{width:90%;margin:0 auto;background:#fff}
+.loginBox-ofc a{color:inherit}
+.head-ofc{padding:50px 0 0;text-align:center}
+.head-ofc a{display:inline-block;width:230px;height:50px;text-align:center}
+.head-ofc img{width:100%}
+.body-ofc{color:#666; text-align:center}
+.body-ofc .go-www{color:#2985db;margin:20px 0 0;display: inline-block}
+.body-ofc .save-ofc{text-align:right;margin:35px 0 15px}
+.body-ofc .save-ofc:after {display: block;clear: both;content: '';}
+.body-ofc .save-ofc li{display:inline-block;float: left;}
+.body-ofc .save-ofc li.cont-ip {float: right;}
+.body-ofc .save-ofc .cont-ip .is-state{display: inline-block;width: 45px;height: 26px;line-height: 24px;border:1px solid #ccc;border-radius: 20px;color: #939baa;font-weight: bold;text-align: center;cursor: pointer;}
+.body-ofc .save-ofc .cont-ip .is-state.on {color: #2c86dc;}
+
+/*기획 요청 주석 처리*/
+/*.body-ofc .save-ofc li:last-child{color:#2985db;margin-left:2px}
+.body-ofc .save-ofc li:last-child:before{color:#c8c8c8;display:inline-block;content:'|';margin-right:8px}*/
+
+.body-ofc .err {text-align:left;padding:3px 0 0}
+.body-ofc .save-ofc-2 {margin:60px 0 0;position:relative}
+.save-ofc-2 .office-login {text-align:left;padding:0}
+.save-ofc-2 .office-login span {color:#666}
+.save-ofc-2 .office-login .icon-q {text-align:center}
+.save-ofc-2 .save {position:absolute;right:0;top:0}
+#svId + label {margin-left:3px}
+.body-ofc .box-notice {text-align:left;box-shadow:1px 1px 3px 1px #eee; margin:30px 0 40px;min-width:288px}
+.body-ofc .box-notice .inner {box-shadow:-1px -1px 3px 1px #eee; padding:10px; position:relative}
+.body-ofc .box-notice p:first-of-type {padding-bottom:8px;color:#333}
+.body-ofc .box-notice p:first-of-type .spr {background-position:-97px -47px;width:11px;height:11px;padding:3px;margin:0 0 -3px 6px}
+.body-ofc .box-notice li:after {display:block;content:'';clear:both}
+.body-ofc .box-notice li a {width:65%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;display:block;float:left}
+.body-ofc .box-notice li .spr {background-position:-100px -68px;width:3px;height:3px;margin:0px 5px 3px 0}
+.body-ofc .box-notice li .date {float:right}
+.body-ofc .box-notice ul + .spr {background-position:-97px -47px;width:14px;height:14px;position:absolute;top:16px;left:80px}
+.body-ofc .btn-login {margin-top:20px}
+.foot-ofc {display:none}
+.body-ofc .box-notice .inner .phising {position: absolute;top:10px;right:10px; color: #ff472e;}
+.body-ofc .box-notice .inner .phising .warning {position: relative;top: 1px;display: inline-block;width: 14px;height: 14px;background: #ff472e;color: #fff;border-radius: 50%;line-height: 14px;font-weight: bold;text-align: center;}
+
+.layer_box.mid_large {width: 350px;padding: 14px 15px 16px;box-sizing: border-box;}
+.layer_box .title_layer {font-size: 18px;}
+
+.layer_box.phishing {box-sizing: border-box;width:320px;}
+.layer_box.phishing .header {background: #ffe1dd;padding: 30px 20px; color: #ff472e;text-align: center;font-size: 12px;letter-spacing: -1px;}
+.layer_box.phishing .header .warning {position: relative; top:1px;display: inline-block; width: 14px; height: 14px;background: #ff472e; color: #fff;border-radius: 50%;line-height: 14px;font-weight: bold;}
+.layer_box.phishing .body {font-size: 14px;padding: 20px;letter-spacing: -1px; color: #666;}
+.layer_box.phishing .body p {padding-bottom: 20px;}
+.layer_box.phishing .body .underline {text-decoration: underline;}
+.layer_box.phishing .body li {font-size: 12px;color: #9a999e; text-indent: -5px;line-height: 1.8;}
+
+
+/* --------------------------------------------
+ * ipad-portrait
+/* ------------------------------------------ */
+@media screen and (min-width:768px) {
+    /* office login */
+    .body-ofc .box-notice li a {width:80%}
+	.modal_body .ex-inner,.my_layer .ex-inner {display:table;margin:30px 0 0 15px}
+	.modal_body .ex-inner span,.my_layer .ex-inner span {display:table-cell;width:40px;word-break:break-all;word-wrap:break-word}
+	.set-pw .several.tr .btn {margin:0 0 0 15px}
+
+    .layer_box.large {width: 640px;padding: 25px 30px 32px;}
+    .layer_box.mid_large {width: 450px;padding: 25px 30px 32px;}
+    .layer_box .title_layer {font-size: 16px;padding-bottom: 21px;}
+}
+
+
+/* --------------------------------------------
+ * ipad-landscape
+/* ------------------------------------------ */
+@media screen and (min-width:1024px) {
+	.spr{background-size:500px 500px}
+
+	/* office login */
+	input.type-J[type="text"], input.type-J[type="password"]{text-indent:20px;margin-top:12px;line-height:50px;height:50px}
+	.loginWrap-ofc{background:#f3f2f0;/* min-height:870px; */padding:10% 0 0;position:fixed;top:0;right:0;bottom:0;left:0}
+	.loginWrap-ofc.bg{background:#f3f2f0 url(../images/bg_ofc.jpg) 0 0/cover no-repeat}
+	.loginWrap-ofc.bg .loginBox-ofc{background:rgba(255,255,255,0.3)}
+	.loginBox-ofc{width:420px;padding:0 30px; border:1px solid #d0d0d0}
+	.loginBox-ofc.noline{border:none}
+	.head-ofc{padding:60px 0 0}
+	.head-ofc a{width:280px;height:60px}
+	.body-ofc .save-ofc{margin:70px 0 15px}
+
+	/*기획 요청 주석 처리*/
+	/*.body-ofc .save-ofc li:last-child{margin-left:6px}
+	.body-ofc .save-ofc li:last-child:before{margin-right:12px}*/
+
+	.body-ofc .box-notice{margin:25px 0 50px}
+	.body-ofc .box-notice.noline{box-shadow:none}
+	.body-ofc .box-notice .inner{padding:23px 20px}
+	.body-ofc .box-notice.noline .inner{box-shadow:none;padding:10px}
+	.body-ofc .box-notice p:first-of-type{padding-bottom:8px}
+	.body-ofc .box-notice p:first-of-type .spr{background-position:-240px -100px;width:13px;height:13px;padding:0;margin:0px 0 -1px 8px}
+	.body-ofc .box-notice li a{width:75%}
+	.body-ofc .box-notice li .spr{background-position:-216px -138px;width:4px;height:4px;margin:0px 5px 3px 0}
+	.body-ofc .box-notice ul + .spr{background-position:-240px -100px;width:13px;height:13px;padding:0;position:absolute;top:28px;left:83px;}
+	.body-ofc .box-notice.noline ul + .spr{top:14px;left:73px;}
+	.body-ofc .btn-login{margin-top:20px}
+	.body-ofc .btn-login .int_jogin{line-height:60px;font-size:18px;}
+	.foot-ofc{display:block;text-align:center;padding:14px 0 0}
+	.foot-ofc a{color:#999}
+
+    .layer_box.large {width: 640px;padding: 25px 30px 32px;}
+    .layer_box.mid_large {width: 450px;padding: 25px 30px 32px;box-sizing: content-box;}
+    .layer_box .title_layer {font-size: 16px;padding-bottom: 21px;}
+    .layer_box.phishing {width: 392px;}
+    .layer_box.phishing .header {font-size: 14px; text-align: left;padding: 30px;}
+    .layer_box.phishing .header .warning {text-align: center; line-height: 14px;}
+    .layer_box.phishing .body {padding: 30px;}
+}
+
+
+/* --------------------------------------------
+ * wide
+/* ------------------------------------------ */
+@media screen and (min-width:1200px) {
+	#wrap{position:relative}
+
+    /* office login */
+    .loginWrap-ofc{/* min-height:980px */}
+
+
+    .layer_box.large {width: 640px;padding: 25px 30px 32px;}
+    .layer_box.mid_large {width: 450px;padding: 25px 30px 32px;box-sizing: content-box;}
+    .layer_box .title_layer {font-size: 16px;padding-bottom: 21px;}
+
+}
+
+#dimmed {
+    background-color: #000;
+    display: none;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0.3;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* 로그인 페이지 아이디 신청 추가 */
+.id-regform {margin-top:20px;color:#2985db;cursor:pointer;}
+.after:after {content: '';display: block;clear: both;}
+.w50 {width:50px !important}
+.w100 {width: 100px!important;}
+.w200 {width:200px !important}
+.mgt_10 {margin-top:10px}
+.mgr_10 {margin-right:10px}
+.pdt_30 {padding-top: 30px;}
+.font12 {font-size:12px;color:#9a989d;}
+.weakblue {color: #779ec0!important;}
+.layer_box {position: fixed;top: 50%;left: 50%;z-index: 1010;border: 1px solid #8d8d8d;background: #fff;}
+.layer_box .scroll{height:475px;overflow-y: auto;}
+.layer_box .title_layer {padding-bottom: 21px;}
+.layer_box .text_variables {color: #2985db;}
+.layer_box .to-add dl {width: 100%;margin-bottom: 15px;color:#676767;}
+.layer_box .to-add dt {width: 20%;float:left;}
+.layer_box .to-add dt span {color:#d91a1a;}
+.layer_box .to-add dd {float: right;width: 80%;}
+.layer_box input[type="text"], .layer_box input[type="password"]  {height: 21px;font-size:14px;border:1px solid #a5acb2;color:#676767;}
+.layer_box .select-box {border: 1px solid #a5acb2;height:23px;color:#676767;}
+.layer_box .layer_button {margin-top: 29px;line-height: 19px;text-align: center;}
+.layer_button button {padding: 6px 27px 7px;color: #444;letter-spacing: -1px;border: 0;background: #f1f1f1;}
+.layer_button button:hover {background:#dadada;}
+.layer_box .btn_variables {background:#fff;padding:5px 27px 6px;border:1px solid #c8c8c8;color:#2c86dc;}
+.layer_box .btn_variables:hover {border:1px solid #2c86dc;background:#fff;}
+
+.icon.btn_closelayer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 17px;
+    height: 16px;
+    background-position: -281px 0;
+}
+.icon {
+    background: url(/static/ui/images/sp_icon.png) 0 0 no-repeat;
+}
+
+/* 로그인 페이지 아이디 등록 신청 우편번호 검색 레이어*/
+.layer_box .title_layer {
+    padding-bottom: 21px;
+}
+.layer_box .text_variables {
+    color: #2985db;
+}
+.mgr_20 {
+    margin-right: 20px;
+}
+.bold {
+    font-weight: 700;
+}
+.cal_table1.bdt {
+    border-top: 1px solid #dedede;
+}
+.cal_table1 {
+    width: 100%;
+}
+.mgt_10 {
+    margin-top: 10px;
+}
+.cal_table1 tr td:first-child, .cal_table1 tr th:first-child {
+    border-left: 0 none;
+}
+.cal_table1 tbody th {
+    text-align: left;
+}
+.cal_table1 th {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border-bottom: 1px solid #dedede;
+    border-left: 1px solid #dedede;
+    font-weight: 400;
+    padding: 6px 12px;
+}
+.cal_table1 td {
+    border-bottom: 1px solid #dedede;
+    border-left: 1px solid #dedede;
+    padding: 6px 12px;
+}
+.layer_box table caption {
+    display: none;
+}
+.pdt_10 {
+    padding-top: 10px !important;
+}
+.gr_depth1 {
+    padding-left: 14px;
+    text-indent: -12px;
+}
+.tableType01 {
+    border-bottom: 1px solid #cdcdcd;
+    border-top: 1px solid #cdcdcd;
+    width: 100%;
+}
+.post_scroll {
+    height: 224px;
+    overflow-y: auto;
+}
+.tableType01 th, .list_select .tableType01 th {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border-bottom: 1px solid #ececec;
+    color: #333;
+    font-weight: 400;
+    padding: 14px 0;
+}
+.tableType01 .center {
+    padding-left: 0;
+    text-align: center;
+}
+.tableType01 td, .list_select .tableType01 td {
+    padding: 12px 0 12px 16px;
+    word-break: break-all;
+}
+.pdt_30 {
+    padding-top: 30px;
+}

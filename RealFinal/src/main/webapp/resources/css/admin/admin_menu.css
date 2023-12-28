@@ -1,0 +1,126 @@
+.h_admin_global_left .menufield {
+  margin: 0px;
+  padding: 0px;
+  height: 90%;
+  background-color: #eff4fc;
+}
+
+/* changing the original setting */
+.h_admin_global_left .menufield #adminLeftMenu li {
+  margin: 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+.h_admin_global_left .menufield #adminLeftMenu li > ul {
+  margin: 0px;
+}
+.h_admin_global_left .menufield #adminLeftMenu li > a {
+  max-width: none;
+}
+.h_admin_global_left #adminLeftMenu {
+  margin-top: 16px;
+  font-family: "맑은 고딕", "Malgun Gothic", dotum, sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  text-align: left;
+  color: #333333;
+}
+.h_admin_global_left #adminLeftMenu .arrow_down {
+  float: right;
+  position: relative;
+  top: 6px;
+  right: 48px;
+  width: 9px;
+  height: 5px;
+  background: url("../../images/h_admin/admin_menu/chevron-down.png") 0 0 no-repeat;
+  transition : transform 0.5s ease; 
+}
+
+.h_admin_global_left #adminLeftMenu .arrow_down.up {
+  float: right;
+  position: relative;
+  top: 6px;
+  right: 48px;
+  width: 9px;
+  height: 5px;
+  background: url("../../images/h_admin/admin_menu/chevron-down.png") 0 0 no-repeat;
+  transform: rotate(180deg);
+}
+
+.h_admin_global_left #adminLeftMenu #currentPagePointer {
+  background-color: #dae8f8;
+}
+/* 1st depth */
+.h_admin_global_left #adminLeftMenu .depth1-anchor {
+  padding: 15px 0px 15px 24px;
+  width: 100%;
+}
+
+.h_admin_global_left #adminLeftMenu .depth1-anchor:hover {
+  background-color: #fafcff;
+}
+
+.h_admin_global_left #adminLeftMenu .depth1-anchor.selected {
+  font-weight: bold;
+}
+
+.h_admin_global_left #adminLeftMenu .depth1-anchor.selected_depth {
+  font-weight: bold;
+  background-color: #dae8f8;
+}
+
+.h_admin_global_left #adminLeftMenu .depth1-menu-title {
+  float: none;
+  padding-left: 12px;
+}
+
+/* 2nd-depth */
+.h_admin_global_left #adminLeftMenu .depth2 {
+  transition : display 5s ease;
+}
+
+.h_admin_global_left #adminLeftMenu .depth2 li {
+  padding: 15px 0px 15px 56px;
+}
+
+.h_admin_global_left #adminLeftMenu .depth2 li .external_img{  
+  margin-left:8px;
+  height:14px;
+  width:14px;
+  background: url("../../images/h_admin/admin_menu/icon_external_icon.png") 0 0 no-repeat;
+  display: none;
+}
+
+.h_admin_global_left #adminLeftMenu .depth2 li:hover {
+  background-color: #fafcff;
+}
+.h_admin_global_left #adminLeftMenu .depth2 li.external:hover .external_img {
+  display: block;
+}
+
+.h_admin_global_left #menu_footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 10%;
+  background-color: #eff4fc;
+}
+/* guide menu */
+.h_admin_global_left #start_help {
+  display: table;
+  width: 227px;
+  height: 32px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 16px;
+  border: solid 1px #cfcfcc;
+  background-color: #ffffff;
+  text-align: center;
+}
+.h_admin_global_left #start_help #start_help_content {
+  display: table-cell;
+  vertical-align: middle;
+}
+

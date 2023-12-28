@@ -1,0 +1,751 @@
+@charset "UTF-8";
+
+
+
+/* 내가 추가한 css */
+
+
+
+/* 컨텐츠시작 */
+
+
+.bjcWTx {
+    float: left;
+    height: 100%;
+    will-change: width;
+    overflow: auto;
+    width: calc(96% - 276px) !important;
+    color: rgb(51, 51, 51);
+    padding: 0px 24px 24px
+}
+.feoGRI {
+    min-width: 944px;
+    min-height: 100%;
+}
+
+.boCrcg {
+    background: rgb(255, 255, 255);
+    position: sticky;
+    top: 0px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgb(214, 214, 214);
+    z-index: 10;
+}
+
+.daJILi {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-top: 24px;
+}
+
+.KMKuO {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.ebCLqY {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding-left: 10px;
+    width: 520px;
+    height: 34px;
+    border-radius: 2px;
+    border: 1px solid rgb(214, 214, 214);
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+
+.lpdtzo {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+svg[속성 스타일] {
+    width: 16;
+    height: 16;
+    fill: rgb(196, 196, 196);
+}
+path[속성 스타일] {
+    d: path("m 15.5 14.793 l -3.776 -3.776 a 5.509 5.509 0 1 0 -0.707 0.707 l 3.776 3.776 Z M 3 7.5 A 4.5 4.5 0 1 1 7.5 12 A 4.505 4.505 0 0 1 3 7.5");
+    transform: translate(-1, -1);
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.cKa-DKY {
+    width: 100%;
+    margin-left: 8px;
+    border: none;
+    outline: none;
+    background: rgb(255, 255, 255);
+    color: rgb(51, 51, 51);
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+
+.bGJRFG {
+    display: flex;
+}
+
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+
+
+.bGJRFG > :first-child {
+    margin-left: 0px;
+}
+.bGJRFG > * {
+    margin-left: 12px;
+}
+.htsvgG {
+    position: relative;
+    z-index: 50;
+}
+
+.jwoHjk {
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    min-height: 34px;
+    min-width: 34px;
+    padding: 0px;
+    background: rgb(255, 255, 255);
+    color: rgb(51, 51, 51);
+}
+
+svg[속성 스타일] {
+    width: 16;
+    height: 16;
+    fill: rgb(144, 144, 144);
+}
+
+path[속성 스타일] {
+    d: path("M 14263.6 19425 a 1.006 1.006 0 0 1 -0.984 -0.8 l -0.249 -1.258 a 6.522 6.522 0 0 1 -0.658 -0.381 l -1.214 0.41 a 0.92 0.92 0 0 1 -0.321 0.053 a 1.006 1.006 0 0 1 -0.868 -0.5 l -1.18 -2.043 a 1 1 0 0 1 0.205 -1.248 l 0.96 -0.848 c 0 -0.127 -0.01 -0.254 -0.01 -0.381 s 0.01 -0.254 0.015 -0.379 l -0.965 -0.85 a 1 1 0 0 1 -0.205 -1.248 l 1.18 -2.047 a 1.014 1.014 0 0 1 0.868 -0.5 a 0.928 0.928 0 0 1 0.321 0.059 l 1.209 0.4 a 6.2 6.2 0 0 1 0.663 -0.375 l 0.249 -1.258 a 1.006 1.006 0 0 1 0.984 -0.8 h 2.359 a 1 1 0 0 1 0.98 0.8 l 0.253 1.258 a 5.736 5.736 0 0 1 0.653 0.379 l 1.219 -0.408 a 0.911 0.911 0 0 1 0.317 -0.059 a 1.007 1.007 0 0 1 0.867 0.5 l 1.181 2.047 a 0.993 0.993 0 0 1 -0.205 1.248 l -0.961 0.844 c 0.01 0.127 0.015 0.254 0.015 0.385 s -0.01 0.254 -0.02 0.381 l 0.966 0.848 a 0.992 0.992 0 0 1 0.205 1.248 l -1.181 2.043 a 1 1 0 0 1 -0.867 0.5 a 0.9 0.9 0 0 1 -0.317 -0.053 l -1.209 -0.41 a 6.94 6.94 0 0 1 -0.663 0.381 l -0.253 1.258 a 1 1 0 0 1 -0.98 0.8 Z m -0.355 -2.777 l 0.355 1.779 h 2.359 l 0.356 -1.779 a 4.337 4.337 0 0 0 1.355 -0.781 l 1.711 0.58 l 1.185 -2.041 l -1.36 -1.2 a 4.432 4.432 0 0 0 0 -1.564 l 1.365 -1.2 l -1.185 -2.043 l -1.721 0.58 a 4.626 4.626 0 0 0 -1.346 -0.785 l -0.356 -1.773 h -2.359 l -0.355 1.773 a 4.537 4.537 0 0 0 -1.36 0.785 l -1.711 -0.58 l -1.18 2.043 l 1.36 1.193 a 4.443 4.443 0 0 0 0 1.566 l -1.36 1.2 l 1.18 2.041 l 1.721 -0.584 a 4.489 4.489 0 0 0 1.346 0.79 Z m -1.468 -4.223 a 3 3 0 1 1 3 3 a 2.97 2.97 0 0 1 -3 -3 Z m 1 0 a 2 2 0 1 0 2 -2 a 1.958 1.958 0 0 0 -2 2 Z");
+    transform: translate(-14256.8, -19410);
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+/* 모든 게시글 시작 */
+
+.kZczLo {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.bQIjvn {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.dZVovp {
+    width: fit-content;
+}
+
+.fA-DaJW {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 4px;
+    color: rgb(51, 51, 51);
+}
+
+path[속성 스타일] {
+    d: path("M 8.4 10.306 a 0.5 0.5 0 0 1 -0.705 0.089 a 0.511 0.511 0 0 1 -0.089 -0.089 l -3.5 -4.494 A 0.5 0.5 0 0 1 4.5 5 h 7 a 0.5 0.5 0 0 1 0.4 0.812 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.gxKYhy {
+    display: flex;
+}
+
+.kkExOm {
+    display: inline-block;
+}
+label {
+    margin-bottom: 0px !important;
+}
+
+.wRCjH {
+    display: flex;
+    position: relative;
+    padding: 0px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.gCXHle {
+    display: inline-block;
+    position: relative;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    background: rgb(255, 255, 255);
+    border-radius: 4px;
+    border: 1px solid rgb(103, 103, 103);
+}
+
+.wRCjH > input {
+    position: absolute;
+    z-index: -1;
+    margin: 0px;
+    width: 0px;
+    height: 0px;
+    outline: none;
+    opacity: 0;
+}
+
+.hSuNEG {
+    margin-left: 8px;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgb(51, 51, 51);
+    transform: translateY(-1px);
+}
+
+
+
+
+/* 이제 본내용 시작 */
+
+
+.jIIinW {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0px 14px 0px 8px;
+    width: 100%;
+    height: 46px;
+    font-size: 14px;
+    transition: height 0.2s ease-in-out 0s;
+    color: rgb(51, 51, 51);
+}
+
+.jIIinW > div:first-child {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.jIIinW > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.jIIinW > .post .star {
+    margin-right: 8px;
+}
+.bEXVOX {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 30px;
+    min-width: 30px;
+}
+
+svg[속성 스타일] {
+    width: 16;
+    height: 16;
+    fill: rgb(253, 192, 54);
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 14 v 14 H 0 Z");
+}
+
+
+path[속성 스타일] {
+    d: path("M 13.667 4.912 a 1.1 1.1 0 0 0 -0.545 -0.29 l -3.6 -0.556 L 7.913 0.6 a 1 1 0 0 0 -1.831 0 L 4.473 4.067 l -3.607 0.555 A 1.049 1.049 0 0 0 0 5.6 v 0.142 a 1.09 1.09 0 0 0 0.3 0.729 l 2.613 2.7 l -0.613 3.56 A 1.069 1.069 0 0 0 3.306 14 a 0.972 0.972 0 0 0 0.476 -0.127 L 7 12.078 l 3.216 1.794 a 0.967 0.967 0 0 0 0.476 0.127 a 1.068 1.068 0 0 0 1.024 -1.11 a 1.006 1.006 0 0 0 -0.019 -0.159 l -0.613 -3.563 l 2.6 -2.695 a 1.1 1.1 0 0 0 -0.021 -1.56");
+}
+
+g[속성 스타일] {
+    transform: translate(1, 1);
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.jIIinW > .post > .post-link {
+    display: flex;
+    overflow: hidden;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    color: rgb(51, 51, 51);
+}
+a, a:active, a:hover {
+    text-decoration: none;
+}
+a {
+    color: #676767;
+}
+a {
+    text-decoration: none;
+}
+
+.jIIinW > .post > .post-link > * {
+    margin-right: 8px;
+}
+.jRFgSG {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 24px;
+    width: max-content;
+    font-size: 13px;
+    padding: 0px 8px;
+    border: 1px solid rgb(168, 205, 240);
+    border-radius: 2px;
+    line-height: 1.31;
+    letter-spacing: -0.2px;
+    user-select: none;
+    color: rgb(5, 106, 201);
+    background-color: rgb(239, 244, 252);
+}
+
+.gbTpZJ {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.kOsrJe {
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+svg[속성 스타일] {
+    width: 16;
+    height: 16;
+    fill: rgb(41, 133, 219);
+}
+
+path[속성 스타일] {
+    d: path("M 8 0 a 8 8 0 1 0 8 8 a 8 8 0 0 0 -8 -8 Z m 4 12 h -1.5 l -5 -5.5 V 12 H 4 V 4 h 1.5 l 5 5.5 V 4 H 12 Z");
+}
+
+.jIIinW > div:last-child {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+.jIIinW > div:last-child .profile {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+}
+.jIIinW > div:last-child .profile, .jIIinW > div:last-child .file {
+    margin-left: 16px;
+}
+.jIIinW > div:last-child > * {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+fieldset, img {
+    border: 0 none;
+}
+
+img[속성 스타일] {
+    width: 30px;
+    aspect-ratio: auto 30 / 30;
+    height: 30px;
+}
+
+.jIIinW > div:last-child .writer {
+    margin-left: 8px;
+    width: 144px;
+}
+
+.jIIinW > div:last-child .views {
+    width: 40px;
+    text-align: center;
+}
+.jIIinW > div:last-child .created, .jIIinW > div:last-child .boardTitle, .jIIinW > div:last-child .views, .jIIinW > div:last-child .survey {
+    margin-left: 30px;
+}
+
+.jIIinW > div:last-child .boardTitle {
+    width: 144px;
+}
+.jIIinW > div:last-child .created, .jIIinW > div:last-child .boardTitle, .jIIinW > div:last-child .views, .jIIinW > div:last-child .survey {
+    margin-left: 30px;
+}
+
+.lcJsTb {
+    outline: none;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.jIIinW > div:last-child .boardTitle .title {
+    color: rgb(51, 51, 51);
+}
+
+.jIIinW > div:last-child .created {
+    width: 100px;
+    text-align: right;
+}
+
+.jIIinW {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0px 14px 0px 8px;
+    width: 100%;
+    height: 46px;
+    font-size: 14px;
+    transition: height 0.2s ease-in-out 0s;
+    color: rgb(51, 51, 51);
+}
+
+.kWqjLa .post + .post {
+    border-top: 1px solid rgb(234, 234, 234);
+}
+.jIIinW > div:first-child {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+path[속성 스타일] {
+    d: path("M 13.667 4.912 a 1.1 1.1 0 0 0 -0.545 -0.29 l -3.6 -0.556 L 7.913 0.6 a 1 1 0 0 0 -1.831 0 L 4.473 4.067 l -3.607 0.555 A 1.049 1.049 0 0 0 0 5.6 v 0.142 a 1.09 1.09 0 0 0 0.3 0.729 l 2.613 2.7 l -0.613 3.56 A 1.069 1.069 0 0 0 3.306 14 a 0.972 0.972 0 0 0 0.476 -0.127 L 7 12.078 l 3.216 1.794 a 0.967 0.967 0 0 0 0.476 0.127 a 1.068 1.068 0 0 0 1.024 -1.11 a 1.006 1.006 0 0 0 -0.019 -0.159 l -0.613 -3.563 l 2.6 -2.695 a 1.1 1.1 0 0 0 -0.021 -1.56");
+}
+
+g[속성 스타일] {
+    transform: translate(1, 1);
+}
+
+.fFjBdu {
+    border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+.biSzcA {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.iKAGRm:disabled {
+    cursor: default;
+    background-color: rgba(248, 248, 248, 0.3);
+    color: rgba(144, 144, 144, 0.3);
+    border: 1px solid rgba(214, 214, 214, 0.3);
+}
+.iKAGRm {
+    margin: 0px 4px;
+    max-height: 34px;
+    min-width: 34px;
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 0.25rem;
+    background-color: rgb(255, 255, 255);
+    padding: 7px 0px;
+    font-size: 13px;
+    color: rgb(51, 51, 51);
+    z-index: 5;
+}
+
+svg[속성 스타일] {
+    width: 16;
+    height: 16;
+    fill: rgba(144, 144, 144, 0.3);
+}
+
+path[속성 스타일] {
+    d: path("M -880.354 -209.647 a 0.5 0.5 0 0 1 -0.146 -0.353 a 0.5 0.5 0 0 1 0.146 -0.355 l 4.647 -4.646 l 0.707 0.706 l -4.293 4.295 l 4.293 4.293 l -0.707 0.707 Z m -4 0 a 0.5 0.5 0 0 1 -0.146 -0.353 a 0.5 0.5 0 0 1 0.147 -0.355 l 4.647 -4.646 l 0.707 0.706 l -4.294 4.295 l 4.293 4.293 l -0.707 0.707 Z");
+    transform: translate(888, 218);
+}
+
+path[속성 스타일] {
+    transform: rotate(90deg, 8, 8);
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+.iKAGRm:disabled {
+    cursor: default;
+    background-color: rgba(248, 248, 248, 0.3);
+    color: rgba(144, 144, 144, 0.3);
+    border: 1px solid rgba(214, 214, 214, 0.3);
+}
+
+path[속성 스타일] {
+    d: path("M 11 11 a 0.5 0.5 0 0 1 0.146 -0.354 L 15.793 6 l 0.707 0.707 L 12.207 11 l 4.293 4.293 l -0.707 0.707 l -4.647 -4.646 A 0.5 0.5 0 0 1 11 11");
+    transform: translate(-5.5, -3);
+}
+
+.jvhUpG[aria-current] {
+    border: none;
+    background-color: rgb(41, 133, 219);
+    color: rgb(255, 255, 255);
+}
+.jvhUpG {
+    margin: 0px 4px;
+    max-height: 34px;
+    min-width: 34px;
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 0.25rem;
+    background-color: rgb(255, 255, 255);
+    padding: 7px 0px;
+    font-size: 13px;
+    color: rgb(51, 51, 51);
+    z-index: 5;
+}
+path[속성 스타일] {
+    d: path("M 16.5 10.94 a 0.5 0.5 0 0 1 -0.146 0.354 l -4.647 4.646 l -0.707 -0.707 l 4.293 -4.293 L 11 6.647 l 0.707 -0.707 l 4.647 4.647 a 0.5 0.5 0 0 1 0.146 0.353");
+    transform: translate(-5.5, -2.971);
+}
+
+
+.iKAGRm {
+    margin: 0px 4px;
+    max-height: 34px;
+    min-width: 34px;
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 0.25rem;
+    background-color: rgb(255, 255, 255);
+    padding: 7px 0px;
+    font-size: 13px;
+    color: rgb(51, 51, 51);
+    z-index: 5;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+path[속성 스타일] {
+    d: path("m -936.5 -205.707 l 4.294 -4.293 l -4.294 -4.294 l 0.707 -0.706 l 4.647 4.647 A 0.5 0.5 0 0 1 -931 -210 a 0.5 0.5 0 0 1 -0.147 0.353 l -4.646 4.647 Z m -4 0 l 4.293 -4.293 l -4.293 -4.294 l 0.707 -0.706 l 4.646 4.647 A 0.5 0.5 0 0 1 -935 -210 a 0.5 0.5 0 0 1 -0.147 0.353 l -4.646 4.647 Z");
+    transform: translate(943.5, 218);
+}
+
+path[속성 스타일] {
+    transform: rotate(90deg, 8, 8);
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+
+.lmwuze::after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.lmwuze {
+    position: absolute;
+    inset: 60px 0px 0px;
+    width: 100%;
+    background: rgb(255, 255, 255);
+}
+
+
+
+
+
+
+/* 여기까지 콘텐츠랑 메인 끝 */
+
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.ihDBSY {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(41, 133, 219);
+}
+.ihDBSY .icon {
+    margin: 0px 4px;
+}
+
+path[속성 스타일] {
+    d: path("m 13.909 8.389 l -5.291 5.352 a 0.87 0.87 0 0 1 -1.238 0 L 2.088 8.389 a 3.792 3.792 0 0 1 0.271 -5.569 a 3.8 3.8 0 0 1 5.1 0.364 L 8 3.728 l 0.538 -0.544 a 3.74 3.74 0 1 1 5.371 5.2");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.ihDBSY {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(41, 133, 219);
+}
+.ihDBSY {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(41, 133, 219);
+}
+
+path[속성 스타일] {
+    d: path("M 15 15 h -4 V 2 h 4 Z m -3 -1 h 2 V 3 h -2 Z");
+}
+
+
+
+path[속성 스타일] {
+    d: path("M 10 15 H 6 V 6 h 4 Z m -3 -1 h 2 V 7 H 7 Z");
+}
+path[속성 스타일] {
+    d: path("M 5 15 H 1 V 9 h 4 Z m -3 -1 h 2 v -4 H 2 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+fieldset, img {
+    border: 0 none;
+}
+img[속성 스타일] {
+    width: 30px;
+    aspect-ratio: auto 30 / 30;
+    height: 30px;
+}
+
+.jIIinW > div:last-child .writer {
+    margin-left: 8px;
+    width: 144px;
+}
+
+.jIIinW > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.jIIinW > div:last-child .profile, .jIIinW > div:last-child .file {
+    margin-left: 16px;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+<style>
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+
+.jIIinW > div {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.jIIinW > div:last-child > * {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fYDjSr span {
+    color: rgb(41, 133, 219);
+}
+.jIIinW:hover {
+    background: rgb(239, 244, 252);
+}

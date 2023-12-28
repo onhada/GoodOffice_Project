@@ -1,0 +1,124 @@
+/* Button Common */
+.button,
+.button *{ position:relative; margin:0; padding:0; display:inline-block; text-decoration:none !important; border:0; font-size:12px; font-family:dotum; white-space:nowrap; background:url(/assets/images/common/bg/new_button.gif) no-repeat; vertical-align:top; overflow:visible; color:#333;}
+.button { margin-right:4px;}
+.button *{ left:4px; cursor:pointer; _cursor:hand;}
+
+/* Button Size = medium | large | xLarge | small */
+.button.large, .button.large *{ font-family:dotum; height:23px; line-height:23px;}
+.button.medium, .button.medium *{ font-family:dotum; height:20px; line-height:20px;}
+.button.small, .button.small *{ font-family:dotum; height:16px; line-height:16px;}
+.button.large { background-position:left -30px;}
+.button.medium { background-position:left -63px;}
+.button.small { background-position:left -98px;}
+.button.large *{ padding:1px 10px 0 6px; font-size:12px; background-position:right -30px;}
+.button.medium *{ padding:1px 10px 0 6px; font-size:11px; background-position:right -63px;}
+.button.small *{ padding:2px 6px 0 2px; font-size:9px; color: #fff; background-position:right -98px;}
+
+/* Button Hover */
+.button *:hover,
+.button *:active,
+.button *:focus{ font-family:dotum; color:#0e8ae4;}
+/*
+.button.small *:hover,
+.button.small *:active,
+.button.small *:focus{ color:#FFFFFF;}
+*/
+/* Button Strong */
+.button.strong *{ font-weight:bold !important;}
+
+/* Button Icon Variation */
+.button.icon *{ font-family:dotum; padding-left:16px;}
+.button.medium.icon *{ padding-left:16px;}
+.button.small.icon *{ padding-left:14px;}
+.button.icon span{ width:20px; margin-right:-19px; padding:0 !important;}
+
+.button.large .del { BACKGROUND-POSITION: 4px -149px }
+.button.large .send { BACKGROUND-POSITION: -14px -150px }
+.button.large .send_re { BACKGROUND-POSITION: -34px -150px }
+.button.large .mail_write { BACKGROUND-POSITION: -54px -150px }
+.button.large .edit_save { BACKGROUND-POSITION: -74px -150px }
+.button.large .upload { BACKGROUND-POSITION: -95px -150px }
+.button.large .link { BACKGROUND-POSITION: -118px -150px }
+.button.large .linkdel { BACKGROUND-POSITION: 4px -149px }
+.button.large .view { BACKGROUND-POSITION: -143px -150px }
+.button.large .bookmark { BACKGROUND-POSITION: -167px -150px }
+.button.large .all { BACKGROUND-POSITION: -191px -150px }
+.button.large .ok { BACKGROUND-POSITION: -215px -150px }
+.button.large .back { BACKGROUND-POSITION: -240px -150px }
+.button.large .prev { BACKGROUND-POSITION: -260px -150px }
+.button.large .next { BACKGROUND-POSITION: -277px -150px }
+.button.large .send_m { BACKGROUND-POSITION: -294px -150px }
+.button.large .send_n { BACKGROUND-POSITION: -313px -150px }
+.button.large .put { BACKGROUND-POSITION: -333px -150px }
+.button.large .get { BACKGROUND-POSITION: -350px -149px }
+.button.large .memo_write {background:url(/assets/images/newmain/main_memo_icon.gif) no-repeat;background-position:45% 55%;}
+
+
+.button.medium .del { BACKGROUND-POSITION: 4px -151px }
+.button.medium .send { BACKGROUND-POSITION: -14px -152px }
+.button.medium .send_re { BACKGROUND-POSITION: -34px -152px }
+.button.medium .mail_write { BACKGROUND-POSITION: -54px -152px }
+.button.medium .edit_save { BACKGROUND-POSITION: -74px -152px }
+.button.medium .upload { BACKGROUND-POSITION: -95px -152px }
+.button.medium .link { BACKGROUND-POSITION: -118px -152px }
+.button.medium .linkdel { BACKGROUND-POSITION: 4px -151px }
+.button.medium .view { BACKGROUND-POSITION: -143px -152px }
+.button.medium .bookmark { BACKGROUND-POSITION: -167px -152px }
+.button.medium .all { BACKGROUND-POSITION: -191px -152px }
+.button.medium .ok { BACKGROUND-POSITION: -215px -152px }
+.button.medium .back { BACKGROUND-POSITION: -240px -152px }
+.button.medium .prev { BACKGROUND-POSITION: -260px -152px }
+.button.medium .next { BACKGROUND-POSITION: -277px -152px }
+.button.medium .put { BACKGROUND-POSITION: -333px -150px }
+
+
+
+
+a button {cursor:pointer; display:inline-block; font-size:12px; font-family:dotum; text-decoration:none; white-space:nowrap; overflow:hidden; margin:0px; padding:0 5px 0 0; border:none; background:url('/assets/images/common/bg/btn_bg2.gif') no-repeat; line-height:150%; vertical-align:bottom;}
+
+a.btn01 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left 0px no-repeat ;margin:0px; padding:0px;}
+a.btn01 button {float:left; background-position: right 0px; height:17px; color:white; margin:0 0 0 5px; font-size:11px; padding-bottom:1px;_padding-top:1px;}
+a.btn01:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -17px; color:orange;}
+a.btn01 button:hover {background-position: right -17px; color:orange;}
+
+a.btn02 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -40px no-repeat; margin:0px; padding:0px;}
+a.btn02 button {float:left; background-position: right -40px; height:17px; color:white; margin:0 0 0 5px; font-size:11px; padding-bottom:1px ;_padding-top:1px;}
+a.btn02:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -57px; color:orange;}
+a.btn02 button:hover {background-position:  right -57px; color:orange;}
+
+a.btn03 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -80px no-repeat; margin:0px; padding:0px;}
+a.btn03 button {float:left; background-position: right -80px; height:21px; color:#555; vertical-align:middle; margin:0 0 0 5px; padding-right:12px; }
+a.btn03:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -103px; color:#005C96;}
+a.btn03 button:hover {background-position: right -103px; color:#005C96;}
+
+a.btn04 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -127px no-repeat; margin:0px; padding:0px;}
+a.btn04 button {float:left;  background-position: right; background-position: right -127px; height:32px; color:#555; vertical-align:middle; margin:0 0 0 5px;}
+a.btn04:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -156px; color:orange;}
+a.btn04 button:hover {background-position: right -156px; color:orange;}
+a.btn04 button img {vertical-align:-2px;}
+
+a.pBtn05 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -190px no-repeat; margin:0px; padding:0px;}
+a.pBtn05 button {float:left; background-position: right -190px; height:22px; color:white; vertical-align:middle; margin:0 0 0 5px;}
+a.pBtn05:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -214px; color:orange;}
+a.pBtn05 button:hover {background-position: right -214px; color:orange;}
+
+a.pBtn06 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -245px no-repeat; margin:0px; padding:0px;}
+a.pBtn06 button {float:left; background-position: right -245px; height:22px; color:white; vertical-align:middle; margin:0 0 0 5px;}
+a.pBtn06:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -269px; color:orange;}
+a.pBtn06 button:hover {background-position: right -269px; color:orange;}
+
+a.pBtn07 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -300px no-repeat; margin:0px; padding:0px;}
+a.pBtn07 button {float:left; background-position: right -300px; height:20px; color:white; vertical-align:middle; margin:0 0 0 5px; font-size:11px;}
+a.pBtn07:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -326px; color:orange;}
+a.pBtn07 button:hover {background-position: right -326px; color:orange;}
+
+a.pBtn08 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -360px no-repeat; margin:0px; padding:0px;}
+a.pBtn08 button {float:left; background-position: right -360px; height:18px; color:#555; vertical-align:middle; margin:0 0 0 5px; font-size:11px;}
+a.pBtn08:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -387px; color:orange;}
+a.pBtn08 button:hover {background-position: right -387px; color:orange;}
+
+a.btn09 {display:inline-block; background:url('/assets/images/common/bg/btn_bg2.gif') left -414px no-repeat; margin:0px; padding:0px;}
+a.btn09 button {float:left;  background-position: right; background-position: right -414px; height:21px; color:#555; vertical-align:middle; margin:0 0 0 5px;}
+a.btn09:hover {background:url('/assets/images/common/bg/btn_bg2.gif') left -437px; color:#005C96;}
+a.btn09 button:hover {background-position: right -437px; color:#005C96;}

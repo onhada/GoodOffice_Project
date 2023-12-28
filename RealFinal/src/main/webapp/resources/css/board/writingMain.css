@@ -1,0 +1,935 @@
+@charset "UTF-8";
+
+.bjcWTx {
+    float: left;
+    height: 100%;
+    will-change: width;
+    overflow: auto;
+    width: calc(96% - 276px) !important;
+    padding: 0px 24px 24px;
+    color: rgb(51, 51, 51);
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+<style>
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+<style>
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+
+.feoGRI {
+    min-width: 944px;
+    min-height: 100%;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+<style>
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+
+.gDBbxo {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    top: 0px;
+    padding: 20px 0px;
+    position: sticky;
+    background-color: rgb(255, 255, 255);
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+<style>
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.hfDMom {
+    display: flex;
+    gap: 30px;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.hfDMom button {
+    font-size: 16px;
+    padding: 0px;
+}
+<style>
+.iqqprB {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border: 1px solid transparent;
+    background: none;
+    color: rgb(41, 133, 219);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+
+.rXMde {
+    position: relative;
+    z-index: 50;
+}
+
+.kVxwen {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+    color: rgb(41, 133, 219);
+}
+
+.kVxwen > svg {
+    fill: rgb(41, 133, 219);
+    pointer-events: none;
+}
+
+svg[속성 스타일] {
+    width: 20;
+    height: 20;
+    fill: rgb(144, 144, 144);
+}
+
+path[속성 스타일] {
+    d: path("M 8.4 10.306 a 0.5 0.5 0 0 1 -0.705 0.089 a 0.511 0.511 0 0 1 -0.089 -0.089 l -3.5 -4.494 A 0.5 0.5 0 0 1 4.5 5 h 7 a 0.5 0.5 0 0 1 0.4 0.812 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.kVxwen > svg {
+    fill: rgb(41, 133, 219);
+    pointer-events: none;
+}
+.kVxwen {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+    color: rgb(41, 133, 219);
+}
+
+.hfDMom button {
+    font-size: 16px;
+    padding: 0px;
+}
+
+.rXMde {
+    position: relative;
+    z-index: 50;
+}
+
+.iqqprB {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border: 1px solid transparent;
+    background: none;
+    color: rgb(41, 133, 219);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+
+.NGaiM {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.hABIMr > button {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid rgb(214, 214, 214);
+    background: rgb(255, 255, 255);
+    border-radius: 4px;
+    padding: 0px 10px;
+    height: 34px;
+}
+<style>
+.ceATpR {
+    outline: none;
+}
+
+path[속성 스타일] {
+    d: path("M 8.125 2 a 2.5 2.5 0 1 1 -2.5 2.5 a 2.5 2.5 0 0 1 2.5 -2.5 m 0 -1 a 3.5 3.5 0 1 0 3.5 3.5 a 3.5 3.5 0 0 0 -3.5 -3.5");
+}
+
+path[속성 스타일] {
+    d: path("M 10.575 9.875 a 2.678 2.678 0 0 1 2.675 2.675 v 1.138 a 0.313 0.313 0 0 1 -0.312 0.313 H 3.313 A 0.313 0.313 0 0 1 3 13.688 V 12.55 a 2.678 2.678 0 0 1 2.675 -2.675 a 1.93 1.93 0 0 1 0.61 0.132 a 5.706 5.706 0 0 0 3.681 0 a 1.93 1.93 0 0 1 0.609 -0.132 m 0 -1 c -0.787 0 -1.163 0.438 -2.45 0.438 s -1.662 -0.437 -2.45 -0.437 A 3.675 3.675 0 0 0 2 12.55 v 1.138 a 1.312 1.312 0 0 0 1.313 1.313 h 9.625 a 1.312 1.312 0 0 0 1.313 -1.312 V 12.55 a 3.675 3.675 0 0 0 -3.676 -3.675");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.hABIMr > button span {
+    margin-left: 5px;
+    color: rgb(51, 51, 51);
+}
+
+.hABIMr > button {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid rgb(214, 214, 214);
+    background: rgb(255, 255, 255);
+    border-radius: 4px;
+    padding: 0px 10px;
+    height: 34px;
+}
+<style>
+.ceATpR {
+    outline: none;
+}
+
+.lcJsTb {
+    outline: none;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.dPKKrw {
+    border-radius: 4px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid rgb(214, 214, 214);
+}
+
+path[속성 스타일] {
+    d: path("M 1 13.5 v -2 h 2 v 2 Z m 4 -0.5 v -1 h 10 v 1 Z M 1 9 V 7 h 2 v 2 Z m 4 -0.5 v -1 h 10 v 1 Z m -4 -4 v -2 h 2 v 2 Z M 5 4 V 3 h 10 v 1 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.lcJsTb {
+    outline: none;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+.dPKKrw {
+    border-radius: 4px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid rgb(214, 214, 214);
+}
+
+path[속성 스타일] {
+    d: path("M 3.21 10.5 L 8 4.577 l 4.79 5.923 Z m -0.363 1 h 10.306 a 0.869 0.869 0 0 0 0.52 -0.172 a 0.794 0.794 0 0 0 0.149 -1.143 L 8.669 3.814 a 0.841 0.841 0 0 0 -0.149 -0.143 a 0.871 0.871 0 0 0 -1.189 0.143 l -5.152 6.371 a 0.793 0.793 0 0 0 -0.179 0.5 a 0.831 0.831 0 0 0 0.847 0.815");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.dpaTqP {
+    display: flex;
+}
+
+.dpaTqP > div > svg {
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+path[속성 스타일] {
+    d: path("M 8 2.006 v 0.007 l 0.007 0.013 l 1.608 3.463 l 0.226 0.485 l 0.529 0.082 l 3.562 0.549 a 0.11 0.11 0 0 1 0.037 0.023 a 0.1 0.1 0 0 1 0 0.149 l -2.6 2.695 l -0.352 0.365 l 0.086 0.5 l 0.613 3.563 v 0.03 a 0.067 0.067 0 0 1 -0.031 0.06 L 8.486 12.2 L 8 11.933 l -0.488 0.272 l -3.2 1.787 a 0.082 0.082 0 0 1 -0.03 -0.091 l 0.618 -3.564 l 0.086 -0.5 l -0.353 -0.365 l -2.609 -2.69 A 0.108 0.108 0 0 1 2 6.744 v -0.1 a 0.079 0.079 0 0 1 0.018 -0.034 l 3.607 -0.555 l 0.529 -0.082 l 0.226 -0.485 l 1.609 -3.462 v -0.012 Z M 8 1 a 1 1 0 0 0 -0.915 0.605 L 5.473 5.067 l -3.607 0.556 A 1.049 1.049 0 0 0 1 6.6 v 0.142 a 1.087 1.087 0 0 0 0.3 0.729 l 2.613 2.7 l -0.613 3.56 A 1.069 1.069 0 0 0 4.306 15 a 0.967 0.967 0 0 0 0.476 -0.127 L 8 13.078 l 3.216 1.794 a 0.967 0.967 0 0 0 0.476 0.127 A 1.067 1.067 0 0 0 12.7 13.73 l -0.613 -3.563 l 2.6 -2.695 a 1.1 1.1 0 0 0 -0.566 -1.85 l -3.6 -0.556 l -1.608 -3.461 A 1 1 0 0 0 8 1");
+}
+
+
+.dpaTqP > div > svg {
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+.dpaTqP > img {
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+<style>
+fieldset, img {
+    border: 0 none;
+}
+/* 공지부분 시작 */
+.boTYJp {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    flex-shrink: 1;
+}
+gVIMLu {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 20px;
+    color: rgb(51, 51, 51);
+}
+
+.kORXNE {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.kORXNE .notice {
+    margin-right: 10px;
+}
+<style>
+.jRFgSG {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 24px;
+    width: max-content;
+    font-size: 13px;
+    padding: 0px 8px;
+    border: 1px solid rgb(168, 205, 240);
+    border-radius: 2px;
+    line-height: 1.31;
+    letter-spacing: -0.2px;
+    user-select: none;
+    color: rgb(5, 106, 201);
+    background-color: rgb(239, 244, 252);
+}
+
+.gVIMLu .title {
+    font-weight: bold;
+    margin-right: 15px;
+}
+/* 하트부분 시작 */
+.pbYzq {
+    padding: 0px;
+    height: 100%;
+    display: flex;
+    gap: 10px;
+}
+<style>
+.iqqprB {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border: 1px solid transparent;
+    background: none;
+    color: rgb(41, 133, 219);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+
+.fXOTwM {
+    color: rgb(41, 133, 219);
+    margin-right: 4px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.fXOTwM > svg {
+    margin: 0px 4px;
+    fill: rgb(41, 133, 219);
+}
+
+path[속성 스타일] {
+    d: path("m 13.909 8.389 l -5.291 5.352 a 0.87 0.87 0 0 1 -1.238 0 L 2.088 8.389 a 3.792 3.792 0 0 1 0.271 -5.569 a 3.8 3.8 0 0 1 5.1 0.364 L 8 3.728 l 0.538 -0.544 a 3.74 3.74 0 1 1 5.371 5.2");
+}
+.fXOTwM > span {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+/* 하트부분 끝 */
+.pbYzq .goodjob-text {
+    visibility: hidden;
+}
+.gVIMLu {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 20px;
+    color: rgb(51, 51, 51);
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+<style>
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+.gOqbSW {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(144, 144, 144);
+}
+
+.gOqbSW > span {
+    text-align: center;
+}
+.gcGBiW {
+    background-color: rgb(214, 214, 214);
+    height: 14px;
+    width: 1px;
+    border: 0px;
+    margin: 0px 16px;
+}
+
+.gOqbSW > span.board-name {
+    cursor: pointer;
+}
+<style>
+.gOqbSW > span {
+    text-align: center;
+}
+
+gOqbSW > button.read-user {
+    color: rgb(144, 144, 144);
+}
+
+.frqaPP {
+    margin-left: 6px;
+    color: rgb(41, 133, 219);
+}
+.gOqbSW > button.read-user {
+    color: rgb(144, 144, 144);
+}
+
+.gOqbSW {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(144, 144, 144);
+}
+.dpaTqP > span {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    text-align: end;
+    color: rgb(144, 144, 144);
+    flex-shrink: 0;
+}
+
+.jERLLz {
+    padding: 30px 0px 70px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    word-break: break-word;
+    border-top: 1px solid rgb(234, 234, 234);
+}
+
+.bjcWTx .new-board-contents.contents-light, .bjcWTx .new-board-contents.print {
+    color: initial;
+}
+<style>
+.jERLLz > div.new-board-contents {
+    display: inline-block;
+    min-width: 100%;
+    font-size: 16px;
+    line-height: 1.8em;
+}
+
+.bjcWTx .new-board-contents.contents-light, .bjcWTx .new-board-contents.print {
+    color: initial;
+}
+<style>
+.jERLLz > div.new-board-contents {
+    display: inline-block;
+    min-width: 100%;
+    font-size: 16px;
+    line-height: 1.8em;
+}
+
+.jERLLz {
+    padding: 30px 0px 70px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    word-break: break-word;
+    border-top: 1px solid rgb(234, 234, 234);
+}
+
+.jcEqTX {
+    display: flex;
+    flex-direction: column;
+    color: rgb(51, 51, 51);
+}
+
+.drNJhy {
+    margin-bottom: 16px;
+}
+
+.drNJhy .comment-count {
+    font-weight: bold;
+    color: rgb(41, 133, 219);
+}
+
+.drNJhy {
+    margin-bottom: 16px;
+}
+
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+
+.edWlXA > li {
+    display: flex;
+    border-top: 1px solid rgb(234, 234, 234);
+    padding: 0px 8px 20px 20px;
+}
+
+.edWlXA > li > img {
+    margin-top: 20px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+<style>
+fieldset, img {
+    border: 0 none;
+}
+<style>
+fieldset, img {
+    border: 0px none;
+}
+<style>
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+img[속성 스타일] {
+    width: 34px;
+    aspect-ratio: auto 34 / 34;
+    height: 34px;
+}
+
+.bPUFbe > div {
+    display: flex;
+    margin-bottom: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 16px;
+}
+
+.bPUFbe > div > svg {
+    margin-right: 8px;
+}
+
+path[속성 스타일] {
+    d: path("m 14472 19695.8 l 3.184 -3.18 l 1.414 1.414 l -3.184 3.18 H 14472 Z m 3.891 -3.885 l 0.534 -0.535 a 0.022 0.022 0 0 1 0 -0.01 l 0.346 -0.346 a 0.251 0.251 0 0 1 0.352 0 l 1.058 1.059 a 0.246 0.246 0 0 1 0 0.352 l -0.347 0.346 l -0.538 0.543 Z");
+    transform: translate(-14462.3, -19681.3);
+}
+
+path[속성 스타일] {
+    d: path("M 2.313 15 a 1.315 1.315 0 0 1 -1.315 -1.314 v -1.133 a 3.677 3.677 0 0 1 3.675 -3.68 c 0.791 0 1.167 0.441 2.452 0.441 s 1.662 -0.441 2.448 -0.441 a 3.673 3.673 0 0 1 2.962 1.5 l -0.321 0.32 l -3.185 3.182 l -0.292 0.291 v 0.83 Z M 3.624 4.5 a 3.5 3.5 0 1 1 3.5 3.5 a 3.5 3.5 0 0 1 -3.5 -3.5 Z");
+}
+.bPUFbe > div > svg {
+    margin-right: 8px;
+}
+
+.bPUFbe > div .created-time {
+    margin: 0px 20px;
+    color: rgb(144, 144, 144);
+}
+
+.lkCXzB {
+    padding: 0px;
+    height: 100%;
+    line-height: 1.71;
+    letter-spacing: -0.21px;
+}
+<style>
+.iqqprB {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border: 1px solid transparent;
+    background: none;
+    color: rgb(41, 133, 219);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+.lkCXzB .goodjob-text {
+    visibility: hidden;
+}
+
+
+.lkCXzB {
+    padding: 0px;
+    height: 100%;
+    line-height: 1.71;
+    letter-spacing: -0.21px;
+}
+<style>
+.iqqprB {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border: 1px solid transparent;
+    background: none;
+    color: rgb(41, 133, 219);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+
+.bPUFbe > div {
+    display: flex;
+    margin-bottom: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 16px;
+}
+
+.bPUFbe {
+    margin-top: 20px;
+
+}
+.cqJGoh {
+    visibility: hidden;
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    margin-top: 8px;
+}
+<style>
+.dLRgeA {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border: 1px solid transparent;
+    background: none;
+    color: rgb(103, 103, 103);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+
+path[속성 스타일] {
+    d: path("m 12 4.7 l -0.7 -0.7 L 8 7.3 L 4.7 4 l -0.7 0.7 L 7.3 8 L 4 11.3 l 0.7 0.7 L 8 8.7 l 3.3 3.3 l 0.7 -0.7 L 8.7 8 Z");
+}
+
+.cqJGoh {
+    visibility: hidden;
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    margin-top: 8px;
+}
+<style>
+.dLRgeA {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border: 1px solid transparent;
+    background: none;
+    color: rgb(103, 103, 103);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+
+.edWlXA > li {
+    display: flex;
+    border-top: 1px solid rgb(234, 234, 234);
+    padding: 0px 8px 20px 20px;
+}
+<style>
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+
+.hgQMqR {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(249, 250, 251);
+    border-top: 1px solid rgb(234, 234, 234);
+}
+
+.hgQMqR > img {
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.hgQMqR > textarea {
+    margin-right: 20px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    height: 34px;
+    padding: 4px 16px 4px 10px;
+    resize: vertical;
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 2px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(51, 51, 51);
+    min-height: 34px;
+}
+
+.erJFJu:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+<style>
+.erJFJu {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border: 1px solid rgb(41, 133, 219);
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    background: rgb(41, 133, 219);
+    color: rgb(255, 255, 255);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}
+
+.hgQMqR {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(249, 250, 251);
+    border-top: 1px solid rgb(234, 234, 234);
+}
+
+.jcEqTX {
+    display: flex;
+    flex-direction: column;
+    color: rgb(51, 51, 51);
+}
+
+.lmwuze::after {
+    display: block;
+    clear: both;
+    content: "";
+}
+
+.kORXNE .notice {
+    margin-right: 10px;
+}
+.jRFgSG {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    height: 24px;
+    width: max-content;
+    font-size: 13px;
+    padding: 0px 8px;
+    border: 1px solid rgb(168, 205, 240);
+    border-radius: 2px;
+    line-height: 1.31;
+    letter-spacing: -0.2px;
+    user-select: none;
+    color: rgb(5, 106, 201);
+    background-color: rgb(239, 244, 252);
+}
+
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+
+.erJFJu:disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+.erJFJu {
+    display: inline-flex;
+    box-sizing: border-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    user-select: none;
+    white-space: nowrap;
+    border: 1px solid rgb(41, 133, 219);
+    border-radius: 4px;
+    line-height: 1;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    background: rgb(41, 133, 219);
+    color: rgb(255, 255, 255);
+    height: 34px;
+    padding: 0px 20px;
+    font-size: 14px;
+}

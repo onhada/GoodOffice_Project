@@ -1,0 +1,8 @@
+.tree_frame {width:100%; height:150px; overflow:auto; position:relative; float:left; border:none; display:inline-block; background-color:#ffffff; z-index:100;}
+.tree_frame p {float: none; color:#000000; font-size:12px; display:inline-block; margin:0px; padding:0px; white-space:nowrap;}
+.tree_frame img {float: left; margin:0;}
+.tree_frame .expands {cursor:pointer;}
+.tree_frame div {float:left; position:relative; width:95%; height:18px; display:inline-block; white-space:nowrap; overflow:visible;}
+.tree_frame .rootDiv {font-weight:bold; cursor:pointer;}
+.tree_frame .constName {color:#375986; font-weight:bold; cursor:pointer;}
+.tree_frame .userName {color:#000000; font-weight:normal; cursor:pointer;}

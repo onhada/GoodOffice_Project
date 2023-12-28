@@ -1,0 +1,2196 @@
+@charset "UTF-8";
+
+#leftmenu {
+    width: 276px;
+}
+#leftmenu {
+    position: absolute;
+    width: 276px;
+    height: 100%;
+    border: 0;
+    background: #e8ecee repeat;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item.left {
+    overflow: hidden;
+    width: inherit;
+}
+.new-split-item {
+    position: relative;
+    background: #eff4fc;
+    box-sizing: border-box;
+    float: left;
+    height: 100%;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar {
+    height: 100%;
+    background: #eff4fc;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .main-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 24px;
+    padding: 10px 0 10px 0;
+    width: calc(100% - 48px);
+    background: #2985db;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    font-weight: 500;
+    color: #fff;
+    border-radius: 4px;
+    outline: none;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .main-btn .gi {
+    width: 12px;
+    height: 12px;
+    padding-top: 2px;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.new-sidebar .gi, .new-sidebar .gis, .new-sidebar .gid {
+    width: 15.5px;
+    display: inline-flex;
+    justify-content: center;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.gi.gi-plus:before {
+    content: "";
+}
+.gi.gi-plus:before {
+    content: "";
+}
+.gi.gi-plus:before {
+    content: "";
+}
+.gi.gi-plus:before {
+    content: "";
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+
+.new-sidebar .menu-wrap {
+    padding: 0 24px 30px;
+    height: 100%;
+    max-height: calc(100% - 105px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.month_left {
+    position: relative;
+    height: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 15px 25px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.month_left {
+    padding: 10px;
+    margin-bottom: 26px;
+    background: #fff;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+#calendar_mini {
+    width: 180px;
+    margin: 0 auto;
+    font-size: 10px;
+}
+body .fc {
+    font-size: 1em;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc {
+    direction: ltr;
+    text-align: left;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-toolbar {
+    text-align: center;
+    margin-bottom: 1em;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-toolbar .fc-left {
+    float: left;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-toolbar .fc-right {
+    float: right;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-toolbar .fc-center {
+    display: inline-block;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc .fc-toolbar > * > :first-child {
+    margin-left: 0;
+}
+.fc .fc-toolbar > * > * {
+    float: left;
+    margin-left: 0.75em;
+}
+.icon.monthTo1 {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    background-position: -297px -92px;
+}
+.fc-toolbar button {
+    position: relative;
+}
+.fc button {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    height: 2.1em;
+    padding: 0 0.6em;
+    font-size: 1em;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.icon {
+    background: url(../images/sp_icon.png) 0 0 no-repeat;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc .fc-toolbar > * > * {
+    float: left;
+    margin-left: 0.75em;
+}
+.icon.monthTo2 {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    background-position: -319px -92px;
+}
+.fc-toolbar button {
+    position: relative;
+}
+.fc button {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    height: 2.1em;
+    padding: 0 0.6em;
+    font-size: 1em;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.icon {
+    background: url(../images/sp_icon.png) 0 0 no-repeat;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+#calendar_mini h2 {
+    text-align: center;
+}
+.fc .fc-toolbar > * > * {
+    float: left;
+    margin-left: 0.75em;
+}
+.fc-toolbar h2 {
+    margin: 0;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc .fc-toolbar > * > * {
+    float: left;
+    margin-left: 0.75em;
+}
+.icon.monthTo3 {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    background-position: -341px -92px;
+}
+.fc-toolbar button {
+    position: relative;
+}
+.fc button {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    height: 2.1em;
+    padding: 0 0.6em;
+    font-size: 1em;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.icon {
+    background: url(../images/sp_icon.png) 0 0 no-repeat;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc .fc-toolbar > * > * {
+    float: left;
+    margin-left: 0.75em;
+}
+.icon.monthTo4 {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    background-position: -363px -92px;
+}
+.fc-toolbar button {
+    position: relative;
+}
+.fc button {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    height: 2.1em;
+    padding: 0 0.6em;
+    font-size: 1em;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.icon {
+    background: url(../images/sp_icon.png) 0 0 no-repeat;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-clear {
+    clear: both;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view, .fc-view > table {
+    position: relative;
+    z-index: 1;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-view, .fc-view > table {
+    position: relative;
+    z-index: 1;
+}
+.fc table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+table {
+    border-collapse: collapse;
+}
+table {
+    border-collapse: collapse;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-widget-header {
+    margin: 0px;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc .fc-row {
+    border-style: solid;
+    border-width: 0;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-widget-header {
+    margin: 0px;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.fc-row {
+    position: relative;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-row:first-child table {
+    border-top: 0 hidden transparent;
+}
+.fc-row table {
+    border-left: 0 hidden transparent;
+    border-right: 0 hidden transparent;
+    border-bottom: 0 hidden transparent;
+}
+.fc table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+table {
+    border-collapse: collapse;
+}
+table {
+    border-collapse: collapse;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc th {
+    text-align: center;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-widget-header {
+    margin: 0px;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.red_color {
+    color: #d91a1a!important;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc th {
+    text-align: center;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-widget-header {
+    margin: 0px;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc th {
+    text-align: center;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-widget-header {
+    margin: 0px;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc th {
+    text-align: center;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-widget-header {
+    margin: 0px;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+#calendar_mini .fc-basic-view .fc-body .fc-row {
+    min-height: 2em;
+}
+.fc-basic-view .fc-body .fc-row {
+    min-height: 4em;
+}
+.fc-day-grid .fc-row {
+    z-index: 1;
+}
+.fc .fc-row {
+    border-style: solid;
+    border-width: 0;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.fc-row {
+    position: relative;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-row .fc-bg {
+    z-index: 1;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.fc-bg {
+    bottom: 0;
+}
+.fc-bg, .fc-bgevent-skeleton, .fc-highlight-skeleton, .fc-helper-skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-row:first-child table {
+    border-top: 0 hidden transparent;
+}
+.fc-row table {
+    border-left: 0 hidden transparent;
+    border-right: 0 hidden transparent;
+    border-bottom: 0 hidden transparent;
+}
+.fc table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+}
+.fc-bg table {
+    height: 100%;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+table {
+    border-collapse: collapse;
+}
+table {
+    border-collapse: collapse;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-row .fc-content-skeleton {
+    position: relative;
+    z-index: 4;
+    padding-bottom: 2px;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-row:first-child table {
+    border-top: 0 hidden transparent;
+}
+.fc-row table {
+    border-left: 0 hidden transparent;
+    border-right: 0 hidden transparent;
+    border-bottom: 0 hidden transparent;
+}
+.fc table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+table {
+    border-collapse: collapse;
+}
+table {
+    border-collapse: collapse;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+#calendar_mini .fc-day-number {
+    text-align: center;
+}
+.fc-basic-view td.fc-week-number span, .fc-basic-view td.fc-day-number {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.fc-row .fc-content-skeleton td, .fc-row .fc-helper-skeleton td {
+    background: none;
+    border-color: transparent;
+    border-bottom: 0;
+}
+.fc-day-number.fc-other-month {
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+}
+.fc-basic-view .fc-week-number, .fc-basic-view .fc-day-number {
+    padding: 0 2px;
+}
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-day-number {
+    text-align: left;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.red_color {
+    color: #d91a1a!important;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.fc-row .fc-content-skeleton tbody td, .fc-row .fc-helper-skeleton tbody td {
+    border-top: 0;
+}
+.fc-row .fc-content-skeleton td, .fc-row .fc-helper-skeleton td {
+    background: none;
+    border-color: transparent;
+    border-bottom: 0;
+}
+.fc th, .fc td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+}
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-popover {
+    border-color: #ddd;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.fc-row .fc-bgevent-skeleton {
+    z-index: 2;
+}
+.fc-row .fc-bgevent-skeleton, .fc-row .fc-highlight-skeleton {
+    bottom: 0;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.fc-bg, .fc-bgevent-skeleton, .fc-highlight-skeleton, .fc-helper-skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .el-collapse {
+    border: 0;
+    background: none;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.gt-mt-8 {
+    margin-top: 8px !important;
+}
+<style>
+.gt-mt-8 {
+    margin-top: 8px!important;
+}
+.gt-mt-8 {
+    margin-top: 8px !important;
+}
+<style>
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .menu-item {
+    width: 100%;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.new-sidebar .el-collapse-item__header {
+    display: block;
+    height: 38px;
+    line-height: 36px;
+}
+.new-sidebar .el-collapse-item__header, .new-sidebar .el-collapse-item__wrap, .new-sidebar .el-collapse-item__content {
+    background: none;
+    border: 0;
+    font-size: inherit;
+    transition: none;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .menu-item .link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    outline: 0;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    height: 38px;
+    line-height: 36px;
+    padding-left: 34px;
+    padding-right: 4px;
+    color: #333;
+    text-decoration: none;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.gt-pl-10 {
+    padding-left: 10px !important;
+}
+.gt-pl-10 {
+    padding-left: 10px !important;
+}
+<style>
+.gt-pl-10 {
+    padding-left: 10px!important;
+}
+.gt-pl-10 {
+    padding-left: 10px !important;
+}
+.gt-pl-10 {
+    padding-left: 10px !important;
+}
+
+.new-sidebar .el-collapse-item.is-active .collapse-prefix-icon {
+    transform: rotate(180deg);
+}
+.new-sidebar .collapse-prefix-icon {
+    margin-right: 8px;
+    color: #909090;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+
+.fal {
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 300;
+}
+.fa, .fas, .far, .fal, .fab {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+.fal, .far {
+    font-family: Font Awesome\ 5 Pro;
+}
+<style>
+.fal {
+    font-weight: 300;
+}
+<style>
+.fa, .fab, .fal, .far, .fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+.fal {
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 300;
+}
+.fa, .fas, .far, .fal, .fab {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+.fa-chevron-down:before {
+    content: "";
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+.fa-chevron-down:before {
+    content: "";
+}
+.fa-chevron-down:before {
+    content: "";
+}
+
+.new-sidebar .menu-item .link .flex-truncate.collapse {
+    color: #6d88a4;
+    font-weight: 600;
+}
+.new-sidebar .menu-item .link .flex-truncate {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    flex: 1 1 auto;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+
+.new-sidebar .collapse-suffix-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    flex: 0 0 30px;
+    opacity: 1;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #909090;
+    font-size: 16px;
+    line-height: 1;
+    transition-duration: .2s;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .gi, .new-sidebar .gis, .new-sidebar .gid {
+    width: 15.5px;
+    display: inline-flex;
+    justify-content: center;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.new-sidebar .el-collapse-item__wrap {
+    display: none;
+    margin-top: 1px;
+}
+.new-sidebar .el-collapse-item__header, .new-sidebar .el-collapse-item__wrap, .new-sidebar .el-collapse-item__content {
+    background: none;
+    border: 0;
+    font-size: inherit;
+    transition: none;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .el-collapse-item__header, .new-sidebar .el-collapse-item__wrap, .new-sidebar .el-collapse-item__content {
+    background: none;
+    border: 0;
+    font-size: inherit;
+    transition: none;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .menu-item {
+    width: 100%;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+dl, li, menu, ol, ul {
+    list-style: none;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .menu-item .link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    outline: 0;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    height: 38px;
+    line-height: 36px;
+    padding-left: 34px;
+    padding-right: 4px;
+    color: #333;
+    text-decoration: none;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+a, a:active, a:hover {
+    text-decoration: none;
+}
+<style>
+a {
+    color: #676767;
+}
+a {
+    color: #676767;
+    text-decoration: none;
+}
+
+.new-sidebar .menu-item .link .color-mark {
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 2px;
+    border: solid 1px #909090;
+    flex: 0 0 12px;
+}
+.new-sidebar .menu-item .link .link-prefix-icon {
+    text-align: center;
+    color: #a0a0a0;
+    margin-right: 8px;
+}
+.new-sidebar .link-prefix-icon {
+    text-align: center;
+    color: #909090;
+    line-height: 1;
+    font-size: 16px;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.label {
+    float: left;
+    margin: 4px 6px 0 0;
+    padding: 1px;
+    border: 1px solid #cacaca;
+}
+
+.label .c1 {
+    background-position: -2px -2px;
+}
+.label span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: url(../images/label_color.png) 0 0 no-repeat;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.c1 {
+    background-color: #ee5074;
+    border-color: #ee5074;
+}
+
+.new-sidebar .menu-item .link .flex-truncate {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    flex: 1 1 auto;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+
+.new-sidebar .collapse-suffix-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    flex: 0 0 30px;
+    opacity: 1;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #909090;
+    font-size: 16px;
+    line-height: 1;
+    transition-duration: .2s;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+<style>
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+.new-sidebar .gi, .new-sidebar .gis, .new-sidebar .gid {
+    width: 15.5px;
+    display: inline-flex;
+    justify-content: center;
+}
+.new-split-item *, .new-split-item *:before, .new-split-item *:after {
+    box-sizing: inherit;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.gi, .gis, .gid {
+    display: inline-block;
+    font-family: "gi-icons" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: 맑은 고딕,Malgun Gothic,dotum,sans-serif;
+    color: #676767;
+}
+<style>
+button, input, select, textarea {
+    vertical-align: middle;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, td, textarea, th {
+    font-size: 14px;
+    font-family: '맑은 고딕','Malgun Gothic',dotum,sans-serif;
+    color: #676767;
+}
+button, input, select, textarea {
+    vertical-align: middle;
+}
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+
+
