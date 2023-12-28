@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- ==== #29. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="mail">
+	
+
+	<!-- === employee 중 해당 이메일이 존재하는지 확인 === -->
+	<select id="isExistMail" parameterType="HashMap" resultType="com.spring.app.common.domain.EmployeeVO">
+		select empId, email
+		from tbl_employee
+		where email = #{email}
+	</select>
+	
+	
+	<!-- === 하나의 메일을 tbl_mail 테이블에 insert === -->
+	<insert id="insertMail" parameterType="com.spring.app.mail.domain.MailVO">
+		<!-- 원메일쓰기인 경우 -->
+		<if test='orgMailId.equals("0")'> 
+			insert into tbl_mail(mailId, subject, mailContent, sendDay, orgMailId)
+			values(mailSeq.nextval, #{subject}, #{mailContent}, sysdate, default)		 
+		</if>
+		<!-- 답장메일쓰기인 경우 -->
+		<if test='!orgMailId.equals("0")'>
+			insert into tbl_mail(mailId, subject, mailContent, sendDay, orgMailId)
+			values(mailSeq.nextval, #{subject}, #{mailContent}, sysdate, #{orgMailId})
+		</if>
+	</insert>
+
+
+	<!-- === 메일의 첨부파일 : tbl_mailfile 테이블에 insert === -->
+	<insert id="insertFile" parameterType="com.spring.app.mail.domain.MailVO">
+		<selectKey resultType="String" keyProperty="mailId" order="BEFORE">
+	        SELECT mailSeq.currval FROM dual
+	    </selectKey> 
+		insert into tbl_mailfile(fileId, fk_mailId, fileName, fileSize, orgFileName)
+		values(mailfileSeq.nextval, #{mailId}, #{fileName}, #{fileSize}, #{orgFileName})
+    </insert>
+
+
+	<!-- === 수신메일을 tbl_incomemail 테이블에 insert === -->
+	<insert id="insertIncomeMail" parameterType="HashMap">
+		<selectKey resultType="String" keyProperty="mailId" order="BEFORE">
+	        SELECT mailSeq.currval FROM dual
+	    </selectKey> 
+		insert into tbl_incomemail(incomeMailId, fk_mailId, fk_empId, isRead, isImportant, isDelete)
+		values(incomemailSeq.nextval, #{mailId}, #{incomeEmpId}, default, default, default)
+    </insert>
+
+
+	<!-- === 참조메일을 tbl_referenceMail 테이블에 insert === -->
+	<insert id="insertReferenceMail" parameterType="HashMap">
+		<selectKey resultType="String" keyProperty="mailId" order="BEFORE">
+	        SELECT mailSeq.currval FROM dual
+	    </selectKey> 
+		insert into tbl_referencemail(referenceMailId, fk_mailId, fk_empId, isHiddenReference, isImportant, isDelete)
+		values(refmailSeq.nextval, #{mailId}, #{referenceEmpId}, default, default, default)
+    </insert>
+
+
+	<!-- === 숨은참조메일을 tbl_referenceMail 테이블에 insert === -->
+	<insert id="insertHiddenReferenceMail" parameterType="HashMap">
+		<selectKey resultType="String" keyProperty="mailId" order="BEFORE">
+	        SELECT mailSeq.currval FROM dual
+	    </selectKey> 
+		insert into tbl_referencemail(referenceMailId, fk_mailId, fk_empId, isHiddenReference, isImportant, isDelete)
+		values(refmailSeq.nextval, #{mailId}, #{hiddenReferenceEmpId}, 1, default, default)
+    </insert>
+
+
+	<!-- === 발신메일 테이블에 insert === -->
+	<insert id="insertSendMail" parameterType="HashMap">
+		<selectKey resultType="String" keyProperty="mailId" order="BEFORE">
+	        SELECT mailSeq.currval FROM dual
+	    </selectKey> 
+	    <if test='isTemporary.equals("0")'>	<!-- 발신메일은 tbl_sendMail 테이블에 insert -->
+			insert into tbl_sendMail(sendMailId, fk_mailId, fk_empId, isDelete, isImportant, isCancel)
+			values(sendmailSeq.nextval, #{mailId}, #{loginEmpId}, default, default, default)
+		</if>
+		<if test='isTemporary.equals("1")'> <!-- 임시저장메일은 tbl_tempMail 테이블에 insert -->
+			insert into tbl_tempMail(tempMailId, fk_mailId, fk_empId, isDelete, isImportant)
+			values(tempmailSeq.nextval, #{mailId}, #{loginEmpId}, default, default)
+		</if>
+	</insert>
+
+
+
+
+
+
+	<!-- === personalmailboxtype 테이블에서 개인편지함 가져오기 === --> 
+	<resultMap type="HashMap" id="getPersonalMailbox_Map">
+	    <result property="personalMailboxTypeId" 	column="personalMailboxTypeId" 	javaType="String" />
+	    <result property="personalMailboxTypeName" 	column="personalMailboxTypeName" 	javaType="String" />
+	    <result property="fk_empId" 				column="fk_empId" 				javaType="String" />
+	</resultMap>
+	<select id="getPersonalMailbox" parameterType="HashMap" resultMap="getPersonalMailbox_Map">
+		select personalMailboxTypeId, personalMailboxTypeName, fk_empId
+		from tbl_personalmailboxtype
+		where fk_empId = #{loginEmpId}
+		order by personalMailboxTypeId asc
+	</select>
+
+
+	<!-- === 총 게시물 건수(totalCount) 구하기 === --> 
+	<select id="getTotalCount" parameterType="HashMap" resultType="int">
+		<choose>
+		    <!-- 받은편지함인 경우 -->
+		    <when test='mailType == "1"'>
+		    select count(*)
+			from tbl_incomeMail I
+			join tbl_sendMail S
+			on I.fk_mailId = S.fk_mailId
+			where I.fk_empId = #{loginEmpId} and I.isDelete = 0      
+			      and ( I.isRead = 1
+			            or (I.isRead = 0 and S.isCancel = 0 ) )
+			</when>
+		    <!-- 보낸편지함인 경우 -->
+			<when test='mailType == "2"'>
+			select count(*)
+		    from tbl_sendMail
+			where fk_empId = #{loginEmpId} and isDelete = 0
+		    </when>
+		    <!-- 보낼편지함인 경우 -->
+			<when test='mailType == "3"'>
+			select count(*)
+			from tbl_reservationmail
+			where fk_empId = #{loginEmpId} and isDelete = 0
+		    </when>
+		    <!-- 임시보관함인 경우 -->
+			<when test='mailType == "4"'>
+			select count(*)
+			from tbl_tempMail
+			where fk_empId = #{loginEmpId} and isDelete = 0
+		    </when>
+		    <!-- 휴지통인 경우 -->
+			<when test='mailType == "5"'>
+			select
+			(   ( 
+			    select count(*)
+			    from tbl_incomeMail I
+			    join tbl_sendMail S
+			    on I.fk_mailId = S.fk_mailId
+			    where I.fk_empId = #{loginEmpId} and I.isDelete = 1      
+			          and ( I.isRead = 1
+			                or (I.isRead = 0 and S.isCancel = 0 ) ) 
+			    ) 
+			    +
+			    ( 
+			    select count(*)
+			    from tbl_sendMail
+			    where fk_empId = #{loginEmpId} and isDelete = 1 
+			    ) 
+			    +
+			    ( 
+			    select count(*)
+			    from tbl_reservationmail
+			    where fk_empId = #{loginEmpId} and isDelete = 1 
+			    )
+			    +
+			    ( 
+			    select count(*)
+			    from tbl_tempMail
+			    where fk_empId = #{loginEmpId} and isDelete = 1 
+			    )
+			    +
+			    ( 
+			    select count(*)
+			    from tbl_personalmailclass
+			    where fk_empId = #{loginEmpId} and isDelete = 1 
+			    )
+			)   as cnt
+			from dual
+		    </when>
+		    <!-- 개인매일함인 경우 -->
+		    <when test='mailType == "6"'>
+		    select count(*)
+			from tbl_personalMailClass 
+			where fk_empId = #{loginEmpId} and isDelete = 0 and fk_personalMailboxTypeId = #{personalMailboxTypeId} 		
+		    </when>
+		</choose>
+	</select>
+	
+	
+	<!-- === 페이징 처리한 메일목록 가져오기 === -->
+	<select id="mailList_withPaging" parameterType="HashMap" resultType="com.spring.app.mail.domain.MailVO"> 
+		<choose>
+			<!-- 받은메일함인 경우 -->
+			<when test='mailType == "1"'>
+			SELECT empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+			FROM
+			(
+				select rownum AS rno, empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+				from
+				(
+				    select O.empId as empId, empName, email, O.mailId as mailId, subject, sendDay, orgMailId, isImportant, nvl2(f.fk_mailId, 1, 0) as hasFile
+				    from
+				    (
+				        select I.fk_empId as empId, I.fk_mailId as mailId, I.isImportant
+				        from tbl_incomeMail I
+				        join tbl_sendMail S
+				        on I.fk_mailId = S.fk_mailId
+				        where I.fk_empId = #{loginEmpId} and I.isDelete = 0     
+				              and ( I.isRead = 1
+				                    or (I.isRead = 0 and S.isCancel = 0 ) )
+				    ) O
+				    join tbl_employee E
+				    on O.empId = E.empId
+				    join tbl_mail M
+				    on O.mailId = M.mailId
+				    left join (select fk_mailId from tbl_mailFile group by fk_mailId) F 
+				    on O.mailId = F.fk_mailId
+				    order by sendDay desc
+				)
+			)	
+			WHERE RNO between #{startRno} and #{endRno}
+			</when>
+			
+			<!-- 보낸메일함인 경우 -->
+			<when test='mailType == "2"'>
+			SELECT empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+			FROM(
+				select rownum AS rno, empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+				from(
+				    select O.empId as empId, empName, email, O.mailId as mailId, subject, sendDay, orgMailId, isImportant, nvl2(f.fk_mailId, 1, 0) as hasFile
+				    from    
+				    (
+				        select fk_empId as empId, fk_mailId as mailId, isImportant
+				        from tbl_sendMail S
+				        where fk_empId = #{loginEmpId} and isDelete = 0 
+				    ) O
+				    join tbl_employee E
+				    on O.empId = E.empId
+				    join tbl_mail M
+				    on O.mailId = M.mailId
+				    left join (select fk_mailId from tbl_mailFile group by fk_mailId) F 
+				    on O.mailId = F.fk_mailId
+				    order by sendDay desc
+				)
+			)	
+			WHERE RNO between #{startRno} and #{endRno}
+			</when>
+			
+			<!-- 보낼메일함인 경우 -->
+			<when test='mailType == "3"'>
+			SELECT empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+			FROM
+			(
+				select rownum as rno, empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+				from
+				(
+				    select O.empId as empId, empName, email, O.mailId as mailId, subject, sendDay, orgMailId, isImportant, nvl2(f.fk_mailId, 1, 0) as hasFile
+				    from
+				    (
+				        select fk_empId as empId, fk_mailId as mailId, isImportant
+				        from tbl_reservationmail
+				        where fk_empId = #{loginEmpId} and isDelete = 0
+				    ) O
+				    join tbl_employee E
+				    on O.empId = E.empId
+				    join tbl_mail M
+				    on O.mailId = M.mailId
+				    left join (select fk_mailId from tbl_mailFile group by fk_mailId) F 
+				    on O.mailId = F.fk_mailId
+				    order by sendDay desc
+				)
+			)	
+			WHERE RNO between #{startRno} and #{endRno}
+			</when>
+			
+			<!-- 임시보관함인 경우 -->
+			<when test='mailType == "4"'>
+			SELECT empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+			FROM
+			(
+				select rownum as rno, empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+				from
+				(
+					select empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile
+					from
+					(
+					    select O.empId as empId, empName, email, O.mailId as mailId, subject, sendDay, orgMailId, isImportant, nvl2(f.fk_mailId, 1, 0) as hasFile
+					    from
+					    (
+					        select fk_empId as empId, fk_mailId as mailId, isImportant
+					        from tbl_tempMail
+					        where fk_empId = #{loginEmpId} and isDelete = 0 
+					    ) O
+					    join tbl_employee E
+					    on O.empId = E.empId
+					    join tbl_mail M
+					    on O.mailId = M.mailId
+					    left join (select fk_mailId from tbl_mailFile group by fk_mailId) F 
+					    on O.mailId = F.fk_mailId
+					    order by sendDay desc
+					)
+				)
+			)
+			WHERE RNO between #{startRno} and #{endRno}
+			</when>
+			
+			<!-- 휴지통인 경우 -->
+			<when test='mailType == "5"'>
+			SELECT empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile, fromMailbox
+			FROM
+			(
+				SELECT rownum as rno, empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, hasFile, fromMailbox
+				FROM
+				(
+				    select O.empId as empId, empName, email, O.mailId as mailId, subject, sendDay, orgMailId, O.isImportant as isImportant, nvl2(f.fk_mailId, 1, 0) as hasFile, fromMailbox
+				    from
+				    (
+				        (-- 받은편지함에서 휴지통으로
+				            select I.fk_empId as empId, I.fk_mailId as mailId, I.isImportant as isImportant, 'income' as fromMailbox
+				            from tbl_incomeMail I
+				            join tbl_sendMail S
+				            on I.fk_mailId = S.fk_mailId
+				            where I.fk_empId = #{loginEmpId} and I.isDelete = 1
+				                  and ( I.isRead = 1
+				                        or (I.isRead = 0 and S.isCancel = 0 ) )
+				        )
+				        union
+				        (-- 보낸편지함에서 휴지통으로 
+				            select fk_empId as empId, fk_mailId as mailId, isImportant, 'send' as fromMailbox
+				            from tbl_sendMail S
+				            where fk_empId = #{loginEmpId} and isDelete = 1  
+				        )
+				        union
+				        (-- 보낼편지함에서 휴지통으로 
+				            select fk_empId as empId, fk_mailId as mailId, isImportant, 'reservation' as fromMailbox
+				            from tbl_reservationmail
+				            where fk_empId = #{loginEmpId} and isDelete = 1  
+				        )
+				        union
+				        (-- 임시보관함에서 휴지통으로
+				            select fk_empId as empId, fk_mailId as mailId, isImportant, 'temp' as fromMailbox
+				            from tbl_tempMail
+				            where fk_empId = #{loginEmpId} and isDelete = 1  
+				        )
+				        union
+				        (-- 개인편지함에서 휴지통으로 
+				            select fk_empId as empId, fk_mailId as mailId, isImportant, 'personal' as fromMailbox
+				            from tbl_personalMailClass 
+				            where fk_empId = #{loginEmpId} and isDelete = 1  
+				        )
+				    ) O
+				    join tbl_employee E
+				    on O.empId = E.empId
+				    join tbl_mail M
+				    on O.mailId = M.mailId
+				    left join (select fk_mailId from tbl_mailFile group by fk_mailId) F 
+				    on O.mailId = F.fk_mailId
+				    order by sendDay desc
+				)
+			)	
+			WHERE RNO between #{startRno} and #{endRno}
+			</when>
+			
+			<!-- 개인편지함 경우 -->
+			<when test='mailType == "6"'>
+			SELECT empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, fromMailbox, hasFile
+			FROM
+			(
+				SELECT rownum as rno, empId, empName, email, mailId, subject, sendDay, orgMailId, isImportant, fromMailbox, hasFile
+				FROM
+				(
+				    select O.empId as empId, empName, email, O.mailId as mailId, subject, sendDay, orgMailId, O.isImportant as isImportant, O.fromMailbox as fromMailbox, nvl2(f.fk_mailId, 1, 0) as hasFile
+				    from
+				    (
+				        select fk_empId as empId, fk_mailId as mailId, isImportant, fromMailbox
+				        from tbl_personalMailClass 
+				        where fk_empId = #{loginEmpId} and isDelete = 0 and fk_personalMailboxTypeId = #{personalMailboxTypeId} 
+				    ) O
+				    join tbl_employee E
+				    on O.empId = E.empId
+				    join tbl_mail M
+				    on O.mailId = M.mailId
+				    left join (select fk_mailId from tbl_mailFile group by fk_mailId) F 
+				    on O.mailId = F.fk_mailId
+				    order by sendDay desc
+				)
+			)	
+			WHERE RNO between #{startRno} and #{endRno}
+			</when>	
+		</choose>
+	</select>
+	
+	
+	<!-- === 중요메일 여부 업데이트 === -->
+	<update id="updateImportant" parameterType="HashMap">
+		<choose>
+		
+			<when test='isImportant.equals("0")'>
+				<choose>
+					<when test='mailType == "1"'>
+						update tbl_incomeMail set isImportant = 1
+						where fk_mailId = #{mailId}
+					</when>	
+					<when test='mailType == "2"'>
+						update tbl_sendMail set isImportant = 1
+						where fk_mailId = #{mailId}
+					</when>
+					<when test='mailType == "3"'>
+						update tbl_reservationmail set isImportant = 1
+						where fk_mailId = #{mailId}
+					</when>
+					<when test='mailType == "4"'>
+						update tbl_tempMail set isImportant = 1
+						where fk_mailId = #{mailId}
+					</when>
+					<!-- <when test='mailType == "5"'>
+						update tbl_incomeMail set isImportant = 1
+						where fk_mailId = #{mailId}
+					</when> -->
+					<when test='mailType == "6"'>
+						update tbl_personalMailClass set isImportant = 1
+						where fk_mailId = #{mailId}
+					</when>
+				</choose>
+			</when>
+			
+			<when test='isImportant.equals("1")'>	
+				<choose>
+					<when test='mailType == "1"'>
+						update tbl_incomeMail set isImportant = 0
+						where fk_mailId = #{mailId}
+					</when>	
+					<when test='mailType == "2"'>
+						update tbl_sendMail set isImportant = 0
+						where fk_mailId = #{mailId}
+					</when>
+					<when test='mailType == "3"'>
+						update tbl_reservationmail set isImportant = 0
+						where fk_mailId = #{mailId}
+					</when>
+					<when test='mailType == "4"'>
+						update tbl_tempMail set isImportant = 0
+						where fk_mailId = #{mailId}
+					</when>
+					<!-- <when test='mailType == "5"'>
+						update tbl_incomeMail set isImportant = 0
+						where fk_mailId = #{mailId}
+					</when> -->
+					<when test='mailType == "6"'>
+						update tbl_personalMailClass set isImportant = 0
+						where fk_mailId = #{mailId}
+					</when>
+				</choose>
+			</when>
+			
+		</choose>
+	</update>
+	
+
+	<!-- === 메일을 휴지통으로 이동하기 === -->
+	<update id="moveToTrashbox" parameterType="HashMap">
+		<choose>
+			<when test='mailType == "1"'>
+				update tbl_incomeMail set isDelete = 1
+				where fk_mailId = #{mailId}
+			</when>	
+			<when test='mailType == "2"'>
+				update tbl_sendMail set isDelete = 1
+				where fk_mailId = #{mailId}
+			</when>
+			<when test='mailType == "3"'>
+				update tbl_reservationmail set isDelete = 1
+				where fk_mailId = #{mailId}
+			</when>
+			<when test='mailType == "4"'>
+				update tbl_tempMail set isDelete = 1
+				where fk_mailId = #{mailId}
+			</when>
+			<when test='mailType == "6"'>
+				update tbl_personalMailClass set isDelete = 1
+				where fk_mailId = #{mailId}
+			</when>
+		</choose>
+	</update>
+	
+	
+	<!-- === 메일 영구삭제하기 === -->
+	<delete id="delPermanently" parameterType="HashMap">
+		<choose>
+			<when test='mailType == "1"'>
+				delete from tbl_incomeMail
+			</when>	
+			<when test='mailType == "2"'>
+				delete from tbl_sendMail 
+			</when>
+			<when test='mailType == "3"'>
+				delete tbl_reservationmail
+			</when>
+			<when test='mailType == "4"'>
+				delete tbl_tempMail set
+			</when>
+			<when test='mailType == "5"'>
+				<choose>
+					<when test='fromOrgMailbox == "income"'>
+						delete from tbl_incomeMail
+					</when>
+					<when test='fromOrgMailbox == "send"'>
+						delete from tbl_sendMail
+					</when>
+					<when test='fromOrgMailbox == "reservation"'>
+						delete from tbl_reservationMail
+					</when>
+					<when test='fromOrgMailbox == "temp"'>
+						delete from tbl_tempMail
+					</when>
+					<when test='fromOrgMailbox == "personal"'>
+						delete from tbl_personalMailClass
+					</when>
+				</choose>
+			</when>
+			<when test='mailType == "6"'>
+				delete from tbl_personalMailClass 
+			</when>
+		</choose>
+		where fk_mailId = #{mailId}
+	</delete>
+	
+	
+	<!-- === 기존편지함에서 삭제(delete) === -->
+	<delete id="deleteOrgMailbox" parameterType="HashMap">	<!-- 기존편지함이 개인편지함이 아닐 경우  -->
+		<choose>
+			<when test='mailType == "1"'>
+				delete tbl_incomeMail
+				where fk_mailId = #{mailId}
+			</when>	
+			<when test='mailType == "2"'>
+				delete from tbl_sendMail
+				where fk_mailId = #{mailId} 
+			</when>
+		</choose>
+	</delete>
+	
+	<!-- === 개인편지함에 추가(insert 또는 update) === -->
+	<insert id="insertPersonalMailbox" parameterType="HashMap">	<!-- 기존편지함이 개인편지함이 아닐 경우  -->
+		insert into tbl_personalmailclass(personalMailClassId, fk_mailId, fk_empId, fk_personalMailboxTypeId, isImportant, isDelete, fromMailbox)
+		values(pmailclassSeq.nextval, #{mailId}, #{loginEmpId}, #{toPersonalMailboxTypeId}, #{isImportant}, default, #{mailType})	
+	</insert>
+	<update id="updatePersonalMailbox" parameterType="HashMap">	<!-- 기존편지함이 개인편지함일 경우  -->
+	
+		update tbl_personalMailClass set fk_personalMailboxTypeId = #{toPersonalMailboxTypeId}
+		where fk_mailId = #{mailId} and fk_personalMailboxTypeId = #{fromPersonalMailboxTypeId}
+	
+	</update>
+	
+	
+	<!-- === 메일메모의 mailType 변경(update) === -->
+	<update id="updateMailMemoMailType" parameterType="HashMap">
+		update tbl_mailmemo set mailType = 6
+		where fk_mailId = #{mailId} and fk_empId = #{loginEmpId} and mailType = #{mailType}
+	</update>
+	
+	
+	<!-- === 하나의 메일 정보 가져오기 === -->
+	<select id="getOneMail" parameterType="HashMap" resultType="com.spring.app.mail.domain.MailVO">
+		select subject, mailContent, sendDay, orgmailId, nvl(M.memoContent, ' ') as memoContent
+		from
+		(
+			select mailId, subject, to_char(sendDay, 'yyyy-mm-dd hh24:mi:ss') as sendDay, mailContent, orgmailId
+			from tbl_mail 
+			where mailId = #{mailId}
+		) O
+		left join tbl_mailMemo M
+		on O.mailId = M.fk_mailId and M.fk_empId = #{loginEmpId} and mailType = #{mailType}
+	</select>
+	
+	
+	<!-- === 중요메일 여부 가져오기 === -->
+	<select id="getIsImportant" parameterType="HashMap" resultType="String">
+		<choose>
+			<when test='mailType == "1"'>
+				select isImportant
+				from tbl_incomeMail
+				where fk_mailId = #{mailId} and fk_empId = #{loginEmpId}
+			</when>	
+			<when test='mailType == "2"'>
+				select isImportant
+				from tbl_sendMail
+				where fk_mailId = #{mailId} and fk_empId = #{loginEmpId}
+			</when>
+			<when test='mailType == "3"'>
+				select isImportant
+				from tbl_reservationmail
+				where fk_mailId = #{mailId} and fk_empId = #{loginEmpId}
+			</when>
+			<when test='mailType == "4"'>
+				select isImportant
+				from tbl_tempMail
+				where fk_mailId = #{mailId} and fk_empId = #{loginEmpId}
+			</when>
+			<!-- <when test='mailType == "5"'>
+				
+			</when> -->
+			<when test='mailType == "6"'>
+				select isImportant
+				from tbl_personalMailClass
+				where fk_mailId = #{mailId} and fk_empId = #{loginEmpId} and fromMailbox = #{fromMailbox}
+			</when>
+		</choose>
+	</select>
+	
+	
+	<!-- === 첨부파일 관련 정보(첨부파일제목, 첨부파일크기) 가져오기 === -->
+	<resultMap type="HashMap" id="getMailFileList_map">
+	    <result property="fileName" 		column="fileName" 		javaType="String" />
+	    <result property="fileSize" 		column="fileSize" 		javaType="String" />
+	    <result property="orgFileName" 		column="orgFileName" 	javaType="String" />
+	</resultMap>
+	<select id="getMailFileList" parameterType="HashMap" resultMap="getMailFileList_map">
+		select fileName, fileSize, orgFileName
+		from tbl_mailFile
+		where fk_mailId = #{mailId}
+		order by fileId asc
+	</select>
+	
+	
+	<!-- 보낸사원_str(이름, 이메일) 가져오기 -->
+	<select id="getSendEmp" parameterType="HashMap" resultType="String">
+		select listagg( CAST(sendEmp AS VARCHAR(100)) , '; ') WITHIN GROUP (ORDER BY sendEmp) AS sendEmp_str
+		from
+		(
+		    select ( E.empName || ' ' || E.email ) as sendEmp
+		    from
+		    (
+		        select fk_empId as empId from tbl_sendMail where fk_mailId = #{mailId}
+		    ) O
+		    join tbl_employee E
+		    on O.empId = E.empId
+		)
+	</select>
+	
+	
+	<!-- 받은사원_str(이름, 이메일) 가져오기 -->
+	<select id="getIncomeEmp" parameterType="HashMap" resultType="String">
+		select listagg( CAST(incomeEmp AS VARCHAR(100)) , '; ') WITHIN GROUP (ORDER BY incomeEmp) AS incomeEmp_str
+		from
+		(
+		    select ( E.empName || ' ' || E.email ) as incomeEmp
+		    from
+		    (
+		        select fk_empId as empId from tbl_incomeMail where fk_mailId = #{mailId}
+		    ) O
+		    join tbl_employee E
+		    on O.empId = E.empId
+		)
+	</select>
+	
+	
+	<!-- 참조사원_str(이름, 이메일) 가져오기 -->
+	<select id="getReferenceEmp" parameterType="HashMap" resultType="String">
+		select listagg( CAST(referenceEmp AS VARCHAR(100)) , '; ') WITHIN GROUP (ORDER BY referenceEmp) AS referenceEmp_str
+		from
+		(
+		    select ( E.empName || ' ' || E.email ) as referenceEmp
+		    from
+		    (
+		        select fk_empId as empId from tbl_referenceMail where isHiddenReference = 0 and fk_mailId = #{mailId}
+		    ) O
+		    join tbl_employee E
+		    on O.empId = E.empId
+		)	
+	</select>
+
+
+	<!-- 숨은참조사원_str(이름, 이메일) 가져오기 -->
+	<select id="getHiddenReferenceEmp" parameterType="HashMap" resultType="String">
+		select listagg( CAST(referenceEmp AS VARCHAR(100)) , '; ') WITHIN GROUP (ORDER BY referenceEmp) AS hiddenReferenceEmp_str
+		from
+		(
+		    select ( E.empName || ' ' || E.email ) as referenceEmp
+		    from
+		    (
+		        select fk_empId as empId from tbl_referenceMail where isHiddenReference = 1 and fk_mailId = #{mailId}
+		    ) O
+		    join tbl_employee E
+		    on O.empId = E.empId
+		)	
+	</select>
+		
+			    
+	<!-- 메일메모 조회하기 -->
+	<select id="selectMemo" parameterType="HashMap" resultType="String">
+		select memoContent
+		from tbl_mailmemo
+		where fk_mailId = #{mailId} and fk_empId = #{loginEmpId} and mailType = #{mailType} 
+	</select>
+	
+	
+	<!-- 메일메모 추가하기 -->
+	<insert id="insertMemo" parameterType="HashMap">
+		insert into tbl_mailMemo(memoId, fk_mailId, fk_empId, memoContent, mailType)
+		values(mailmemoSeq.nextval, #{mailId}, #{loginEmpId}, #{memoContent}, #{mailType})
+	</insert>
+	
+	
+	<!-- 메일메모 수정하기 -->
+	<update id="updateMemo" parameterType="HashMap">
+		update tbl_mailmemo set memoContent = #{memoContent}
+		where fk_mailId = #{mailId} and fk_empId = #{loginEmpId} and mailType = #{mailType}
+	</update>
+
+
+	<!-- === 답장메일을 쓰기 위해 필요한 원메일 정보 가져오기 === -->
+	<resultMap type="HashMap" id="getOrgMailInfo_map">
+	    <result property="mailId" 			column="mailId" 		javaType="String" />
+	    <result property="subject" 			column="subject" 		javaType="String" />
+	    <result property="mailContent" 		column="mailContent" 	javaType="String" />
+	    <result property="sendEmpName" 		column="sendEmpName" 	javaType="String" />
+	    <result property="sendEmpEmail" 	column="sendEmpEmail" 		javaType="String" />
+	</resultMap>
+	<select id="getOrgMailInfo" parameterType="HashMap" resultMap="getOrgMailInfo_map">
+		select mailId, subject, mailContent, empName as sendEmpName, email as sendEmpEmail
+		from tbl_mail M
+		join tbl_sendMail S
+		on M.mailId = S.fk_mailId
+		join tbl_employee E
+		on S.fk_empId = E.empId
+		where mailId = #{mailId}
+	</select>
+
+
+	<!-- === 개인메일함에 있는 메일의 기존메일함 타입 가져오기 === -->
+	<select id="getOrgMailTypeOfPersonalMailbox" parameterType="HashMap" resultType="String">
+		select fromMailbox
+		from tbl_personalMailClass
+		where fk_mailId = #{mailId} and fk_empId = #{loginEmpId} and fromMailbox = #{fromMailbox}
+	</select>
+
+
+	<!-- === 임시저장 메일 가져오기 === -->
+	<resultMap type="HashMap" id="getTempMailInfo_map">
+	    <result property="mailId" 			column="mailId" 		javaType="String" />
+	    <result property="subject" 			column="subject" 		javaType="String" />
+	    <result property="mailContent" 		column="mailContent" 	javaType="String" />
+	</resultMap>
+	<select id="getTempMailInfo" parameterType="HashMap" resultMap="getTempMailInfo_map">
+		select mailId, subject, mailContent
+		from tbl_tempMail T
+		join tbl_mail M
+		on T.fk_mailId = M.mailId
+		where M.mailId = #{mailId}
+	</select>
+
+
+	<!-- 받은사원_str(이메일) 가져오기 -->
+	<select id="getIncomeEmpMail" parameterType="HashMap" resultType="String">
+		select listagg( CAST(incomeEmp AS VARCHAR(100)) , '; ') WITHIN GROUP (ORDER BY incomeEmp) AS incomeEmp_str
+		from
+		(
+		    select ( E.email ) as incomeEmp
+		    from
+		    (
+		        select fk_empId as empId from tbl_incomeMail where fk_mailId = #{mailId}
+		    ) O
+		    join tbl_employee E
+		    on O.empId = E.empId
+		)
+	</select>
+	
+	
+	<!-- 참조사원_str(이메일) 가져오기 -->
+	<select id="getReferenceEmpMail" parameterType="HashMap" resultType="String">
+		select listagg( CAST(referenceEmp AS VARCHAR(100)) , '; ') WITHIN GROUP (ORDER BY referenceEmp) AS referenceEmp_str
+		from
+		(
+		    select ( E.email ) as referenceEmp
+		    from
+		    (
+		        select fk_empId as empId from tbl_referenceMail where isHiddenReference = 0 and fk_mailId = #{mailId}
+		    ) O
+		    join tbl_employee E
+		    on O.empId = E.empId
+		)	
+	</select>
+
+
+	<!-- 숨은참조사원_str(이메일) 가져오기 -->
+	<select id="getHiddenReferenceEmpMail" parameterType="HashMap" resultType="String">
+		select listagg( CAST(referenceEmp AS VARCHAR(100)) , '; ') WITHIN GROUP (ORDER BY referenceEmp) AS hiddenReferenceEmp_str
+		from
+		(
+		    select ( E.email ) as referenceEmp
+		    from
+		    (
+		        select fk_empId as empId from tbl_referenceMail where isHiddenReference = 1 and fk_mailId = #{mailId}
+		    ) O
+		    join tbl_employee E
+		    on O.empId = E.empId
+		)	
+	</select>
+
+
+	<!-- === 임시저장메일을 이어서 작성하는 경우, tbl_tempMail 테이블에서 delete === -->
+	<delete id="deleteTempMail" parameterType="String">
+		delete tbl_tempMail
+		where fk_mailId = #{mailId}
+	</delete>
+	
+	
+	<!-- === 개인편지함 만들기 === -->
+	<insert id="makePersonalMailbox" parameterType="HashMap">
+		insert into tbl_personalMailboxType(personalMailboxTypeId, personalMailboxTypeName, fk_empId)
+		values(pmailboxtypeSeq.nextval, #{personalMailboxTypeName}, #{loginEmpId})	
+	</insert>
+	
+	
+	<!-- === 삭제할 개인편지함 안에 있는 메일을 모두 삭제 === -->
+	<delete id="deleteInnerMailAtPersonalMailbox" parameterType="HashMap">
+		delete from tbl_personalmailclass
+		where fk_personalMailboxTypeId = #{personalMailboxTypeId}
+	</delete> 
+	<!-- === 개인편지함 삭제하기 === -->
+	<delete id="deletePersonalMailbox" parameterType="HashMap">
+		delete from tbl_personalMailboxType
+		where personalMailboxTypeId = #{personalMailboxTypeId}
+	</delete> 
+	
+	
+	<!-- === 편지함 비우기 === -->
+	<delete id="emptyMailbox" parameterType="HashMap">
+		<choose>
+		    <!-- 받은편지함인 경우 -->
+		    <when test='mailType == "1"'>
+		    delete from tbl_incomeMail
+			where incomeMailId IN (select I.incomeMailId as incomeMailId
+			                       from tbl_incomeMail I
+			                       join tbl_sendMail S
+			                       on I.fk_mailId = S.fk_mailId
+			                       where I.fk_empId = #{loginEmpId} and I.isDelete = 0     
+			                             and ( I.isRead = 1
+			                                   or (I.isRead = 0 and S.isCancel = 0 ) ))
+			</when>
+		    <!-- 보낸편지함인 경우 -->
+			<when test='mailType == "2"'>
+			delete from tbl_sendMail
+			where fk_empId = #{loginEmpId} and isDelete = 0
+		    </when>
+		    <!-- 보낼편지함인 경우 -->
+			<when test='mailType == "3"'>
+			delete from tbl_reservationmail
+			where fk_empId = #{loginEmpId} and isDelete = 0
+		    </when>
+		    <!-- 임시보관함인 경우 -->
+			<when test='mailType == "4"'>
+			delete from tbl_tempMail
+			where fk_empId = #{loginEmpId} and isDelete = 0
+		    </when>
+		    <!-- 휴지통인 경우 -->
+			<when test='mailType == "5"'>
+			{
+		    call
+		        declare
+		    begin
+		        -- 받은메일함
+		        DELETE FROM tbl_incomeMail 
+		        WHERE incomeMailId IN (select I.incomeMailId as incomeMailId
+		                               from tbl_incomeMail I
+		                               join tbl_sendMail S
+		                               on I.fk_mailId = S.fk_mailId
+		                               where I.fk_empId = #{loginEmpId} and I.isDelete = 1     
+		                                     and ( I.isRead = 1
+		                                           or (I.isRead = 0 and S.isCancel = 0 ) ));
+		        -- 보낸메일함 
+		        DELETE FROM tbl_sendMail
+		        WHERE fk_empId = #{loginEmpId} and isDelete = 1;
+		        -- 보낼편지함
+		        DELETE FROM tbl_reservationmail
+		        WHERE fk_empId = #{loginEmpId} and isDelete = 1;
+		        -- 임시보관함인 경우
+		        DELETE FROM tbl_tempMail
+		        WHERE fk_empId = #{loginEmpId} and isDelete = 1;
+		        -- 개인매일함인 경우
+		        DELETE FROM tbl_personalMailClass 
+		        WHERE fk_empId = #{loginEmpId} and fk_personalMailboxTypeId = #{personalMailboxId} and isDelete = 1; 
+		    end
+			}
+		    </when>
+		    <!-- 개인매일함인 경우 -->
+		    <when test='mailType == "6"'>
+		    delete from tbl_personalMailClass 
+			where fk_empId = #{loginEmpId} and fk_personalMailboxTypeId = #{personalMailboxId} and isDelete = 0 		
+		    </when>
+		</choose>
+	</delete>
+	
+	
+	
+	
+	
+
+</mapper>

@@ -1,0 +1,274 @@
+@charset "UTF-8";
+
+@media screen and (min-width: 1024px)
+.loginBox-ofc {
+    width: 420px;
+    padding: 0 30px;
+    border: 1px solid #d0d0d0;
+}
+.loginBox-ofc {
+    /* width: 90%; */
+    margin: 0 auto;
+    background: #fff;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+.body-ofc {
+    color: #666;
+    text-align: center;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (min-width: 1024px)
+.body-ofc .save-ofc {
+    margin: 70px 0 15px;
+}
+.body-ofc .save-ofc {
+    text-align: right;
+    margin: 35px 0 15px;
+}
+dl, ul, ol, menu, li {
+    list-style: none;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+.body-ofc .save-ofc li {
+    display: inline-block;
+    float: left;
+}
+dl, ul, ol, menu, li {
+    list-style: none;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (min-width: 1024px)
+body, th, td, input, select, textarea, button {
+    font-size: 14px;
+}
+body, th, td, input, select, textarea, button {
+    font-size: 18px;
+    line-height: 1.5;
+    font-family: Apple Gothic,"Malgun Gothic",dotum,"Arial", sans-serif;
+    color: #333;
+}
+input, select, textarea, button {
+    vertical-align: middle;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+.body-ofc .save-ofc li.cont-ip {
+    float: right;
+}
+.body-ofc .save-ofc li {
+    display: inline-block;
+    float: left;
+}
+dl, ul, ol, menu, li {
+    list-style: none;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+.body-ofc .save-ofc .cont-ip .is-state.on {
+    color: #2c86dc;
+}
+.body-ofc .save-ofc .cont-ip .is-state {
+    display: inline-block;
+    width: 45px;
+    height: 26px;
+    line-height: 24px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    color: #939baa;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+
+.body-ofc .save-ofc:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+@media screen and (min-width: 1024px)
+input.type-J[type="text"], input.type-J[type="password"] {
+    text-indent: 20px;
+    margin-top: 12px;
+    line-height: 50px;
+    height: 50px;
+}
+input.type-J[type="text"], input.type-J[type="password"] {
+    border: 1px solid #c8c8c8;
+    display: block;
+    text-indent: 10px;
+    margin-top: 12px;
+    background: #fff;
+    width: 100%;
+    font-size: inherit;
+    color: inherit;
+    line-height: 56px;
+    height: 56px;
+    box-sizing: border-box;
+}
+input[type='text'], input[type='password'] {
+    -webkit-appearance: none;
+    border-radius: 0/*Safari/Chrome*/;
+}
+@media screen and (min-width: 1024px)
+body, th, td, input, select, textarea, button {
+    font-size: 14px;
+}
+body, th, td, input, select, textarea, button {
+    font-size: 18px;
+    line-height: 1.5;
+    font-family: Apple Gothic,"Malgun Gothic",dotum,"Arial", sans-serif;
+    color: #333;
+}
+input, select, textarea, button {
+    vertical-align: middle;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (min-width: 1024px)
+input.type-J[type="text"], input.type-J[type="password"] {
+    text-indent: 20px;
+    margin-top: 12px;
+    line-height: 50px;
+    height: 50px;
+}
+input.type-J[type="text"], input.type-J[type="password"] {
+    border: 1px solid #c8c8c8;
+    display: block;
+    text-indent: 10px;
+    margin-top: 12px;
+    background: #fff;
+    width: 100%;
+    font-size: inherit;
+    color: inherit;
+    line-height: 56px;
+    height: 56px;
+    box-sizing: border-box;
+}
+input[type='text'], input[type='password'] {
+    -webkit-appearance: none;
+    border-radius: 0/*Safari/Chrome*/;
+}
+@media screen and (min-width: 1024px)
+body, th, td, input, select, textarea, button {
+    font-size: 14px;
+}
+body, th, td, input, select, textarea, button {
+    font-size: 18px;
+    line-height: 1.5;
+    font-family: Apple Gothic,"Malgun Gothic",dotum,"Arial", sans-serif;
+    color: #333;
+}
+input, select, textarea, button {
+    vertical-align: middle;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+.body-ofc .err {
+    text-align: left;
+    padding: 3px 0 0;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+.err .wr-txt {
+    color: #ed4f4f;
+    font-size: 12px;
+    letter-spacing: -1px;
+}
+
+@media screen and (min-width: 1024px)
+.body-ofc .btn-login {
+    margin-top: 20px;
+}
+.body-ofc .btn-login {
+    margin-top: 20px;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+user agent stylesheet
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+@media screen and (min-width: 1024px)
+.body-ofc .btn-login .int_jogin {
+    line-height: 60px;
+    font-size: 18px;
+}
+.int_jogin {
+    display: block;
+    width: 100%;
+    height: 70px;
+    margin: 0 auto;
+    color: #fff;
+    cursor: pointer;
+    line-height: 70px;
+    text-align: center;
+    border: none;
+    border-radius: 2px;
+    background: #2c86dc;
+    -webkit-appearance: none;
+    -webkit-transition: all 0.25s;
+    -moz-transition: all 0.25s;
+    transition: all 0.25s;
+}
+@media screen and (min-width: 1024px)
+body, th, td, input, select, textarea, button {
+    font-size: 14px;
+}
+body, th, td, input, select, textarea, button {
+    font-size: 18px;
+    line-height: 1.5;
+    font-family: Apple Gothic,"Malgun Gothic",dotum,"Arial", sans-serif;
+    color: #333;
+}
+input, select, textarea, button {
+    vertical-align: middle;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0;
+}
+
+/* 추가한 것 @ 민경 */
+.body-ofc .btn-login {
+	margin-top: 20px;
+	margin-bottom: 30px; 
+}

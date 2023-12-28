@@ -1,0 +1,719 @@
+@charset "UTF-8";
+
+
+/* 내가 추가한 css */
+
+a {
+  text-decoration: none;
+}
+
+
+
+
+.cGRhOQ {
+	float: left;
+	height: 100%;
+	will-change: width;
+	overflow: hidden;
+}
+
+<style>blockquote, body, button, code, dd, div, dl, dt, fieldset, form,
+	h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td,
+	textarea, th, ul {
+	margin: 0;
+	padding: 0;
+}
+
+<style>blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5,
+	h6, pre, code, form, fieldset, legend, textarea, p, th, td, input,
+	select, button {
+	margin: 0px;
+	padding: 0px;
+}
+
+<style>*, ::before, ::after {
+	box-sizing: inherit;
+}
+
+.gUbYc {
+	position: relative;
+	background: rgb(239, 244, 252);
+	padding: 20px 0px;
+	height: 100%;
+	width: 276px;
+}
+
+<style>blockquote, body, button, code, dd, div, dl, dt, fieldset, form,
+	h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td,
+	textarea, th, ul {
+	margin: 0;
+	padding: 0;
+}
+
+.NXtKL {
+	margin: 0px 24px 20px;
+	width: calc(100% - 48px);
+	padding: 0px;
+	background: rgb(41, 133, 219);
+}
+
+.jbMDdv {
+	display: inline-flex;
+	box-sizing: border-box;
+	-webkit-box-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	align-items: center;
+	user-select: none;
+	white-space: nowrap;
+	border: 1px solid rgb(41, 133, 219);
+	border-radius: 4px;
+	line-height: 1;
+	transition-property: all;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
+	background: rgb(41, 133, 219);
+	color: rgb(255, 255, 255);
+	height: 44px;
+	padding: 0px 80px;
+	font-size: 18px;
+}
+
+<style>body, button, input, select, td, textarea, th {
+	font-size: 14px;
+	font-family: 맑은 고딕, Malgun Gothic, dotum, sans-serif;
+	color: #676767;
+}
+
+<style>button {
+	border: 0 none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+<style>button, input, select, textarea {
+	vertical-align: middle;
+}
+
+<style>blockquote, body, button, code, dd, div, dl, dt, fieldset, form,
+	h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td,
+	textarea, th, ul {
+	margin: 0;
+	padding: 0;
+}
+
+<style>body, h1, h2, h3, h4, th, td, input, select, textarea, button, a {
+	color: rgb(51, 51, 51);
+	font-size: 14px;
+	line-height: 1.5;
+	font-weight: 400;
+	font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", 돋움, dotum,
+		sans-serif;
+}
+
+<style>button {
+	border: 0px none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+<style>input, select, textarea, button {
+	vertical-align: middle;
+}
+
+svg[속성 스타일] {
+	width: 16;
+	height: 16;
+	fill: rgb(255, 255, 255);
+}
+
+path[속성 스타일] {
+	d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+path[속성 스타일] {
+	d: path("M 7 15 V 9 H 1 V 7 h 6 V 1 h 2 v 6 h 6 v 2 H 9 v 6 Z");
+}
+
+svg[속성 스타일] {
+	width: 16;
+	height: 16;
+	fill: rgb(255, 255, 255);
+}
+
+.NXtKL .text {
+	padding-left: 10px;
+}
+
+.NXtKL {
+	margin: 0px 24px 20px;
+	width: calc(100% - 48px);
+	padding: 0px;
+	background: rgb(41, 133, 219);
+}
+
+<style>.jbMDdv {
+	display: inline-flex;
+	box-sizing: border-box;
+	-webkit-box-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	align-items: center;
+	user-select: none;
+	white-space: nowrap;
+	border: 1px solid rgb(41, 133, 219);
+	border-radius: 4px;
+	line-height: 1;
+	transition-property: all;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
+	background: rgb(41, 133, 219);
+	color: rgb(255, 255, 255);
+	height: 44px;
+	padding: 0px 80px;
+	font-size: 18px;
+}
+
+<style>body, button, input, select, td, textarea, th {
+	font-size: 14px;
+	font-family: 맑은 고딕, Malgun Gothic, dotum, sans-serif;
+	color: #676767;
+}
+
+<style>button {
+	border: 0 none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+<style>button, input, select, textarea {
+	vertical-align: middle;
+}
+
+<style>blockquote, body, button, code, dd, div, dl, dt, fieldset, form,
+	h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td,
+	textarea, th, ul {
+	margin: 0;
+	padding: 0;
+}
+
+<style>body, h1, h2, h3, h4, th, td, input, select, textarea, button, a {
+	color: rgb(51, 51, 51);
+	font-size: 14px;
+	line-height: 1.5;
+	font-weight: 400;
+	font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", 돋움, dotum,
+		sans-serif;
+}
+
+/* 글쓰기 끝  */
+.dgHvnC {
+	overflow-y: scroll;
+	width: 100%;
+	height: calc(100% - 72px);
+	padding: 0px 8px 0px 24px;
+}
+
+.fGUqWO {
+	position: relative;
+	margin-top: 1px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	height: 38px;
+	width: 100%;
+	padding-left: 0px;
+	padding-right: 4px;
+	cursor: pointer;
+	transition-duration: 0.05s;
+	background: rgb(218, 232, 248);
+}
+/* 최근게시물 시작  */
+.fGUqWO .board-list-link {
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+<style>a, a:active, a:hover {
+	text-decoration: none;
+}
+
+<style>a {
+	color: #676767;
+}
+
+.bGiSqX {
+	margin: 8px;
+	width: 16px;
+	height: 16px;
+}
+
+svg[속성 스타일] {
+	width: 16;
+	height: 16;
+	fill: rgb(5, 106, 201);
+}
+
+path[속성 스타일] {
+	d: path("M 8 1 a 7 7 0 1 0 7 7 a 7.008 7.008 0 0 0 -7 -7 m 2.293 10 L 7.5 8.2 V 3.5 h 1 v 4.291 l 2.5 2.5 Z"
+		);
+}
+
+path[속성 스타일] {
+	d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.XAcOg {
+	max-width: 100%;
+	user-select: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 15px;
+	letter-spacing: -0.5px;
+	color: rgb(5, 106, 201);
+	font-weight: bold;
+}
+
+.fGUqWO .board-list-link {
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.fGUqWO {
+	position: relative;
+	margin-top: 1px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	height: 38px;
+	width: 100%;
+	padding-left: 0px;
+	padding-right: 4px;
+	cursor: pointer;
+	transition-duration: 0.05s;
+	background: rgb(218, 232, 248);
+}
+
+/* 최근 게시물 끝  */
+.sc-19ba191c-0+.sc-19ba191c-0 {
+	margin-top: 1px;
+}
+
+.csOgEM {
+	position: relative;
+	margin-top: 1px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	height: 38px;
+	width: 100%;
+	padding-left: 0px;
+	padding-right: 4px;
+	cursor: pointer;
+	transition-duration: 0.05s;
+}
+
+.csOgEM .board-list-link {
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+svg[속성 스타일] {
+	width: 16;
+	height: 16;
+	fill: rgb(144, 144, 144);
+}
+
+path[속성 스타일] {
+	d: path("M 0 0 h 14 v 14 H 0 Z");
+}
+
+g[속성 스타일] {
+	transform: translate(1, 1);
+}
+
+path[속성 스타일] {
+	d: path("M 13.667 4.912 a 1.1 1.1 0 0 0 -0.545 -0.29 l -3.6 -0.556 L 7.913 0.6 a 1 1 0 0 0 -1.831 0 L 4.473 4.067 l -3.607 0.555 A 1.049 1.049 0 0 0 0 5.6 v 0.142 a 1.09 1.09 0 0 0 0.3 0.729 l 2.613 2.7 l -0.613 3.56 A 1.069 1.069 0 0 0 3.306 14 a 0.972 0.972 0 0 0 0.476 -0.127 L 7 12.078 l 3.216 1.794 a 0.967 0.967 0 0 0 0.476 0.127 a 1.068 1.068 0 0 0 1.024 -1.11 a 1.006 1.006 0 0 0 -0.019 -0.159 l -0.613 -3.563 l 2.6 -2.695 a 1.1 1.1 0 0 0 -0.021 -1.56"
+		);
+}
+
+g[속성 스타일] {
+	transform: translate(1, 1);
+}
+
+path[속성 스타일] {
+	d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.DqQQz {
+	max-width: 100%;
+	user-select: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 15px;
+	color: rgb(51, 51, 51);
+	letter-spacing: -0.5px;
+}
+
+/* 중요게시물 끝  */
+.gvLux {
+	width: 100%;
+	overflow: hidden;
+	margin: 8px 0px;
+}
+
+.itJKwI {
+	position: relative;
+	margin-top: 1px;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	width: 100%;
+	height: 38px;
+	cursor: pointer;
+	color: rgb(109, 136, 164);
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.itJKwI .icon {
+    margin: 8px;
+    color: rgb(144, 144, 144);
+    transition: all 0.2s ease 0s;
+    transform: rotate(180deg);
+}
+
+path[속성 스타일] {
+    d: path("M 8 11 a 0.5 0.5 0 0 1 -0.354 -0.146 L 3 6.207 l 0.707 -0.707 L 8 9.793 L 12.293 5.5 l 0.707 0.707 l -4.647 4.647 A 0.5 0.5 0 0 1 8 11");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.itJKwI .icon {
+    margin: 8px;
+    color: rgb(144, 144, 144);
+    transition: all 0.2s ease 0s;
+    transform: rotate(180deg);
+}
+
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+/* 전사게시판 끝 */
+
+.jorOGi {
+    position: relative;
+    margin-top: 1px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 38px;
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 4px;
+    cursor: pointer;
+    transition-duration: 0.05s;
+}
+
+path[속성 스타일] {
+    d: path("M 14 6 h -3 V 2 a 1 1 0 0 0 -1 -1 H 2 a 1 1 0 0 0 -1 1 v 13 h 14 V 7 a 1 1 0 0 0 -1 -1 m -9 6 H 4 v -2 h 1 Z m 0 -3 H 4 V 7 h 1 Z m 0 -3 H 4 V 4 h 1 Z m 3 6 H 7 v -2 h 1 Z m 0 -3 H 7 V 7 h 1 Z m 0 -3 H 7 V 4 h 1 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.jzjYef {
+    margin: 0px 4px;
+}
+
+.iFJxTg {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    background-color: rgb(41, 133, 219);
+    border-radius: 10px;
+    padding: 0px 8px;
+    font-size: 12px;
+    height: 20px;
+    border: 1px solid rgb(248, 248, 248);
+}
+
+.jzjYef {
+    margin: 0px 4px;
+}
+.jorOGi .board-list-link {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+<style>
+a, a:active, a:hover {
+    text-decoration: none;
+}
+<style>
+a {
+    color: #676767;
+}
+<style>
+a {
+    text-decoration: none;
+}
+<style>
+body, h1, h2, h3, h4, th, td, input, select, textarea, button, a {
+    color: rgb(51, 51, 51);
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+    font-family: "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", 돋움, dotum, sans-serif;
+}
+
+.jorOGi .board-modify-link {
+    margin-left: auto;
+    display: none;
+}
+
+.fRdTNV {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+
+/* 사내공지 끝  */
+
+
+
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+<style>
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+<style>
+*, ::before, ::after {
+    box-sizing: inherit;
+}
+
+/* 자유게시판 시작 */
+
+.sc-19ba191c-0 + .sc-19ba191c-0 {
+    margin-top: 1px;
+}
+
+path[속성 스타일] {
+    d: path("M 14 6 h -3 V 2 a 1 1 0 0 0 -1 -1 H 2 a 1 1 0 0 0 -1 1 v 13 h 14 V 7 a 1 1 0 0 0 -1 -1 m -9 6 H 4 v -2 h 1 Z m 0 -3 H 4 V 7 h 1 Z m 0 -3 H 4 V 4 h 1 Z m 3 6 H 7 v -2 h 1 Z m 0 -3 H 7 V 7 h 1 Z m 0 -3 H 7 V 4 h 1 Z");
+}
+
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 11.878 1.004 a 1 1 0 0 0 -0.708 0.293 l -9.263 9.269 c -0.016 0.017 -0.029 0.036 -0.044 0.054 a 0.794 0.794 0 0 0 -0.237 0.421 l -0.61 3.007 a 0.8 0.8 0 0 0 0.779 0.956 a 0.825 0.825 0 0 0 0.159 -0.016 l 3.008 -0.6 a 0.8 0.8 0 0 0 0.313 -0.148 c 0.017 -0.01 0.032 -0.024 0.049 -0.035 s 0.032 -0.021 0.046 -0.034 l 0.009 -0.011 c 0.022 -0.019 0.046 -0.034 0.066 -0.054 l 9.262 -9.271 a 1 1 0 0 0 0 -1.415 l -2.122 -2.125 a 1 1 0 0 0 -0.707 -0.293 M 12 6.132 L 9.873 4.009 l 2 -2.005 L 14 4.129 Z m -9.943 7.816 l 0.536 -2.643 l 0.026 -0.031 l 0.031 -0.037 l 6.516 -6.521 l 2.125 2.124 l -6.52 6.524 l -0.036 0.03 l -0.019 0.016 l -0.008 0.006 Z");
+}
+
+
+/* 전사게시판 테스트 시작 */
+
+path[속성 스타일] {
+    d: path("M 11.878 1.004 a 1 1 0 0 0 -0.708 0.293 l -9.263 9.269 c -0.016 0.017 -0.029 0.036 -0.044 0.054 a 0.794 0.794 0 0 0 -0.237 0.421 l -0.61 3.007 a 0.8 0.8 0 0 0 0.779 0.956 a 0.825 0.825 0 0 0 0.159 -0.016 l 3.008 -0.6 a 0.8 0.8 0 0 0 0.313 -0.148 c 0.017 -0.01 0.032 -0.024 0.049 -0.035 s 0.032 -0.021 0.046 -0.034 l 0.009 -0.011 c 0.022 -0.019 0.046 -0.034 0.066 -0.054 l 9.262 -9.271 a 1 1 0 0 0 0 -1.415 l -2.122 -2.125 a 1 1 0 0 0 -0.707 -0.293 M 12 6.132 L 9.873 4.009 l 2 -2.005 L 14 4.129 Z m -9.943 7.816 l 0.536 -2.643 l 0.026 -0.031 l 0.031 -0.037 l 6.516 -6.521 l 2.125 2.124 l -6.52 6.524 l -0.036 0.03 l -0.019 0.016 l -0.008 0.006 Z");
+}
+
+svg[속성 스타일] {
+    width: 16;
+    height: 16;
+    fill: rgb(144, 144, 144);
+}
+
+/* 게시판 만들기 */
+
+path[속성 스타일] {
+    d: path("M 8 1 a 7.086 7.086 0 0 0 -7 7 a 7.086 7.086 0 0 0 7 7 a 7.086 7.086 0 0 0 7 -7 a 7.086 7.086 0 0 0 -7 -7 m 4 7.5 H 8.5 V 12 h -1 V 8.5 H 4 v -1 h 3.5 V 4 h 1 v 3.5 H 12 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 16 12.5 h -3.5 V 16 h -1 v -3.5 H 8 v -1 h 3.5 V 8 h 1 v 3.5 H 16 Z");
+    transform: translate(-4, -4);
+}
+
+path[속성 스타일] {
+    transform: translate(4, 4);
+    d: path("M 0 0 h 8 v 8 H 0 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 13.481 8.378 c 0.009 -0.126 0.019 -0.251 0.019 -0.378 s -0.005 -0.257 -0.014 -0.383 l 0.96 -0.844 a 1 1 0 0 0 0.206 -1.251 l -1.18 -2.044 a 1 1 0 0 0 -1.186 -0.448 l -1.217 0.412 a 5.469 5.469 0 0 0 -0.656 -0.38 L 10.161 1.8 A 1 1 0 0 0 9.18 1 H 6.82 a 1 1 0 0 0 -0.981 0.8 l -0.253 1.263 a 5.509 5.509 0 0 0 -0.664 0.377 l -1.208 -0.41 a 1 1 0 0 0 -1.186 0.447 L 1.347 5.522 a 1 1 0 0 0 0.206 1.251 l 0.965 0.849 c -0.009 0.125 -0.019 0.251 -0.019 0.378 s 0.005 0.257 0.014 0.383 l -0.96 0.843 a 1 1 0 0 0 -0.206 1.252 l 1.181 2.044 a 1 1 0 0 0 1.186 0.447 l 1.217 -0.412 a 5.537 5.537 0 0 0 0.656 0.38 l 0.252 1.263 a 1 1 0 0 0 0.981 0.8 h 2.36 a 1 1 0 0 0 0.981 -0.8 l 0.252 -1.259 a 5.547 5.547 0 0 0 0.663 -0.377 l 1.209 0.409 a 1 1 0 0 0 1.187 -0.447 l 1.18 -2.044 a 1 1 0 0 0 -0.206 -1.252 Z M 8 10 a 2 2 0 1 1 2 -2 a 1.956 1.956 0 0 1 -2 2");
+}
+
+.sc-fa4f91dd-0 + .sc-fa4f91dd-0 {
+    margin-top: 0px;
+}
+<style>
+.gvLux {
+    width: 100%;
+    overflow: hidden;
+    margin: 8px 0px;
+}
+<style>
+blockquote, body, button, code, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend, li, ol, p, pre, select, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+<style>
+blockquote, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, th, td, input, select, button {
+    margin: 0px;
+    padding: 0px;
+}
+
+path[속성 스타일] {
+    d: path("M 8 11 a 0.5 0.5 0 0 1 -0.354 -0.146 L 3 6.207 l 0.707 -0.707 L 8 9.793 L 12.293 5.5 l 0.707 0.707 l -4.647 4.647 A 0.5 0.5 0 0 1 8 11");
+}
+
+path[속성 스타일] {
+    d: path("M 24.561 21.689 c 0 -0.062 0.01 -0.125 0.01 -0.189 s 0 -0.128 -0.007 -0.191 l 0.48 -0.422 a 0.5 0.5 0 0 0 0.1 -0.626 l -0.59 -1.022 a 0.5 0.5 0 0 0 -0.433 -0.25 a 0.493 0.493 0 0 0 -0.16 0.026 l -0.609 0.206 a 2.79 2.79 0 0 0 -0.327 -0.19 L 22.9 18.4 a 0.5 0.5 0 0 0 -0.49 -0.4 h -1.18 a 0.5 0.5 0 0 0 -0.491 0.4 l -0.126 0.629 a 2.736 2.736 0 0 0 -0.332 0.189 l -0.6 -0.2 a 0.493 0.493 0 0 0 -0.16 -0.026 a 0.5 0.5 0 0 0 -0.433 0.25 l -0.59 1.022 a 0.5 0.5 0 0 0 0.1 0.626 l 0.483 0.424 c 0 0.063 -0.009 0.125 -0.009 0.189 s 0 0.128 0.007 0.191 l -0.48 0.422 a 0.5 0.5 0 0 0 -0.1 0.626 l 0.59 1.022 a 0.5 0.5 0 0 0 0.433 0.25 a 0.493 0.493 0 0 0 0.16 -0.026 l 0.609 -0.206 a 2.838 2.838 0 0 0 0.328 0.19 l 0.126 0.629 a 0.5 0.5 0 0 0 0.491 0.4 h 1.18 a 0.5 0.5 0 0 0 0.49 -0.4 l 0.126 -0.629 a 2.805 2.805 0 0 0 0.331 -0.189 l 0.6 0.2 a 0.493 0.493 0 0 0 0.16 0.026 a 0.5 0.5 0 0 0 0.433 -0.25 l 0.59 -1.022 a 0.5 0.5 0 0 0 -0.1 -0.626 Z m -2.74 0.811 a 1 1 0 1 1 1 -1 a 0.978 0.978 0 0 1 -1 1");
+    transform: translate(-9.214, -9);
+}
+
+path[속성 스타일] {
+    d: path("M 14199.3 19051 a 1.313 1.313 0 0 1 -1.311 -1.311 v -1.137 a 3.676 3.676 0 0 1 3.677 -3.678 c 0.784 0 1.162 0.436 2.448 0.436 a 4.4 4.4 0 0 0 1.453 -0.23 a 4.493 4.493 0 0 0 -1.577 3.42 a 4.439 4.439 0 0 0 0.76 2.5 Z m 1.314 -10.5 a 3.5 3.5 0 1 1 3.5 3.5 a 3.5 3.5 0 0 1 -3.5 -3.5 Z");
+    transform: translate(-14196, -19036);
+}
+
+path[속성 스타일] {
+    d: path("M 11.878 1.004 a 1 1 0 0 0 -0.708 0.293 l -9.263 9.269 c -0.016 0.017 -0.029 0.036 -0.044 0.054 a 0.794 0.794 0 0 0 -0.237 0.421 l -0.61 3.007 a 0.8 0.8 0 0 0 0.779 0.956 a 0.825 0.825 0 0 0 0.159 -0.016 l 3.008 -0.6 a 0.8 0.8 0 0 0 0.313 -0.148 c 0.017 -0.01 0.032 -0.024 0.049 -0.035 s 0.032 -0.021 0.046 -0.034 l 0.009 -0.011 c 0.022 -0.019 0.046 -0.034 0.066 -0.054 l 9.262 -9.271 a 1 1 0 0 0 0 -1.415 l -2.122 -2.125 a 1 1 0 0 0 -0.707 -0.293 M 12 6.132 L 9.873 4.009 l 2 -2.005 L 14 4.129 Z m -9.943 7.816 l 0.536 -2.643 l 0.026 -0.031 l 0.031 -0.037 l 6.516 -6.521 l 2.125 2.124 l -6.52 6.524 l -0.036 0.03 l -0.019 0.016 l -0.008 0.006 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 12.018 16 a 0.5 0.5 0 0 1 -0.492 -0.4 l -0.124 -0.631 a 3.6 3.6 0 0 1 -0.33 -0.186 l -0.607 0.205 a 0.637 0.637 0 0 1 -0.162 0.023 a 0.5 0.5 0 0 1 -0.431 -0.248 l -0.588 -1.023 a 0.5 0.5 0 0 1 0.1 -0.627 l 0.482 -0.42 c 0 -0.062 -0.01 -0.129 -0.01 -0.191 s 0 -0.129 0.01 -0.191 l -0.482 -0.42 a 0.5 0.5 0 0 1 -0.1 -0.627 l 0.588 -1.023 a 0.5 0.5 0 0 1 0.431 -0.248 a 0.637 0.637 0 0 1 0.162 0.023 l 0.607 0.205 a 2.128 2.128 0 0 1 0.33 -0.186 l 0.124 -0.631 a 0.5 0.5 0 0 1 0.492 -0.4 H 13.2 a 0.5 0.5 0 0 1 0.487 0.4 l 0.129 0.631 a 3.164 3.164 0 0 1 0.325 0.186 l 0.607 -0.205 a 0.67 0.67 0 0 1 0.162 -0.023 a 0.5 0.5 0 0 1 0.431 0.248 l 0.593 1.023 a 0.5 0.5 0 0 1 -0.1 0.627 l -0.479 0.42 v 0.191 c 0 0.066 0 0.129 -0.01 0.191 l 0.483 0.42 a 0.5 0.5 0 0 1 0.1 0.627 l -0.593 1.023 a 0.5 0.5 0 0 1 -0.431 0.248 a 0.67 0.67 0 0 1 -0.162 -0.023 l -0.6 -0.205 a 2.987 2.987 0 0 1 -0.33 0.186 l -0.129 0.631 a 0.5 0.5 0 0 1 -0.487 0.4 Z m -0.411 -3.5 a 1 1 0 1 0 1 -1 a 0.98 0.98 0 0 0 -1.001 1 Z m -4.953 2 a 0.7 0.7 0 0 1 -0.655 -0.736 V 6.159 a 0.657 0.657 0 0 1 0.655 -0.656 h 7.693 a 0.657 0.657 0 0 1 0.655 0.656 v 2.605 A 4.494 4.494 0 0 0 8.475 14.5 Z m -5.217 0 a 0.461 0.461 0 0 1 -0.435 -0.486 V 5.938 a 0.434 0.434 0 0 1 0.435 -0.436 h 3.127 A 0.438 0.438 0 0 1 5 5.938 v 8.076 a 0.465 0.465 0 0 1 -0.436 0.486 Z m 0.063 -10 A 0.5 0.5 0 0 1 1 4 V 2 a 0.5 0.5 0 0 1 0.5 -0.5 h 13 a 0.5 0.5 0 0 1 0.5 0.5 v 2 a 0.5 0.5 0 0 1 -0.5 0.5 Z M 13 3 a 0.5 0.5 0 1 0 0.5 -0.5 a 0.5 0.5 0 0 0 -0.5 0.5 Z m -1.5 0 a 0.5 0.5 0 1 0 0.5 -0.5 a 0.5 0.5 0 0 0 -0.5 0.5 Z M 10 3 a 0.5 0.5 0 1 0 0.5 -0.5 a 0.5 0.5 0 0 0 -0.5 0.5 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 8 1 a 7.086 7.086 0 0 0 -7 7 a 7.086 7.086 0 0 0 7 7 a 7.086 7.086 0 0 0 7 -7 a 7.086 7.086 0 0 0 -7 -7 m 4 7.5 H 8.5 V 12 h -1 V 8.5 H 4 v -1 h 3.5 V 4 h 1 v 3.5 H 12 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 16 12.5 h -3.5 V 16 h -1 v -3.5 H 8 v -1 h 3.5 V 8 h 1 v 3.5 H 16 Z");
+    transform: translate(-4, -4);
+}
+
+path[속성 스타일] {
+    transform: translate(4, 4);
+    d: path("M 0 0 h 8 v 8 H 0 Z");
+}
+
+path[속성 스타일] {
+    d: path("M 13.481 8.378 c 0.009 -0.126 0.019 -0.251 0.019 -0.378 s -0.005 -0.257 -0.014 -0.383 l 0.96 -0.844 a 1 1 0 0 0 0.206 -1.251 l -1.18 -2.044 a 1 1 0 0 0 -1.186 -0.448 l -1.217 0.412 a 5.469 5.469 0 0 0 -0.656 -0.38 L 10.161 1.8 A 1 1 0 0 0 9.18 1 H 6.82 a 1 1 0 0 0 -0.981 0.8 l -0.253 1.263 a 5.509 5.509 0 0 0 -0.664 0.377 l -1.208 -0.41 a 1 1 0 0 0 -1.186 0.447 L 1.347 5.522 a 1 1 0 0 0 0.206 1.251 l 0.965 0.849 c -0.009 0.125 -0.019 0.251 -0.019 0.378 s 0.005 0.257 0.014 0.383 l -0.96 0.843 a 1 1 0 0 0 -0.206 1.252 l 1.181 2.044 a 1 1 0 0 0 1.186 0.447 l 1.217 -0.412 a 5.537 5.537 0 0 0 0.656 0.38 l 0.252 1.263 a 1 1 0 0 0 0.981 0.8 h 2.36 a 1 1 0 0 0 0.981 -0.8 l 0.252 -1.259 a 5.547 5.547 0 0 0 0.663 -0.377 l 1.209 0.409 a 1 1 0 0 0 1.187 -0.447 l 1.18 -2.044 a 1 1 0 0 0 -0.206 -1.252 Z M 8 10 a 2 2 0 1 1 2 -2 a 1.956 1.956 0 0 1 -2 2");
+}
+
+path[속성 스타일] {
+    d: path("M 0 0 h 16 v 16 H 0 Z");
+}
+
+.hOXNWt {
+    position: fixed;
+    z-index: 10;
+    top: 60px;
+    left: 276px;
+    width: 12px;
+    height: 100%;
+    border-left: 4px solid transparent;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: ew-resize;
+    transition: border-color 0.2s ease-in-out 0s;
+    color: transparent;
+}
+
+.bRQPaO {
+    position: absolute;
+    left: 24px;
+    top: 45%;
+    padding: 5px 8px;
+    width: max-content;
+    height: max-content;
+    background: rgb(88, 88, 88);
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+    border-radius: 2px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out 0s;
+}
+
+.hOXNWt {
+    position: fixed;
+    z-index: 10;
+    top: 60px;
+    left: 276px;
+    width: 12px;
+    height: 100%;
+    border-left: 4px solid transparent;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: ew-resize;
+    transition: border-color 0.2s ease-in-out 0s;
+    color: transparent;
+}
+
+
+
+/* 메인  */
+
+.lmwuze {
+    position: absolute;
+    inset: 60px 0px 0px;
+    width: 100%;
+    background: rgb(255, 255, 255);
+}
+/* 부모 태그들 */
+
+body {
+    background: #fff;
+}
+
+

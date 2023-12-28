@@ -1,0 +1,12 @@
+.se:not(#se-t) {
+    border: 1px solid #d6d6d6;
+    box-shadow: none;
+}
+
+.se:not(#se-t).se-classic-editor>.se-header {
+    box-shadow: none;
+}
+
+.se:not(#se-t) > .se-header > .se-toolbar {
+    border-bottom: 1px solid #d6d6d6;
+}

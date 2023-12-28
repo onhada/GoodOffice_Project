@@ -1,0 +1,75 @@
+﻿	.body { padding: 0px; }
+	#calendar { margin-right: 20px; min-width:733px; }
+	#script-warning {
+		display: none;
+		background: #eee;
+		border-bottom: 1px solid #ddd;
+		padding: 0 10px;
+		line-height: 40px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 12px;
+		color: red;
+	}
+	#loading { display: none; position: absolute; top: 10px; right: 10px;}
+
+	.board_w { max-width:none }
+	#calendar_mini { width: 180px; margin: 0 auto; font-size: 10px; }
+	#calendar_mini .fc-basic-view .fc-body .fc-row { min-height: 2em }
+	#calendar_mini .fc-view-month .fc-event, .fc-view-agendaWeek .fc-event { font-size: 0; overflow: hidden; height: 2px; }
+	#calendar_mini .fc-header-title h2 { font-size: .9em; white-space: normal !important; }
+	#calendar_mini .fc-view-agendaWeek .fc-event-vert { font-size: 0; overflow: hidden; width: 2px !important; }
+	#calendar_mini .fc-agenda-axis { width: 20px !important; font-size: .7em; }
+	#calendar_mini .fc-button-content { padding: 0; }
+
+	/* misc demo css */
+	#calendar_mini h2 { text-align: center; }
+	#calendar_mini .buttons { display: block; margin: 0 auto; text-align: center; }
+	#calendar_mini .buttons button { margin-bottom: 5px; }
+	#calendar_mini .fc-day-number {text-align: center; }
+
+	.detail_select {color:#2985db; padding-right:26px}
+	.detail_select > a {color:#2985db;}
+
+	.fc-day-number { text-align:left }
+	.share { background: url('/static/ui/images/bar_bg.png') 0 0 repeat; color: #333333; }
+	.backLayer { z-index:999 }
+
+	/*색상표*/
+	.c1 { background-color: #ee5074; border-color: #ee5074;}
+	.c2 { background-color: #fa7227; border-color: #fa7227;}
+	.c3 { background-color: #ac725e; border-color: #ac725e;}
+	.c4 { background-color: #f7d915; border-color: #f7d915;}
+	.c5 { background-color: #a3b90a; border-color: #a3b90a;}
+	.c6 { background-color: #57b92a; border-color: #57b92a;}
+	.c7 { background-color: #4fced8; border-color: #4fced8;}
+	.c8 { background-color: #5990d5; border-color: #5990d5;}
+	.c9 { background-color: #777dbf; border-color: #777dbf;}
+	.c10 {background-color: #844285; border-color: #844285;}
+
+	.share.c1 { background-color: #ff96b5; border-color: #ff96b5;}
+	.share.c2 { background-color: #ffc887; border-color: #ffc887;}
+	.share.c3 { background-color: #e2b1a0; border-color: #e2b1a0;}
+	.share.c4 { background-color: #ffed54; border-color: #ffed54;}
+	.share.c5 { background-color: #cce119; border-color: #cce119;}
+	.share.c6 { background-color: #87dc54; border-color: #87dc54;}
+	.share.c7 { background-color: #7be2e9; border-color: #7be2e9;}
+	.share.c8 { background-color: #6eacec; border-color: #6eacec;}
+	.share.c9 { background-color: #ac9ef4; border-color: #ac9ef4;}
+	.share.c10 {background-color: #ee9aee; border-color: #ee9aee;}
+
+	/*	#calendar_mini > .fc th, .fc td { border-style: none; border-width: 1px; padding: 0; vertical-align: top; } */
+
+	.active { background-color: "#e8ecee";}
+
+	.month_left { position:relative; height:auto; bottom:0; left:0; right:0; margin:15px 25px; overflow-x: hidden; overflow-y: auto; }
+	._menufield { position:absolute; height:auto; top:330px; bottom:0; left:0; right:0; margin:26px 0 0 25px; padding-right:25px; overflow-x: hidden; overflow-y: auto; }
+	.a.share:hover {color:#333;}
+
+	/* 모달 더보기 버튼 */
+	.layer_box .more { display: flex; align-items: center; justify-content: center; position: absolute; top: 6px; right: calc(10px + 17px + 9px); width: 25px; height: 25px; border-radius: 50%; transition: .2s ease; }
+	.layer_box .more:after { font-family: "Font Awesome 5 Pro"; font-weight: 500; font-size: 18px; content: '\f141'; }
+	.layer_box .more:hover, .layer_box .more:active, .layer_box .more:focus { background-color: rgba(159, 166, 173, 0.2); }
+	.layer_box .show-menu { position: absolute; width: 100px; padding: 10px 0; top: 34px; right: -41px; border: 1px solid #999; background: #fff; box-shadow: 2px 5px 4px 0 rgba(0, 0, 0, 0.16); }
+	.layer_box .show-menu li { padding: 10px; cursor: pointer; }
+	.layer_box .show-menu li:hover, .layer_box .show-menu li:active { background-color: rgba(159, 166, 173, 0.2); }

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/* 메인  */
+
+.lmwuze {
+    position: absolute;
+    inset: 60px 0px 0px;
+    width: 100%;
+    background: rgb(255, 255, 255);
+}
+/* 부모 태그들 */
+
+body {
+    background: #fff;
+}

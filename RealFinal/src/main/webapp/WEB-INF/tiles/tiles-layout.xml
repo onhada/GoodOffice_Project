@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ======= #23. tiles 레이아웃 설정하기 ======= -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+       
+<tiles-definitions> 
+
+
+	 
+	<!-- ==== 인덱스 tiles 설정 시작  ==== -->
+	<definition name="layout-index"  template="/WEB-INF/tiles/layout/layout-index.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.index" extends="layout-index">
+		<put-attribute name="content" value="/WEB-INF/views/index/{1}.jsp"/>
+	</definition>
+	<!-- ==== 인덱스 tiles 설정 끝  ==== -->
+	 
+	 
+	
+	<!-- ==== 메일 tiles 설정 시작  ==== -->
+	<definition name="layout-mail"  template="/WEB-INF/tiles/layout/layout-mail.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_search.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/mail/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.mail" extends="layout-mail">
+		<put-attribute name="content" value="/WEB-INF/views/mail/{1}.jsp"/>
+	</definition>
+	<!-- ==== 메일 tiles 설정 끝  ==== -->
+
+
+	
+	<!-- ==== 게시판 tiles 설정 시작  ==== -->
+	<definition name="layout-board"  template="/WEB-INF/tiles/layout/layout-board.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/board/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.board" extends="layout-board">
+		<put-attribute name="content" value="/WEB-INF/views/board/{1}.jsp"/>
+	</definition>
+	<!-- ==== 게시판 tiles 설정 끝  ==== -->
+	
+	
+	
+	<!-- ==== 일정 tiles 설정 시작  ==== -->
+	<definition name="layout-schedule"  template="/WEB-INF/tiles/layout/layout-schedule.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_search.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/schedule/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.schedule" extends="layout-schedule">
+		<put-attribute name="content" value="/WEB-INF/views/schedule/{1}.jsp"/>
+	</definition>
+	<!-- ==== 일정 tiles 설정 끝  ==== -->
+	
+	
+	
+	<!-- ==== 주소록 tiles 설정 시작  ==== -->
+	<definition name="layout-addressBook"  template="/WEB-INF/tiles/layout/layout-addressBook.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/addressBook/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.addressBook" extends="layout-addressBook">
+		<put-attribute name="content" value="/WEB-INF/views/addressBook/{1}.jsp"/>
+	</definition>
+	<!-- ==== 주소록 tiles 설정 끝  ==== -->
+	
+	
+	
+	<!-- ==== 예약 tiles 설정 시작  ==== -->
+	<definition name="layout-reservation"  template="/WEB-INF/tiles/layout/layout-reservation.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_search.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/reservation/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.reservation" extends="layout-reservation">
+		<put-attribute name="content" value="/WEB-INF/views/reservation/{1}.jsp"/>
+	</definition>
+	<!-- ==== 예약 tiles 설정 끝  ==== -->
+	
+	
+	
+	<!-- ==== 인사 tiles 설정 시작  ==== -->
+	<definition name="layout-personnel"  template="/WEB-INF/tiles/layout/layout-personnel.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/personnel/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.personnel" extends="layout-personnel">
+		<put-attribute name="content" value="/WEB-INF/views/personnel/{1}.jsp"/>
+	</definition>
+	<!-- ==== 인사 tiles 설정 끝  ==== -->
+	
+	
+	<!-- 예인 추가 시작 -->
+	<!-- ==== 인사 조직 관리 tiles 설정 시작  ==== -->
+	<definition name="layout-personnel_insa"  template="/WEB-INF/tiles/layout/layout-personnel_insa.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/personnel_insa/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.personnel_insa" extends="layout-personnel_insa">
+		<put-attribute name="content" value="/WEB-INF/views/personnel_insa/{1}.jsp"/>
+	</definition>
+	<!-- ==== 인사 조직 관리  설정 끝  ==== -->
+	<!-- 예인 추가 끝 -->
+	
+	
+	<!-- ==== 전자결재 tiles 설정 시작  ==== -->
+	<definition name="layout-approval"  template="/WEB-INF/tiles/layout/layout-approval.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_search.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/approval/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.approval" extends="layout-approval">
+		<put-attribute name="content" value="/WEB-INF/views/approval/{1}.jsp"/>
+	</definition>
+	<!-- ==== 전자결재 tiles 설정 끝  ==== -->
+	
+	
+	
+	<!-- ==== 그룹메인 tiles 설정 시작  ==== -->
+	<definition name="layout-groupMain"  template="/WEB-INF/tiles/layout/layout-groupMain.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.groupMain" extends="layout-groupMain">
+		<put-attribute name="content" value="/WEB-INF/views/groupMain/{1}.jsp"/>
+	</definition>
+	<!-- ==== 그룹메인 tiles 설정 끝  ==== -->
+	
+	
+	
+	<!-- ==== 그룹 tiles 설정 시작  ==== -->
+	<definition name="layout-group"  template="/WEB-INF/tiles/layout/layout-group.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/group/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.group" extends="layout-group">
+		<put-attribute name="content" value="/WEB-INF/views/group/{1}.jsp"/>
+	</definition>
+	<!-- ==== 그룹 tiles 설정 끝  ==== -->
+
+	
+	
+	<!-- ==== 오피스관리 tiles 설정 시작  ==== -->
+	<definition name="layout-admin"  template="/WEB-INF/tiles/layout/layout-admin.jsp"> 
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/admin/side.jsp" />
+		<put-attribute name="content" value="" />
+	</definition>
+	
+	<definition name="*.admin" extends="layout-admin">
+		<put-attribute name="content" value="/WEB-INF/views/admin/{1}.jsp"/>
+	</definition>
+	<!-- ==== 오피스관리 tiles 설정 끝  ==== -->
+
+
+
+</tiles-definitions>
+       
