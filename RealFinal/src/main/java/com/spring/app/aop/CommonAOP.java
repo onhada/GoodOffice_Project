@@ -175,27 +175,27 @@ public class CommonAOP {
 //
 //	}
 
-//	@Pointcut("execution(public * com.spring.app..*Controller.*(..))")
-//	// Controller 클래스에 속한 파마리터가 0개 이상인 모든 메서드
-//	public void headerDynamicManager() {
-//	}
-//
-//	@Before("headerDynamicManager()")
-//	public void headerDynamicManager(JoinPoint joinPoint) {
-//		// 헤더 동적으로 제어할 수 있도록 파라미터 값을 넣어준다
-//
-//		HttpServletRequest req = (HttpServletRequest) joinPoint.getArgs()[0]; // 주업무 메소드의 첫번째 파라미터를 얻어오는 것이다.
-//		ModelAndView mav = (ModelAndView) joinPoint.getArgs()[2];
-//
-//		Object thisObject = joinPoint.getThis(); // 프락시를 가져온다.
-//		
-//
-//		// 매핑되는 클래스명으로 관리자 종류를 알 수 있다
-//		String headerManage = thisObject.toString().substring(thisObject.toString().lastIndexOf(".") + 1,
-//				thisObject.toString().indexOf("Controller"));
-//		
-//		mav.addObject("headerManage", headerManage);
-//
-//	}
+	@Pointcut("execution(public * com.spring.app..*Controller.*(..))")
+	// Controller 클래스에 속한 파마리터가 0개 이상인 모든 메서드
+	public void headerDynamicManager() {
+	}
+
+	@Before("headerDynamicManager()")
+	public void headerDynamicManager(JoinPoint joinPoint) {
+		// 헤더 동적으로 제어할 수 있도록 파라미터 값을 넣어준다
+
+		HttpServletRequest req = (HttpServletRequest) joinPoint.getArgs()[0]; // 주업무 메소드의 첫번째 파라미터를 얻어오는 것이다.
+		ModelAndView mav = (ModelAndView) joinPoint.getArgs()[2];
+
+		Object thisObject = joinPoint.getThis(); // 프락시를 가져온다.
+		
+
+		// 매핑되는 클래스명으로 관리자 종류를 알 수 있다
+		String headerManage = thisObject.toString().substring(thisObject.toString().lastIndexOf(".") + 1,
+				thisObject.toString().indexOf("Controller"));
+		
+		mav.addObject("headerManage", headerManage);
+
+	}
 
 }
