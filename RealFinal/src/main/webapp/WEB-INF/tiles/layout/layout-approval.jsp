@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String ctxPath = request.getContextPath();
 %>
@@ -15,30 +16,27 @@
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>하이웍스 오피스</title>
-<meta name="viewport"
-	content="width=1024, user-scalable=yes,minimum-scale=0.25, maximum-scale=1.0">
+<meta name="viewport" content="width=1024, user-scalable=yes,minimum-scale=0.25, maximum-scale=1.0">
 
 
-<link rel="shortcut icon" type="image/x-icon"
-	href="/static/images/favicon/favicon.ico">
-<link rel="stylesheet" type="text/css"
-	href="<%=ctxPath%>/resources/css/approval/style.css">
-<link rel="stylesheet" type="text/css"
-	href="<%=ctxPath%>/resources/css/approval/style_new.css">
-<link rel="stylesheet" type="text/css"
-	href="<%=ctxPath%>/resources/css/approval/style_tutorial.css">
-<!--add msy@gabia.com 2016-10-28-->
-<link rel="stylesheet" type="text/css"
-	href="<%=ctxPath%>/resources/css/approval/style_approval.css">
-<link rel="stylesheet" type="text/css"
-	href="<%=ctxPath%>/resources/css/approval/new_lnb.css">
-
+<link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon/favicon.ico">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_new.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_tutorial.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/jquery.toastmessage-min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_approval.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/new_lnb.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/contentsEditStyle.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/characterPicker.min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/editor_custom.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/synapeditor.min.css">
 <!-- 예인추가 -->
-<link rel="stylesheet" type="text/css"
-	href="<%=ctxPath%>/resources/css/approval/approval.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/approval.css">
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	var cookie_imagepath = "/static/images/";
 </script>
 
@@ -51,51 +49,28 @@
 	PATH_INFO['ROOT'] = '/gabia.biz/';
 </script>
 
-<script src="/approval-static/scripts/language.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/Sly.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/common_new.js?v=b7bc77e01"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/jquery-1.11.2.min.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/jcommon.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/jvalidateMessage.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/jorgtree.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/jaddressbook.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script src="/approval-static/scripts/jajaxBasic.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script
-	src="/approval-static/scripts/jquery/jquery.toastmessage.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<!-- Frontend devteam -->
+<script src="/approval-static/scripts/language.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/Sly.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/common_new.js?v=b7bc77e01" type="text/javascript"></script>
+<script src="/approval-static/scripts/jquery-1.11.2.min.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/jcommon.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/jvalidateMessage.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/jorgtree.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/jaddressbook.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/jajaxBasic.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/jquery/jquery.toastmessage.js?v=b7bc77e0" type="text/javascript"></script>
+Frontend devteam
 
-<script
-	src="/approval-static/scripts/jquery-ui-1.11.4/jquery-ui.min.js?v=b7bc77e0"
-	type="text/javascript"></script>
+<script src="/approval-static/scripts/jquery-ui-1.11.4/jquery-ui.min.js?v=b7bc77e0" type="text/javascript"></script>
 <script src="/approval-static/ui/js/main.js?v=b7bc77e0"></script>
-<script src="/approval-static/scripts/common/api_url_list.js?v=b7bc77e0"
-	type="text/javascript"></script>
+<script src="/approval-static/scripts/common/api_url_list.js?v=b7bc77e0" type="text/javascript"></script>
 
 
-<script
-	src="/approval-static/scripts/approval/approval.js?v=2?v=b7bc77e0"
-	charset="utf-8" type="text/javascript"></script>
-<script
-	src="/approval-static/scripts/approval/resizableTableColumns.js?v=b7bc77e0"
-	charset="utf-8" type="text/javascript"></script>
-<script src="/approval-static/scripts/jquery/history.js?v=b7bc77e0"
-	type="text/javascript"></script>
-<script
-	src="/approval-static/scripts/approval/document.js?v=1?v=b7bc77e0"
-	type="text/javascript"></script>
-<script
-	src="/approval-static/scripts/approval/approval_table.js?v=1?v=b7bc77e0"
-	type="text/javascript"></script>
+<script src="/approval-static/scripts/approval/approval.js?v=2?v=b7bc77e0" charset="utf-8" type="text/javascript"></script>
+<script src="/approval-static/scripts/approval/resizableTableColumns.js?v=b7bc77e0" charset="utf-8" type="text/javascript"></script>
+<script src="/approval-static/scripts/jquery/history.js?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/approval/document.js?v=1?v=b7bc77e0" type="text/javascript"></script>
+<script src="/approval-static/scripts/approval/approval_table.js?v=1?v=b7bc77e0" type="text/javascript"></script>
 <script type="text/javascript">
 	Api.urlList = {
 		"menu-api" : "https:\/\/menu-api-v4.office.hiworks.com",
@@ -116,8 +91,41 @@
 			jQuery('#logo_anchor').css("cursor", "default");
 		}
 	});
+</script> -->
+
+
+
+
+
+
+<!-- 예진 추가 -->
+<!-- JavaScript -->
+<script src="<%=ctxPath%>/resources/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+<%-- <script src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script> --%>
+<!-- CSS -->
+<%-- <link rel="stylesheet" href="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css"> --%>
+
+
+
+
+
+
+
+<script>
+	function closeModal(id) {
+		$(id).hide();
+		$("ul.approval-autocomplete").hide();
+	}
+
+	function clickTriggerToFileApprovalAttach() {
+		$("input#fileApprovalAttach").trigger("click");
+	}
 </script>
 
+
+
+
+<!-- 예진 추가 끝 -->
 
 
 
@@ -137,14 +145,13 @@
 			<!---->
 		</div>
 
-		<script type="text/javascript"
-			src="https://gnb.office.hiworks.com/main.js?v=b7bc77e0"></script>
+		<!-- <script type="text/javascript"
+			src="https://gnb.office.hiworks.com/main.js?v=b7bc77e0"></script> -->
 		<!-- Top End-->
 		<div id="container">
 
 			<div id="drag_wrap">
-				<div id="drag" class="ui-draggable ui-draggable-handle"
-					style="left: 0px;"></div>
+				<div id="drag" class="ui-draggable ui-draggable-handle" style="left: 0px;"></div>
 			</div>
 
 			<!-- 사이드바 시작 -->
@@ -160,12 +167,9 @@
 		<div id="dimmed"></div>
 		<div id="dimmed2"></div>
 
-		<iframe id="alphaDiv"
-			style="height: 100%; width: 100%; display: none; opacity: 0.6;"></iframe>
+		<iframe id="alphaDiv" style="height: 100%; width: 100%; display: none; opacity: 0.6;"></iframe>
 		<div id="progressDiv" style="left: 944px; top: 448px; display: none;">
-			<img
-				src="https://static.hiworks.com/office/static/images/progress_big.gif"
-				alt="progress.." title="progress..">
+			<img src="https://static.hiworks.com/office/static/images/progress_big.gif" alt="progress.." title="progress..">
 		</div>
 	</div>
 	<div id="main_layer_div"></div>
@@ -173,55 +177,45 @@
 	<div class="layer_box small alarm hide popup1 " style="" id="HWA_MAIN">
 		<p class="text" id="HWA_MSG"></p>
 		<div class="layer_button">
-			<button class="btn_variables" type="button" onclick="hidePopup();"
-				id="HWA_MAIN_OK">확인</button>
+			<button class="btn_variables" type="button" onclick="hidePopup();" id="HWA_MAIN_OK">확인</button>
 		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
+		<a href="javascript:void(0)" class="icon btn_closelayer" onclick="hidePopup();" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</a>
 	</div>
 
 	<div class="layer_box large hide dns_intro_layer" style="width: 550px;">
 		<div class="title_layer text_variables">메일 서비스 이용 안내</div>
 		<p class="bold body_bold">메일 서비스를 이용하시려면 하이웍스용 DNS 정보 설정이 필요합니다.</p>
 		<p class="mgt_15">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
+			<span style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
 			가비아 등록 도메인은 자동 설정을 지원합니다.
 		</p>
 		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open('https://domain.gabia.com/api/hiworksdns/domainsetting')">가비아
-				도메인 자동 설정하기</button>
+			<button type="button" class="btn_variables" onclick="location:href=window.open('https://domain.gabia.com/api/hiworksdns/domainsetting')">가비아 도메인 자동 설정하기</button>
 		</div>
 		<p class="pdt_20">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
+			<span style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
 			타사 등록 도메인은 DNS 정보를 직접 설정해야 합니다.
 		</p>
 		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open('https://customer.gabia.com/manuals_pop/manual_set.php?service=webmail_hosting&amp;fact=mailzine&amp;seq_no=2221')">설정
-				방법 보기</button>
+			<button type="button" class="btn_variables" onclick="location:href=window.open('https://customer.gabia.com/manuals_pop/manual_set.php?service=webmail_hosting&amp;fact=mailzine&amp;seq_no=2221')">설정 방법 보기</button>
 		</div>
 		<p class="bold body_bold mgt_50">
-			※ 하이웍스용 DNS 정보 설정을 완료하셨다면 메일 용량을 할당한 후 메일 서비스를<br> 이용할 수 있습니다.
-			‘오피스 관리’에서 계정별 메일 용량을 설정해주세요.
+			※ 하이웍스용 DNS 정보 설정을 완료하셨다면 메일 용량을 할당한 후 메일 서비스를<br> 이용할 수 있습니다. ‘오피스 관리’에서 계정별 메일 용량을 설정해주세요.
 		</p>
 		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open('/gabia.biz/admin/Orgmain')">오피스관리
-				페이지 가기</button>
+			<button type="button" class="btn_variables" onclick="location:href=window.open('/gabia.biz/admin/Orgmain')">오피스관리 페이지 가기</button>
 		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
+		<a href="javascript:void(0)" class="icon btn_closelayer" onclick="hidePopup();" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</a>
 	</div>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		var CHECK_TIME_OUT = window.setInterval(Common.showTimeout,
 				6 * 60 * 60 * 1000);
-	</script>
+	</script> -->
 
 	<!-- 문서보기 모달 시작 -->
 	<!--
@@ -814,56 +808,166 @@
 
 
 	<!-- 결재 설정, 신청 설정 , 처리 설정 모달 시작 -->
-	<!--
-	<div class="layer_box middle hide" id="layerApprovalLineSetting" style="margin-left: -175px; margin-top: -169.5px; display: block;">
-	<div class="title_layer text_variables">결재 설정</div>
-	<div class="to-item after">
-		<!-- <div class="updown-wrap first">
-			<span class="blind icon up">위로</span>
-			<span class="blind icon down">아래로</span>
-		</div>  
-	</div>
-	<div class="after">
-		<div class="approval-list" style="overflow-y: inherit;">
-			<label for="autocomplete"><input type="text"
-				class="refer-add js-complete ui-autocomplete-input"
-				placeholder="클릭 후 입력" id="inputApprovalLineSetting"
-				autocomplete="off"></label>
-			<ul
-				style="height: 132px; overflow-x: hidden; overflow-y: auto; margin-top: 5px;"
-				id="sortApprovalLineSetting" class="ui-sortable">
-				<li class="js-approval-line-setting unsortable" user_no="2812"
-					node_id="2256" old_new="old" style="cursor: auto;"><span>대표이사</span>
-				</li>
-				<li class="js-approval-line-setting ui-sortable-handle"
-					user_no="2819" node_id="2263" old_new="old"><span>양대리</span> <span
-					class="icon file_delete js-approval-line-setting-delete"></span> <span
-					class="spr-approval updown" title="Move"></span></li>
-			</ul>
+
+	<!-- 결재, 처리용 -->
+	<div class="layer_box middle hide" id="layerApprovalLineSetting" style="margin-left: -175px; margin-top: -169.5px; display: none;">
+		<div class="title_layer text_variables">결재 설정</div>
+		<div class="after">
+			<div class="approval-list" style="overflow-y: inherit;">
+				<label for="autocomplete">
+					<input type="text" class="refer-add js-complete ui-autocomplete-input" placeholder="클릭 후 입력" id="inputApprovalLineSetting" autocomplete="off">
+				</label>
+				<ul style="height: 132px; overflow-x: hidden; overflow-y: auto; margin-top: 5px;" id="sortApprovalLineSetting" class="ui-sortable">
+				</ul>
+			</div>
+			<div class="spr-approval approval-direction">
+				결<br> 재<br> <br> 방<br> 향<br>
+			</div>
 		</div>
-		<div class="spr-approval approval-direction">
-			결<br> 재<br>
-			<br> 방<br> 향<br>
+
+		<div class="layer_button">
+			<button type="button" class="btn_variables" onclick="updateApprovalLineSetting();">확인</button>
+			<button type="button" onclick="closeModal(layerApprovalLineSetting);">취소</button>
 		</div>
+		<button type="button" class="icon btn_closelayer" onclick="closeModal(layerApprovalLineSetting);" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</button>
+
+		<input type="hidden" id="tempApprovalLineType" value="approval_first_line">
+		<input type="hidden" id="tempApprovalType" value="A">
 	</div>
+	<!-- 결재, 처리용 끝 -->
 
-	<div class="layer_button">
-		<button type="button" class="btn_variables"
-			onclick="ApprovalDocument.saveApprovalLineSetting('A');">확인</button>
-		<button type="button"
-			onclick="$j('#layerApprovalLineSetting').hidePopup();">취소</button>
+
+
+
+
+	<!-- 신청, 기안용 -->
+	<div class="layer_box middle hide" id="layerApplicationLineSetting" style="margin-left: -175px; margin-top: -169.5px; display: none;">
+		<div class="title_layer text_variables">신청 설정</div>
+		<div class="after">
+			<div class="approval-list" style="overflow-y: inherit;">
+				<label for="autocomplete">
+					<input type="text" class="refer-add js-complete ui-autocomplete-input" placeholder="클릭 후 입력" id="inputApplicationLineSetting" autocomplete="off">
+				</label>
+				<ul style="height: 132px; overflow-x: hidden; overflow-y: auto; margin-top: 5px;" id="sortApplicationLineSetting" class="ui-sortable">
+				</ul>
+			</div>
+			<div class="spr-approval approval-direction">
+				결<br> 재<br> <br> 방<br> 향<br>
+			</div>
+		</div>
+
+		<div class="layer_button">
+			<button type="button" class="btn_variables" onclick="updateApplicationLineSetting();">확인</button>
+			<button type="button" onclick="closeModal(layerApplicationLineSetting);">취소</button>
+		</div>
+		<button type="button" class="icon btn_closelayer" onclick="closeModal(layerApplicationLineSetting);" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</button>
+
+		<input type="hidden" id="tempApprovalLineType" value="approval_first_line">
+		<input type="hidden" id="tempApprovalType" value="A">
 	</div>
-	<a href="javascript:void(0)" class="icon btn_closelayer"
-		onclick="$j('#layerApprovalLineSetting').hidePopup();" title="레이어 닫기"><span
-		class="blind">레이어 닫기</span></a>
+	<!-- 신청, 기안용 끝 -->
+	
+	
+	
+	<!-- 합의용 -->
+	<div class="layer_box middle hide" id="layerAgreeLineSetting" style="margin-left: -175px; margin-top: -169.5px; display: none;">
+		<div class="title_layer text_variables">합의 설정</div>
+		<div class="after">
+			<div class="approval-list" style="overflow-y: inherit;">
+				<label for="autocomplete">
+					<input type="text" class="refer-add js-complete ui-autocomplete-input" placeholder="클릭 후 입력" id="inputAgreeLineSetting" autocomplete="off">
+				</label>
+				<ul style="height: 132px; overflow-x: hidden; overflow-y: auto; margin-top: 5px;" id="sortAgreeLineSetting" class="ui-sortable">
+				</ul>
+			</div>
+			<div class="spr-approval approval-direction">
+				결<br> 재<br> <br> 방<br> 향<br>
+			</div>
+		</div>
 
-	<input type="hidden" id="tempApprovalLineType"
-		value="approval_first_line">
-	<input type="hidden" id="tempApprovalType" value="A">
+		<div class="layer_button">
+			<button type="button" class="btn_variables" onclick="updateAgreeLineSetting();">확인</button>
+			<button type="button" onclick="closeModal(layerAgreeLineSetting);">취소</button>
+		</div>
+		<button type="button" class="icon btn_closelayer" onclick="closeModal(layerAgreeLineSetting);" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</button>
+
+		<input type="hidden" id="tempApprovalLineType" value="approval_first_line">
+		<input type="hidden" id="tempApprovalType" value="A">
 	</div>
+	<!-- 합의용 끝 -->
+	
+	
+	<!-- 재무합의용 -->
+	<div class="layer_box middle hide" id="layerFiAgreeLineSetting" style="margin-left: -175px; margin-top: -169.5px; display: none;">
+		<div class="title_layer text_variables">재무합의 설정</div>
+		<div class="after">
+			<div class="approval-list" style="overflow-y: inherit;">
+				<label for="autocomplete">
+					<input type="text" class="refer-add js-complete ui-autocomplete-input" placeholder="클릭 후 입력" id="inputFiAgreeLineSetting" autocomplete="off">
+				</label>
+				<ul style="height: 132px; overflow-x: hidden; overflow-y: auto; margin-top: 5px;" id="sortFiAgreeLineSetting" class="ui-sortable">
+				</ul>
+			</div>
+			<div class="spr-approval approval-direction">
+				결<br> 재<br> <br> 방<br> 향<br>
+			</div>
+		</div>
+
+		<div class="layer_button">
+			<button type="button" class="btn_variables" onclick="updateFiAgreeLineSetting();">확인</button>
+			<button type="button" onclick="closeModal(layerFiAgreeLineSetting);">취소</button>
+		</div>
+		<button type="button" class="icon btn_closelayer" onclick="closeModal(layerFiAgreeLineSetting);" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</button>
+
+		<input type="hidden" id="tempApprovalLineType" value="approval_first_line">
+		<input type="hidden" id="tempApprovalType" value="A">
+	</div>
+	<!-- 재무합의용 끝 -->
 
 
-	-->
+
+
+	<!-- 결재 설정, 신청 설정 , 처리 설정 모달 속 이름 입력시 자동으로 뜨는 것 시작-->
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete approval_autocomplete" id="ui-id-6" tabindex="0" style="display: none; top: 399px; left: 826px; width: 360px;">
+	</ul>
+
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete reference_autocomplete" id="ui-id-1" tabindex="0" style="display: none; top: 560px; left: 426.5px; width: 360px;">
+	</ul>
+
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete income_autocomplete" id="ui-id-2" tabindex="0" style="display: none; top: 620px; left: 427px; width: 360px;">
+	</ul>
+
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete inR_autocomplete" id="ui-id-3" tabindex="0" style="display: none; top: 665px; left: 426.5px; width: 360px;">
+	</ul>
+
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete cir_autocomplete" id="ui-id-1" tabindex="0" style="display: none; top: 397.406px; left: 426.5px; width: 360px;">
+	</ul>
+
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete application_autocomplete" id="ui-id-6" tabindex="0" style="display: none; top: 399px; left: 826px; width: 360px;">
+	</ul>
+	
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete agree_autocomplete" id="ui-id-6" tabindex="0" style="display: none; top: 399px; left: 826px; width: 360px;">
+	</ul>
+	
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete fiAgree_autocomplete" id="ui-id-6" tabindex="0" style="display: none; top: 399px; left: 826px; width: 360px;">
+	</ul>
+
+	<!-- 
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete " id="ui-id-1" tabindex="0" 
+	style="display: block; top: 475.422px; left: 426.5px; width: 360px;">
+	</ul> -->
+
+
+	<!-- 결재 설정, 신청 설정 , 처리 설정 모달 속 이름 입력시 자동으로 뜨는 것 끝-->
+
 	<!-- 결재 설정, 신청 설정 , 처리 설정 모달 끝 -->
 
 	<!-- 양식함관리-분류 설정 모달 시작 -->
@@ -1225,6 +1329,410 @@
     </div>
 </div>
 	 -->
-	<!-- 완전 삭제 이력 모달 시작 -->
+	<!-- 완전 삭제 이력 모달 끝 -->
+
+
+
+
+
+
+
+
+
+	<!-- 상세보기_파일 첨부 모달 시작 -->
+
+	<div class="layer_box app-dialog large hide" id="layerAttachedFile" style="margin-left: -351px; margin-top: -116.5px; display: none;">
+		<div class="title_layer text_variables">파일 첨부</div>
+		<div class="write_input js-approval-input">
+			<label for="write_txt3" class="blind"></label>
+			<div class="file">
+				<div class="position">
+					<div class="file-list" id="dragZone" style="min-height: 68px;">
+						<div class="top">
+							<p class="left">
+								<span class="body-color mgr_20">별첨</span>
+								<button type="button" class="addfile" onclick="clickTriggerToFileApprovalAttach()">파일 추가</button>
+								<input type="file" style="overflow: hidden; width: 0px; height: 0px;" name="approval_attach" id="fileApprovalAttach" multiple="">
+							</p>
+							<p class="right hide" id="approvalAttachSize">
+								<span id="attachAttachSum">0KB</span>
+								/ 50MB
+							</p>
+						</div>
+
+						<div class="center show" id="approvalAttachText">여기로 파일을 끌어놓으세요</div>
+						<div class="list" id="approvalAttachList" style="max-height: 280px; overflow: auto;">
+							<form name="addFrm">
+								<input type="hidden" name="approvalId" value="${requestScope.approvalDetail.approvalId}">
+								<table id="tableApprovalAttach">
+									<caption></caption>
+									<colgroup>
+										<col width="">
+									</colgroup>
+									<tbody>
+
+
+									</tbody>
+
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layer_button">
+			<button type="button" class="btn_variables" id="updateAttachedFile">확인</button>
+			<button type="button" onclick="closeModal(layerAttachedFile);">취소</button>
+		</div>
+		<button type="button" class="icon btn_closelayer" onclick="closeModal(layerAttachedFile);" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</button>
+	</div>
+
+	<!-- 상세보기_파일 첨부 모달 끝 -->
+
+
+
+
+
+	<!-- 상세보기_결재 버튼 클릭시 모달 시작 -->
+
+	<div class="hw-modal-wrap size-sm hide popup37 hide" id="layerActionOfApproval" style="margin-left: -250px; margin-top: -109px; display: none;">
+		<div class="hw-modal-header">
+			<strong> 결재 </strong>
+		</div>
+		<div class="hw-modal-body">
+			<input type="hidden" name="approval_no" value="233505">
+			<input type="hidden" name="document_no" value="30284">
+			<input type="hidden" name="approval_office_user_no" value="3847">
+			<div class="gt-mb-20" id="approvalEnableValue">
+				<div class="hw-radio gt-mr-20">
+					<label>
+						<input type="radio" id="accept" name="approval_value" value="2" onchange="changeActionOfApproval(2);">
+						승인
+					</label>
+				</div>
+				<div class="hw-radio gt-mr-20">
+					<label>
+						<input type="radio" id="return" name="approval_value" value="3" onchange="changeActionOfApproval(3);">
+						반려
+					</label>
+				</div>
+			</div>
+			<p id="approvalMessage" class="hide pdb_10" style="display: block;">승인하시겠습니까?</p>
+			<div class="reason hide" id="approvalReason" style="display: block;">
+				<textarea class="hw-textarea" placeholder="의견을 입력하세요." id="approvalReasonMessage" style="resize: none;"></textarea>
+			</div>
+		</div>
+
+		<div class="hw-modal-footer gt-d-flex gt-justify-content-between">
+			<button type="button" class="hw-button secondary" onclick="closeModal(layerActionOfApproval);">취소</button>
+			<div>
+				<button type="button" onclick="enterActionOfApproval();" class="hw-button">확인</button>
+			</div>
+		</div>
+		<button type="button" class="icon btn_closelayer" onclick="closeModal(layerActionOfApproval);" title="레이어 닫기">
+			<span class="blind">레이어 닫기</span>
+		</button>
+	</div>
+
+	<!-- 상세보기_결재 버튼 클릭시 모달 끝 -->
+
+
+
+	<!-- 상세보기_결재선 변경 버튼 클릭시 모달 시작 -->
+	<div class="layer_box large address line universal" id="universal_approval_layer" style="margin-left: -560px; margin-top: -364.5px; display: none;">
+		<div id="titleApprovalLineSetting" class="title_layer text_variables">결재선 변경</div>
+		<div>
+			<div class="gt-d-table">
+				<!-- 조직도 영역 -->
+				<div class="area-tree gt-d-table-cell">
+					<div class="flex-container">
+						<div class="search-field">
+							<div class="gt-flex-1 gt-position-relative">
+								<input type="text" class="text-box gt-pr-20 gt-d-block gt-w-100" id="input-search-user-by-name" placeholder="이름, 조직 검색">
+								<button type="button" class="gt-position-absolute" id="btn-search-user-by-name" style="right: 5px; top: 7px;">
+									<i class="gi gi-search"></i>
+								</button>
+							</div>
+							<button type="button" class="refresh" id="btn-refresh-search">
+								<i class="fal fa-redo"></i>
+							</button>
+						</div>
+						<div class="tree-scroll-box gt-mt-15 approval_orgtree" id="approval-organization-area">
+							<div class="hw-org-tree">
+								<ul id="organization-nodes-root" class="hw-org-branch root">
+									<li class="organization-nodes">
+										<span class="org-name-wrap">
+											<span class="collapse-arrow js-org-folding">
+												<i class="gi gi-minus-alt"></i>
+											</span>
+											<div class="hw-checkbox">
+												<label class="js-org-checkbox-label" style="display: block;">
+													<input type="checkbox" class="checkbox-original js-org-checkbox">
+													<span class="hw-checkbox-input"></span>
+												</label>
+												<span class="org-name js-org-folding">
+													부서1
+													<span class="count">(2)</span>
+												</span>
+											</div>
+										</span>
+										<ul class="js-node-area hw-org-branch" style="display: none;">
+											<li class="organization-nodes">
+												<span class="org-name-wrap">
+													<span class="collapse-arrow js-org-folding">
+														<i class="gi gi-minus-alt"></i>
+													</span>
+													<div class="hw-checkbox">
+														<label class="js-org-checkbox-label" style="">
+															<input type="checkbox" class="checkbox-original js-org-checkbox">
+															<span class="hw-checkbox-input"></span>
+														</label>
+														<span class="org-name js-org-folding">
+															팀1
+															<span class="count">(2)</span>
+														</span>
+													</div>
+												</span>
+												<div class="js-members-area org-member-list" style="">
+													<span class="org-member organization-users">
+														<div class="hw-checkbox">
+															<label>
+																<input type="checkbox" class="checkbox-original js-member-checkbox">
+																<span class="hw-checkbox-input"></span>
+																<span class="org-name gt-font-normal entries-user ui-draggable ui-draggable-handle">이사 김이사</span>
+															</label>
+														</div>
+													</span>
+													<span class="org-member organization-users">
+														<div class="hw-checkbox">
+															<label>
+																<input type="checkbox" class="checkbox-original js-member-checkbox">
+																<span class="hw-checkbox-input"></span>
+																<span class="org-name gt-font-normal entries-user ui-draggable ui-draggable-handle">이사 이사장</span>
+															</label>
+														</div>
+													</span>
+												</div>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 결재선 영역 -->
+				<div class="area-target gt-d-table-cell gt-align-top">
+					<div class="row-space js-show-personal-approval-line" style="visibility: hidden;">
+						<select style="width: 304px" id="show-personal-approval-line">
+							<option value="">자주 쓰는 결재선</option>
+						</select>
+					</div>
+					<div class="gt-d-table gt-mt-15">
+						<!-- 이동 버튼 영역 -->
+						<div class="area-ctrls gt-d-table-cell">
+							<button type="button" class="hw-button outline-gray2 rounded" id="btn_approval_add_type_of_a">
+								결재<i class="far fa-chevron-right"></i>
+							</button>
+							<button type="button" class="hw-button outline-gray2 rounded" id="btn_approval_add_type_of_d">
+								합의<i class="far fa-chevron-right"></i>
+							</button>
+							<button type="button" class="hw-button outline-gray2 rounded" id="btn_approval_add_type_of_e">
+								재무합의<i class="far fa-chevron-right"></i>
+							</button>
+							<button type="button" class="hw-button outline-gray2 rounded" id="btn_approval_add_type_of_f">
+								참조<i class="far fa-chevron-right"></i>
+							</button>
+						</div>
+						<!-- 결재선 -->
+						<div class="approval-step-line gt-d-table-cell">
+							<div id="draggable_group" class="step-scroll-box-tall ui-sortable">
+								<div class="approval-sortable-group approval-type-A disabled group-0">
+									<div class="group-steps">
+										<span class="step">1</span>
+									</div>
+									<div class="group-head">
+										<div class="btn-handle group-btn-handle">
+											<i class="gis gi-grab"></i>
+										</div>
+										<div class="label-name">결재</div>
+									</div>
+									<div class="approval-sortable-table horizontal disabled  ui-sortable">
+										<div class="approval-sortable-cell disabled ui-sortable-handle">
+											<div class="cell-column">
+												<div class="btn-handle no-handle">
+													<i class="gis gi-grab"></i>
+												</div>
+											</div>
+											<div class="cell-column">
+												<div class="title ">관리자</div>
+												<div class="description ">하이웍스오피스 대표이사</div>
+											</div>
+											<div class="cell-column"></div>
+										</div>
+									</div>
+								</div>
+								<div class="approval-sortable-group approval-type-D  group-1">
+									<div class="group-steps">
+										<span class="step">2</span>
+									</div>
+									<div class="group-head">
+										<div class="btn-handle group-btn-handle">
+											<i class="gis gi-grab"></i>
+										</div>
+										<div class="label-name">
+											<div class="hw-btntype-radio-group">
+												<label class="hw-btntype-radio-label">
+													<input type="radio" class="hw-btntype-radio-input" name="approval_lqlu6frfmla6" value="A">
+													<span class="hw-btntype-radio-text">결재</span>
+												</label>
+												<label class="hw-btntype-radio-label">
+													<input type="radio" class="hw-btntype-radio-input" name="approval_lqlu6frfmla6" value="D" checked="">
+													<span class="hw-btntype-radio-text">합의</span>
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="approval-sortable-table horizontal   ui-sortable">
+										<div class="approval-sortable-cell ui-sortable-handle">
+											<div class="cell-column">
+												<div class="btn-handle row-btn-handle">
+													<i class="gis gi-grab"></i>
+												</div>
+											</div>
+											<div class="cell-column">
+												<div class="title ">김이사</div>
+												<div class="description ">하이웍스오피스 이사</div>
+											</div>
+											<div class="cell-column">
+												<button type="button" class="btn-delete-cell hw-icon btn-cancel-approval-sotable-cell">
+													<i class="gi gi-cancel"></i>
+												</button>
+											</div>
+										</div>
+										<div class="approval-sortable-cell ui-sortable-handle">
+											<div class="cell-column">
+												<div class="btn-handle row-btn-handle">
+													<i class="gis gi-grab"></i>
+												</div>
+											</div>
+											<div class="cell-column">
+												<div class="title ">이사장</div>
+												<div class="description ">하이웍스오피스 이사</div>
+											</div>
+											<div class="cell-column">
+												<button type="button" class="btn-delete-cell hw-icon btn-cancel-approval-sotable-cell">
+													<i class="gi gi-cancel"></i>
+												</button>
+											</div>
+										</div>
+										<div class="approval-sortable-cell ui-sortable-handle">
+											<div class="cell-column">
+												<div class="btn-handle row-btn-handle">
+													<i class="gis gi-grab"></i>
+												</div>
+											</div>
+											<div class="cell-column">
+												<div class="title ">양대리</div>
+												<div class="description ">하이웍스오피스 대리</div>
+											</div>
+											<div class="cell-column">
+												<button type="button" class="btn-delete-cell hw-icon btn-cancel-approval-sotable-cell">
+													<i class="gi gi-cancel"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="btn-delete-row-wrap">
+										<button type="button" class="btn-delete-row hw-icon js-btn-remove-group">
+											<i class="gi gi-cancel"></i>
+										</button>
+									</div>
+								</div>
+								<div class="approval-sortable-group approval-type-E  group-2">
+									<div class="group-steps">
+										<span class="step">3</span>
+									</div>
+									<div class="group-head">
+										<div class="btn-handle group-btn-handle">
+											<i class="gis gi-grab"></i>
+										</div>
+										<div class="label-name">재무합의</div>
+									</div>
+									<div class="approval-sortable-table    ui-sortable">
+										<div class="approval-sortable-cell ui-sortable-handle">
+											<div class="cell-column">
+												<div class="btn-handle row-btn-handle">
+													<i class="gis gi-grab"></i>
+												</div>
+											</div>
+											<div class="cell-column">
+												<div class="title ">차은우</div>
+												<div class="description ">하이웍스오피스 이사</div>
+											</div>
+											<div class="cell-column">
+												<button type="button" class="btn-delete-cell hw-icon btn-cancel-approval-sotable-cell">
+													<i class="gi gi-cancel"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="btn-delete-row-wrap">
+										<button type="button" class="btn-delete-row hw-icon js-btn-remove-group">
+											<i class="gi gi-cancel"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="approval-step-direction gt-d-table-cell gt-pl-10">
+            <div class="stem">결<br>재<br>방<br>향</div>
+          </div>
+           -->
+					</div>
+					<p class="gt-mt-30 font-size-14 text-333 row-space">참조</p>
+					<div class="row-space">
+						<div class="approval-type-F step-scroll-box-short gt-mt-15">
+							<div class="approval-sortable-table horizontal gt-p-0 gt-h-100 ui-sortable">
+								<div class="approval-sortable-cell ui-sortable-handle">
+									<div class="cell-column">
+										<div class="btn-handle row-btn-handle">
+											<i class="gis gi-grab"></i>
+										</div>
+									</div>
+									<div class="cell-column">
+										<div class="title ">박상무</div>
+										<div class="description ">하이웍스오피스 부장</div>
+									</div>
+									<div class="cell-column">
+										<button type="button" class="btn-delete-cell hw-icon btn-cancel-approval-sotable-cell">
+											<i class="gi gi-cancel"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layer_button">
+				<button type="button" class="btn_variables" id="btn_approval_apply">확인</button>
+				<button type="button" onclick="closeModal(universal_approval_layer);">취소</button>
+			</div>
+			<button type="button" class="icon btn_closelayer" onclick="closeModal(universal_approval_layer);" title="레이어 닫기">
+				<span class="blind">레이어 닫기</span>
+			</button>
+		</div>
+	</div>
+
+
+	<!-- 상세보기_결재선 변경 버튼 클릭시 모달 끝 -->
+
+
+
+
 </body>
 </html>

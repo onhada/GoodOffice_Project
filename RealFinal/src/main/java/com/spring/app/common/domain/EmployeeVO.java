@@ -128,6 +128,20 @@ public class EmployeeVO {
 	 */
 	private String adminType;
 	
+	/**
+	 * 소속 팀명
+	 */
+	private String teamName;
+	
+	/**
+	 * 소속 부서명
+	 */
+	private String depName;
+	
+	/**
+	 * 직위명
+	 */
+	private String positionName;
 	
 	
 	/**
@@ -465,6 +479,48 @@ public class EmployeeVO {
 	 */
 	public void setAdminType(String adminType) {
 		this.adminType = adminType;
+	}
+
+	/**
+	 * @return the teamName
+	 */
+	public String getTeamName() {
+		return teamName;
+	}
+
+	/**
+	 * @param teamName the teamName to set
+	 */
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
+	/**
+	 * @return the depName
+	 */
+	public String getDepName() {
+		return depName;
+	}
+
+	/**
+	 * @param depName the depName to set
+	 */
+	public void setDepName(String depName) {
+		this.depName = depName;
+	}
+
+	/**
+	 * @return the positionName
+	 */
+	public String getPositionName() {
+		return positionName;
+	}
+
+	/**
+	 * @param positionName the positionName to set
+	 */
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
 	}
 	
 	

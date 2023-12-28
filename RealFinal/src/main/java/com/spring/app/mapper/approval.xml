@@ -1,0 +1,1523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="approval">
+
+
+
+
+
+
+
+
+
+
+	<!-- 전자결재절차 테이블에서 유저의 사원번호가 등록되어있는 컬럼의 전자결재Id만 가져옴 !!!! -->
+	<select id="getApprovalAllIngList_withSearchAndPaging"
+		parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+        apd.fk_approvalId,
+        a.title,
+        apd.procedureId,
+        e.empName,
+        apd.sequence,
+		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+		apd.procedureType,
+		apd.status,
+		ap.isReadReturn,
+		nvl2(af.fk_approvalId, 1, 0) as isFile,
+		a.fk_formId
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        isReadReturn
+        from tbl_approvalProcedure
+        where fk_empId = #{empId}
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId
+        join tbl_employee e on apd.fk_empId = e.empId
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+
+
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+
+		<if test='orderType == "desc"'>order by draftDay desc</if>
+		<if test='orderType == "asc"'>order by draftDay asc</if>
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 전자결재절차 테이블에서 해당 전자결재id 반려 존재여부 -->
+	<select id="hasReturn" parameterType="Long" resultType="int">
+
+		select
+		count(fk_approvalId)
+		from
+		tbl_approvalprocedure
+		where fk_approvalId = #{fk_approvalId}
+		and status = 3
+		order by sequence
+
+	</select>
+
+
+
+	<!-- 유저보다 하위 신청 or 기안자들이 전원 승인하였는지 확인용 (0 : 전원 승인) -->
+	<select id="hasLowerApplicantAllAccept" parameterType="HashMap"
+		resultType="int">
+
+		select
+		count(*)
+		from
+		tbl_approvalProcedure
+		where fk_approvalId =
+		#{fk_approvalId}
+		and (procedureType = 1 or procedureType = 2)
+		and status != 2
+		and <![CDATA[ sequence < #{sequence} ]]>
+
+	</select>
+
+	<!-- 유저보다 하위 신청 or 기안자들 중에 대기가 있는지 확인 (0 : 대기 없음) -->
+	<select id="hasLowerApplicantWait" parameterType="HashMap"
+		resultType="int">
+		select
+		count(*)
+		from tbl_approvalProcedure
+		where fk_approvalId = #{fk_approvalId}
+		and (procedureType = 1 or procedureType = 2)
+		and status = 1
+		and <![CDATA[ sequence < #{sequence} ]]>
+	</select>
+
+	<!-- 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우 -->
+	<select id="hasUpperApplicantAndApproverWait"
+		parameterType="HashMap" resultType="int">
+
+		select count(*) from tbl_approvalProcedure where fk_approvalId =
+		#{fk_approvalId} and status = 1 and <![CDATA[ sequence > #{sequence} ]]>
+
+	</select>
+
+	<!-- 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0: 전원 승인) -->
+	<select id="hasLowerApplicantAndApproverAllAccept"
+		parameterType="HashMap" resultType="int">
+
+		select 
+		count(*) 
+		from tbl_approvalProcedure 
+		where fk_approvalId = #{fk_approvalId}
+		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 )
+		and status != 2
+		and <![CDATA[ sequence < #{sequence} ]]>
+
+	</select>
+
+
+	<!-- 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우 -->
+	<select id="hasLowerApplicantAndApproverWait"
+		parameterType="HashMap" resultType="int">
+		<![CDATA[ 
+		select 
+		count(*) 
+		from 
+		tbl_approvalProcedure 
+		where 
+		fk_approvalId = #{fk_approvalId} 
+		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4) 
+		and status = 1 and sequence < #{sequence} 
+		]]>
+	</select>
+
+	<!-- 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우 -->
+	<select id="hasUpperApproverWait" parameterType="HashMap"
+		resultType="int">
+
+		select 
+		count(*) 
+		from tbl_approvalProcedure
+		where fk_approvalId = #{fk_approvalId}
+		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4)
+		and status = 1
+		and <![CDATA[ sequence > #{sequence} ]]>
+
+	</select>
+
+	<!-- 결재자와 신청자가 모두 승인했는지 확인한다 (0일 경우 모두 승인, 그 외의 경우 모두 승인하기 전) -->
+	<select id="hasApplicantAndApproverAllAccept"
+		parameterType="HashMap" resultType="int">
+
+		select
+		count(*)
+		from
+		tbl_approvalProcedure
+		where fk_approvalId = #{fk_approvalId}
+		and
+		(procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4)
+		and status != 2
+
+	</select>
+
+
+	<!-- 하위 순서가 모두 승인했는지 확인한다 (0: 전원 승인) -->
+	<select id="hasUnderRankerAllAccept" parameterType="HashMap"
+		resultType="int">
+
+		select
+		count(*)
+		from
+		tbl_approvalProcedure
+		where fk_approvalId = #{fk_approvalId}
+		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 or procedureType = 8 or procedureType = 9)
+		and status != 2
+		and <![CDATA[ sequence < #{sequence} ]]>
+
+	</select>
+
+
+	<!-- 하위 순서 중에 대기가 있을 경우 -->
+	<select id="hasUnderRankerWait" parameterType="HashMap"
+		resultType="int">
+
+		select
+		count(*)
+		from
+		tbl_approvalProcedure
+		where fk_approvalId = #{fk_approvalId} 
+		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 or procedureType = 8 or procedureType = 9 )
+		and status = 1
+		and <![CDATA[ sequence < #{sequence} ]]>
+
+	</select>
+
+
+	<!-- 상위 순서 중에 대기가 있을 경우 -->
+	<select id="hasUpperRankerWait" parameterType="HashMap"
+		resultType="int">
+
+		select
+		count(*)
+		from
+		tbl_approvalProcedure
+		where fk_approvalId = #{fk_approvalId}
+		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 or procedureType = 8 or procedureType = 9 )
+		and status = 1
+		and <![CDATA[ sequence > #{sequence} ]]>
+
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 전자결재절차 테이블에서 유저의 사원번호가 등록되어있는 컬럼의 전자결재Id만 가져옴 !!!! -->
+	<select id="getApprovalAllBox_withViewAllAndSearchAndPaging"
+		parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+		*
+		from
+		(
+		(
+		select
+        apd.procedureId,
+        apd.fk_approvalId,
+        a.title,
+        e.empName,
+		e.empId,
+        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+        a.fk_formId,
+        formName,
+        s.fk_positionId,
+        apd.procedureType,
+		apd.status,
+        apd.sequence,
+		nvl2(importantApprovalId, 1, 0) as isImportant,
+		nvl2(af.fk_approvalId, 1, 0) as isFile,
+		ap.isReadReturn
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        isReadReturn
+        from tbl_approvalProcedure
+        where fk_empId = #{empId}
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId
+        join tbl_employee e on apd.fk_empId = e.empId
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+		
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		)
+		union
+		(
+		select
+        apd.procedureId,
+        apd.fk_approvalId,
+        a.title,
+        e.empName,
+        e.empId,
+        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+        a.fk_formId,
+        formName,
+        s.fk_positionId,
+        apd.procedureType,
+		apd.status,
+        apd.sequence,
+		nvl2(importantApprovalId, 1, 0) as isImportant,
+		nvl2(af.fk_approvalId, 1, 0) as isFile,
+		ap.isReadReturn
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        isReadReturn
+        from tbl_approvalProcedure
+        where sequence = 1
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId
+        join tbl_employee e on apd.fk_empId = e.empId
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+        join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+
+		where
+		approvalId not in (select fk_approvalId from tbl_approvalProcedure where fk_empId = #{empId})
+		and sequence = 1
+		and s.securityLevel != 'S'
+		and isDelete = 0
+		
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<!-- and <![CDATA[ e.fk_positionId < s.fk_positionId ]]> -->
+		)
+		)
+		
+		<if test='orderType == "desc"'>order by draftDay desc</if>
+		<if test='orderType == "asc"'>order by draftDay asc</if>
+
+
+	</select>
+	
+	
+	
+	<select id="getApprovalAllBox_withSearchAndPaging"
+		parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+		procedureId,
+		apd.fk_approvalId,
+		title,
+		empName,
+		apd.fk_empId as empId,
+		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+		fk_formId,
+		formName,
+		s.fk_positionId,
+		procedureType,
+		apd.status,
+		sequence,
+		nvl2(importantApprovalId, 1, 0) as isImportant,
+		nvl2(af.fk_approvalId, 1, 0) as isFile,
+		isReadReturn
+		
+		
+		from tbl_approval a
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_approvalprocedure apd on a.approvalId = apd.fk_approvalId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		apd.fk_empId = #{empId}
+		and isTemporary = 0
+		and isDelete = 0
+		
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<if test='orderType == "desc"'>order by draftDay desc</if>
+		<if test='orderType == "asc"'>order by draftDay asc</if>
+
+
+	</select>
+
+
+	<!-- <select id="getApprovalAllBox_withSearchAndPaging" parameterType="HashMap" 
+		resultType="com.spring.app.approval.domain.ApprovalVO"> select procedureId, 
+		apd.fk_approvalId, title, empName, to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') 
+		as draftDay, to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay, 
+		formName, procedureType, apd.status, sequence, nvl2(importantApprovalId, 
+		1, 0) as isImportant, nvl2(fileId, 1, 0) as isFile from tbl_approval a join 
+		tbl_employee e on a.fk_empId = e.empId join tbl_approvalprocedure apd on 
+		a.approvalId = apd.fk_approvalId join tbl_form f on a.fk_formId = f.formId 
+		join tbl_team t on e.fk_teamId = t.teamId join tbl_department d on t.fk_depid 
+		= d.depId left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid 
+		and apd.fk_approvalId = ia.fk_approvalId left join tbl_approvalFile af on 
+		apd.fk_approvalId = af.fk_approvalId where apd.fk_empId = #{empId} and isTemporary 
+		= 0 <choose> <when test='searchType != "" and searchType != "approvalId" 
+		and searchWord != ""'> and #{searchType} like '%'||lower(#{searchWord})||'%' 
+		</when> <when test='searchType == "approvalId" and searchWord != ""'> and 
+		#{searchType} = #{searchWord} </when> <when test='searchType == "all" and 
+		searchWord != ""'> and ( approvalId = #{searchWord} or title like '%'||lower(#{searchWord})||'%' 
+		or empName like '%'||lower(#{searchWord})||'%' or formName like '%'||lower(#{searchWord})||'%' 
+		or depName like '%'||lower(#{searchWord})||'%' ) </when> </choose> <if test='orderType 
+		== "desc"'>order by draftDay desc</if> <if test='orderType == "asc"'>order 
+		by draftDay asc</if> </select> -->
+
+
+	<!-- 전원 승인했는지 확인 -->
+	<select id="hasAllAccept" parameterType="HashMap"
+		resultType="int">
+
+		select
+		count(*)
+		from
+		tbl_approvalProcedure
+		where fk_approvalId
+		= #{fk_approvalId}
+		and (procedureType = 1 or procedureType = 2 or
+		procedureType = 3 or
+		procedureType = 4 or procedureType = 8 or
+		procedureType = 9 )
+		and status != 2
+
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 임시저장함 -->
+	<select id="getApprovalTempBox_withSearchAndPaging"
+		parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+		apd.fk_approvalId,
+		title,
+		formName,
+		nvl2(importantApprovalId, 1, 0)
+		as isImportant,
+		nvl2(fileId, 1, 0) as isFile
+		from tbl_approval a
+		join
+		tbl_employee e on a.fk_empId =
+		e.empId
+		join tbl_approvalprocedure apd on
+		a.approvalId =
+		apd.fk_approvalId
+		join tbl_form f on a.fk_formId =
+		f.formId
+		join
+		tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d
+		on
+		t.fk_depid = d.depId
+		left join tbl_importantApproval ia on
+		apd.fk_empId = ia.fk_empid and
+		apd.fk_approvalId = ia.fk_approvalId
+		left join tbl_approvalFile af on apd.fk_approvalId = af.fk_approvalId
+		where
+		apd.fk_empId = #{empId}
+		and ( procedureType = 1 or procedureType =
+		2 )
+		and sequence = 1
+		and isTemporary = 1
+		and isDelete = 0
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<if test='orderType == "desc"'>order by draftDay desc</if>
+		<if test='orderType == "asc"'>order by draftDay asc</if>
+	</select>
+
+
+
+
+
+
+	<!-- 전자결재_관리자 설정_기본 설정_보안 등급별 열람 설정을 하기 위해 기존 보안 등급별 열람 정보를 가져온다 -->
+	<select id="getSecurityLevelDetailList" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.SecurityVO">
+
+		select
+		positionId,
+		positionName,
+		nvl2(s.fk_positionId,
+		securityLevel, 0) as securityLevel
+		from
+		tbl_position p
+		left join
+		tbl_security s on p.positionId = s.fk_positionId
+		order by positionId
+
+	</select>
+
+
+	<!-- 전자결재_관리자 설정_기본 설정_보안 등급별 열람 설정을 하기 위해 보안등급 정보를 가져온다 -->
+	<select id="getSecurityLevelList" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.SecurityVO">
+
+		select
+		securityId,
+		securityLevel
+		from tbl_security
+		order by securityId
+
+	</select>
+
+
+
+	<!-- 전자결재_관리자 설정_기본 설정_보안 등급A 설정 -->
+	<update id="setSecurityLevelA" parameterType="HashMap">
+
+		UPDATE tbl_security
+		SET fk_positionId = #{levelA} WHERE securityLevel = 'A'
+
+	</update>
+
+	<!-- 전자결재_관리자 설정_기본 설정_보안 등급B 설정 -->
+	<update id="setSecurityLevelB" parameterType="HashMap">
+
+		UPDATE tbl_security
+		SET fk_positionId = #{levelB} WHERE securityLevel = 'B'
+
+	</update>
+
+
+	<!-- 전자결재_관리자 설정_양식함 관리_메인화면 총 건수 용 -->
+	<select id="getTotalCountApprovalFormList"
+		parameterType="String" resultType="int">
+
+		select
+		count(*)
+		from tbl_form
+		<if test='searchWord != ""'>
+			where formName like
+			'%'||lower(#{searchWord})||'%'
+		</if>
+
+	</select>
+
+
+	<!-- 전자결재_관리자 설정_양식함 관리_메인화면 -->
+	<select id="getFormList" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.FormVO">
+
+		select
+		*
+		from
+		(
+		select
+		row_number() over(order by formId) AS rno,
+		formId,
+		formName,
+		description,
+		isUse
+		from tbl_form
+		<if test='searchWord != ""'>
+			where formName like
+			'%'||lower(#{searchWord})||'%'
+		</if>
+		)
+		where rno between #{startRno} and #{endRno}
+	</select>
+	
+	<!-- 전자결재_목록화면에서 문서 드롭다운 리스트에 보여줄 문서 종류 리스트 -->
+	<select id="getFormNameList"
+		resultType="com.spring.app.approval.domain.FormVO">
+
+		select
+		formId,
+		formName
+		from tbl_form
+		where isUse = 1
+		
+	</select>
+
+
+
+
+	<!-- 전자결재_관리자 설정_전체 문서 목록 -->
+	<select id="getDocumentAllList_withSearchAndPaging"
+		parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+		*
+		from
+		(
+		select
+		row_number() over(
+		<if test='orderType == "desc"'>order by draftDay desc</if>
+		<if test='orderType == "asc"'>order by draftDay asc</if>
+		) AS rno,
+		approvalId as fk_approvalId,
+		title,
+		empName,
+		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+		apd.status,
+		nvl2(fileId, 1, 0) as isFile
+		from tbl_approval a
+		join tbl_approvalProcedure apd on a.approvalId = apd.fk_approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId =
+		t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		left join
+		tbl_approvalFile af on
+		apd.fk_approvalId = af.fk_approvalId
+		where isTemporary = 0
+		and sequence = 1
+		and isDelete = 0
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		)
+		where rno between #{startRno} and #{endRno}
+	</select>
+
+
+
+
+	<!-- 전자결재_관리자 설정_전체 문서 목록 총 건수 -->
+	<select id="getTotalCountDocumentAllList"
+		parameterType="HashMap" resultType="int">
+
+		select
+		count(*)
+		from tbl_approval a
+		join tbl_approvalProcedure apd on a.approvalId = apd.fk_approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId =
+		t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		left join
+		tbl_approvalFile af on
+		apd.fk_approvalId = af.fk_approvalId
+		where isTemporary = 0
+		and sequence = 1
+		and isDelete = 0
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+
+	</select>
+
+
+
+
+
+
+
+	<!-- 전자결재_관리자 설정_삭제 문서 목록 -->
+	<select id="getDocumentDeleteList_withSearchAndPaging"
+		parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+		*
+		from
+		(
+		select
+		row_number() over(
+		<if test='orderType == "desc"'>order by draftDay desc</if>
+		<if test='orderType == "asc"'>order by draftDay asc</if>
+		) AS rno,
+		approvalId as fk_approvalId,
+		title,
+		empName,
+		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+		apd.status,
+		nvl2(fileId, 1, 0) as isFile,
+		isDelete
+		from tbl_approval a
+		join tbl_approvalProcedure apd on a.approvalId = apd.fk_approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId =
+		t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		left join
+		tbl_approvalFile af on
+		apd.fk_approvalId = af.fk_approvalId
+		where isTemporary = 0
+		and sequence = 1
+		and (isDelete = 1 or isDelete = 2)
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		)
+		where rno between #{startRno} and #{endRno}
+	</select>
+
+
+
+
+	<!-- 전자결재_관리자 설정_삭제 문서 목록 총 건수 -->
+	<select id="getTotalCountDocumentDeleteList"
+		parameterType="HashMap" resultType="int">
+
+		select
+		count(*)
+		from tbl_approval a
+		join tbl_approvalProcedure apd on a.approvalId = apd.fk_approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId =
+		t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		left join
+		tbl_approvalFile af on
+		apd.fk_approvalId = af.fk_approvalId
+		where isTemporary = 0
+		and sequence = 1
+		and (isDelete = 1 or isDelete = 2)
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+
+	</select>
+
+
+
+
+
+
+	<!-- 전자결재_관리자 설정_전자결재 관리자_메인 화면 -->
+	<select id="getAdminList"
+		resultType="com.spring.app.approval.domain.AdminVO">
+		select
+		adminId,
+		empName,
+		substr(email, 0, instr(email, '@')-1) as id,
+		'['||depName||'] '||teamName as team,
+		to_char(ah.registerDay,'yyyy-mm-dd') as registerDay,
+		isReadAllDocument,
+		case adminType when '4' then '1' else '0' end as isFullAdmin
+		from tbl_admin a
+		join tbl_adminHistory ah on a.adminid = ah.fk_adminId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on d.depid = t.fk_depid
+		where adminType = 4 or adminType = 2
+		order by ah.registerDay
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_상세보기 -->
+	<select id="getApprovalDocumentView"
+		parameterType="HashMap" resultType="com.spring.app.approval.domain.ApprovalDetailVO">
+		
+		select
+		formId,
+		formName,
+		'['||depName||'] '||teamName as team,
+		empName,
+		a.approvalId,
+		preservationYear,
+		securityId,
+		title,
+		
+		
+		<!-- 수정필  -->
+		<choose>
+		   <when test='formId == 101 or formId == 102 or formId == 104 or formId == 109'>
+		      reason as content,
+		   </when>
+		   <when test='formId == 103'>
+		      detail as content,
+		   </when>
+		   <when test='formId == 105 or formId == 106 or formId == 107 or formId == 108'>
+		      content,
+		   </when>
+		   <otherwise>
+		   </otherwise>
+		</choose>
+        nvl2(IMPORTANTAPPROVALID, 1 , 0) as isImportant,
+        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+        to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay
+		
+		
+		from
+		tbl_approval a
+        join tbl_approvalProcedure ap on a.approvalId = ap.fk_approvalId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_employee e on ap.fk_empid = e.empid
+		join tbl_team t on e.fk_teamId = t.teamid
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on a.fk_securityid = s.securityid
+		
+		<!-- 수정필  -->
+		<choose>
+		   <when test='formId == 101 or formId == 102'>
+		      left join tbl_workApplication wa on a.approvalid = wa.fk_approvalid
+		   </when>
+		   <when test='formId == 103'>
+		      left join (select fk_approvalId, detail from tbl_modifyWorkRequest where fk_approvalId = #{approvalId} and rownum = 1) mw on a.approvalid = mw.fk_approvalid
+		   </when>
+		   <when test='formId == 104'>
+		      left join tbl_dayOffApplication da on a.approvalid = da.fk_approvalid
+		   </when>
+		   <when test='formId == 105 or formId == 107'>
+		      left join tbl_businesscontact b on a.approvalid = b.fk_approvalid
+		   </when>
+		   <when test='formId == 106'>
+		      left join tbl_circular c on a.approvalid = c.fk_approvalid
+		   </when>
+		   <when test='formId == 108'>
+		      left join tbl_approvalLetter al on a.approvalid = al.fk_approvalid
+		   </when>
+		   <when test='formId == 109'>
+		      left join tbl_empProof ep on a.approvalid = ep.fk_approvalid
+		   </when>
+		   <otherwise>
+		   </otherwise>
+		</choose>
+		
+        left join (select * from tbl_importantApproval where fk_empId = #{empId} and fk_approvalId = #{approvalId}) i on a.approvalId = i.fk_approvalId
+        where a.approvalId = #{approvalId} and sequence = 1
+		
+	</select>
+	
+	<!-- 전자결재_상세보기_절차부분 -->
+	<select id="getApprovalDocumentView_Procedure"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalProcedureVO">
+		
+		select
+		procedureType,
+		ap.status,
+		empId,
+		empName,
+        positionName,
+        profileImage,
+		to_char(ap.registerDay,'yyyy-mm-dd hh24:mi:ss') as registerDay,
+		rn.sequence
+		from tbl_approvalProcedure ap
+		join tbl_employee e on ap.fk_empid = e.empId
+        join tbl_position p on e.fk_positionId = p.positionId
+        left join (select procedureId,  row_number() over(order by sequence) -1 as sequence from tbl_approvalProcedure where fk_approvalId = #{approvalId}) rn on 
+        ap.procedureId = rn.procedureId
+		where ap.fk_approvalId = #{approvalId}
+		order by sequence
+		
+	</select>
+	
+	
+	<!-- 전자결재_상세보기_첨부파일부분 -->
+	<select id="getApprovalDocumentView_File"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalFileVO">
+		
+		select 
+		fileId as approvalFileId,
+		fileName,
+		fileSize
+		from tbl_approvalFile
+		where fk_approvalId = #{approvalId}
+		order by fileId
+		
+	</select>
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_의견부분 -->
+	<select id="getApprovalOpinionList"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalOpinionVO">
+		
+		select 
+		opinionId,
+		empId,
+        empName,
+        profileImage,
+        to_char(ao.registerDay, 'yyyy-mm-dd hh24:mi:dd') as registerDay,
+        content
+        from tbl_approvalOpinion ao
+        join tbl_employee e on ao.fk_empId = e.empId
+		where fk_approvalId = #{approvalId}
+		order by registerDay
+		
+	</select>
+	
+	
+	<!-- 전자결재_상세보기_기안 or 신청자인지 확인 -->
+	<select id="isDraftEmp"
+		parameterType="HashMap" resultType="int">
+
+		select
+		count(*)
+		from tbl_approvalProcedure
+		where 
+		fk_empId = #{empId}
+		and fk_approvalId = #{approvalId}
+		and (procedureType = 1 or procedureType = 2)
+		and sequence = 1
+
+	</select>
+	
+	
+	<!-- 전자결재_상세보기_보안등급 업데이트-->
+	<update id="updateApprovalSecurity"
+		parameterType="HashMap">
+
+		update tbl_approval set fk_securityId = #{securityId} where approvalId = #{approvalId}
+
+	</update>
+	
+	
+	
+	<!-- 전자결재_상세보기_결재 + 버튼_사원명 검색 -->
+	<select id="searchEmpName"
+		parameterType="String" resultType="com.spring.app.common.domain.EmployeeVO">
+
+		select
+		empId,
+		empName,
+		depName,
+		teamName,
+		positionName
+		from tbl_employee e
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depId = d.depId
+		join tbl_position p on e.fk_positionId = p.positionId
+		where empName like '%'||lower(#{searchWord})||'%'
+		order by empName
+		
+	</select>
+	
+	
+	<!-- 전자결재_상세보기_결재 및 처리 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트 -->
+	<select id="getProcedureTypeApproval"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalProcedureVO">
+
+		select
+		procedureId,
+		fk_empId as empId
+		from tbl_approvalProcedure
+		where (procedureType = 3 or procedureType = 4) and fk_approvalId = #{approvalId}
+		order by sequence
+		
+	</select>
+	
+	<!-- 전자결재_상세보기_결재 or 신청 or 처리 +버튼_확인 눌렀을 경우_업데이트-->
+	<update id="updateApprovalLineSetting"
+		parameterType="HashMap">
+
+		update tbl_approvalProcedure set fk_empId = #{empId}, registerDay = default where procedureId = #{procedureId}
+
+	</update>
+	
+	<!-- 전자결재_상세보기_결재 +버튼_확인 눌렀을 경우_등록을 위해 마지막 시퀀스(순서)를 가져와야함-->
+	<select id="getApprovalProcedureLastSeq"
+		parameterType="Long" resultType="int">
+		
+		select
+		MAX(sequence) as sequence
+		from tbl_approvalProcedure
+		where fk_approvalId = #{approvalId}  
+
+	</select>
+	
+	<!-- 전자결재_상세보기_결재 +버튼_확인 눌렀을 경우_등록-->
+	<insert id="insertApprovalLineSetting"
+		parameterType="HashMap">
+		insert into tbl_approvalProcedure values (APPROVALPROCEDURESEQ.nextVal, #{approvalId}, #{procedureType}, #{empId}, 1, #{sequence}, 0, default)
+	</insert>
+	
+	
+	<!-- 전자결재_상세보기_결재 +버튼_확인 눌렀을 경우_삭제-->
+	<delete id="deleteApprovalLineSetting"
+		parameterType="HashMap">
+		delete from tbl_approvalProcedure where procedureId = #{procedureId}
+	</delete>
+	
+	<!-- 전자결재_상세보기_참조 or 수신참조 or 수신 +버튼_등록-->
+	<insert id="addRef"
+		parameterType="HashMap">
+		insert into tbl_approvalProcedure values(APPROVALPROCEDURESEQ.nextVal, #{approvalId}, #{refType}, #{empId}, 5, #{sequence}, 0, default)
+	</insert>
+	
+	<!-- 전자결재_상세보기_유저의 절차 타입 취득 -->
+	<select id="getUserProcedureType"
+		parameterType="HashMap" resultType="int">
+
+		select
+		procedureType
+		from tbl_approvalProcedure
+		where 
+		fk_empId = #{empId}
+		and fk_approvalId = #{approvalId}
+
+	</select>
+	
+	
+	<!-- 전자결재_상세보기_참조 or 수신참조 or 수신 x 버튼_삭제-->
+	<delete id="delRef"
+		parameterType="HashMap">
+		delete from tbl_approvalProcedure where fk_approvalId = #{approvalId} and fk_empId = #{empId}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_파일 첨부 확인 버튼_등록 -->
+	<insert id="insertApprovalFile"
+		parameterType="HashMap">
+		insert into tbl_approvalFile values(APPROVALFILESEQ.nextVal, #{approvalId}, #{fileName}, #{fileSize})
+	</insert>
+	
+	
+	<!-- 전자결재_상세보기_파일 첨부 확인 버튼_업데이트 -->
+	<update id="updateApprovalFile"
+		parameterType="HashMap">
+
+		update tbl_approvalFile set fileName = #{fileName}, fileSize = #{fileSize} where fileId = #{approvalFileId}
+
+	</update>
+	
+	<!-- 전자결재_상세보기_파일 첨부 확인 버튼_삭제-->
+	<delete id="deleteApprovalFile"
+		parameterType="HashMap">
+		delete from tbl_approvalFile where fileId = #{approvalFileId}
+	</delete>
+	
+	<!-- 전자결재_상세보기_기존 첨부파일 정보 -->
+	<select id="getApprovalDocumentFile"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalFileVO">
+		
+		select 
+		fileId as approvalFileId,
+		fileName,
+		fileSize
+		from tbl_approvalFile
+		where fileId = #{fileId}
+	</select>
+	
+	<!-- 전자결재_상세보기_의견 등록-->
+	<insert id="insertOpinion"
+		parameterType="HashMap">
+		insert into tbl_approvalOpinion values(APPROVALOPINIONSEQ.nextVal, #{approvalId}, #{empId}, #{opinion}, default)
+	</insert>
+	
+	<!-- 전자결재_상세보기_의견 삭제-->
+	<delete id="deleteOpinion"
+		parameterType="Long">
+		delete from tbl_approvalOpinion where opinionId = #{opinionId}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_중요 등록-->
+	<insert id="insertImportant"
+		parameterType="HashMap">
+		insert into tbl_importantApproval values(IMPAPPROVALSEQ.nextVal, #{approvalId}, #{empId})
+	</insert>
+	
+	<!-- 전자결재_상세보기_중요 삭제-->
+	<delete id="deleteImportant"
+		parameterType="HashMap">
+		delete from tbl_importantApproval where fk_approvalId = #{approvalId} and fk_empId = #{empId}
+	</delete>
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_결재 상태 업데이트-->
+	<update id="updateActionOfApproval"
+		parameterType="HashMap">
+		update tbl_approvalProcedure set status = #{status}, registerDay = default where fk_approvalId = #{approvalId} and fk_empId = #{empId}
+	</update>
+	
+	
+	<!-- 전자결재_상세보기_참조, 수신참조, 수신 읽음으로 업데이트-->
+	<update id="updateRefRead" parameterType="HashMap">
+		update tbl_approvalProcedure set status = 4, registerDay = default where fk_approvalId = #{approvalId} and fk_empId = #{empId}
+	</update>
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_재직증명서 상세정보 -->
+	<select id="getEmpProofDetail" parameterType="HashMap" resultType="com.spring.app.approval.domain.EmpProofDetailVO">
+		select
+		empName,
+		to_char(birth,'yyyy-mm-dd') as birth,
+		to_char(issueDay,'yyyy. mm. dd') as issueDay,
+		submit,
+		'[' || teamName || '] ' || depName as team,
+		to_char(startWorkDay,'yyyy-mm-dd') as startWorkDay,
+		reason
+		from 
+		tbl_empProof ep 
+		join tbl_approval a on ep.fk_approvalid = a.approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_team t on e.fk_teamid = t.teamId
+		join tbl_department d on t.fk_depId = d.depId
+		where fk_approvalId = #{approvalId}
+	</select>
+
+
+
+	<!-- 전자결재_상세보기_처리 +버튼_확인 눌렀을 경우_등록-->
+	<insert id="insertProcessLineSetting"
+		parameterType="HashMap">
+		insert into tbl_approvalProcedure values (APPROVALPROCEDURESEQ.nextVal, #{approvalId}, 4, #{empId}, 1, #{sequence}, 0, default)
+	</insert>
+	
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_신청 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트 -->
+	<select id="getProcedureTypeApplication"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalProcedureVO">
+
+		select
+		procedureId,
+		fk_empId as empId
+		from tbl_approvalProcedure
+		where (procedureType = 1 or procedureType = 2) and fk_approvalId = #{approvalId}
+		order by sequence
+		
+	</select>
+	
+	
+	<!-- 전자결재_상세보기_신청 +버튼_확인 눌렀을 경우_등록-->
+	<insert id="insertApplicationLineSetting"
+		parameterType="HashMap">
+		insert into tbl_approvalProcedure values (APPROVALPROCEDURESEQ.nextVal, #{approvalId}, 2, #{empId}, 1, #{sequence}, 0, default)
+	</insert>
+	
+	<!-- 전자결재_상세보기_완료일 업데이트-->
+	<update id="updateApprovalComplete" parameterType="HashMap">
+		update tbl_approval set completeDay = sysdate where approvalId = #{approvalId}
+	</update>
+	
+	
+	<!-- 전자결재_상세보기_합의 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트 -->
+	<select id="getProcedureTypeAgree"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalProcedureVO">
+
+		select
+		ap.procedureId,
+		fk_empId as empId,
+		ap.status,
+		empName,
+		rn.sequence
+		from tbl_approvalProcedure ap
+		join tbl_employee e on ap.fk_empId = e.empId
+		join (select procedureId,  row_number() over(order by sequence) -1 as sequence from tbl_approvalProcedure where fk_approvalId = #{approvalId}) rn 
+		on rn.procedureId = ap.procedureId
+		where procedureType = 8 and fk_approvalId = #{approvalId}
+		order by sequence
+		
+	</select>
+	
+	<!-- 전자결재_상세보기_재무합의 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트 -->
+	<select id="getProcedureTypeFiAgree"
+		parameterType="Long" resultType="com.spring.app.approval.domain.ApprovalProcedureVO">
+
+		select
+		procedureId,
+		fk_empId as empId
+		from tbl_approvalProcedure
+		where procedureType = 9 and fk_approvalId = #{approvalId}
+		order by sequence
+		
+	</select>
+	
+	
+	
+	<!-- 전자결재_상세보기_연장근무 혹은 휴일근무 신청 -->
+	<select id="getWorkApplicationDetail"
+		parameterType="Long" resultType="com.spring.app.approval.domain.WorkApplicationVO">
+
+		select
+		fk_approvalId as approvalId,
+		fk_workType as workType,
+		to_char(workDay, 'YYYY"년 "MM"월 "DD"일"(dy)') as workDay,
+		to_char(overTimeStart,'hh24:mi') as overTimeStart,
+		to_char(overTimeEnd,'hh24:mi') as overTimeEnd
+		from tbl_workApplication
+		where fk_approvalId = #{approvalId}
+		
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_휴무 신청 -->
+	<select id="getDayOffDetail" parameterType="Long" resultType="com.spring.app.approval.domain.DayOffVO">
+		select
+		approvalId,
+		empName,
+		'[' || depName || '] ' || teamName as team,
+		dayOffTypeName,
+		type,
+		to_char(dayOffDay, 'YYYY"년 "MM"월 "DD"일"(dy)') as dayOffDay
+        from tbl_dayOffType dot 
+		join tbl_dayOffApplication d on d.fk_dayOffTypeId = dot.dayOffTypeId
+		join tbl_approval a on d.fk_approvalId = a.approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department de on t.fk_depId = de.depId
+		where d.fk_approvalId = #{approvalId}
+	</select>
+	
+	
+	
+	
+	
+	<!-- 전자결재_상세보기_근무체크 수정 요청 -->
+   <resultMap type="com.spring.app.approval.domain.ModifyWorkRequestVO" id="resultMap_mwRequest">
+      <result property="workDay" column="workDay"/>
+      <result property="empName" column="empName"/>
+      <result property="approvalId" column="approvalId"/>
+      <collection property="modifyDetailList" column="approvalId" javaType="List" ofType="com.spring.app.approval.domain.ModifyDetailVO" select="getModifyDetailList"/>
+   </resultMap>
+   
+   <!-- 전자결재_상세보기_근무체크 수정 정보 -->
+   <select id="getModifyWorkRequest" parameterType="Long" resultMap="resultMap_mwRequest">
+      	select
+		approvalId,
+		empName,
+		to_char(resisterdayTime, 'YYYY"년 "MM"월 "DD"일"(dy)') as workDay
+		from 
+		tbl_approval a
+		join tbl_modifyWorkRequest m on a.approvalId = m.fk_approvalid
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_workHistory w on m.fk_workhistoryid = w.workhistoryid
+		where approvalId = #{approvalId}
+		group by approvalId, empName, to_char(resisterdayTime, 'YYYY"년 "MM"월 "DD"일"(dy)')
+   </select>
+   
+   <!-- 전자결재_상세보기_근무체크 수정 정보 목록 -->
+   <select id="getModifyDetailList" resultType="com.spring.app.approval.domain.ModifyDetailVO">
+      	select
+		fk_workHistoryId as workHistoryId,
+		workType,
+		requestType,
+		to_char(resisterDayTime, 'yyyy-mm-dd hh24:mi:ss') as orgWorkDateTime,
+		to_char(modifyRequestDateTime, 'yyyy-mm-dd hh24:mi:ss') as modifyRequestDateTime
+		from
+		tbl_approval a
+		join tbl_modifyWorkRequest m on a.approvalId = m.fk_approvalid
+		join tbl_workHistory w on m.fk_workhistoryid = w.workhistoryid
+		where approvalId = #{approvalId}
+   </select>
+   
+   <!-- 전자결재_상세보기_근무체크 수정 -->
+   <update id="updateWorkHistoryByRequest" parameterType="com.spring.app.approval.domain.ModifyDetailVO">
+   		update tbl_workHistory set resisterDayTime = #{modifyRequestDateTime} where workHistoryId = #{workHistoryId} and workType = #{workType}
+   </update>
+   
+   <!-- 전자결재_상세보기_근무체크 추가 -->
+   <insert id="insertWorkHistoryByRequest" parameterType="com.spring.app.approval.domain.ModifyDetailVO">
+   		insert into tbl_workHistory values (WORKHISTORYSEQ.nextVal, #{empId}, #{workType}, #{modifyRequestDateTime})
+   </insert>
+   
+   <!-- 전자결재_상세보기_근무체크 삭제 -->
+   <delete id="deleteWorkHistoryByRequest" parameterType="com.spring.app.approval.domain.ModifyDetailVO">
+   		delete from tbl_workHistory where workHistoryId = #{workHistoryId};
+   </delete>
+   
+	
+</mapper>

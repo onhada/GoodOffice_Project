@@ -1,0 +1,26 @@
+html, body {
+	color: #000;
+}
+
+table {
+	text-align:inherit;
+	border-collapse: collapse;
+	word-break: break-all;
+}
+
+#hw_dext_default_style {
+	color: #000;
+}
+
+#hw_dext_default_style div{
+	display:block;
+}
+
+#hw_dext_default_style table td {
+	border: 1px solid #000;
+	word-break:break-all;
+}
+
+#hw_dext_default_style p {
+	margin:0px;
+}
