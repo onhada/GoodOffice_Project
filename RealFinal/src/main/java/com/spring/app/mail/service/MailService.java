@@ -49,7 +49,7 @@ public interface MailService {
 	* @작성일   : Dec 9, 2023 
 	* @작성자   : 김민경  
 	* @변경이력  : 
-	* @Method 설명 : 총 게시물 건수(totalCount) 구하기
+	* @Method 설명 : 총 메일 건수(totalCount) 구하기
 	* @param paraMap
 	* @return 
 	*/

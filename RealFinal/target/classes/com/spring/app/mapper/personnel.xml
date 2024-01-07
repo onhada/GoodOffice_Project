@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- ==== #29. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="personnel">
+
+
+
+	<select id="test_hour" parameterType="String" resultType="String" >
+		select   to_char(resisterdaytime,'hh24:mi:ss' ) 
+		from tbl_workhistory
+		where workhistoryid = #{id}
+	</select>
+	
+	
+	<select id="sysdate_get"   resultType="String" >
+		select to_char(sysdate ,'yyyy-mm-dd')
+		from dual
+	</select>
+	
+	<select id="day_hour" parameterType="HashMap"   resultType="String" >
+		  <![CDATA[ 
+select  dayhh-nvl(dd,0)
+from
+(
+    select fk_empid,worktype,resisterdaytime 
+            ,ROUND((TO_DATE(    case when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >  TO_DATE(  '18:00:00' , 'HH24:MI:SS')then '17:00:00'
+                    when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <  TO_DATE(  '12:00:00' , 'HH24:MI:SS')
+                    then to_char(resisterdaytime,'hh24:mi:ss' )   
+                    when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >=  TO_DATE(  '12:00:00' , 'HH24:MI:SS') and 
+                        TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <=  TO_DATE(  '13:00:00' , 'HH24:MI:SS') 
+                    then '12:00:00'  
+                else to_char(resisterdaytime- to_dsinterval('000 01:00:00'),'hh24:mi:ss' ) end    , 'HH24:MI:SS') 
+                - TO_DATE( '09:00:00'   , 'HH24:MI:SS')  ) * 24 , 2) AS dayhh
+    from tbl_workhistory
+    where  (worktype =5 and fk_empid =#{empid} )and( to_char(resisterdaytime,'yyyy-mm-dd' ) = #{sysdate}  )
+     
+) a join   
+(
+    select fk_empid,worktype, resisterdaytime  
+            , case 
+             
+            when  (worktype=2  and LEAD(worktype ) OVER(ORDER BY resisterdaytime) in(1,3,4) ) and( to_date(to_char(resisterdaytime,'hh24:mi:ss' ),'hh24:mi:ss')
+            < to_date('12:00:00','hh24:mi:ss') and  
+            to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) > to_date('13:00:00','hh24:mi:ss'))
+            then ROUND((to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) -
+            to_date( to_char(resisterdaytime,'hh24:mi:ss' ), 'hh24:mi:ss') ) * 24 , 2) -1
+            
+            
+            when( worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) in(1,3,4) )
+             then  
+            ROUND((to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) -
+            to_date( to_char(resisterdaytime,'hh24:mi:ss' ), 'hh24:mi:ss') ) * 24 , 2)  
+            
+            
+             when( worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) not in(1,3,4) )  
+            and to_date(to_char(resisterdaytime,'hh24:mi:ss' ),'hh24:mi:ss')   < to_date('12:00:00','hh24:mi:ss') 
+             then 
+             ROUND((to_date ('18:00:00', 'hh24:mi:ss' ) -
+            to_date(   to_char(resisterdaytime,'hh24:mi:ss' )  ,'hh24:mi:ss') ) * 24 , 2) -1
+            
+            when worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) not in(1,3,4) then  
+             ROUND((to_date ('18:00:00', 'hh24:mi:ss' ) -
+            to_date(   to_char(resisterdaytime,'hh24:mi:ss' )  ,'hh24:mi:ss') ) * 24 , 2) 
+            
+      
+            end as dd
+    from tbl_workhistory
+    where   fk_empid =#{empid} and  to_char(resisterdaytime,'yyyy-mm-dd' ) = #{sysdate}
+order by resisterdaytime
+)b
+on to_char(a.resisterdaytime,'yyyy-mm-dd' ) = to_char(b.resisterdaytime,'yyyy-mm-dd' )
+where dd is not null
+]]>
+	</select>
+	
+	
+	<select id="outingCheck"  parameterType="HashMap"  resultType="String" >
+		select workhistoryid
+		from tbl_workhistory
+		where (fk_empId = #{empid} and worktype =2) and to_char(resisterdaytime,'yyyy' ) = #{year}
+	</select>
+	
+	
+	<select id="overtimeCheck"  parameterType="HashMap"  resultType="int" >
+		select count(*)
+		from tbl_workhistory
+		where fk_empid =#{empid} and worktype=8
+	</select>
+	
+	
+	<select id="overtimeSum"  parameterType="HashMap"  resultType="int" >
+	<![CDATA[ 
+		select nvl(sum(hour),0)
+from
+(
+select workappid,workday,  overtimestart,  overtimeend, reason
+      
+     ,ROUND (( TO_DATE(overtimeend, 'yyyy-mm-dd hh24:mi:ss' )-TO_DATE(overtimestart, 'yyyy-mm-dd hh24:mi:ss' )) * 24 , 2) as hour
+     
+from
+(
+    select a.fk_empid,worktype,workappid,workday,to_char(overtimestart,'yyyy-mm-dd hh24:mi:ss' ) as overtimestart,to_char(overtimeend,'yyyy-mm-dd hh24:mi:ss' ) as overtimeend, reason
+    from tbl_approval a join tbl_workapplication w
+    on a.approvalid = w.fk_approvalid and a.fk_empid=#{empid}
+    join  tbl_workhistory x
+    on a.fk_empid=x.fk_empid and w.fk_worktype=x.worktype
+    where to_char(w.workday,'yyyy-mm-dd' ) =to_char(x.resisterdaytime,'yyyy-mm-dd' )
+    and x.fk_empid=#{empid}  and x.worktype=8
+    
+)workplus join 
+
+(
+    select *
+    from
+    (
+        select resisterdaytime as resisterdaytime_start
+        from tbl_workhistory
+        where (fk_empid=#{empid} and (  worktype=6)) and
+                to_char(resisterdaytime,'yyyy-mm-dd') in(select to_char(resisterdaytime,'yyyy-mm-dd') from tbl_workhistory where worktype=8 and fk_empid=#{empid})
+    )a   join
+    (
+        select case when worktype=2 and LEAD(worktype  ) OVER(ORDER BY resisterdaytime) in(5) then   resisterdaytime  
+            when worktype=5 and lag(worktype  ) OVER(ORDER BY resisterdaytime)  in (2) then   lag(resisterdaytime  ) OVER(ORDER BY resisterdaytime) 
+            when worktype=5 then   resisterdaytime    end as resisterdaytime_end
+   
+        from tbl_workhistory
+        where (fk_empid=#{empid} and (worktype in (5,2,1,3,4) )) and
+                to_char(resisterdaytime,'yyyy-mm-dd') in(select to_char(resisterdaytime,'yyyy-mm-dd') from tbl_workhistory where worktype=8 and fk_empid=#{empid})
+        order by resisterdaytime
+    )b
+    on to_char(a.resisterdaytime_start,'yyyy-mm-dd') =to_char(b.resisterdaytime_end,'yyyy-mm-dd')
+)   wh
+on workplus.workday = to_char(wh.resisterdaytime_start,'yyyy-mm-dd' ) 
+where  
+(     TO_DATE(overtimestart, 'yyyy-mm-dd hh24:mi:ss' ) >=  TO_DATE( to_char(wh.resisterdaytime_start,'yyyy-mm-dd hh24:mi:ss' )  , 'yyyy-mm-dd hh24:mi:ss' ) )
+   and     (   TO_DATE(overtimeend, 'yyyy-mm-dd hh24:mi:ss' ) <= TO_DATE( to_char(wh.resisterdaytime_end,'yyyy-mm-dd hh24:mi:ss' )  , 'yyyy-mm-dd hh24:mi:ss' )
+            and     to_date(to_char(wh.resisterdaytime_start, 'yyyy' ), 'yyyy' ) = to_date(#{year}, 'yyyy' )  )
+)
+]]>
+	</select>
+	
+	
+	
+	<select id="year_hour"  parameterType="HashMap" resultType="int" >
+		<![CDATA[ 
+		
+		select sum(dayhh)
+		from
+		(
+		select fk_empid,worktype,resisterdaytime 
+		                ,ROUND((TO_DATE(    case  
+		                when      TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >  TO_DATE(  '18:00:00' , 'HH24:MI:SS')  
+		                then '17:00:00'
+		                        when   TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <  TO_DATE(  '12:00:00' , 'HH24:MI:SS')  
+		                        then to_char(resisterdaytime,'hh24:mi:ss' )   
+		                        
+		                        when    TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >=  TO_DATE(  '12:00:00' , 'HH24:MI:SS') and 
+		                            TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <=  TO_DATE(  '13:00:00' , 'HH24:MI:SS')  
+		                            
+		                        then '12:00:00'  
+		                         
+		                    else to_char(resisterdaytime- to_dsinterval('000 01:00:00'),'hh24:mi:ss' ) end    , 'HH24:MI:SS') 
+		                    - TO_DATE( '09:00:00'   , 'HH24:MI:SS')  ) * 24* 60, 2) AS dayhh
+		        from tbl_workhistory
+		        where  ( fk_empid =#{empid}  and  to_char(resisterdaytime,'yyyy' ) = #{year}  )
+		        and ( to_char(resisterDayTime,'yyyy-mm-dd') not in (select to_char(resisterDayTime,'yyyy-mm-dd') from tbl_workhistory where fk_empId = 200 and worktype =2)
+		        and worktype=5)
+		)
+		]]>
+		 
+	</select>
+	   
+	<select id="year_hour_out" parameterType="HashMap"  resultType="int" >
+		<![CDATA[ 
+		select sum(year)
+from
+(
+            select  dayhh-nvl(dd,0) as year
+        from
+        (
+            select fk_empid,worktype,resisterdaytime 
+                    ,ROUND((TO_DATE(    case when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >  TO_DATE(  '18:00:00' , 'HH24:MI:SS')then '17:00:00'
+                            when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <  TO_DATE(  '12:00:00' , 'HH24:MI:SS')
+                            then to_char(resisterdaytime,'hh24:mi:ss' )   
+                            when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >=  TO_DATE(  '12:00:00' , 'HH24:MI:SS') and 
+                                TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <=  TO_DATE(  '13:00:00' , 'HH24:MI:SS') 
+                            then '12:00:00'  
+                        else to_char(resisterdaytime- to_dsinterval('000 01:00:00'),'hh24:mi:ss' ) end    , 'HH24:MI:SS') 
+                        - TO_DATE( '09:00:00'   , 'HH24:MI:SS')  ) * 24* 60, 2) AS dayhh
+            from tbl_workhistory
+            where  (worktype =5 and fk_empid =#{empid} )and( to_char(resisterdaytime,'yyyy' ) = #{year}  )
+             
+        ) a join  
+        (
+            select fk_empid,worktype, resisterdaytime  
+                    , case 
+                     
+                    when  (worktype=2  and LEAD(worktype ) OVER(ORDER BY resisterdaytime) in(1,3,4) ) and( to_date(to_char(resisterdaytime,'hh24:mi:ss' ),'hh24:mi:ss')
+                    < to_date('12:00:00','hh24:mi:ss') and 
+                    to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) > to_date('13:00:00','hh24:mi:ss'))
+                    then ROUND((to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) -
+                    to_date( to_char(resisterdaytime,'hh24:mi:ss' ), 'hh24:mi:ss') ) * 24* 60, 2) -60
+                    
+                    
+                    when( worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) in(1,3,4) )
+                     then 
+                    ROUND((to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) -
+                    to_date( to_char(resisterdaytime,'hh24:mi:ss' ), 'hh24:mi:ss') ) * 24* 60, 2)  
+                    
+                    
+                     when( worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) not in(1,3,4) )  
+                    and to_date(to_char(resisterdaytime,'hh24:mi:ss' ),'hh24:mi:ss')   < to_date('12:00:00','hh24:mi:ss') 
+                     then 
+                     ROUND((to_date ('18:00:00', 'hh24:mi:ss' ) -
+                    to_date(   to_char(resisterdaytime,'hh24:mi:ss' )  ,'hh24:mi:ss') ) * 24* 60, 2) -60
+                    
+                    when worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) not in(1,3,4) then 
+                     ROUND((to_date ('18:00:00', 'hh24:mi:ss' ) -
+                    to_date(   to_char(resisterdaytime,'hh24:mi:ss' )  ,'hh24:mi:ss') ) * 24* 60, 2) 
+                    
+              
+                    end as dd
+            from tbl_workhistory
+            where   fk_empid =#{empid} and  to_char(resisterdaytime,'yyyy' ) = #{year}
+        order by resisterdaytime
+        )b
+        on to_char(a.resisterdaytime,'yyyy-mm-dd' ) = to_char(b.resisterdaytime,'yyyy-mm-dd' )
+        where dd is not null
+)
+		
+		]]>
+	</select>
+	  
+	<select id="workhistory_print"  parameterType="HashMap"  resultType="com.spring.app.personnel.domain.WorkhistoryVO" >
+		select *
+		from tbl_workhistory
+		where (to_char(resisterdaytime,'yyyy-mm-dd') = #{date}  and fk_empid =#{empid})
+				and (isdelete=0 and worktype in(1,2,3,4,5,6))
+		order by resisterdaytime
+	</select>
+	
+	<insert id="workhistory_insert" parameterType="HashMap" > 
+		
+		insert into tbl_workhistory
+		values (360, #{empid}, #{worktype}, sysdate, default)
+	<!--  시퀀스 수정필-->
+	</insert>
+
+
+	<select id="personnel_search_name"	parameterType="String" resultType="com.spring.app.common.domain.EmployeeVO">
+
+
+		select	empId, empName, teamName 
+		from tbl_employee e
+		join tbl_team t on e.fk_teamId = t.teamId
+        where empName like '%'||lower(#{empName})||'%'
+		order by empName
+	 
+	</select>
+	
+	<select id="personnel_selct_empid"	parameterType="String" resultType="String">
+
+
+		select	empname 
+		from tbl_employee
+		where empid=#{empid}
+	 
+	</select>
+	
+	<select id="vaction_cnt"	parameterType="String" resultType="String">
+
+	<![CDATA[ 
+		select case when annualleave-count < 0 then 0
+        else annualleave-count end as cntVaction
+		from
+		(
+		    select annualleave
+		    from
+		    (
+		        select  to_date( to_char(sysdate, 'yyyy-mm-dd'), 'yyyy-mm-dd')-to_date( to_char(startworkday, 'yyyy-mm-dd'), 'yyyy-mm-dd'),
+		                floor( MONTHS_BETWEEN(to_char(sysdate, 'yyyy-mm-dd') ,to_char(startworkday, 'yyyy-mm-dd')) /12 ) as startyear
+		        from tbl_employee
+		        where empid = #{empid}
+		        
+		    ) a join tbl_annual b
+		    on a.startyear = b.years
+		)x join 
+		 
+		(
+		    select nvl(sum(cnt),0) as count
+		    from
+		    (
+		    select         case when worktype=7 then 1
+		                else 0.5 end as cnt
+		    from tbl_workhistory
+		    where fk_empid=#{empid} and( (worktype=7 or worktype=2) or
+		        ( worktype=5 and to_date(to_char(resisterdaytime, 'hh24:mi:ss') ,'hh24:mi:ss') < to_date('18:00:00','hh24:mi:ss')  ) )
+		    )
+		)y
+		on count>=0
+	 ]]>
+	</select>
+	
+	
+	<insert id="va_approval_insert" parameterType="HashMap" > 
+		
+		insert into tbl_approval(approvalid, fk_formid, fk_empid, title, draftday, istemporary, fk_securityid, isdelete)
+		values (APPROVALSEQ.nextval, 104, #{empid}, '휴가신청', sysdate, 0,3,0)
+	 
+	</insert>
+	
+	<insert id="va_dayoff_insert" parameterType="HashMap" > 
+		
+		insert into tbl_dayoffapplication
+		values (DAYOFFAPPROVALSEQ.nextval , APPROVALSEQ.CURRVAL ,   #{datepi}, #{vtype}, 1, #{reason})
+	</insert>
+	
+	
+	<insert id="procedure_insert" parameterType="HashMap" > 
+		insert into tbl_approvalprocedure
+	values(APPROVALPROCEDURESEQ.nextval,APPROVALSEQ.CURRVAL,#{ptype},#{empid}, #{status}, #{seq},0, sysdate  )
+</insert>
+	
+	 
+	
+</mapper>

@@ -99,11 +99,11 @@ public class MailController {
 		mav.addObject("orgMailId", mailId);
 		
 		
-// ----- 개인편지함 가져오기 시작 ----- //
-List<Map<String, String>> personalMailboxList = null;
-personalMailboxList = service.getPersonalMailbox(paraMap);
-mav.addObject("personalMailboxList", personalMailboxList);
-// ----- 개인편지함 가져오기 끝 ----- //		
+		// ----- 개인편지함 가져오기 시작 ----- //
+		List<Map<String, String>> personalMailboxList = null;
+		personalMailboxList = service.getPersonalMailbox(paraMap);
+		mav.addObject("personalMailboxList", personalMailboxList);
+		// ----- 개인편지함 가져오기 끝 ----- //		
 		
 		
 		Map<String, String> orgMailInfo_map = new HashMap<>(); // 원메일id, 발신자, 제목, 내용 

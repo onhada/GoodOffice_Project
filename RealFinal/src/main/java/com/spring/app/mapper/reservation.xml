@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- ==== #29. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<mapper namespace="reservation">
+
+
+	<!-- === 자원카테고리 목록 가져오기 === --> 
+	<resultMap type="HashMap" id="getResourceCategoryList_Map">
+	    <result property="resourceCategoryId" 		column="resourceCategoryId" 	javaType="String" />
+	    <result property="resourceCategoryName" 	column="resourceCategoryName" 	javaType="String" />
+	</resultMap>
+	<select id="getResourceCategoryList" resultMap="getResourceCategoryList_Map">
+		select resourceCategoryId, resourceCategoryName
+		from tbl_resourceCategory
+		where isDelete = 0
+		order by resourceCategoryId asc
+	</select>
+	
+	
+	<!-- === 자원카테고리 목록 가져오기 === --> 
+	<resultMap type="HashMap" id="getAdminResourceCategoryList_Map">
+	    <result property="resourceCategoryId" 		column="resourceCategoryId" 	javaType="String" />
+	    <result property="resourceCategoryName" 	column="resourceCategoryName" 	javaType="String" />
+	</resultMap>
+	<select id="getAdminResourceCategoryList" resultMap="getAdminResourceCategoryList_Map">
+		select resourceCategoryId, resourceCategoryName
+		from tbl_resourceCategory
+		order by resourceCategoryId asc
+	</select>
+	
+	
+	<!-- === 자원 목록 가져오기 === --> 
+	<resultMap type="HashMap" id="getResourceList_Map">
+	    <result property="resourceId" 				column="resourceId" 			javaType="String" />
+	    <result property="fk_resourceCategoryId" 	column="fk_resourceCategoryId" 	javaType="String" />
+	    <result property="resourceName" 			column="resourceName" 			javaType="String" />
+	    <result property="description" 				column="description" 			javaType="String" />
+	    <result property="imageFile" 				column="imageFile" 				javaType="String" />
+	    <result property="isApproval" 				column="isApproval" 			javaType="String" />
+	    <result property="isReturn" 				column="isReturn" 				javaType="String" />
+	</resultMap>
+	<select id="getResourceList" parameterType="HashMap" resultMap="getResourceList_Map">
+		select resourceId, fk_resourceCategoryId, resourceName, description, imageFile, isApproval, isReturn
+		from tbl_resource
+		where isDelete = 0 and fk_resourceCategoryId = #{resourceCategoryId}
+		order by resourceId asc		
+	</select>
+	
+	
+	<!-- === 관리자_자원 목록 가져오기 === --> 
+	<resultMap type="HashMap" id="getAdminResourceList_Map">
+	    <result property="resourceId" 				column="resourceId" 			javaType="String" />
+	    <result property="fk_resourceCategoryId" 	column="fk_resourceCategoryId" 	javaType="String" />
+	    <result property="resourceName" 			column="resourceName" 			javaType="String" />
+	    <result property="description" 				column="description" 			javaType="String" />
+	    <result property="imageFile" 				column="imageFile" 				javaType="String" />
+	    <result property="isApproval" 				column="isApproval" 			javaType="String" />
+	    <result property="isReturn" 				column="isReturn" 				javaType="String" />
+	</resultMap>
+	<select id="getAdminResourceList" parameterType="HashMap" resultMap="getAdminResourceList_Map">
+		select resourceId, fk_resourceCategoryId, resourceName, description, imageFile, isApproval, isReturn
+		from tbl_resource
+		where fk_resourceCategoryId = #{resourceCategoryId}
+		order by resourceId asc		
+	</select>
+	
+	
+	<!-- === 자원카테고리 정보 가져오기 === --> 
+	<resultMap type="HashMap" id="getResourceCategoryInfo_map">
+	    <result property="resourceCategoryId" 		column="resourceCategoryId" 	javaType="String" />
+	    <result property="resourceCategoryName" 	column="resourceCategoryName" 	javaType="String" />
+	    <result property="description" 				column="description" 			javaType="String" />
+	    <result property="imageFile" 				column="imageFile" 				javaType="String" />
+	</resultMap>
+	<select id="getResourceCategoryInfo" parameterType="HashMap" resultMap="getResourceCategoryInfo_map">
+		select resourceCategoryId, resourceCategoryName, description, imageFile
+		from tbl_resourceCategory
+		where isDelete = 0 and resourceCategoryId = #{resourceCategoryId}
+		order by resourceCategoryId asc
+	</select>
+	
+	
+	<!-- === 관리자_자원카테고리 정보 가져오기 === --> 
+	<resultMap type="HashMap" id="getAdminResourceCategoryInfo_map">
+	    <result property="resourceCategoryId" 		column="resourceCategoryId" 	javaType="String" />
+	    <result property="resourceCategoryName" 	column="resourceCategoryName" 	javaType="String" />
+	    <result property="description" 				column="description" 			javaType="String" />
+	    <result property="imageFile" 				column="imageFile" 				javaType="String" />
+	    <result property="resourceType" 			column="resourceType" 			javaType="String" />
+	    <result property="isDelete" 				column="isDelete" 				javaType="String" />
+	</resultMap>
+	<select id="getAdminResourceCategoryInfo" parameterType="HashMap" resultMap="getAdminResourceCategoryInfo_map">
+		select resourceCategoryId, resourceCategoryName, description, imageFile, resourceType, isDelete
+		from tbl_resourceCategory
+		where resourceCategoryId = #{resourceCategoryId}
+		order by resourceCategoryId asc
+	</select>
+	
+	
+	<!-- === 자원 정보 가져오기 === --> 
+	<resultMap type="HashMap" id="getResourceInfo_map">
+	    <result property="resourceId" 				column="resourceId" 			javaType="String" />
+	    <result property="fk_resourceCategoryId" 	column="fk_resourceCategoryId" 	javaType="String" />
+	    <result property="resourceName" 			column="resourceName" 			javaType="String" />
+	    <result property="description" 				column="description" 			javaType="String" />
+	    <result property="imageFile" 				column="imageFile" 				javaType="String" />
+	    <result property="isDelete" 				column="isDelete" 				javaType="String" />
+	</resultMap>
+	<select id="getResourceInfo" parameterType="HashMap" resultMap="getResourceInfo_map">
+		select resourceId, fk_resourceCategoryId, resourceName, description, imageFile, isDelete
+		from tbl_resource
+		where isDelete = 0 and resourceId = #{resourceId}
+		order by resourceId asc
+	</select>
+	
+	
+	<!-- === 관리자_자원 정보 가져오기 === --> 
+	<resultMap type="HashMap" id="getAdminResourceInfo_map">
+	    <result property="resourceId" 				column="resourceId" 			javaType="String" />
+	    <result property="fk_resourceCategoryId" 	column="fk_resourceCategoryId" 	javaType="String" />
+	    <result property="resourceName" 			column="resourceName" 			javaType="String" />
+	    <result property="description" 				column="description" 			javaType="String" />
+	    <result property="imageFile" 				column="imageFile" 				javaType="String" />
+	    <result property="isApproval" 				column="isApproval" 				javaType="String" />
+	    <result property="isReturn" 				column="isReturn" 				javaType="String" />
+	    <result property="isDelete" 				column="isDelete" 				javaType="String" />
+	</resultMap>
+	<select id="getAdminResourceInfo" parameterType="HashMap" resultMap="getAdminResourceInfo_map">
+		select resourceId, fk_resourceCategoryId, resourceName, description, imageFile, isApproval, isReturn, isDelete
+		from tbl_resource
+		where resourceId = #{resourceId}
+		order by resourceId asc
+	</select>
+	
+	
+	<!-- === 모든 자원 목록 가져오기 === -->
+	<resultMap type="HashMap" id="getAllResourceList_map">
+	    <result property="resourceId" 				column="resourceId" 			javaType="String" />
+	    <result property="fk_resourceCategoryId" 	column="fk_resourceCategoryId" 	javaType="String" />
+	    <result property="resourceName" 			column="resourceName" 			javaType="String" />
+	</resultMap>
+	<select id="getAllResourceList" resultMap="getAllResourceList_map">
+		select resourceId, fk_resourceCategoryId, resourceName
+		from tbl_resource
+		where isDelete = 0 
+		order by fk_resourceCategoryId asc, resourceId asc
+	</select>
+	
+	
+	<!-- === 승인여부, 반납필수여부 알아오기 === -->
+	<resultMap type="HashMap" id="getResourceOption_map">
+	    <result property="isApproval" 				column="isApproval" 			javaType="String" />
+	    <result property="isReturn" 	column="isReturn" 	javaType="String" />
+	</resultMap>
+	<select id="getResourceOption" parameterType="String" resultMap="getResourceOption_map">
+		select isApproval, isReturn
+		from tbl_resource
+		where resourceId = #{resourceId}
+	</select>
+	
+	
+	<!-- === 해당일시에 등록된 예약이 있는지 조회 === -->
+	<resultMap type="HashMap" id="selectReservation_map">
+	    <result property="rsvResourceId"		column="rsvResourceId" 			javaType="String" />
+	</resultMap>
+	<select id="selectReservation" parameterType="HashMap" resultMap="selectReservation_map">
+		<![CDATA[
+		select rsvResourceId
+		from tbl_reservationResource
+		where fk_resourceId = #{resourceId} 
+		      and (
+		              ( to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS') <= rsvStartDayTime and ( rsvStartDayTime <= to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS') and to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS') <= rsvEndDayTime ) )
+		           or ( rsvStartDayTime <= to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS') and  to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS') <= rsvEndDayTime )
+		           or ( (rsvStartDayTime <= to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS') and to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS') <= rsvEndDayTime) and rsvEndDayTime <= to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS') )
+		           or ( to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS') <= rsvStartDayTime and rsvEndDayTime <= to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS') )
+		          )
+		]]>          	
+	</select>
+	
+	
+	<!-- === 예약하기 (자원예약 table에 insert) === -->
+	<insert id="addReservation" parameterType="HashMap">
+		<!-- rsvStatus:예약상태 (1:승인대기중, 2:예약완료, 3:예약반려) 
+			 approvalStatus:결재현황 (1:대기, 2:승인, 3:반려)
+			 isReturn:반납여부 (0:반납필요자원아님, 1:반납대기, 2:반납완료) -->
+		<!-- 경우1 : 승인없이예약가능 and 반납필요없음 -->
+		<if test='isApproval.equals("0") and isReturn.equals("0")'> 
+			insert into tbl_reservationResource(rsvResourceId, fk_resourceId, fk_empId, rsvStartDayTime, rsvEndDayTime, rsvReason, rsvStatus, returnStatus, registerDay)
+			values(rsvresourceSeq.nextval, #{resourceId}, #{loginEmpId}, to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS'), to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS'), #{rsvReason}, 2, 0, default)				 
+		</if>
+		<!-- 경우2 : 승인없이예약가능 and 반납필요 -->
+		<if test='isApproval.equals("0") and isReturn.equals("1")'> 
+			insert into tbl_reservationResource(rsvResourceId, fk_resourceId, fk_empId, rsvStartDayTime, rsvEndDayTime, rsvReason, rsvStatus, returnStatus, registerDay)
+			values(rsvresourceSeq.nextval, #{resourceId}, #{loginEmpId}, to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS'), to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS'), #{rsvReason}, 2, 1, default)				 
+		</if>
+		<!-- 경우3 : 승인필요함 and 반납필요없음 -->
+		<if test='isApproval.equals("1") and isReturn.equals("0")'> 
+			insert into tbl_reservationResource(rsvResourceId, fk_resourceId, fk_empId, rsvStartDayTime, rsvEndDayTime, rsvReason, rsvStatus, approvalStatus, returnStatus, registerDay)
+			values(rsvresourceSeq.nextval, #{resourceId}, #{loginEmpId}, to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS'), to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS'), #{rsvReason}, 1, 1, 0, default)			 
+		</if>
+		<!-- 경우4 : 승인필요함 and 반납필요 -->
+		<if test='isApproval.equals("1") and isReturn.equals("1")'> 
+			insert into tbl_reservationResource(rsvResourceId, fk_resourceId, fk_empId, rsvStartDayTime, rsvEndDayTime, rsvReason, rsvStatus, approvalStatus, returnStatus, registerDay)
+			values(rsvresourceSeq.nextval, #{resourceId}, #{loginEmpId}, to_date(#{rsvStartDayTime}, 'YYYY-MM-DD HH24:MI:SS'), to_date(#{rsvEndDayTime}, 'YYYY-MM-DD HH24:MI:SS'), #{rsvReason}, 1, 1, 1, default)			 
+		</if>
+	</insert>
+	
+
+	<!-- === 예약 목록 가져오기 === -->
+	<select id="getReservationList" parameterType="HashMap" resultType="com.spring.app.reservation.domain.ReservationVO">
+		select rsvResourceId, fk_empId, empName as rsvEmpName, SUBSTR(email, 0, INSTR(email, '@')-1) as rsvEmpEmail, resourceId, resourceName, resourceCategoryId, resourceCategoryName,
+		       rsvStartDayTime, rsvEndDayTime, rsvReason, rsvStatus, 
+		       approvalStatus, approvalDay, fk_approvalEmpId, rejectReason,
+		       A.returnStatus as returnStatus, A.registerDay as registerDay, A.updateDay as updateDay
+		from tbl_reservationResource A
+		join tbl_resource B
+		on A.fk_resourceId = B.resourceId
+		join tbl_resourceCategory C
+		on B.fk_resourceCategoryId = C.resourceCategoryId
+		join tbl_employee E
+		on A.fk_empId = E.empId
+		<if test='type.equals("reserved")'>
+			<![CDATA[ where fk_empId = #{loginEmpId} and sysdate <= rsvEndDayTime+3 and rsvStatus = 2 and returnStatus != 2 ]]> 
+		</if>
+		<if test='type.equals("waiting")'>
+			<![CDATA[ where fk_empId = #{loginEmpId} and sysdate <= rsvEndDayTime+3 and (rsvStatus = 1 or rsvStatus = 3) ]]> 
+		</if>
+		<if test='type.equals("oneDetailInfo")'>
+			<![CDATA[ where rsvResourceId = #{rsvResourceId} and sysdate <= rsvEndDayTime+3 ]]> 
+		</if>
+		<if test='type.equals("all")'>
+			<![CDATA[ where sysdate <= rsvEndDayTime+3 and resourceCategoryId = #{resourceCategoryId} ]]> 
+		</if>
+		<if test='type.equals("approvalWait")'>
+			<![CDATA[ where approvalStatus = 1 ]]> 
+		</if>
+		<if test='type.equals("approved")'>
+			<![CDATA[ where approvalStatus = 2 ]]> 
+		</if>
+		<if test='type.equals("approvalReject")'>
+			<![CDATA[ where approvalStatus = 3 ]]> 
+		</if>
+		<if test='type.equals("returnWait")'>
+			<![CDATA[ where returnStatus = 1 ]]> 
+		</if>
+		<if test='type.equals("returned")'>
+			<![CDATA[ where returnStatus = 2 ]]> 
+		</if>
+		order by rsvStartDayTime		         	
+	</select>
+ 	
+ 	
+ 	<!-- === 총 예약 건수 가져오기 === -->
+ 	<select id="getTotalCount" parameterType="HashMap" resultType="int">
+ 		select count(*)
+		from tbl_reservationResource 
+ 		<if test='type.equals("approvalWait")'>
+		where approvalStatus = 1
+		</if>
+		<if test='type.equals("approved")'>
+		where approvalStatus = 2	
+		</if>
+		<if test='type.equals("approvalReject")'>
+		where approvalStatus = 3	
+		</if>
+		<if test='type.equals("returnWait")'>
+		where returnStatus = 1
+		</if>
+		<if test='type.equals("returned")'>
+		where returnStatus = 2 
+		</if>
+ 	</select>
+ 
+ 
+ 	<!-- === 사원 정보 가져오기 === -->
+ 	<resultMap type="HashMap" id="getEmpInfo_map">
+	    <result property="empId" 	column="empId" 		javaType="String" />
+	    <result property="empName" 	column="empName" 	javaType="String" />
+	</resultMap>
+ 	<select id="getEmpInfo" parameterType="HashMap" resultMap="getEmpInfo_map">
+	 	select empId, empName
+		from tbl_employee
+		where empId = #{empId}
+ 	</select>
+ 	
+ 	
+ 	<!-- === 예약 삭제하기 === -->
+ 	<delete id="delReservation" parameterType="HashMap">
+ 		delete from tbl_reservationResource
+ 		where rsvResourceId = #{rsvResourceId}
+ 	</delete>
+ 	
+ 	
+ 	<!-- === 예약 자원 반납하기 === -->
+ 	<update id="returnRsource" parameterType="HashMap">
+ 		update tbl_reservationResource set returnStatus = 2
+ 		where rsvResourceId = #{rsvResourceId}
+ 	</update>
+ 	
+ 	
+ 	<!-- === 로그인 사원이 인사관리자인지 확인 === -->
+ 	<select id="isAdmin" parameterType="HashMap" resultType="String">
+	 	select fk_empId
+	 	from tbl_admin
+	 	where adminType = 1 and fk_empId = #{loginEmpId}
+ 	</select>
+ 	
+ 	
+ 	<!-- === 예약 승인하기 === -->
+ 	<update id="rsvApprove" parameterType="HashMap">
+ 		update tbl_reservationResource 
+ 		set rsvStatus = 2, approvalStatus = 2, approvalDay = sysdate, fk_approvalEmpId = #{loginEmpId}
+ 		where rsvResourceId = #{rsvResourceId}
+ 	</update>
+ 	
+ 	
+ 	<!-- === 예약 반려하기 === -->
+ 	<update id="rsvReject" parameterType="HashMap">
+ 		update tbl_reservationResource 
+ 		set rsvStatus = 3, approvalStatus = 3, approvalDay = sysdate, fk_approvalEmpId = #{loginEmpId}, rejectReason = #{rejectReason}
+ 		where rsvResourceId = #{rsvResourceId}
+ 	</update>
+ 	
+ 	
+ 	<!-- === 카테고리 삭제하기 === -->
+ 	<delete id="categoryDel" parameterType="HashMap">
+ 		delete from tbl_resourceCategory
+ 		where resourceCategoryId = #{resourceCategoryId}
+ 	</delete>
+ 	
+ 	
+ 	<!-- === 자원 카테고리 추가하기 === -->
+ 	<insert id="categoryAdd" parameterType="HashMap">
+ 		insert into tbl_resourceCategory(resourceCategoryId, resourceCategoryName, description, imageFile, resourceType, isDelete, registerDay)
+		values(resourcecategorySeq.nextval, #{name}, #{description}, #{newFileName}, #{resourceType}, #{isDelete}, sysdate)				 
+	</insert>
+ 	
+ 	
+ 	<!-- === 자원 카테고리 수정하기 === -->
+ 	<update id="categoryEdit" parameterType="HashMap">
+ 		update tbl_resourceCategory
+ 		set resourceCategoryName = #{name}, description = #{description}, imageFile = #{newFileName}, isDelete = #{isDelete}, updateDay = sysdate
+ 		where resourceCategoryId = #{resourceCategoryId}
+ 	</update>
+ 	
+ 	
+ 	<!-- === 자원 추가하기 === -->
+ 	<insert id="resourceAdd" parameterType="HashMap">
+ 		insert into tbl_resource(resourceId, fk_resourcecategoryid, resourceName, description, imageFile, isApproval, isReturn, isDelete, registerDay)
+		values(resourceSeq.nextval, #{fk_resourcecategoryid}, #{name}, #{description}, #{newFileName}, #{isApproval}, #{isReturn}, #{isDelete}, sysdate)				 
+	</insert>
+	
+ 	
+ 	<!-- === 자원 수정하기 === -->
+ 	<update id="resourceEdit" parameterType="HashMap">
+ 		update tbl_resource
+ 		set resourceName = #{name}, description = #{description}, imageFile = #{newFileName}, isApproval = #{isApproval}, isReturn = #{isReturn}, isDelete = #{isDelete}, updateDay = sysdate
+ 		where resourceId = #{resourceId}
+ 	</update>
+ 	
+ 	
+ 	<!-- === 존재하는 첫번째 카테고리id 가져오기 === -->
+ 	<select id="getFirstCategoryId" resultType="String">
+ 		select min(resourceCategoryId)
+		from tbl_resourceCategory
+		order by resourceCategoryId asc
+ 	</select>
+ 	
+ 	
+ 	<!-- === 자원 삭제하기 === -->
+ 	<delete id="resourceDel" parameterType="HashMap">
+ 		delete from tbl_resource
+ 		where resourceId = #{resourceId}
+ 	</delete>
+ 	
+ 	
+ 	<!-- === 예약관리자 목록 가져오기 === -->
+ 	<resultMap type="HashMap" id="getRsvAdminList_map">
+	    <result property="adminId" 			column="adminId" 		javaType="String" />
+	    <result property="empId" 			column="empId" 		javaType="String" />
+	    <result property="empName" 			column="empName" 		javaType="String" />
+	    <result property="email" 			column="email" 			javaType="String" />
+	    <result property="depName" 			column="depName" 		javaType="String" />
+	    <result property="teamName" 		column="teamName" 		javaType="String" />
+	    <result property="registerDay" 		column="registerDay" 	javaType="String" />
+	</resultMap>
+	<select id="getRsvAdminList" resultMap="getRsvAdminList_map">
+		select adminId, empId, empName, SUBSTR(email, 0,INSTR(email, '@')-1) as email, depName, teamName, H.registerday as registerDay
+		from tbl_admin A
+		join tbl_employee E
+		on A.fk_empId = E.empId
+		join tbl_team T
+		on E.fk_teamId = T.teamId
+		join tbl_department D
+		on D.depId = T.fk_depId
+		left join tbl_adminHistory H
+		on H.fk_adminId = A.adminId
+		where (adminType = 4 or adminType = 1) and isDelete = 0
+		order by decode(E.empId, '9999', 1), empName
+	</select>
+ 	
+ 	
+ 	<!-- === 예약관리자 총 인원수 가져오기 === -->
+ 	<select id="getRsvAdminTotalCount" resultType="int">
+ 		select count(*)
+		from tbl_admin 
+		where adminType = 4 or adminType = 1
+ 	</select>
+ 	
+ 	
+ 	<!-- === 예약된 시간을 표시하기 위한 자원 목록 가져오기 === -->
+ 	<resultMap type="HashMap" id="getReservationMarkList_map">
+	    <result property="rsvResourceId" 			column="rsvResourceId" 		javaType="String" />
+	    <result property="fk_resourceId" 			column="fk_resourceId" 		javaType="String" />
+	    <result property="fk_empId" 			column="fk_empId" 			javaType="String" />
+	    <result property="empName" 			column="empName" 		javaType="String" />
+	    <result property="rsvDate" 			column="rsvDate" 			javaType="String" />
+	    <result property="startTime" 		column="startTime" 		javaType="String" />
+	    <result property="endTime" 		column="endTime" 	javaType="String" />
+	</resultMap>
+ 	<select id="getReservationMarkList" parameterType="HashMap" resultMap="getReservationMarkList_map">
+	 	select rsvResourceId, fk_resourceId, fk_empId, empName,
+               TO_CHAR(rsvStartDayTime, 'YYYY-MM-DD') as rsvDate,
+	           to_char(rsvStartDayTime, 'HH24MI')  as startTime,
+               to_char(rsvEndDayTime, 'HH24MI')  as EndTime
+	    from tbl_reservationResource R
+	    join tbl_employee E
+	    on R.fk_empId = E.empId
+	    where approvalStatus != 3
+	    		<if test="searchDay != null">
+	    			and substr(rsvStartDayTime, 0,INSTR(rsvStartDayTime, ' ')-1) = #{searchDay}
+	    		</if>
+	    		<if test="arr_deptId != null">
+		    		and fk_resourceId in
+				    <foreach collection="resourceId_arr" index="i" separator="," open="(" close=")">
+				    	${item[i]}
+				    </foreach>
+				</if>
+	    order by rsvStartDayTime asc
+ 	</select>
+ 	
+ 	
+ 	<!-- === tbl_admin 테이블에 isDelete 컬럼 update === -->
+ 	<update id="updateAdminIsDelete" parameterType="HashMap">
+ 		update tbl_admin
+ 		set isDelete = 1
+ 		where adminId = #{adminId}
+ 	</update>
+ 	
+	
+	<!-- === tbl_adminHistory 테이블에 삭제사원,삭제일시 update === -->	
+	<update id="updateAdminHistory" parameterType="HashMap">
+ 		update tbl_adminHistory
+ 		set deleteDay = sysdate, fk_delEmpId = #{loginEmpId}
+ 		where fk_adminId = #{adminId}
+ 	</update>
+ 	
+ 	
+ 	
+</mapper>	

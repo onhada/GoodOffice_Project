@@ -233,7 +233,7 @@ System.out.println("$$"+mailId);
 	}
 	
 	
-	// === 총 게시물 건수(totalCount) 구하기 === //
+	// === 총 메일 건수(totalCount) 구하기 === //
 	@Override
 	public int getTotalCount(Map<String, Object> paraMap) {
 		int n = dao.getTotalCount(paraMap);

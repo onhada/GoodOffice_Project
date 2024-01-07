@@ -19,7 +19,7 @@ $(document).ready(function(){
 	
 	
 	
-	$("a").click(function(e){ // 수정필 클릭했을 때 주소가 이동되면서 클래스 유지가 안 되는데...
+	$("a").click(function(e){ // 수정필) 클릭했을 때 주소가 이동되면서 클래스 유지가 안 되는데...
 		$(e.target).addClass("router-link-exact-active");
 	});
 	

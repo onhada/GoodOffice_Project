@@ -56,7 +56,7 @@
 		
 		// 메일의 체크박스 선택할 경우
 		$('input[name="mailId"], input#chkAll').change(function(){
-console.log("hey");
+
 			if( $('input:checkbox[name="mailId"]:checked').length > 0 || $("input[id='chkAll']").is(':checked') ){ // 메일이 하나 이상 선택되었을 경우 
 				
 				$("a#m_list_view_option").css("display", "none"); 
