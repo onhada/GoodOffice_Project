@@ -37,6 +37,11 @@ public class FormVO {
 	 * 사용 여부 (0: 비사용, 1: 사용)
 	 */
 	private int isUse;
+	
+	/**
+	 * 보존 연한
+	 */
+	private int preservationYear;
 
 	/**
 	 * @return the formId
@@ -92,6 +97,20 @@ public class FormVO {
 	 */
 	public void setIsUse(int isUse) {
 		this.isUse = isUse;
+	}
+
+	/**
+	 * @return the preservationYear
+	 */
+	public int getPreservationYear() {
+		return preservationYear;
+	}
+
+	/**
+	 * @param preservationYear the preservationYear to set
+	 */
+	public void setPreservationYear(int preservationYear) {
+		this.preservationYear = preservationYear;
 	}
 	
 }

@@ -11,18 +11,20 @@ package com.spring.app.approval.service;
 import java.util.List;
 import java.util.Map;
 
-import com.spring.app.approval.domain.AdminVO;
+import com.spring.app.approval.domain.AdminHistoryVO;
 import com.spring.app.approval.domain.ApprovalDetailVO;
 import com.spring.app.approval.domain.ApprovalFileVO;
 import com.spring.app.approval.domain.ApprovalOpinionVO;
 import com.spring.app.approval.domain.ApprovalProcedureVO;
 import com.spring.app.approval.domain.ApprovalVO;
+import com.spring.app.approval.domain.BatchVO;
 import com.spring.app.approval.domain.DayOffVO;
 import com.spring.app.approval.domain.EmpProofDetailVO;
 import com.spring.app.approval.domain.FormVO;
 import com.spring.app.approval.domain.ModifyWorkRequestVO;
 import com.spring.app.approval.domain.SecurityVO;
 import com.spring.app.approval.domain.WorkApplicationVO;
+import com.spring.app.common.domain.AdminVO;
 import com.spring.app.common.domain.EmployeeVO;
 
 /** 
@@ -604,6 +606,193 @@ public interface ApprovalService {
 	* @return 
 	*/
 	public ModifyWorkRequestVO getModifyWorkRequest(Long approvalId);
+
+	/** 
+	* @Method Name  : updateReadReturn 
+	* @작성일   : 2023. 12. 29 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	public int updateReadReturn(Map<String, Long> paraMap);
+
+	/** 
+	* @Method Name  : cancleApproval 
+	* @작성일   : 2023. 12. 29 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	public boolean cancleApproval(Map<String, Long> paraMap);
+
+	/** 
+	* @Method Name  : getPreservationYear 
+	* @작성일   : 2023. 12. 29 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param formId
+	* @return 
+	*/
+	public int getPreservationYear(Long formId);
+
+	/** 
+	* @Method Name  : insertDocumentWrite 
+	* @작성일   : 2023. 12. 30 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraArrMap
+	* @param paraMap
+	* @return 
+	*/
+	public String insertDocumentWrite(Map<String, String[]> paraArrMap, Map<String, String> paraMap);
+
+	/** 
+	* @Method Name  : insertTempDocumentWrite 
+	* @작성일   : 2023. 12. 30 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraArrMap
+	* @param paraMap
+	* @return 
+	*/
+	public String insertTempDocumentWrite(Map<String, String[]> paraArrMap, Map<String, String> paraMap);
+
+	/** 
+	* @Method Name  : getFormId 
+	* @작성일   : 2024. 1. 4 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param approvalId
+	* @return 
+	*/
+	public Long getFormId(Long approvalId);
+
+	/** 
+	* @Method Name  : batchApproval 
+	* @작성일   : 2024. 1. 5 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param bvo
+	* @return 
+	*/
+	public int batchApproval(BatchVO bvo);
+
+	/** 
+	* @Method Name  : batchCheck 
+	* @작성일   : 2024. 1. 5 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param bvo
+	* @return 
+	*/
+	public int batchCheck(BatchVO bvo);
+
+	/** 
+	* @Method Name  : batchDelete 
+	* @작성일   : 2024. 1. 6 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param bvo
+	* @return 
+	*/
+	public int batchDelete(BatchVO bvo);
+
+	/** 
+	* @Method Name  : batchRestore 
+	* @작성일   : 2024. 1. 6 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param bvo
+	* @return 
+	*/
+	public int batchRestore(BatchVO bvo);
+
+	/** 
+	* @Method Name  : addAppovalAdminManager 
+	* @작성일   : 2024. 1. 6 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	public boolean addAppovalAdminManager(Map<String, Long> paraMap);
+
+	/** 
+	* @Method Name  : deleteAppovalAdminManager 
+	* @작성일   : 2024. 1. 6 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	public boolean deleteAppovalAdminManager(Map<String, Long> paraMap);
+
+	/** 
+	* @Method Name  : grantAdminRead 
+	* @작성일   : 2024. 1. 6 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	public boolean grantAdminRead(Map<String, Long> paraMap);
+
+	/** 
+	* @Method Name  : getAdminHistoryList 
+	* @작성일   : 2024. 1. 6 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @return 
+	*/
+	public List<AdminHistoryVO> getAdminHistoryList();
+
+	/** 
+	* @Method Name  : getFormDetail 
+	* @작성일   : 2024. 1. 8 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param formId
+	* @return 
+	*/
+	public FormVO getFormDetail(Long formId);
+
+	/** 
+	* @Method Name  : getFormNameListByWrite 
+	* @작성일   : 2024. 1. 8 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @return 
+	*/
+	public List<FormVO> getFormNameListByWrite();
+
+	/** 
+	* @Method Name  : updateForm 
+	* @작성일   : 2024. 1. 8 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	public boolean updateForm(Map<String, String> paraMap);
 
 
 }

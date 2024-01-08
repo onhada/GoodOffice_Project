@@ -1,20 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String ctxPath = request.getContextPath();
 %>
 
+<script>
 
+$(document).ready(function(){
+	
+	if('${requestScope.type}' != null){
+		$("li.menuDropDownList").each(function(){
+			$(this).attr('id', '');
+		})
+		
+		$("li." + '${requestScope.type}').attr('id', 'currentPagePointer');
+	}
+	
+})
+
+
+</script>
 
 
 
 <div id="leftmenu">
 	<!-- left -->
-	<link rel="stylesheet" type="text/css"
-		href="./aaaaaaa_files/admin_menu.css">
-	<link rel="stylesheet" type="text/css"
-		href="./aaaaaaa_files/h_admin.css">
-	<script src="./aaaaaaa_files/gtris.1.2.0.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/admin/admin_menu.css">
+	<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/admin/h_admin.css">
+	<!-- <script src="./aaaaaaa_files/gtris.1.2.0.js" type="text/javascript"></script> -->
 
 	<div class="h_admin_global_left">
 		<div class="menufield" style="top: 0;">
@@ -34,82 +49,55 @@
 					<!-- cookie checking -->
 
 					<div class="depth1">
-						<a href="javascript:void(0)"
-							class="foldtop depth1-fold depth1-anchor selected"
-							id="admin_leftmenu_adminconfig"> <img
-							src="./aaaaaaa_files/icon-setting.png" class="menu_icon"> <span
-							class="depth1-menu-title fold">환경 설정</span> <span
-							class="arrow_down up fold"></span>
+						<a href="javascript:void(0)" class="foldtop depth1-fold depth1-anchor selected" id="admin_leftmenu_adminconfig">
+							<img src="./aaaaaaa_files/icon-setting.png" class="menu_icon">
+							<span class="depth1-menu-title fold">환경 설정</span>
+							<span class="arrow_down up fold"></span>
 						</a>
 					</div>
 
 					<ul class="depth2 hide show_cookie" style="display: block">
-						<%-- 
-									<a target=""
-										href="https://office.hiworks.com/gabia.biz/h_admin/Adminconfig/logoskin"
-										onclick="adminmenu.redirectCookie()">
-										<li style="display: flex; align-items: center;" class="" id="">
-											<span>로고 설정</span>
-									</li>
-									</a>
-									--%>
-						<a target=""
-							href="https://office.hiworks.com/gabia.biz/h_admin/Adminconfig/setmanager"
-							onclick="adminmenu.redirectCookie()">
-							<li style="display: flex; align-items: center;" class=""
-							id="currentPagePointer"><span>관리자 설정</span></li>
+						<a target="" href="<%= ctxPath %>/admin/confirmFullAdmin.gw" >
+							<li style="display: flex; align-items: center;" class="menuDropDownList managerSet" id="">
+								<span>관리자 설정</span>
+							</li>
 						</a>
-						<%-- 
-									<a target=""
-										href="https://office.hiworks.com/gabia.biz/h_admin/menu/manage"
-										onclick="adminmenu.redirectCookie()">
-										<li style="display: flex; align-items: center;" class="" id="">
-											<span>메뉴 설정</span>
-									</li>
-									</a>
-									--%>
 					</ul>
 				</li>
 				<li>
 					<!-- cookie checking -->
 
 					<div class="depth1">
-						<a href="javascript:void(0)"
-							class="foldtop depth1-fold depth1-anchor selected"
-							id="admin_leftmenu_insa_manage"> <img
-							src="./aaaaaaa_files/icon-user-manage.png" class="menu_icon">
-							<span class="depth1-menu-title fold">사용자 관리</span> <span
-							class="arrow_down up fold"></span>
+						<a href="javascript:void(0)" class="foldtop depth1-fold depth1-anchor selected" id="admin_leftmenu_insa_manage">
+							<img src="./aaaaaaa_files/icon-user-manage.png" class="menu_icon">
+							<span class="depth1-menu-title fold">사용자 관리</span>
+							<span class="arrow_down up fold"></span>
 						</a>
 					</div>
 
 					<ul class="depth2 hide show_cookie" style="display: block">
-						<a target="blank"
-							href="https://office.hiworks.com/gabia.biz/insa/manage/orgmanage"
-							onclick="adminmenu.redirectCookie()">
-							<li style="display: flex; align-items: center;" class="external"
-							id=""><span>조직 관리</span> <span class="external_img"></span></li>
+						<a target="blank" href="수정필" onclick="수정필">
+							<li style="display: flex; align-items: center;" class="menuDropDownList external" id="">
+								<span>조직 관리</span>
+								<span class="external_img"></span>
+							</li>
 						</a>
-						<a target=""
-							href="https://officeadmin.office.hiworks.com/accounts"
-							onclick="adminmenu.redirectCookie()">
-							<li style="display: flex; align-items: center;" class="" id="">
+						<a target="" href="<%= ctxPath %>/admin/userManage.gw">
+							<li style="display: flex; align-items: center;" class="menuDropDownList userManage" id="">
 								<span>사용자 관리</span>
-						</li>
+							</li>
 						</a>
-						<a target="blank"
-							href="https://office.hiworks.com/gabia.biz/insa/manage/position"
-							onclick="adminmenu.redirectCookie()">
-							<li style="display: flex; align-items: center;" class="external"
-							id=""><span>직위/직무 관리</span> <span class="external_img"></span></li>
+						<a target="blank" href="https://office.hiworks.com/gabia.biz/insa/manage/position" onclick="수정필">
+							<li style="display: flex; align-items: center;" class="menuDropDownList external" id="">
+								<span>직위/직무 관리</span>
+								<span class="external_img"></span>
+							</li>
 						</a>
-						<a target=""
-							href="https://officeadmin.office.hiworks.com/deactivation/pause"
-							onclick="adminmenu.redirectCookie()">
+						<!-- <a target="" href="https://officeadmin.office.hiworks.com/deactivation/pause" onclick="adminmenu.redirectCookie()">
 							<li style="display: flex; align-items: center;" class="" id="">
 								<span>비활성 사용자</span>
-						</li>
-						</a>
+							</li>
+						</a> -->
 					</ul>
 				</li>
 				<!-- 
@@ -329,8 +317,8 @@
 			</ul>
 		</div>
 		<div id="menu_footer">
-			<a href="https://office.hiworks.com/gabia.biz/manual/main"
-				target="_blank"> <!-- 
+			<a href="수정필" target="_blank">
+				<!-- 
 							<div id="start_help">
 								<div id="start_help_content">
 									<img src="./aaaaaaa_files/icon-i.png" class="i_icon"> <span>시작하기
@@ -342,7 +330,7 @@
 		</div>
 	</div>
 
-	<script src="./aaaaaaa_files/adminmenu.js" type="text/javascript"></script>
+	<!-- <script src="./aaaaaaa_files/adminmenu.js" type="text/javascript"></script> -->
 
 	<!-- left End -->
 </div>

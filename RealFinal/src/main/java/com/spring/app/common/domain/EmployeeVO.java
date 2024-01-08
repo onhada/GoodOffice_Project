@@ -5,7 +5,7 @@ package com.spring.app.common.domain;
 * @FileName  : EmployeeVO.java 
 * @Project   : TempFinal 
 * @Date      : 2023. 12. 6 
-* @작성자      : 먕지 
+* @작성자      : 신예진
 * @변경이력     : 
 * @프로그램설명  : 
 */
@@ -14,7 +14,12 @@ public class EmployeeVO {
 	/**
 	 * 사원id
 	 */
-	private Long empId;           
+	private Long empId;          
+	
+	/**
+	 * 이메일에 사용되는 id
+	 */
+	private String id;
 	
 	
 	/**
@@ -60,7 +65,7 @@ public class EmployeeVO {
 	/**
 	 * 입사일
 	 */
-	private String startworkday;  
+	private String startWorkDay;  
 	
 	/**
 	 * 개인이메일
@@ -85,17 +90,13 @@ public class EmployeeVO {
 	/**
 	 * 우편번호
 	 */
-	private String postcode;	 
+	private String postCode;	 
 	
 	/**
 	 * 상태
 	 */
 	private String status;		 
 	
-	/**
-	 * 프로필이미지
-	 */
-	private String profileImage; 
 	
 	/**
 	 * 기타정보
@@ -105,12 +106,12 @@ public class EmployeeVO {
 	/**
 	 * 등록일자
 	 */
-	private String registerday;   
+	private String registerDay;   
 	
 	/**
 	 * 업데이트일자
 	 */
-	private String updateday;	  
+	private String updateDay;	  
 	
 	/**
 	 * 사원명
@@ -122,6 +123,11 @@ public class EmployeeVO {
 	 * 관리자 여부
 	 */
 	private int isAdmin;
+	
+	/**
+	 * 전자결재) 전체 문서 열람 허용 여부 (0: 미허용, 1: 허용)
+	 */
+	private int isReadAllDocument;
 	
 	/**
 	 * 관리자 기능종류
@@ -143,6 +149,14 @@ public class EmployeeVO {
 	 */
 	private String positionName;
 	
+	
+	
+	// 예진 추가 ----------------------------------------------------------- 수정필
+	/**
+	 * [부서명] 팀명
+	 */
+	private String team; 
+	// 예진 추가 끝 ----------------------------------------------------------- 수정필
 	
 	/**
 	 * @return the empId
@@ -270,19 +284,6 @@ public class EmployeeVO {
 		this.pwd = pwd;
 	}
 	
-	/** 
-	* @return startworkday
-	*/
-	public String getStartworkday() {
-		return startworkday;
-	}
-	
-	/** 
-	* @param startworkday the startworkday to set
-	*/
-	public void setStartworkday(String startworkday) {
-		this.startworkday = startworkday;
-	}
 	
 	/** 
 	* @return personalEmail
@@ -341,20 +342,6 @@ public class EmployeeVO {
 	}
 	
 	/** 
-	* @return postcode
-	*/
-	public String getPostcode() {
-		return postcode;
-	}
-	
-	/** 
-	* @param postcode the postcode to set
-	*/
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-	
-	/** 
 	* @return status
 	*/
 	public String getStatus() {
@@ -369,19 +356,6 @@ public class EmployeeVO {
 	}
 	
 	
-	/** 
-	* @return profileImage
-	*/
-	public String getProfileImage() {
-		return profileImage;
-	}
-	
-	/** 
-	* @param profileImage the profileImage to set
-	*/
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
 	
 	/** 
 	* @return other
@@ -397,33 +371,6 @@ public class EmployeeVO {
 		this.other = other;
 	}
 	
-	/** 
-	* @return registerday
-	*/
-	public String getRegisterday() {
-		return registerday;
-	}
-	
-	/** 
-	* @param registerday the registerday to set
-	*/
-	public void setRegisterday(String registerday) {
-		this.registerday = registerday;
-	}
-	
-	/** 
-	* @return updateday
-	*/
-	public String getUpdateday() {
-		return updateday;
-	}
-	
-	/** 
-	* @param updateday the updateday to set
-	*/
-	public void setUpdateday(String updateday) {
-		this.updateday = updateday;
-	}
 	
 	/** 
 	* @return empName
@@ -521,6 +468,104 @@ public class EmployeeVO {
 	 */
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
+	}
+
+	/**
+	 * @return the startWorkDay
+	 */
+	public String getStartWorkDay() {
+		return startWorkDay;
+	}
+
+	/**
+	 * @param startWorkDay the startWorkDay to set
+	 */
+	public void setStartWorkDay(String startWorkDay) {
+		this.startWorkDay = startWorkDay;
+	}
+
+	/**
+	 * @return the postCode
+	 */
+	public String getPostCode() {
+		return postCode;
+	}
+
+	/**
+	 * @param postCode the postCode to set
+	 */
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
+	}
+
+	/**
+	 * @return the registerDay
+	 */
+	public String getRegisterDay() {
+		return registerDay;
+	}
+
+	/**
+	 * @param registerDay the registerDay to set
+	 */
+	public void setRegisterDay(String registerDay) {
+		this.registerDay = registerDay;
+	}
+
+	/**
+	 * @return the updateDay
+	 */
+	public String getUpdateDay() {
+		return updateDay;
+	}
+
+	/**
+	 * @param updateDay the updateDay to set
+	 */
+	public void setUpdateDay(String updateDay) {
+		this.updateDay = updateDay;
+	}
+
+	/**
+	 * @return the isReadAllDocument
+	 */
+	public int getIsReadAllDocument() {
+		return isReadAllDocument;
+	}
+
+	/**
+	 * @param isReadAllDocument the isReadAllDocument to set
+	 */
+	public void setIsReadAllDocument(int isReadAllDocument) {
+		this.isReadAllDocument = isReadAllDocument;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the team
+	 */
+	public String getTeam() {
+		return team;
+	}
+
+	/**
+	 * @param team the team to set
+	 */
+	public void setTeam(String team) {
+		this.team = team;
 	}
 	
 	

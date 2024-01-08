@@ -33,12 +33,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.app.approval.domain.AdminHistoryVO;
 import com.spring.app.approval.domain.ApprovalActionVO;
 import com.spring.app.approval.domain.ApprovalDetailVO;
 import com.spring.app.approval.domain.ApprovalFileVO;
 import com.spring.app.approval.domain.ApprovalProcedureVO;
 import com.spring.app.approval.domain.ApprovalVO;
-import com.spring.app.approval.domain.FormVO;
+import com.spring.app.approval.domain.BatchVO;
 import com.spring.app.approval.domain.SearchApprovalVO;
 import com.spring.app.approval.service.ApprovalService;
 import com.spring.app.common.FileManager;
@@ -82,6 +83,7 @@ public class ApprovalController {
 		HttpSession session = req.getSession();
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
+		loginUser.setAdminType("2");
 		session.setAttribute("loginUser", loginUser);
 
 		String searchType = savo.getSearchType();
@@ -121,8 +123,7 @@ public class ApprovalController {
 
 		// 문서 종류 가져오기
 		mav.addObject("formList", service.getFormNameList());
-		
-		
+
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		List<ApprovalVO> ingList = new ArrayList<>();
 
@@ -311,6 +312,8 @@ public class ApprovalController {
 
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	@GetMapping("/approval/document/box/{type}.gw")
 	public ModelAndView approvalDocumentBox(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			SearchApprovalVO savo, @PathVariable String type) {
@@ -326,6 +329,7 @@ public class ApprovalController {
 		String searchType = savo.getSearchType();
 		String searchWord = savo.getSearchWord();
 		String orderType = savo.getOrderType();
+		String listType = savo.getListType();
 		String str_currentShowPageNo = savo.getCurrentShowPageNo();
 
 		if (searchType == null) {
@@ -347,22 +351,26 @@ public class ApprovalController {
 		if (searchWord != null) {
 			searchWord = searchWord.trim();
 		}
+		
+		if (listType == null) {
+			listType = "";
+		}
 
-		System.out.println("orderType : " + orderType);
 
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("searchType", searchType);
 		paraMap.put("searchWord", searchWord);
 		paraMap.put("orderType", orderType);
+		paraMap.put("listType", listType);
 		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
 		paraMap.put("positionId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getFk_positionId()));
 
 		// 문서 종류 가져오기
 		mav.addObject("formList", service.getFormNameList());
-		
+
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		List<ApprovalVO> boxList = new ArrayList<>();
-		
+
 		if ("all".equals(type)) {
 			paraMap.put("isViewAll", savo.getIsViewAll());
 			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
@@ -508,10 +516,10 @@ public class ApprovalController {
 		if (pageNo != 1) {
 			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
 					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
-					+ "&currentShowPageNo=1'>[맨처음]</a></li>";
+					+ "&currentShowPageNo=1&listType=" + listType + "'>[맨처음]</a></li>";
 			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
 					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
-					+ (pageNo - 1) + "'>[이전]</a></li>";
+					+ (pageNo - 1) + "&listType=" + listType + "'>[이전]</a></li>";
 		}
 
 		while (!(loop > blockSize || pageNo > totalPage)) {
@@ -522,7 +530,7 @@ public class ApprovalController {
 			} else {
 				pageBar += "<li style='display:inline-block; width:30px; font-size:12pt;'><a href='" + url
 						+ "?searchType=" + searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
-						+ "&currentShowPageNo=" + pageNo + "'>" + pageNo + "</a></li>";
+						+ "&currentShowPageNo=" + pageNo + "&listType=" + listType + "'>" + pageNo + "</a></li>";
 			}
 
 			loop++;
@@ -533,10 +541,10 @@ public class ApprovalController {
 		if (pageNo <= totalPage) {
 			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
 					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
-					+ pageNo + "'>[다음]</a></li>";
+					+ pageNo + "&listType=" + listType + "'>[다음]</a></li>";
 			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
 					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
-					+ totalPage + "'>[마지막]</a></li>";
+					+ totalPage + "&listType=" + listType + "'>[마지막]</a></li>";
 		}
 
 		pageBar += "</ul>";
@@ -551,6 +559,7 @@ public class ApprovalController {
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("orderType", orderType);
+		mav.addObject("listType", listType);
 
 		mav.setViewName("document_box_" + type + ".approval");
 
@@ -589,8 +598,7 @@ public class ApprovalController {
 		if (service.setSecurityLevel(paraMap)) {
 			// true : 업데이트가 잘 되었을 경우
 
-			mav.setViewName("redirect:/approval/settings/basic.gw"); // 실제로 redirect:/view.action 은 POST 방식이 아닌 GET
-																		// 방식이다.
+			mav.setViewName("redirect:/approval/settings/basic.gw"); // 실제로 redirect:/view.action 은 POST방식이 아닌 GET방식이다.
 
 		} else {
 			mav.addObject("message", "저장에 실패하였습니다!");
@@ -763,7 +771,9 @@ public class ApprovalController {
 
 		mav.setViewName("settings_forms.approval");
 		mav.addObject("totalCount", totalCount);
+		mav.addObject("searchWord", searchWord);
 		mav.addObject("goBackURL", goBackURL);
+		mav.addObject("noSearch", true);
 
 		return mav;
 
@@ -959,6 +969,9 @@ public class ApprovalController {
 
 		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
+		mav.addObject("orderType", orderType);
+		mav.addObject("searchType", searchType);
+		mav.addObject("searchWord", searchWord);
 
 		mav.setViewName("settings_document.approval");
 
@@ -1156,6 +1169,9 @@ public class ApprovalController {
 
 		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
+		mav.addObject("orderType", orderType);
+		mav.addObject("searchType", searchType);
+		mav.addObject("searchWord", searchWord);
 
 		mav.setViewName("settings_deleted_document.approval");
 
@@ -1166,7 +1182,16 @@ public class ApprovalController {
 	@GetMapping("/approval/settings/admin.gw")
 	public ModelAndView approvalSettingsAdminList(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
+		HttpSession session = req.getSession();
+		
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setFk_positionId((long) 6);
+		loginUser.setAdminType("4");
+		session.setAttribute("loginUser", loginUser);
+		
 		mav.addObject("type", "settings_admin");
+		mav.addObject("noSearch", true);
 		mav.addObject("adminList", service.getAdminList());
 		mav.setViewName("settings_admin.approval");
 
@@ -1174,38 +1199,37 @@ public class ApprovalController {
 
 	}
 
-	@GetMapping("/approval/documentDetail/{type}/view.gw")
+	@GetMapping("/approval/documentDetail/{viewType}/{type}/view.gw")
 	public ModelAndView approvalDocumentView(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			Long approvalId, Long formId, @PathVariable String type) {
+			Long approvalId, Long formId, @PathVariable String viewType, @PathVariable String type) {
 
 		HttpSession session = req.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+		loginUser.setAdminType("2");
 		
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("approvalId", approvalId);
 		paraMap.put("empId", loginUser.getEmpId());
 		paraMap.put("formId", formId);
-		
-		
+
 		// 수정필 !!!!!!!!!!!!!!!!! 폼id에 따라 더 추가될 내용이 있음 그거 추가해서 넣기
-		if(formId == 109) {
+		if (formId == 109) {
 			// 재직증명서
 			mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
-		}else if(formId == 108) {
+		} else if (formId == 108) {
 			// 품의서 합의 부분
 			mav.addObject("agreeList", service.getProcedureTypeAgree(approvalId));
-		}else if(formId == 101 || formId == 102) {
-			// 연장근무 신청 혹은 휴일 근무 신청 
+		} else if (formId == 101 || formId == 102) {
+			// 연장근무 신청 혹은 휴일 근무 신청
 			mav.addObject("workApplication", service.getWorkApplicationDetail(approvalId));
-		}else if(formId == 104) {
+		} else if (formId == 104) {
 			// 휴가 신청
 			mav.addObject("dayOffDetail", service.getDayOffDetail(approvalId));
-		}else if(formId == 103) {
+		} else if (formId == 103) {
 			// 근무체크 수정 요청
 			mav.addObject("modifyWorkRequest", service.getModifyWorkRequest(approvalId));
 		}
-		
-		
+
 		/////////////////////////////////////////////////////////////
 
 		ApprovalDetailVO approvalDetail = service.getApprovalDocumentView(paraMap);
@@ -1219,24 +1243,56 @@ public class ApprovalController {
 		// 기안자인지 확인하기
 		// 1: 기안 or 신청자
 		mav.addObject("isDraftEmp", service.isDraftEmp(paraMap));
-
+		
+		
+		
 		// 유저 결재절차 타입
-		mav.addObject("userProcedureType", service.getUserProcedureType(paraMap));
-		
-		// 반려된 것인지 확인하기
-		mav.addObject("isReturn", service.isReturn(approvalId));
-		
-		
+		if("Approval".equals(loginUser.getAdminType())) {
+			// 전자 결재 관리자일 경우
+			mav.addObject("userProcedureType", 0);
+		}else {
+			mav.addObject("userProcedureType", service.getUserProcedureType(paraMap));
+		}
 		
 
-		/*
-		 * if ("업무연락".equals(approvalDetail.getFormName())) {
-		 * mav.setViewName("document_view_businessContact.approval"); }
-		 */
-		
+		// 반려된 것인지 확인하기
+		if ("list".equals(viewType)) {
+			boolean isReturn = service.isReturn(approvalId);
+			if (isReturn) {
+				// 반려된 것일 경우 읽음으로 바꾸기
+				if (service.updateReadReturn(paraMap) != 1) {
+					// 읽음처리 실패했을 경우
+
+					// 에러 표시
+
+					mav.addObject("message", "에러가 발생하였습니다. 다시 시도해주세요.");
+					// 이전 페이지로 이동
+					mav.addObject("loc", req.getHeader("referer"));
+					mav.setViewName("msg");
+					return mav;
+
+				}
+			}
+			mav.addObject("isReturn", isReturn);
+		}
+		///////////////////////////////////////////////////////////////////////////////
+
+		Map<String, String> sizeMap = new HashMap<>();
+		sizeMap.put("searchType", "");
+		sizeMap.put("searchWord", "");
+		sizeMap.put("orderType", "desc");
+		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+
+		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
+
+		//////////////////////////////////////////////////////////////////////////////
+
 		String url = "";
-		System.out.println("approvalDetail.getFormName() : " + approvalDetail.getFormName());
-		switch(approvalDetail.getFormName()) {
+		switch (approvalDetail.getFormName()) {
 		case "업무연락":
 			url = "document_view_businessContact.approval";
 			break;
@@ -1264,28 +1320,11 @@ public class ApprovalController {
 			break;
 		}
 		mav.setViewName(url);
-//		if ("box".equals(type)) {
-//			// 문서함에서 클릭했을 경우 (이미 완료된 거일 경우)
-//		} else {
-//			// 진행중인 문서함에서 클릭했을 경우 (아직 진행중일 경우)
-//		}
-		/*
-		 * String goBackURL = ""; String searchType = ""; String searchWord = ""; try {
-		 * searchWord = URLDecoder.decode(redirect_map.get("searchWord"), "UTF-8"); //
-		 * 한글데이터가 포함되어 있으면 반드시 한글로 복구주어야 한다. goBackURL =
-		 * URLDecoder.decode(redirect_map.get("goBackURL"), "UTF-8"); // 한글데이터가 포함되어 있으면
-		 * 반드시 한글로 복구주어야 한다. } catch (UnsupportedEncodingException e) {
-		 * e.printStackTrace(); }
-		 * 
-		 * if(goBackURL != null && goBackURL.contains(" ") ) { goBackURL =
-		 * goBackURL.replaceAll(" ", "&"); } mav.addObject("goBackURL", goBackURL);
-		 */
-		
-		
-		mav.addObject("viewType", type);
+
+		mav.addObject("viewType", viewType);
+		mav.addObject("type", type);
 		mav.addObject("noSearch", true);
-		
-		
+
 		return mav;
 
 	}
@@ -1352,7 +1391,8 @@ public class ApprovalController {
 		JSONObject jsonObj = new JSONObject();
 
 		jsonObj.put("isSuccess",
-				service.updateApprovalLineSetting(updateList, new Long((int) approvalList.get(0).get("approvalId")), new Long((int) approvalList.get(0).get("procedureType"))));
+				service.updateApprovalLineSetting(updateList, new Long((int) approvalList.get(0).get("approvalId")),
+						new Long((int) approvalList.get(0).get("procedureType"))));
 
 		return jsonObj.toString();
 	}
@@ -1364,7 +1404,6 @@ public class ApprovalController {
 		// 참조 or 수신참조 or 수신 + 버튼 _ 참조에 추가할 유저 선택시
 
 		JSONObject jsonObj = new JSONObject();
-
 		jsonObj.put("isAdd", service.addRef(refType, empId, approvalId));
 
 		return jsonObj.toString();
@@ -1408,7 +1447,8 @@ public class ApprovalController {
 		// WAS 의 webapp 의 절대경로를 알아와야 한다.
 		HttpSession session = req.getSession();
 		String root = session.getServletContext().getRealPath("/");
-		String path = root + "resources" + File.separator + "image" + File.separator + "approval" + File.separator + "uploadFile"; // path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다.
+		String path = root + "resources" + File.separator + "image" + File.separator + "approval" + File.separator
+				+ "uploadFile"; // path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다.
 
 		File dir = new File(path);
 
@@ -1444,8 +1484,10 @@ public class ApprovalController {
 					// 탐색기에 가보면 첨부한 파일이 생성되어져 있음을 확인할 수 있다.
 					// === MultipartFile 을 File 로 변환하여 탐색기 저장폴더에 저장하기 끝 ===
 
-					afvo.setFileName(req.getContextPath() + "resources" + File.separator + "image" + File.separator + "approval" + File.separator + "uploadFile" + File.separator
-							+ mtFile.getOriginalFilename()); // 첨부파일명들을 기록한다.
+					afvo.setFileName(
+							req.getContextPath() + "resources" + File.separator + "image" + File.separator + "approval"
+									+ File.separator + "uploadFile" + File.separator + mtFile.getOriginalFilename()); // 첨부파일명들을
+																														// 기록한다.
 					afvo.setFileSize(((double) mtFile.getSize()) / 1024 / 1024); // 첨부파일명들을 기록한다.
 
 					// 수정필 _ 반올림 소수 셋쨰자리
@@ -1486,10 +1528,9 @@ public class ApprovalController {
 
 		PrintWriter out = null;
 		// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
-		
+
 		Long fileId = Long.parseLong(req.getParameter("fileId"));
-		
-		
+
 		try {
 			ApprovalFileVO afvo = service.getApprovalDocumentFile(fileId);
 
@@ -1497,7 +1538,8 @@ public class ApprovalController {
 				out = res.getWriter();
 				// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
 
-				out.println("<script type='text/javascript'>alert('존재하지 않는 글번호 이거나 첨부파일이 없으므로 파일다운로드가 불가합니다.'); history.back();</script>");
+				out.println(
+						"<script type='text/javascript'>alert('존재하지 않는 글번호 이거나 첨부파일이 없으므로 파일다운로드가 불가합니다.'); history.back();</script>");
 				return;
 			}
 
@@ -1520,7 +1562,8 @@ public class ApprovalController {
 				// ~~~ 확인용 webapp 의 절대경로 =>
 				// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\
 
-				String path = root + "resources" + File.separator + "image" + File.separator + "approval" + File.separator + "uploadFile";
+				String path = root + "resources" + File.separator + "image" + File.separator + "approval"
+						+ File.separator + "uploadFile";
 				/*
 				 * File.separator 는 운영체제에서 사용하는 폴더와 파일의 구분자이다. 운영체제가 Windows 이라면 File.separator
 				 * 는 "\" 이고, 운영체제가 UNIX, Linux, 매킨토시(맥) 이라면 File.separator 는 "/" 이다.
@@ -1558,129 +1601,104 @@ public class ApprovalController {
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@ResponseBody
 	@PostMapping(value = "/approval/insertOpinion.gw", produces = "text/plain;charset=UTF-8")
-	public String insertOpinion(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, String opinion, Long approvalId) {
+	public String insertOpinion(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, String opinion,
+			Long approvalId) {
 		HttpSession session = req.getSession();
-		
+
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("approvalId", String.valueOf(approvalId));
 		paraMap.put("opinion", opinion);
-		paraMap.put("empId", String.valueOf(((EmployeeVO)session.getAttribute("loginUser")).getEmpId()));
-		
-		
+		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+
 		JSONObject jsonObj = new JSONObject();
 
 		jsonObj.put("isInsert", service.insertOpinion(paraMap));
 
 		return jsonObj.toString();
 	}
-	
-	
-	
+
 	@ResponseBody
 	@PostMapping(value = "/approval/deleteOpinion.gw", produces = "text/plain;charset=UTF-8")
 	public String deleteOpinion(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long opinionId) {
-		System.out.println("opinionId : "  + opinionId);
+		System.out.println("opinionId : " + opinionId);
 		JSONObject jsonObj = new JSONObject();
 
 		jsonObj.put("isDelete", service.deleteOpinion(opinionId));
 
 		return jsonObj.toString();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@ResponseBody
 	@PostMapping(value = "/approval/deleteImportant.gw", produces = "text/plain;charset=UTF-8")
-	public String deleteImportant(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId, Long approvalId) {
+	public String deleteImportant(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
+			Long approvalId) {
 		JSONObject jsonObj = new JSONObject();
-		
+
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("empId", empId);
 		paraMap.put("approvalId", approvalId);
-		
+
 		jsonObj.put("isDelete", service.deleteImportant(paraMap));
 
 		return jsonObj.toString();
-		
+
 	}
-	
-	
+
 	@ResponseBody
 	@PostMapping(value = "/approval/insertImportant.gw", produces = "text/plain;charset=UTF-8")
-	public String insertImportant(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId, Long approvalId) {
+	public String insertImportant(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
+			Long approvalId) {
 		JSONObject jsonObj = new JSONObject();
-		
+
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("empId", empId);
 		paraMap.put("approvalId", approvalId);
-		
+
 		jsonObj.put("isAdd", service.insertImportant(paraMap));
 
 		return jsonObj.toString();
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@ResponseBody
 	@PostMapping(value = "/approval/updateActionOfApproval.gw", produces = "text/plain;charset=UTF-8")
-	public String updateActionOfApproval(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, ApprovalActionVO aavo) {
-		
+	public String updateActionOfApproval(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			ApprovalActionVO aavo) {
+
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("empId", String.valueOf(aavo.getEmpId()));
 		paraMap.put("approvalId", String.valueOf(aavo.getApprovalId()));
 		paraMap.put("status", String.valueOf(aavo.getApprovalStatus()));
 		paraMap.put("opinion", aavo.getOpinion());
 		paraMap.put("formId", String.valueOf(aavo.getFormId()));
-		
+
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("isUpdate", service.updateActionOfApproval(paraMap));
 
 		return jsonObj.toString();
-		
+
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "/approval/updateRefRead.gw", produces = "text/plain;charset=UTF-8")
-	public String updateRefRead(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId, Long approvalId) {
-		
+	public String updateRefRead(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
+			Long approvalId) {
+
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("empId", empId);
 		paraMap.put("approvalId", approvalId);
-		
+
 		JSONObject jsonObj = new JSONObject();
-		
+
 		jsonObj.put("isUpdate", service.updateRefRead(paraMap));
 
 		return jsonObj.toString();
-		
+
 	}
-	
-	
-	
+
 //	@ResponseBody
 //	@PostMapping("/approval/updateProcessLineSetting.gw")
 //	public String updateProcessLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1703,9 +1721,7 @@ public class ApprovalController {
 //
 //		return jsonObj.toString();
 //	}
-	
-	
-	
+
 //	@ResponseBody
 //	@PostMapping("/approval/updateApplicationLineSetting.gw")
 //	public String updateApplicationLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1730,8 +1746,7 @@ public class ApprovalController {
 //
 //		return jsonObj.toString();
 //	}
-	
-	
+
 	@ResponseBody
 	@PostMapping("/approval/updateRoundRobinApprovalLineSetting.gw")
 	public String updateRoundRobinApprovalLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1742,7 +1757,7 @@ public class ApprovalController {
 
 		for (int i = 0; i < approvalList.size(); i++) {
 			ApprovalProcedureVO apvo = new ApprovalProcedureVO();
-			
+
 			System.out.println("받아온 empID : " + approvalList.get(i).get("empId").toString());
 			apvo.setEmpId(approvalList.get(i).get("empId").toString());
 			apvo.setSequence((int) approvalList.get(i).get("sequence"));
@@ -1751,12 +1766,13 @@ public class ApprovalController {
 
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("isSuccess",
-				service.updateRoundRobinApprovalLineSetting(updateList, new Long((int) approvalList.get(0).get("approvalId")), new Long((int) approvalList.get(0).get("procedureType"))));
+				service.updateRoundRobinApprovalLineSetting(updateList,
+						new Long((int) approvalList.get(0).get("approvalId")),
+						new Long((int) approvalList.get(0).get("procedureType"))));
 
 		return jsonObj.toString();
 	}
-	
-	
+
 	@ResponseBody
 	@PostMapping("/approval/updateAgreeLineSetting.gw")
 	public String updateAgreeLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1767,7 +1783,7 @@ public class ApprovalController {
 
 		for (int i = 0; i < approvalList.size(); i++) {
 			ApprovalProcedureVO apvo = new ApprovalProcedureVO();
-			
+
 			System.out.println("empID : " + approvalList.get(i).get("empId").toString());
 			apvo.setEmpId(approvalList.get(i).get("empId").toString());
 			apvo.setSequence((int) approvalList.get(i).get("sequence"));
@@ -1781,5 +1797,1004 @@ public class ApprovalController {
 
 		return jsonObj.toString();
 	}
+
+	@ResponseBody
+	@PostMapping("/approval/cancleApproval.gw")
+	public String cancleApproval(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
+			Long approvalId) {
+		// 기안 취소
+
+		JSONObject jsonObj = new JSONObject();
+
+		Map<String, Long> paraMap = new HashMap<>();
+		paraMap.put("approvalId", approvalId);
+		paraMap.put("empId", empId);
+
+		jsonObj.put("isDelete", service.cancleApproval(paraMap));
+
+		return jsonObj.toString();
+	}
+
+	@GetMapping("/approval/document/write/{writeType}.gw")
+	public ModelAndView approvalDocumentWrite(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			@PathVariable String writeType, Long approvalId) {
+		// 작성하기 및 수정
+
+		HttpSession session = req.getSession();
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setDepName("부서명");
+		loginUser.setTeamName("팀명");
+		loginUser.setEmpName("이름");
+		loginUser.setPositionName("직위");
+
+		session.setAttribute("loginUser", loginUser);
+
+		mav.addObject("formList", service.getFormNameListByWrite());
+		mav.addObject("securityLevelList", service.getSecurityLevelList());
+
+		if ("index".equals(writeType)) {
+			// 작성하기 눌렀을 경우
+			mav.setViewName("document_write_index.approval");
+
+		} else if ("modify".equals(writeType)) {
+			// 수정하기일 경우
+
+		} else if ("temp".equals(writeType)) {
+			// 임시저장에서 불러온 경우
+
+			Map<String, Long> paraMap = new HashMap<>();
+			paraMap.put("approvalId", approvalId);
+			paraMap.put("empId", loginUser.getEmpId());
+			Long formId = service.getFormId(approvalId);
+			paraMap.put("formId", formId);
+			// 보존 연한 정보
+			mav.addObject("preservationYear", service.getPreservationYear(formId));
+
+			// 수정필 !!!!!!!!!!!!!!!!! 폼id에 따라 더 추가될 내용이 있음 그거 추가해서 넣기
+			if (formId == 109) {
+				// 재직증명서
+				mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
+				mav.setViewName("document_write_empProof.approval");
+
+			} else if (formId == 108) {
+				// 품의서 합의 부분
+				mav.addObject("agreeList", service.getProcedureTypeAgree(approvalId));
+				mav.setViewName("document_write_roundRobin.approval");
+
+			} else if (formId == 106) {
+				// 회람
+				mav.setViewName("document_write_circulation.approval");
+			} else if (formId == 107) {
+				// 업무연락
+				mav.setViewName("document_write_businessContact.approval");
+			}
+			ApprovalDetailVO approvalDetail = service.getApprovalDocumentView(paraMap);
+
+			mav.addObject("approvalDetail", approvalDetail);
+
+		} else {
+			// 에러 수정필
+		}
+
+		return mav;
+	}
+
+	@PostMapping("/approval/document/write/{writeType}.gw")
+	public ModelAndView approvalDocumentWriteForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			@PathVariable String writeType, Long formId) {
+		// 작성하기 및 수정
+
+		HttpSession session = req.getSession();
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setDepName("부서명");
+		loginUser.setTeamName("팀명");
+		loginUser.setEmpName("이름");
+		loginUser.setPositionName("직위");
+
+		session.setAttribute("loginUser", loginUser);
+
+		mav.addObject("formList", service.getFormNameListByWrite());
+		mav.addObject("securityLevelList", service.getSecurityLevelList());
+
+		if ("form".equals(writeType)) {
+			// 문서 종류를 선택했을 경우
+
+			// 보존 연한 정보
+			mav.addObject("preservationYear", service.getPreservationYear(formId));
+
+			if (formId == 107) {
+				// 업무연락일 경우
+
+				mav.setViewName("document_write_businessContact.approval");
+			} else if (formId == 106) {
+				// 회람일 경우
+
+				mav.setViewName("document_write_circulation.approval");
+			} else if (formId == 109) {
+				// 재직증명서일 경우
+
+				mav.setViewName("document_write_empProof.approval");
+			} else if (formId == 108) {
+				// 품의서일 경우
+
+				mav.setViewName("document_write_roundRobin.approval");
+			}
+
+		} else {
+			// 에러 수정필
+		}
+
+		return mav;
+	}
+
+	@ResponseBody
+	@PostMapping(value = "/approval/insertDocumentWrite/{formType}.gw", produces = "text/plain;charset=UTF-8")
+	public String insertDocumentWrite(MultipartHttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			@PathVariable String formType) {
+		// 기안하기
+
+		HttpSession session = req.getSession();
+		String empId = String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("empId", empId);
+		paraMap.put("title", req.getParameter("approval_document_title"));
+		paraMap.put("securityId", req.getParameter("security_level"));
+
+		// 파일 첨부 업데이트
+		List<MultipartFile> fileList = req.getFiles("file_arr");
+		List<ApprovalFileVO> afList = new ArrayList<>();
+
+		// 기존 첨부파일 정보
+		String[] orgFileIdList = req.getParameterValues("orgFiles");
+
+		if (orgFileIdList != null) {
+			for (String str : orgFileIdList) {
+				afList.add(service.getApprovalDocumentFile(Long.parseLong(str)));
+			}
+		}
+
+		if (fileList.size() > 0) {
+
+			// WAS 의 webapp 의 절대경로를 알아와야 한다.
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "resources" + File.separator + "image" + File.separator + "approval" + File.separator
+					+ "uploadFile"; // path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다.
+
+			File dir = new File(path);
+
+			if (!dir.exists()) {
+				// 이미 path의 폴더가 존재하는 지 확인
+				// 없을 경우 생성해라
+				dir.mkdirs();
+			}
+
+			// >>>> 첨부파일을 위의 path 경로에 올리기 <<<< //
+
+			if (fileList != null && fileList.size() > 0) {
+				for (int i = 0; i < fileList.size(); i++) {
+
+					ApprovalFileVO afvo = new ApprovalFileVO();
+
+					MultipartFile mtFile = fileList.get(i); // 파일 하나하나 확인
+
+					try {
+						// === MultipartFile 을 File 로 변환하여 탐색기 저장폴더에 저장하기 시작 ===
+						File attachFile = new File(path + File.separator + mtFile.getOriginalFilename());
+						mtFile.transferTo(attachFile); // 여기서 저장, 이미 있으면 삭제하고 저장
+						// === MultipartFile 을 File 로 변환하여 탐색기 저장폴더에 저장하기 끝 ===
+
+						afvo.setFileName(req.getContextPath() + "resources" + File.separator + "image" + File.separator
+								+ "approval" + File.separator + "uploadFile" + File.separator
+								+ mtFile.getOriginalFilename()); // 첨부파일명들을 기록한다.
+						afvo.setFileSize(((double) mtFile.getSize()) / 1024 / 1024); // 첨부파일명들을 기록한다.
+
+						// 수정필 _ 반올림 소수 셋쨰자리
+
+						afList.add(afvo);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} // end of
+					// for--------------------------------------------------------------------------
+			}
+		}
+
+		String approvalId = "";
+		if (req.getParameter("approvalId") != null) {
+			// 임시저장했던 애를 기안하려고 하는 경우
+			approvalId = req.getParameter("approvalId");
+			paraMap.put("approvalId", approvalId);
+			System.out.println("approvalID: " + approvalId);
+
+		}
+
+		Map<String, String[]> paraArrMap = new HashMap<>();
+
+		JSONObject jsonObj = new JSONObject();
+
+		if ("businessContact".equals(formType)) {
+			// 업무연락일 경우
+			paraMap.put("formId", "107");
+
+			String content = "";
+			if (req.getParameter("content") != null) {
+				content = req.getParameter("content");
+			}
+			paraMap.put("content", content);
+
+			String[] approvalArr = req.getParameterValues("approvalEmpId");
+			String[] referArr = req.getParameterValues("referEmpId");
+			String[] incArr = req.getParameterValues("incEmpId");
+			String[] incRArr = req.getParameterValues("incREmpId");
+
+			paraArrMap.put("approvalArr", approvalArr);
+			paraArrMap.put("referArr", referArr);
+			paraArrMap.put("incArr", incArr);
+			paraArrMap.put("incRArr", incRArr);
+
+			if (approvalArr.length >= 1) {
+				jsonObj.put("viewType", "list");
+			} else {
+				jsonObj.put("viewType", "box");
+			}
+
+		} else if ("circulation".equals(formType)) {
+			// 회람일 경우
+			paraMap.put("formId", "106");
+
+			String content = "";
+			if (req.getParameter("content") != null) {
+				content = req.getParameter("content");
+			}
+			paraMap.put("content", content);
+
+			String[] referArr = req.getParameterValues("referEmpId");
+
+			paraArrMap.put("referArr", referArr);
+
+			jsonObj.put("viewType", "box");
+
+		} else if ("empProof".equals(formType)) {
+			// 재직증명서 경우
+			paraMap.put("formId", "109");
+
+			String reason = "";
+			if (req.getParameter("reason") != null) {
+				reason = req.getParameter("reason");
+
+			}
+			paraMap.put("reason", reason);
+
+			String submit = "";
+			if (req.getParameter("toSubmit") != null) {
+				submit = req.getParameter("toSubmit");
+			}
+			paraMap.put("submit", submit);
+
+			paraMap.put("issueDay", req.getParameter("issueDay"));
+
+			String[] approvalArr = req.getParameterValues("approvalEmpId");
+			String[] applicationArr = req.getParameterValues("applicationEmpId");
+			String[] referArr = req.getParameterValues("referEmpId");
+
+			paraArrMap.put("approvalArr", approvalArr);
+			paraArrMap.put("referArr", referArr);
+			paraArrMap.put("applicationArr", applicationArr);
+
+			if (approvalArr.length >= 1) {
+				jsonObj.put("viewType", "list");
+			} else {
+				jsonObj.put("viewType", "box");
+			}
+
+		} else if ("roundRobin".equals(formType)) {
+			// 품의서일 경우
+			paraMap.put("formId", "108");
+
+			String content = "";
+			if (req.getParameter("content") != null) {
+				content = req.getParameter("content");
+			}
+			paraMap.put("content", content);
+
+			String[] approvalArr = req.getParameterValues("approvalEmpId");
+			String[] referArr = req.getParameterValues("referEmpId");
+			String[] agreeArr = req.getParameterValues("agreeEmpId");
+			String[] fiAgreeArr = req.getParameterValues("fiAgreeEmpId");
+
+			paraArrMap.put("approvalArr", approvalArr);
+			paraArrMap.put("referArr", referArr);
+			paraArrMap.put("agreeArr", agreeArr);
+			paraArrMap.put("fiAgreeArr", fiAgreeArr);
+
+			if (approvalArr.length >= 1) {
+				jsonObj.put("viewType", "list");
+			} else {
+				jsonObj.put("viewType", "box");
+			}
+
+		}
+
+		// insert한 결과값인 approvalId를 가져온다
+		approvalId = service.insertDocumentWrite(paraArrMap, paraMap);
+
+		if (!service.insertOrUpdateApprovalFile(approvalId, afList)) {
+			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기 수정필
+
+			System.out.println("에러랍니다");
+		}
+
+		if ("".equals(approvalId)) {
+			// 업데이트가 제대로 안된거임
+			// 에러처리 수정필
+			jsonObj.put("isSuccess", false);
+		} else {
+			jsonObj.put("isSuccess", true);
+			jsonObj.put("approvalId", approvalId);
+		}
+
+		return jsonObj.toString();
+	}
+
+	@ResponseBody
+	@PostMapping(value = "/approval/insertTempDocumentWrite/{formType}.gw", produces = "text/plain;charset=UTF-8")
+	public String insertTempDocumentWrite(MultipartHttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			@PathVariable String formType) {
+		// 임시저장
+
+		HttpSession session = req.getSession();
+		String empId = String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("empId", empId);
+		paraMap.put("title", req.getParameter("approval_document_title"));
+		paraMap.put("securityId", req.getParameter("security_level"));
+
+		// 파일 첨부 업데이트
+		List<MultipartFile> fileList = req.getFiles("file_arr");
+		List<ApprovalFileVO> afList = new ArrayList<>();
+
+		// 기존 첨부파일 정보
+		String[] orgFileIdList = req.getParameterValues("orgFiles");
+
+		if (orgFileIdList != null) {
+			for (String str : orgFileIdList) {
+				System.out.println("일단 들어왔따능 : " + orgFileIdList);
+				afList.add(service.getApprovalDocumentFile(Long.parseLong(str)));
+			}
+		}
+
+		if (fileList.size() > 0) {
+
+			// WAS 의 webapp 의 절대경로를 알아와야 한다.
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "resources" + File.separator + "image" + File.separator + "approval" + File.separator
+					+ "uploadFile"; // path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다.
+
+			File dir = new File(path);
+
+			if (!dir.exists()) {
+				// 이미 path의 폴더가 존재하는 지 확인
+				// 없을 경우 생성해라
+				dir.mkdirs();
+			}
+
+			// >>>> 첨부파일을 위의 path 경로에 올리기 <<<< //
+
+			if (fileList != null && fileList.size() > 0) {
+				for (int i = 0; i < fileList.size(); i++) {
+
+					ApprovalFileVO afvo = new ApprovalFileVO();
+
+					MultipartFile mtFile = fileList.get(i); // 파일 하나하나 확인
+
+					try {
+						// === MultipartFile 을 File 로 변환하여 탐색기 저장폴더에 저장하기 시작 ===
+						File attachFile = new File(path + File.separator + mtFile.getOriginalFilename());
+						mtFile.transferTo(attachFile); // 여기서 저장, 이미 있으면 삭제하고 저장
+						// === MultipartFile 을 File 로 변환하여 탐색기 저장폴더에 저장하기 끝 ===
+
+						afvo.setFileName(req.getContextPath() + "resources" + File.separator + "image" + File.separator
+								+ "approval" + File.separator + "uploadFile" + File.separator
+								+ mtFile.getOriginalFilename()); // 첨부파일명들을 기록한다.
+						afvo.setFileSize(((double) mtFile.getSize()) / 1024 / 1024); // 첨부파일명들을 기록한다.
+
+						// 수정필 _ 반올림 소수 셋쨰자리
+
+						afList.add(afvo);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} // end of
+					// for--------------------------------------------------------------------------
+			}
+		}
+
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		for (ApprovalFileVO fvo : afList) {
+			System.out.println("fvo name : " + fvo.getFileRName());
+		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+		String approvalId = "";
+		if (req.getParameter("approvalId") != null) {
+			approvalId = req.getParameter("approvalId");
+			paraMap.put("approvalId", approvalId);
+
+		}
+
+		Map<String, String[]> paraArrMap = new HashMap<>();
+
+		JSONObject jsonObj = new JSONObject();
+
+		if ("businessContact".equals(formType)) {
+			// 업무연락일 경우
+			paraMap.put("formId", "107");
+
+			String content = "";
+			if (req.getParameter("content") != null) {
+				content = req.getParameter("content");
+			}
+			paraMap.put("content", content);
+
+			String[] approvalArr = req.getParameterValues("approvalEmpId");
+			String[] referArr = req.getParameterValues("referEmpId");
+			String[] incArr = req.getParameterValues("incEmpId");
+			String[] incRArr = req.getParameterValues("incREmpId");
+
+			paraArrMap.put("approvalArr", approvalArr);
+			paraArrMap.put("referArr", referArr);
+			paraArrMap.put("incArr", incArr);
+			paraArrMap.put("incRArr", incRArr);
+
+		} else if ("circulation".equals(formType)) {
+			// 회람일 경우
+			paraMap.put("formId", "106");
+
+			String content = "";
+			if (req.getParameter("content") != null) {
+				content = req.getParameter("content");
+			}
+			paraMap.put("content", content);
+
+			String[] referArr = req.getParameterValues("referEmpId");
+
+			paraArrMap.put("referArr", referArr);
+
+		} else if ("empProof".equals(formType)) {
+			// 재직증명서 경우
+			paraMap.put("formId", "109");
+
+			String reason = "";
+			if (req.getParameter("reason") != null) {
+				reason = req.getParameter("reason");
+
+			}
+			paraMap.put("reason", reason);
+
+			String submit = "";
+			if (req.getParameter("submit") != null) {
+				submit = req.getParameter("submit");
+
+			}
+			paraMap.put("submit", submit);
+
+			paraMap.put("issueDay", req.getParameter("issueDay"));
+
+			String[] approvalArr = req.getParameterValues("approvalEmpId");
+			String[] applicationArr = req.getParameterValues("applicationEmpId");
+			String[] referArr = req.getParameterValues("referEmpId");
+
+			paraArrMap.put("approvalArr", approvalArr);
+			paraArrMap.put("referArr", referArr);
+			paraArrMap.put("applicationArr", applicationArr);
+
+		} else if ("roundRobin".equals(formType)) {
+			// 품의서일 경우
+			paraMap.put("formId", "108");
+
+			String content = "";
+			if (req.getParameter("content") != null) {
+				content = req.getParameter("content");
+			}
+			paraMap.put("content", content);
+
+			String[] approvalArr = req.getParameterValues("approvalEmpId");
+			String[] referArr = req.getParameterValues("referEmpId");
+			String[] agreeArr = req.getParameterValues("agreeEmpId");
+			String[] fiAgreeArr = req.getParameterValues("fiAgreeEmpId");
+
+			paraArrMap.put("approvalArr", approvalArr);
+			paraArrMap.put("referArr", referArr);
+			paraArrMap.put("agreeArr", agreeArr);
+			paraArrMap.put("fiAgreeArr", fiAgreeArr);
+
+		}
+
+		// insert한 결과값인 approvalId를 가져온다
+		approvalId = service.insertTempDocumentWrite(paraArrMap, paraMap);
+
+		if (!service.insertOrUpdateApprovalFile(approvalId, afList)) {
+			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기 수정필
+
+			System.out.println("에러랍니다");
+		}
+
+		if ("".equals(approvalId)) {
+			// 업데이트가 제대로 안된거임
+			// 에러처리 수정필
+			jsonObj.put("isSuccess", false);
+		} else {
+			jsonObj.put("isSuccess", true);
+		}
+
+		return jsonObj.toString();
+	}
+
+	@PostMapping("/approval/batch/{type}.gw")
+	public ModelAndView approvalBatch(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			@PathVariable String type) {
+
+		HttpSession session = req.getSession();
+		String empId = String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+
+		BatchVO bvo = new BatchVO();
+		bvo.setEmpId(empId);
+		bvo.setApprovalIdList(req.getParameterValues("checkApproval"));
+
+		for (String str : bvo.getApprovalIdList()) {
+			System.out.println("str : " + str);
+		}
+
+		if ("approval".equals(type)) {
+			// 일괄 결재
+
+			if (service.batchApproval(bvo) > 0) {
+				// 잘 끝
+
+				mav.setViewName("redirect:/approval/document/list/W.gw");
+			} else {
+				System.out.println("에러");
+			}
+
+		} else if ("check".equals(type)) {
+			if (service.batchCheck(bvo) > 0) {
+				// 잘 끝
+
+				mav.setViewName("redirect:/approval/document/list/V.gw");
+			} else {
+				System.out.println("에러");
+			}
+		} else if ("delete".equals(type)) {
+			
+			if (service.batchDelete(bvo) > 0) {
+				// 잘 끝
+
+				mav.setViewName("redirect:/approval/settings/document.gw");
+			} else {
+				System.out.println("에러");
+			}
+		} else if("restore".equals(type)) {
+			// 잘 끝
+
+			if (service.batchRestore(bvo) > 0) {
+				// 잘 끝
+
+				mav.setViewName("redirect:/approval/settings/deleted_document.gw");
+			} else {
+				System.out.println("에러");
+			}
+		}
+
+		return mav;
+	}
+
+	@GetMapping("/approval/importantDoc/{viewType}.gw")
+	public ModelAndView approvalViewImportantDoc(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			@PathVariable String type, SearchApprovalVO savo) {
+		mav.addObject("type", type);
+
+		HttpSession session = req.getSession();
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setFk_positionId((long) 6);
+		session.setAttribute("loginUser", loginUser);
+
+		String searchType = savo.getSearchType();
+		String searchWord = savo.getSearchWord();
+		String orderType = savo.getOrderType();
+		String str_currentShowPageNo = savo.getCurrentShowPageNo();
+
+		if (searchType == null) {
+			searchType = "";
+		}
+
+		if (searchWord == null) {
+			searchWord = "";
+		}
+
+		if ("approvalId".equals(searchType) && searchWord != "") {
+			searchType = "apd.fk_" + searchType;
+		}
+
+		if (orderType == null) {
+			orderType = "desc";
+		}
+
+		if (searchWord != null) {
+			searchWord = searchWord.trim();
+		}
+
+		System.out.println("orderType : " + orderType);
+
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("searchType", searchType);
+		paraMap.put("searchWord", searchWord);
+		paraMap.put("orderType", orderType);
+		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+		paraMap.put("positionId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getFk_positionId()));
+
+		// 문서 종류 가져오기
+		mav.addObject("formList", service.getFormNameList());
+
+		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
+		List<ApprovalVO> boxList = new ArrayList<>();
+
+		if ("all".equals(type)) {
+			paraMap.put("isViewAll", savo.getIsViewAll());
+			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
+			mav.addObject("isViewAll", savo.getIsViewAll());
+		} else if ("writer".equals(type)) {
+			boxList = service.getApprovalWriterBox_withSearchAndPaging(paraMap);
+		} else if ("approval".equals(type)) {
+			boxList = service.getApprovalApprovalBox_withSearchAndPaging(paraMap);
+		} else if ("refer".equals(type)) {
+			boxList = service.getApprovalReferBox_withSearchAndPaging(paraMap);
+		} else if ("read".equals(type)) {
+			boxList = service.getApprovalReadBox_withSearchAndPaging(paraMap);
+		} else if ("return".equals(type)) {
+			boxList = service.getApprovalReturnBox_withSearchAndPaging(paraMap);
+		} else if ("temp".equals(type)) {
+			boxList = service.getApprovalTempBox_withSearchAndPaging(paraMap);
+		} else {
+			type = "all";
+			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
+		}
+
+		if (!"".equals(searchType) && !"".equals(searchWord)) {
+			paraMap.put("searchType", "");
+			paraMap.put("searchWord", "");
+
+			mav.addObject("searchType", searchType);
+			mav.addObject("searchWord", searchWord);
+		}
+		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
+		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
+		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
+		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
+		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
+
+		int totalCount = 0; // 총 게시물 건수
+		// 수정필
+		int sizePerPage = 1; // 한 페이지당 보여줄 게시물 건수
+		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
+		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
+
+		// 총 게시물 건수(totalCount)
+		totalCount = boxList.size();
+
+		System.out.println("totalCount" + totalCount);
+
+		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
+
+		if (str_currentShowPageNo == null) {
+			// 게시판에 보여지는 초기화면
+
+			currentShowPageNo = 1;
+		}
+
+		else {
+
+			try {
+				currentShowPageNo = Integer.parseInt(str_currentShowPageNo);
+
+				if (currentShowPageNo < 1 || currentShowPageNo > totalPage) {
+					currentShowPageNo = 1;
+				}
+
+			} catch (NumberFormatException e) {
+				currentShowPageNo = 1;
+			}
+		}
+
+		mav.addObject("currentShowPageNo", currentShowPageNo);
+
+		// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
+		/*
+		 * currentShowPageNo startRno endRno
+		 * -------------------------------------------- 1 page ===> 1 10 2 page ===> 11
+		 * 20 3 page ===> 21 30 4 page ===> 31 40 ...... ... ...
+		 */
+		int startRno = ((currentShowPageNo - 1) * sizePerPage); // 시작 행번호
+		int endRno = startRno + sizePerPage; // 끝 행번호
+		/*
+		 * int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 int
+		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
+		 */
+
+		System.out.println("currentShowPageNo : " + currentShowPageNo);
+		System.out.println("startRno : " + startRno);
+		System.out.println("endRno : " + endRno);
+
+		/*
+		 * paraMap.put("startRno", String.valueOf(startRno)); paraMap.put("endRno",
+		 * String.valueOf(endRno));
+		 */
+
+		if (totalCount == 0) {
+			mav.addObject("boxList", boxList);
+		} else {
+			mav.addObject("boxList", boxList.subList(startRno, endRno));
+		}
+
+//		mav.addObject("allIngList", allIngList.subList(startRno-1, endRno +1));
+
+//		if ("subject".equals(searchType) || "content".equals(searchType) || "subject_content".equals(searchType)
+//				|| "name".equals(searchType)) {
+//			mav.addObject("paraMap", paraMap);
+//		}
+
+		// === #121. 페이지바 만들기 === //
+		// 수정필
+		int blockSize = 2;
+		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
+		/*
+		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
+		 * 20 [다음][마지막] -- 1개블럭 [맨처음][이전] 21 22 23
+		 */
+
+		int loop = 1;
+		/*
+		 * loop는 1부터 증가하여 1개 블럭을 이루는 페이지번호의 개수[ 지금은 10개(== blockSize) ] 까지만 증가하는 용도이다.
+		 */
+
+		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
+		// *** !! 공식이다. !! *** //
+
+		/*
+		 * 1 2 3 4 5 6 7 8 9 10 -- 첫번째 블럭의 페이지번호 시작값(pageNo)은 1 이다. 11 12 13 14 15 16 17
+		 * 18 19 20 -- 두번째 블럭의 페이지번호 시작값(pageNo)은 11 이다. 21 22 23 24 25 26 27 28 29 30
+		 * -- 세번째 블럭의 페이지번호 시작값(pageNo)은 21 이다.
+		 * 
+		 * currentShowPageNo pageNo ---------------------------------- 1 1 = ((1 -
+		 * 1)/10) * 10 + 1 2 1 = ((2 - 1)/10) * 10 + 1 3 1 = ((3 - 1)/10) * 10 + 1 4 1 5
+		 * 1 6 1 7 1 8 1 9 1 10 1 = ((10 - 1)/10) * 10 + 1
+		 * 
+		 * 11 11 = ((11 - 1)/10) * 10 + 1 12 11 = ((12 - 1)/10) * 10 + 1 13 11 = ((13 -
+		 * 1)/10) * 10 + 1 14 11 15 11 16 11 17 11 18 11 19 11 20 11 = ((20 - 1)/10) *
+		 * 10 + 1
+		 * 
+		 * 21 21 = ((21 - 1)/10) * 10 + 1 22 21 = ((22 - 1)/10) * 10 + 1 23 21 = ((23 -
+		 * 1)/10) * 10 + 1 .. .. 29 21 30 21 = ((30 - 1)/10) * 10 + 1
+		 */
+
+		String pageBar = "<ul style='list-style:none;'>";
+		String url = "";
+
+		// === [맨처음][이전] 만들기 === //
+		if (pageNo != 1) {
+			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
+					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
+					+ "&currentShowPageNo=1'>[맨처음]</a></li>";
+			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
+					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
+					+ (pageNo - 1) + "'>[이전]</a></li>";
+		}
+
+		while (!(loop > blockSize || pageNo > totalPage)) {
+
+			if (pageNo == currentShowPageNo) {
+				pageBar += "<li style='display:inline-block; width:30px; font-size:12pt; border:solid 1px gray; color:red; padding:2px 4px;'>"
+						+ pageNo + "</li>";
+			} else {
+				pageBar += "<li style='display:inline-block; width:30px; font-size:12pt;'><a href='" + url
+						+ "?searchType=" + searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
+						+ "&currentShowPageNo=" + pageNo + "'>" + pageNo + "</a></li>";
+			}
+
+			loop++;
+			pageNo++;
+		} // end of while-------------------------
+
+		// === [다음][마지막] 만들기 === //
+		if (pageNo <= totalPage) {
+			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
+					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
+					+ pageNo + "'>[다음]</a></li>";
+			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
+					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
+					+ totalPage + "'>[마지막]</a></li>";
+		}
+
+		pageBar += "</ul>";
+
+		mav.addObject("pageBar", pageBar);
+
+		// === #123. 페이징 처리되어진 후 특정 글제목을 클릭하여 상세내용을 본 이후
+		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
+		// 현재 페이지 주소를 뷰단으로 넘겨준다.
+		String goBackURL = MyUtil.getCurrentURL(req);
+
+		mav.addObject("totalCount", totalCount);
+		mav.addObject("goBackURL", goBackURL);
+		mav.addObject("orderType", orderType);
+
+		mav.setViewName("document_box_" + type + ".approval");
+
+		return mav;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@ResponseBody
+	@PostMapping(value = "/approval/addApprovalAdminManager.gw", produces = "text/plain;charset=UTF-8")
+	public String addAppovalAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			Long empId) {
+		
+		HttpSession session = req.getSession();
+		
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setFk_positionId((long) 6);
+		loginUser.setAdminType("4");
+		session.setAttribute("loginUser", loginUser);
+		
+		Map<String, Long> paraMap = new HashMap<>();
+		paraMap.put("empId", empId);
+		paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+		paraMap.put("adminType", 3L);
+
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("isAdd", service.addAppovalAdminManager(paraMap));
+
+		return jsonObj.toString();
+	}
+	
+	
+	@ResponseBody
+	@PostMapping(value = "/approval/deleteApprovalAdminManager.gw", produces = "text/plain;charset=UTF-8")
+	public String deleteApprovalAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			Long adminId) {
+		
+		HttpSession session = req.getSession();
+		
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setFk_positionId((long) 6);
+		loginUser.setAdminType("4");
+		session.setAttribute("loginUser", loginUser);
+		
+		Map<String, Long> paraMap = new HashMap<>();
+		paraMap.put("adminId", adminId);
+		paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("isDelete", service.deleteAppovalAdminManager(paraMap));
+
+		return jsonObj.toString();
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/approval/grantAdminRead.gw", produces = "text/plain;charset=UTF-8")
+	public String grantAdminRead(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			Long adminId, int isReadAble) {
+		
+		HttpSession session = req.getSession();
+		
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setFk_positionId((long) 6);
+		loginUser.setAdminType("4");
+		session.setAttribute("loginUser", loginUser);
+		
+		Map<String, Long> paraMap = new HashMap<>();
+		paraMap.put("adminId", adminId);
+		paraMap.put("isReadAllDocument", (long)isReadAble);
+
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("isUpdate", service.grantAdminRead(paraMap));
+
+		return jsonObj.toString();
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/approval/getAdminHistory.gw", produces = "text/plain;charset=UTF-8")
+	public String getAdminHistory(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+		
+		HttpSession session = req.getSession();
+		
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setFk_positionId((long) 6);
+		loginUser.setAdminType("4");
+		session.setAttribute("loginUser", loginUser);
+		
+		
+		List<AdminHistoryVO> adminHistoryList = service.getAdminHistoryList();
+
+		JSONArray jsonArr = new JSONArray();
+
+		for (AdminHistoryVO ahvo : adminHistoryList) {
+			JSONObject jsonObj = new JSONObject();
+			
+			jsonObj.put("id", ahvo.getId());
+			jsonObj.put("empName", ahvo.getEmpName());
+			jsonObj.put("registerId", ahvo.getRegisterId());
+			jsonObj.put("registerEmpName", ahvo.getRegisterEmpName());
+			jsonObj.put("registerDay", ahvo.getRegisterDay());
+			jsonObj.put("registerType", ahvo.getRegisterType());
+
+			jsonArr.put(jsonObj);
+		}
+
+		return jsonArr.toString();
+	}
+	
+	
+	
+	
+	
+	
+	@GetMapping("/approval/formDetail.gw")
+	public ModelAndView approvalFormDetail(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,Long formId) {
+		
+		mav.addObject("formDetail", service.getFormDetail(formId));
+		mav.setViewName("settings_forms_detail.approval");
+		mav.addObject("type", "settings_forms");
+		return mav;
+	}
+	
+	
+	@GetMapping("/approval/modifyForm.gw")
+	public ModelAndView approvalModifyForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,Long formId) {
+		
+		mav.addObject("formDetail", service.getFormDetail(formId));
+		mav.setViewName("settings_forms_modify.approval");
+		mav.addObject("type", "settings_forms");
+		return mav;
+	}
+	
+	
+	@PostMapping("/approval/updateForm.gw")
+	public ModelAndView approvalUpdateForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, String formId, String preserved_term) {
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("formId", formId);
+		paraMap.put("preservationYear", preserved_term);
+		
+		if(service.updateForm(paraMap)) {
+			mav.setViewName("redirect:/approval/formDetail.gw?formId=" + formId);
+		}else {
+			mav.addObject("message", "수정에 실패하였습니다!");
+			// mav.addObject("type", "settings_basic");
+			mav.addObject("loc", req.getContextPath() + "/approval/modifyForm.gw?formId=" + formId);
+			mav.setViewName("msg");
+		}
+		
+		
+		return mav;
+	}
+
 
 }

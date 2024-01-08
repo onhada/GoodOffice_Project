@@ -5,21 +5,243 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("button.tag-refresh").click(function(){
+		// 검색시 초기화를 눌렀을 경우
+		
+		$(location).attr('href', window.location.origin + window.location.pathname);
+	})
+	
+	$("a.file_delete").click(function(){
+	// 검색시 검색어 지우기 버튼 눌렀을 경우
+		
+		$(location).attr('href', window.location.origin + window.location.pathname);
+	})
+	
+	$("td.tableData").each(function(){
+		$(this).click(function(){
+			let formId = $(this).parent().find("td.title").attr('id');
+			
+			let status = $(this).parent().find("td.docu-type div").html();
+			
+			console.log(status)
+			
+			
+			if(status == '결재 중'){
+				$(location).attr('href', '<%=ctxPath%>/approval/documentDetail/list/A/view.gw?formId=' + formId + '&approvalId=' + $(this).parent().find("td.docu-num div").html());
+			}else{
+				$(location).attr('href', '<%=ctxPath%>/approval/documentDetail/box/all/view.gw?formId=' + formId + '&approvalId=' + $(this).parent().find("td.docu-num div").html());
+			}
+		})
+	})
+	
+	
+	
+	$("button.updown").click(function(){
+		// 기안일 부분 클릭했을 경우
+		
+		let searchParam = decodeURI(window.location.search);
+		searchParam = searchParam.substring(1, searchParam.length);
+		
+		let searchParamArr = searchParam.split("&");
+		
+		if($(this).find('span').hasClass("up")){
+			// 현재 오름차순일 경우 내림차순이 되도록 한다
+			orderType = 'desc';
+			
+		}else{
+			// 현재 내림차순일 경우 오름차순이 되도록 한다
+			orderType = 'asc';
+		}
+		
+		let hasOrderType = false;
+		
+		for(let i = 0 ; i < searchParamArr.length ; i++){
+			if(searchParamArr[i].indexOf('orderType') != -1){
+				// orderType값이 존재할 경우 확인용 플래그
+				searchParamArr[i] = 'orderType=' + orderType;
+				hasOrderType = true;
+				break;
+			}
+		}
+		
+		if(hasOrderType){
+			$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&'));
+		}else{
+			if(searchParam.length == 0){
+				$(location).attr('href',  origin + window.location.pathname + '?orderType=' + orderType);
+			}else{
+				$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&') + '&orderType=' + orderType);
+			}
+			
+		}
+	}) 
+	
+	
+	
+	 $("input.js-approval-all-checkbox").change(function(){
+        if($("input.js-approval-all-checkbox").is(":checked")){
+        	// 전체 선택
+        	
+        	$("input.js-checkbox-document-list").each(function(){
+        		$(this).prop("checked", true);
+        		
+   				$("span#countCheckApprovalDocumentList").html($("input:checkbox[name='checkApproval']:checked").length);
+   				$("span.js-approval-check-after").show();
+        		
+        	})
+        	
+        }else{
+        	// 전체 선택 해제
+        	
+        	$("input.js-checkbox-document-list").each(function(){
+        		$(this).prop("checked", false);
+        		
+        		$("span.js-approval-check-after").hide();
+				$("span.js-approval-check-before").show();
+        		
+        	})
+        }
+	 });
+	
+	
+	
+	$("input.js-checkbox-document-list").each(function(){
+		$(this).change(function(){
+						
+			// 체크된 갯수
+			
+			if($("input:checkbox[name='checkApproval']:checked").length > 0){
+				
+				$("span#countCheckApprovalDocumentList").html($("input:checkbox[name='checkApproval']:checked").length);
+				$("span.js-approval-check-after").show();
+				
+			}else{
+				$("span.js-approval-check-after").hide();
+				$("span.js-approval-check-before").show();
+			}
+			
+			
+		})
+		
+		
+	})
+	
+	
+	
+	
+	
+	
+})
+
+
+function batchDelete(){
+	// 일괄 결재 처리
+	
+	// 폼(form)을 전송(submit)
+	  const frm = document.checkFrm;
+	  frm.method = "post";
+	  frm.action = "<%= ctxPath%>/approval/batch/delete.gw";
+	  frm.submit();
+}
+
+
+</script>
+
+
 <div id="contents">
 	<div class="setting_title">
 		<h3 class="fl">전체 문서 목록</h3>
-		<a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
+		<!-- <a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
 			<span class="blind">세부 설명</span>
 		</a>
 		<div class="tooltip hide" style="left: 25px; top: 0;">
 			<div class="tooltip-box color-set-6" style="width: 400px;">
 				<p>모든 결재자가 작성한 결재 문서의 목록을 확인하는 곳입니다. 선택 후 참조자를 추가하거나 삭제 문서 목록으로 보낼 수 있습니다.</p>
 			</div>
-		</div>
+		</div> -->
 	</div>
-	<div class="content_inbox approval-admin">
-		<ul class="search-result-tag after from-gnb hide" id="boxSearchState" style="display: none;"></ul>
 
+	<div class="content_inbox approval-admin">
+		<c:if test="${not empty requestScope.searchWord}">
+
+			<ul class="search-result-tag after from-gnb" id="boxSearchState" style="display: block;">
+				<li class="tag">
+					<c:choose>
+						<c:when test="${requestScope.searchType eq 'all'}">
+							전체:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'title'}">
+							제목:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'empName'}">
+							기안자:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'depName'}">
+							기안 부서:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'apd.fk_approvalId'}">
+							문서 번호:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'formName'}">
+							문서 종류:
+						</c:when>
+					</c:choose>
+					 ${requestScope.searchWord}
+					<a class="icon file_delete" onclick="수정필">
+						<span class="blind"></span>
+					</a>
+				</li>
+				<li class="tag-button">
+					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+				</li>
+			</ul>
+		</c:if>
+
+		<c:if test="${empty requestScope.searchWord}">
+			<ul class="search-result-tag after from-gnb hide" id="boxSearchState" style="display: none;">
+				<li class="tag">
+
+					<c:choose>
+						<c:when test="${requestScope.searchType eq 'all'}">
+							전체:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'title'}">
+							제목:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'empName'}">
+							기안자:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'depName'}">
+							기안 부서:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'apd.fk_approvalId'}">
+							문서 번호:
+						</c:when>
+						<c:when test="${requestScope.searchType eq 'formName'}">
+							문서 종류:
+						</c:when>
+					</c:choose>
+
+
+					 ${requestScope.searchWord}
+					<a class="icon file_delete" onclick="수정필">
+						<span class="blind"></span>
+					</a>
+				</li>
+				<li class="tag-button">
+					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+				</li>
+			</ul>
+		</c:if>
+		
+		
+		
+		
 		<div class="cont_box">
 			<div class="approval-wrap">
 				<fieldset class="resize-with-div" style="width: 1604px;">
@@ -28,8 +250,8 @@
 							<label>
 								<input type="checkbox" class="js-approval-all-checkbox">
 							</label>
-							<a href="수정필" class="js-approval-btn-state js-approval-check-before" id="anchorApprovalState">보기: 모든 상태</a>
-							<img src="<%= ctxPath %>/resources/image/icon/btn_drop.gif" class="open_drop vm js-approval-check-before">
+							<a class="js-approval-btn-state js-approval-check-before" id="anchorApprovalState">선택</a>
+							<!-- <img src="<%= ctxPath %>/resources/image/icon/btn_drop.gif" class="open_drop vm js-approval-check-before">
 							<ul class="dropdown-menu hide" id="menuApprovalState">
 								<li>
 									<a href="수정필" class="js-approval-li-state" value="all_except_delete">모든 문서</a>
@@ -43,16 +265,11 @@
 								<li>
 									<a href="수정필" class="js-approval-li-state" value="return">반려</a>
 								</li>
-							</ul>
+							</ul> -->
 							<span class="mgl_10 check-number js-approval-check-after hide" id="countCheckApprovalDocumentList" style="display: none;"></span>
-							<a href="수정필" onclick="수정필" class="mgl_10 js-approval-check-after hide" style="display: none;">참조자추가</a>
-							<a href="수정필" onclick="수정필" class="mgl_10 js-approval-check-after hide" style="display: none;">회람자추가</a>
-							<a href="수정필" onclick="수정필" class="mgl_10 js-approval-check-after hide" style="display: none;">삭제</a>
-							<div class="fr" style="display: flex; align-items: center; margin-right: 5px">
-								<button class="hw-tooltip-file-icon" id="exportDocumentList" title="엑셀다운로드">
-									<img src="https://static.hiworks.com/hr/svg/excel.svg" alt="download excel">
-								</button>
-							</div>
+							<span class="mgl_10 js-approval-check-after hide" style="display: none;">
+								<button type="button" onclick="batchDelete()">삭제</button>
+							</span>
 						</div>
 					</div>
 				</fieldset>
@@ -93,10 +310,17 @@
 									</div>
 								</th>
 								<th style="width: 100px; white-space: nowrap;" class="resizable-false">
-									<a href="수정필" class="js-approval-order updown" value="document_regdate">
+
+									<button type="button" class="js-approval-order updown" value="document_regdate">
 										기안일
-										<span class="down"></span>
-									</a>
+										<c:if test="${empty requestScope.orderType || requestScope.orderType eq 'desc'}">
+											<span class="down"></span>
+										</c:if>
+										<c:if test="${not empty requestScope.orderType && requestScope.orderType eq 'asc'}">
+											<span type="button" class="up"></span>
+										</c:if>
+									</button>
+
 								</th>
 								<th style="width: 120px; white-space: nowrap;" class="resizable-false">
 									<a href="수정필" class="js-approval-order updown" value="document_completedate">완료일</a>
@@ -112,41 +336,40 @@
 
 							<c:if test="${not empty requestScope.documentList}">
 								<!-- c:for -->
-
-								<c:forEach var="approvalVo" items="${requestScope.documentList}">
-
-
-									<tr>
-										<td>
-											<label>
-												<input type="checkbox" class="js-checkbox-document-list" value="수정필" data-form-type="">
-											</label>
-										</td>
-										<td class="docu-num" data-href="수정필">
-											<div title="${approvalVo.fk_approvalId}">${approvalVo.fk_approvalId}</div>
-										</td>
-										<td class="new-open-window resizable-pdl-0 resizable-pdr-0" data-href="수정필">
-											<span class="icon h_new span-new-link" style="margin-top: 0px; display: none;" data-link-url="수정필"></span>
-										</td>
-										<td class="title new-window" data-href="수정필">
-											${approvalVo.title}
-											<c:if test="${approvalVo.isFile eq 1}">
-												<a href="수정필" class="icon file fr">
-													<span class="blind">첨부 파일 표시</span>
-												</a>
-											</c:if>
-										</td>
-										<td class="docu-register" data-href="수정필">
-											<div title="${approvalVo.empName}">${approvalVo.empName}</div>
-										</td>
-										<td title="${approvalVo.draftDay}" data-href="수정필">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
-										<td title="${approvalVo.completeDay}" data-href="수정필">${fn:substring(approvalVo.completeDay, 0, fn:indexOf(approvalVo.completeDay, " "))}</td>
-										<td class="docu-type" data-href="수정필">
-											<div title="${approvalVo.status}">${approvalVo.status}</div>
-										</td>
-									</tr>
-
-								</c:forEach>
+								<form name="checkFrm">
+									<c:forEach var="approvalVo" items="${requestScope.documentList}">
+										<tr>
+											<td>
+												<label>
+													<input type="checkbox" name="checkApproval"  class="js-checkbox-document-list" value="${approvalVo.fk_approvalId}">
+												</label>
+											</td>
+											<td class="docu-num tableData" data-href="수정필">
+												<div title="${approvalVo.fk_approvalId}">${approvalVo.fk_approvalId}</div>
+											</td>
+											<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData" data-href="수정필">
+												<span class="icon h_new span-new-link" style="margin-top: 0px; display: none;" data-link-url="수정필"></span>
+											</td>
+											<td class="title new-window tableData" id="${approvalVo.fk_formId}">
+												${approvalVo.title}
+												<c:if test="${approvalVo.isFile eq 1}">
+													<a href="수정필" class="icon file fr">
+														<span class="blind">첨부 파일 표시</span>
+													</a>
+												</c:if>
+											</td>
+											<td class="docu-register tableData" data-href="수정필">
+												<div title="${approvalVo.empName}">${approvalVo.empName}</div>
+											</td>
+											<td class="tableData" title="${approvalVo.draftDay}" data-href="수정필">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
+											<td class="tableData" title="${approvalVo.completeDay}" data-href="수정필">${fn:substring(approvalVo.completeDay, 0, fn:indexOf(approvalVo.completeDay, " "))}</td>
+											<td class="docu-type tableData" >
+												<div title="${approvalVo.status}">${approvalVo.status}</div>
+											</td>
+										</tr>
+	
+									</c:forEach>
+								</form>
 							</c:if>
 
 

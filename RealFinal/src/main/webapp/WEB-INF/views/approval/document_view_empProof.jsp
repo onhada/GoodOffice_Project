@@ -7,6 +7,42 @@
 %>
 <script>
 $(document).ready(function() {
+	
+	
+	//////////////////////////////////////////////////////////////////////////
+	// 기안 취소
+	$("a#cancelApproval").click(function(){
+		
+		if(confirm("기안한 문서를 취소하시겠습니까? 문서는 삭제처리되며, 복구되지 않습니다.")){
+			// yes일 경우
+			
+			//ajax
+			$.ajax({
+			url: "<%= ctxPath%>/approval/cancleApproval.gw",
+			data: { "empId": ${sessionScope.loginUser.empId}, "approvalId": ${requestScope.approvalDetail.approvalId}},
+			type: "post",
+			async: true,
+			dataType: "json",
+			success: function(text) {
+				console.log(JSON.stringify(text));
+				if(text.isDelete){
+					// 이전 페이지로 돌아간다
+					window.location = document.referrer;
+				}else{
+					alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+				}
+			},
+			error: function(request, status, error) {
+				alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+			}
+			});
+			
+		}
+		
+	})
+	
+	
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	// 결재 + 버튼_사원명 입력시
 	let prev_autoComplete = $("ul.approval_autocomplete").html();
@@ -294,7 +330,7 @@ $(document).ready(function() {
 			alert("이미 포함된 결재자는 중복으로 설정할 수 없습니다.")
 			$("input#inputApplicationLineSetting").val('');
 		}else{
-			html += `<li class="js-approval-line-setting applicationLine-li unsortable" id="processLineSettingEmpId_` + empId +`" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span>`;
+			html += `<li class="js-approval-line-setting applicationLine-li unsortable" id="processLineSettingEmpId_` + empId +`" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span></li>`;
 			$("ul#sortApplicationLineSetting").html(html);
 			$("input#inputApplicationLineSetting").val('');
 			
@@ -1551,9 +1587,15 @@ function deleteThis(id) {
 	<div class="content_title">
 	<!-- <form >
 			<fieldset> -->
+				<style>
+				.content_title .detail_select>button {
+				    color: #2985db;
+				}
+				</style>
+			
 				<c:if test="${not empty requestScope.isDraftEmp && requestScope.isDraftEmp eq 1}">
-					<span class="detail_select">
-						<a href="수정필" class="fl" onclick="수정필">내용수정</a>
+					<!-- <span class="detail_select">
+						<button class="fl" onclick="수정필" style="font-size: 16px">내용수정</button>
 						<a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
 							<span class="blind">세부 설명</span>
 						</a>
@@ -1562,10 +1604,10 @@ function deleteThis(id) {
 								<p>ㆍ내용이 수정되면, 기존 승인 내역은 모두 초기화됩니다.</p>
 							</div>
 						</div>
-					</span>
+					</span> -->
 					<span class="detail_select">
-						<a href="수정필" class="fl" onclick="수정필">기안취소</a>
-						<a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
+						<button class="fl" id="cancelApproval" style="font-size: 16px">기안취소</button>
+						<!-- <a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
 							<span class="blind">세부 설명</span>
 						</a>
 						<div class="tooltip hide" style="left: 0; top: 0; color: #676767;">
@@ -1574,7 +1616,7 @@ function deleteThis(id) {
 								<p>ㆍ기존 결재 내역 뿐만 아니라 문서 번호 자체가 없어지게 됩니다.</p>
 								<p>ㆍ관리자 설정에 따라 반려 처리될 수 있습니다.</p>
 							</div>
-						</div>
+						</div> -->
 					</span>
 				</c:if>
 			<!-- </fieldset>
@@ -2174,7 +2216,7 @@ function deleteThis(id) {
 						<c:forEach var="opinionVo" items="${requestScope.opinionList}">
 							<li>
 								<div class="profile">
-									<img class="myphoto" src="<%= ctxPath %>${opinionVo.profileImage}" alt="">
+									<img class="myphoto" src="<%= ctxPath %>/resources/image/icon/defaultProfile.png" alt="">
 								</div>
 								<div class="txt">
 									<div class="hidden after">

@@ -28,7 +28,7 @@ $(document).ready(function() {
 	$("tr.tableData").each(function(){
 		$(this).click(function(){
 			let formId = $(this).find("td.title").attr('id');
-			$(location).attr('href', '<%=ctxPath%>/approval/documentDetail/list/view.gw?formId=' + formId + '&approvalId=' + $(this).find("td.docu-num div").html());
+			$(location).attr('href', '<%=ctxPath%>/approval/documentDetail/list/A/view.gw?formId=' + formId + '&approvalId=' + $(this).find("td.docu-num div").html());
 		})
 	})
 	
@@ -63,7 +63,7 @@ $(document).ready(function() {
 		if(hasOrderType){
 			$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&'));
 		}else{
-			if(searchParamArr.length == 0){
+			if(searchParam.length == 0){
 				$(location).attr('href',  origin + window.location.pathname + '?orderType=' + orderType);
 			}else{
 				$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&') + '&orderType=' + orderType);

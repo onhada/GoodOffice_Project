@@ -1066,7 +1066,7 @@ function deleteOpinion(opinionId){
 					<c:forEach var="opinionVo" items="${requestScope.opinionList}">
 						<li>
 							<div class="profile">
-								<img class="myphoto" src="<%= ctxPath %>${opinionVo.profileImage}" alt="">
+								<img class="myphoto" src="<%= ctxPath %>/resources/image/icon/defaultProfile.png" alt="">
 							</div>
 							<div class="txt">
 								<div class="hidden after">

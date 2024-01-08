@@ -9,7 +9,10 @@
 <script>
 
 $(document).ready(function() {
-	$('a#' + '${requestScope.type}').addClass('router-link-exact-active');
+	if('${requestScope.type}' != ''){
+		$('a#' + '${requestScope.type}').addClass('router-link-exact-active');
+	}
+	
 	
 	
 	$("div#cookie_approval_menu_first").click(function(){
@@ -58,7 +61,7 @@ $(document).ready(function() {
 					</a>
 				</button>
 			</div>
-			<a href="/gabia.biz/approval/document/write">
+			<a href="<%=ctxPath%>/approval/document/write/index.gw">
 				<button type="button" class="main-btn">
 					<i class="gi gi-plus"></i>
 					<span>작성하기</span>
@@ -236,72 +239,77 @@ $(document).ready(function() {
 					<hr>
 					
 					<!-- 수정필))))))))))) 관리자인지 아닌지 확인 -->
-					<li class="el-collapse">
-						<div class="el-collapse-item ">
-							<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_third" onclick="수정필">
-								<span class="link gt-pl-10">
-									<span class="collapse-prefix-icon open">
-										<i class="fal fa-chevron-up"></i>
+					<%-- <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.adminType eq 'Approval'}"> --%>
+						<li class="el-collapse">
+							<div class="el-collapse-item ">
+								<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_third" onclick="수정필">
+									<span class="link gt-pl-10">
+										<span class="collapse-prefix-icon open">
+											<i class="fal fa-chevron-up"></i>
+										</span>
+										<span class="flex-truncate collapse">관리자 설정</span>
 									</span>
-									<span class="flex-truncate collapse">관리자 설정</span>
-								</span>
+								</div>
+								<div class="el-collapse-item__wrap" style="display: block;">
+									<ul class="el-collapse-item__content">
+										<li class="menu-item">
+											<a href="<%= ctxPath %>/approval/settings/basic.gw" id="settings_basic" class="link ">
+												<span class="link-prefix-icon">
+													<i class="gis gi-cog"></i>
+												</span>
+												<span class="flex-truncate">기본 설정</span>
+											</a>
+										</li>
+										<li class="menu-item">
+											<a href="<%= ctxPath %>/approval/settings/forms.gw" id="settings_forms" class="link ">
+												<span class="link-prefix-icon">
+													<i class="gis gi-paper"></i>
+												</span>
+												<span class="flex-truncate">양식함 관리</span>
+											</a>
+										</li>
+										
+										<%-- <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.isReadAllDocument eq 1}"> --%>
+											<li class="menu-item">
+												<a href="<%= ctxPath %>/approval/settings/document.gw" id="settings_document" class="link ">
+													<span class="link-prefix-icon">
+														<i class="gis gi-list"></i>
+													</span>
+													<span class="flex-truncate">전체 문서 목록</span>
+												</a>
+											</li>
+											<li class="menu-item">
+												<a href="<%= ctxPath %>/approval/settings/deleted_document.gw" id="settings_deleted_document" class="link ">
+													<span class="link-prefix-icon">
+														<i class="gis gi-trash-alt"></i>
+													</span>
+													<span class="flex-truncate">삭제 문서 목록</span>
+												</a>
+											</li>
+										<%-- </c:if> --%>
+										<%-- <li class="menu-item">
+											<a href="<%= ctxPath %>/approval/settings/backup.gw" class="link ">
+												<span class="link-prefix-icon">
+													<i class="gis gi-approval-backup"></i>
+												</span>
+												<span class="flex-truncate">문서 백업</span>
+												<!-- 안 읽은 메일 갯수 표기 -->
+												<span class="several counting"></span>
+											</a>
+										</li> --%>
+										<li class="menu-item">
+											<a href="<%= ctxPath %>/approval/settings/admin.gw" id="settings_admin" class="link ">
+												<span class="link-prefix-icon">
+													<i class="gis gi-user-cog"></i>
+												</span>
+												<span class="flex-truncate">전자결재 관리자</span>
+											</a>
+										</li>
+									</ul>
+								</div>
 							</div>
-							<div class="el-collapse-item__wrap" style="display: block;">
-								<ul class="el-collapse-item__content">
-									<li class="menu-item">
-										<a href="<%= ctxPath %>/approval/settings/basic.gw" id="settings_basic" class="link ">
-											<span class="link-prefix-icon">
-												<i class="gis gi-cog"></i>
-											</span>
-											<span class="flex-truncate">기본 설정</span>
-										</a>
-									</li>
-									<li class="menu-item">
-										<a href="<%= ctxPath %>/approval/settings/forms.gw" id="settings_forms" class="link ">
-											<span class="link-prefix-icon">
-												<i class="gis gi-paper"></i>
-											</span>
-											<span class="flex-truncate">양식함 관리</span>
-										</a>
-									</li>
-									<li class="menu-item">
-										<a href="<%= ctxPath %>/approval/settings/document.gw" id="settings_document" class="link ">
-											<span class="link-prefix-icon">
-												<i class="gis gi-list"></i>
-											</span>
-											<span class="flex-truncate">전체 문서 목록</span>
-										</a>
-									</li>
-									<li class="menu-item">
-										<a href="<%= ctxPath %>/approval/settings/deleted_document.gw" id="settings_deleted_document" class="link ">
-											<span class="link-prefix-icon">
-												<i class="gis gi-trash-alt"></i>
-											</span>
-											<span class="flex-truncate">삭제 문서 목록</span>
-										</a>
-									</li>
-									<%-- <li class="menu-item">
-										<a href="<%= ctxPath %>/approval/settings/backup.gw" class="link ">
-											<span class="link-prefix-icon">
-												<i class="gis gi-approval-backup"></i>
-											</span>
-											<span class="flex-truncate">문서 백업</span>
-											<!-- 안 읽은 메일 갯수 표기 -->
-											<span class="several counting"></span>
-										</a>
-									</li> --%>
-									<li class="menu-item">
-										<a href="<%= ctxPath %>/approval/settings/admin.gw" id="settings_admin" class="link ">
-											<span class="link-prefix-icon">
-												<i class="gis gi-user-cog"></i>
-											</span>
-											<span class="flex-truncate">전자결재 관리자</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</li>
+						</li>
+					<%-- </c:if> --%>
 					<!-- <li class="menu-item only">
 						<a href="/gabia.biz/accounting/basic/criteria" class="link gt-pl-10">
 							<span class="link-prefix-icon">
@@ -311,6 +319,7 @@ $(document).ready(function() {
 						</a>
 					</li> -->
 				</ul>
+				
 			</nav>
 		</div>
 

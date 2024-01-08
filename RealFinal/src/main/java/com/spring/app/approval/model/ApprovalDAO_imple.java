@@ -16,12 +16,13 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.spring.app.approval.domain.AdminVO;
+import com.spring.app.approval.domain.AdminHistoryVO;
 import com.spring.app.approval.domain.ApprovalDetailVO;
 import com.spring.app.approval.domain.ApprovalFileVO;
 import com.spring.app.approval.domain.ApprovalOpinionVO;
 import com.spring.app.approval.domain.ApprovalProcedureVO;
 import com.spring.app.approval.domain.ApprovalVO;
+import com.spring.app.approval.domain.BatchVO;
 import com.spring.app.approval.domain.DayOffVO;
 import com.spring.app.approval.domain.EmpProofDetailVO;
 import com.spring.app.approval.domain.FormVO;
@@ -29,9 +30,9 @@ import com.spring.app.approval.domain.ModifyDetailVO;
 import com.spring.app.approval.domain.ModifyWorkRequestVO;
 import com.spring.app.approval.domain.SecurityVO;
 import com.spring.app.approval.domain.WorkApplicationVO;
+import com.spring.app.common.domain.AdminVO;
 import com.spring.app.common.domain.EmployeeVO;
 
-import sun.print.resources.serviceui;
 
 /**
  *   @FileName  : ApprovalDAO_imple.java 
@@ -808,6 +809,11 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	public DayOffVO getDayOffDetail(Long approvalId) {
 		return sqlSession.selectOne("approval.getDayOffDetail", approvalId);
 	}
+	
+	@Override
+	public DayOffVO getDayOffSimple(Long approvalId) {
+		return sqlSession.selectOne("approval.getDayOffSimple", approvalId);
+	}
 
 
 
@@ -852,8 +858,386 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 
 	@Override
 	public int deleteWorkHistoryByRequest(ModifyDetailVO mdvo) {
-		return sqlSession.delete("approval.deleteWorkHistoryByRequest", mdvo);
+		return sqlSession.update("approval.deleteWorkHistoryByRequest", mdvo);
 	}
+
+
+
+
+
+
+
+
+	@Override
+	public int updateReadReturn(Map<String, Long> paraMap) {
+		return sqlSession.update("approval.updateReadReturn", paraMap);
+	}
+
+
+
+
+
+
+	@Override
+	public int cancleApproval(Map<String, Long> paraMap) {
+		return sqlSession.update("approval.cancleApproval", paraMap);
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public int getPreservationYear(Long formId) {
+		return sqlSession.selectOne("approval.getPreservationYear", formId);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int insertApprovalDocument(Map<String, String> paraMap) {
+		return sqlSession.insert("approval.insertApprovalDocument", paraMap);
+	}
+	
+	@Override
+	public int insertApprovalDocument_circular(Map<String, String> paraMap) {
+		return sqlSession.insert("approval.insertApprovalDocument_circular", paraMap);
+	}
+
+	@Override
+	public int insertTempApprovalDocument(Map<String, String> paraMap) {
+		// 임시저장 등록
+		return sqlSession.insert("approval.insertTempApprovalDocument", paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public String getApprovalSequence() {
+		// insert에 사용하기 위해 시퀀스값 얻기
+		return sqlSession.selectOne("approval.getApprovalSequence");
+	}
+
+
+
+
+	@Override
+	public int insertApplicant(Map<String, String> paraMap) {
+		// 기안자 insert
+		return sqlSession.insert("approval.insertApplicant", paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int insertBusinessContact(Map<String, String> paraMap) {
+		return sqlSession.insert("approval.insertBusinessContact", paraMap);
+	}
+
+	@Override
+	public int insertCircular(Map<String, String> paraMap) {
+		return sqlSession.insert("approval.insertCircular", paraMap);
+	}
+	
+	@Override
+	public int insertEmpProof(Map<String, String> paraMap) {
+		return sqlSession.insert("approval.insertEmpProof", paraMap);
+	}
+
+	@Override
+	public int insertRoundRobin(Map<String, String> paraMap) {
+		return sqlSession.insert("approval.insertRoundRobin", paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public Long getFormId(Long approvalId) {
+		return sqlSession.selectOne("approval.getFormId", approvalId);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int deleteApprovalProcedure(String approvalId) {
+		return sqlSession.delete("approval.deleteApprovalProcedure", approvalId);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int updateApprovalDocument(Map<String, String> paraMap) {
+		return sqlSession.update("approval.updateApprovalDocument", paraMap);
+	}
+	
+	@Override
+	public int updateApprovalDocument_circular(Map<String, String> paraMap) {
+		return sqlSession.update("approval.updateApprovalDocument_circular", paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int updateBusinessContact(Map<String, String> paraMap) {
+		return sqlSession.update("approval.updateBusinessContact", paraMap);
+	}
+
+	@Override
+	public int updateEmpProof(Map<String, String> paraMap) {
+		return sqlSession.update("approval.updateEmpProof", paraMap);
+	}
+
+	@Override
+	public int updateRoundRobin(Map<String, String> paraMap) {
+		return sqlSession.update("approval.updateRoundRobin", paraMap);
+	}
+	
+	@Override
+	public int updateCircular(Map<String, String> paraMap) {
+		return sqlSession.update("approval.updateCircular", paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int batchApproval(BatchVO bvo) {
+		return sqlSession.update("approval.batchApproval", bvo);
+	}
+
+	@Override
+	public int batchCheck(BatchVO bvo) {
+		return sqlSession.update("approval.batchCheck", bvo);
+	}
+	
+	@Override
+	public int batchDelete(BatchVO bvo) {
+		return sqlSession.update("approval.batchDelete", bvo);
+	}
+
+	@Override
+	public int batchRestore(BatchVO bvo) {
+		return sqlSession.update("approval.batchRestore", bvo);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int addAppovalAdminManager(Map<String, Long> paraMap) {
+		return sqlSession.insert("approval.addAppovalAdminManager", paraMap);
+	}
+
+	@Override
+	public Long getAdminSequence() {
+		return sqlSession.selectOne("approval.getAdminSequence");
+	}
+
+	@Override
+	public int addAdminHistory(Map<String, Long> paraMap) {
+		return sqlSession.insert("approval.addAdminHistory", paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int deleteAppovalAdminManager(Map<String, Long> paraMap) {
+		return sqlSession.update("approval.deleteAppovalAdminManager", paraMap);
+	}
+
+	@Override
+	public int updateAdminHistory(Map<String, Long> paraMap) {
+		return sqlSession.update("approval.updateAdminHistory", paraMap);
+	}
+
+
+	@Override
+	public int grantAdminRead(Map<String, Long> paraMap) {
+		return sqlSession.update("approval.grantAdminRead", paraMap);
+	}
+
+
+	@Override
+	public List<AdminHistoryVO> getAdminHistoryList() {
+		return sqlSession.selectList("approval.getAdminHistoryList");
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public FormVO getFormDetail(Long formId) {
+		return sqlSession.selectOne("approval.getFormDetail", formId);
+	}
+
+	@Override
+	public List<FormVO> getFormNameListByWrite() {
+		return sqlSession.selectList("approval.getFormNameListByWrite");
+	}
+
+
+	@Override
+	public int updateForm(Map<String, String> paraMap) {
+		return sqlSession.update("approval.updateForm", paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+	
 
 
 

@@ -959,6 +959,9 @@ Frontend devteam
 	
 	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete fiAgree_autocomplete" id="ui-id-6" tabindex="0" style="display: none; top: 399px; left: 826px; width: 360px;">
 	</ul>
+	
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete admin_autocomplete" id="ui-id-6" tabindex="0" style="display: none; top: 399px; left: 826px; width: 360px;">
+	</ul>
 
 	<!-- 
 	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content dropdown-menu block approval-autocomplete " id="ui-id-1" tabindex="0" 
@@ -1131,45 +1134,34 @@ Frontend devteam
 	<!-- 참조자 추가 모달 시작 -->
 
 	<!-- 관리자 권한 이력 관리 모달 시작 -->
-	<!-- 
-	<div class="hw-modal-wrap hide" id="layerApprovalManagerHistory" style="margin-left: -400px; margin-top: -173px; display: block;">
-    <div class="hw-modal-header manager-header">관리자 권한 이력 관리</div>
 
-    <div class="hw-modal-body manager-body">
-        <table class="setting-table">
-            <colgroup>
-                <col>
-                <col style="width:50%">
-                <col>
-            </colgroup>
-            <thead>
-            <tr>
-                <th class="th-border-right th-border-bottom">일시</th>
-                <th class="th-border-right th-border-bottom">내용</th>
-                <th class="th-border-bottom">권한 제공자</th>
-            </tr>
-            </thead>
-            <tbody>
-                                                <tr>
-                        <td class="gt-text-center"><div class="padding-10">2023-12-03 00:18:03</div></td>
-	                                                <td class="text-left"><div class="padding-10">박상무(park)의 전자결재 관리자 권한이 삭제되었습니다.</div></td>
-	                    	                                                <td class="text-left"><div class="padding-10">전체 관리자 해제에 따른 권한 삭제</div></td>
-	                                        </tr>
-	                                <tr>
-                        <td class="gt-text-center"><div class="padding-10">2023-12-03 00:17:57</div></td>
-	                                                <td class="text-left"><div class="padding-10">박상무(park)의 전자결재 관리자 권한이 부여되었습니다.</div></td>
-                        	                                                <td class="text-left"><div class="padding-10">전체 관리자 등록에 따른 권한 부여</div></td>
-	                                        </tr>
-	                                    </tbody>
-        </table>
-    </div>
+	<div class="hw-modal-wrap" id="layerApprovalManagerHistory" style="margin-left: -400px; margin-top: -303.5px; display: none;">
+		<div class="hw-modal-header manager-header">관리자 권한 이력 관리</div>
 
-    <div class="hw-modal-footer text-center">
-        <button type="button" class="hw-button secondary" onclick="$j('#layerApprovalManagerHistory').hidePopup();">닫기</button>
-    </div>
-</div>
-	
-	 -->
+		<div class="hw-modal-body manager-body">
+			<table class="setting-table">
+				<colgroup>
+					<col>
+					<col style="width: 50%">
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th class="th-border-right th-border-bottom">일시</th>
+						<th class="th-border-right th-border-bottom">내용</th>
+						<th class="th-border-bottom">권한 제공자</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="hw-modal-footer text-center">
+			<button type="button" class="hw-button secondary" onclick="closeModal(layerApprovalManagerHistory)">닫기</button>
+		</div>
+	</div>
+
 	<!-- 관리자 권한 이력 관리 모달 끝 -->
 
 	<!-- 결재 문서 백업 모달 시작 -->

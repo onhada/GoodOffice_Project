@@ -23,7 +23,7 @@ $(document).ready(function() {
 	$("tr.tableData").each(function(){
 		$(this).click(function(){
 			let formId = $(this).find("td.title").attr('id');
-			$(location).attr('href', '<%=ctxPath%>/approval/documentDetail/list/view.gw?formId=' + formId + '&approvalId=' + $(this).find("td.docu-num div").html());
+			$(location).attr('href', '<%=ctxPath%>/approval/documentDetail/list/P/view.gw?formId=' + formId + '&approvalId=' + $(this).find("td.docu-num div").html());
 		})
 	})
 	
@@ -59,7 +59,7 @@ $(document).ready(function() {
 		if(hasOrderType){
 			$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&'));
 		}else{
-			if(searchParamArr.length == 0){
+			if(searchParam.length == 0){
 				$(location).attr('href',  origin + window.location.pathname + '?orderType=' + orderType);
 			}else{
 				$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&') + '&orderType=' + orderType);
@@ -71,7 +71,7 @@ $(document).ready(function() {
 </script>
 <div id="contents">
 	<div class="content_title">
-		<span class="detail_select js-approval-lists-first-type">
+		<%-- <span class="detail_select js-approval-lists-first-type">
 			<a href="수정필" class="js-approval-btn-form-mode" id="anchorApprovalForm">보기: 모든 문서</a>
 			<img src="<%= ctxPath %>/resources/image/icon/btn_drop.gif" alt="DROPDOWN" class="open_drop vm">
 			<ul class="dropdown-menu hide js-approval-lists-first-type-layer" id="menuApprovalFormMode" style="max-height: 550px; overflow-y: auto; padding-right: 8px;">
@@ -110,7 +110,7 @@ $(document).ready(function() {
 					<a href="수정필" class="js-approval-li-forms" value="4612">휴일근무 신청서</a>
 				</li>
 			</ul>
-		</span>
+		</span> --%>
 		<span class="detail_select js-approval-lists-second-type hide" id="countCheckApprovalLists"></span>
 		<span class="detail_select js-approval-lists-second-type hide"> </span>
 	</div>

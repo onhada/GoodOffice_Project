@@ -53,10 +53,6 @@ public class ApprovalProcedureVO {
 	 */
 	private String registerDay;
 	
-	/**
-	 * 프로필이미지
-	 */
-	private String profileImage;
 	
 	/**
 	 * 순서
@@ -173,19 +169,6 @@ public class ApprovalProcedureVO {
 		this.positionName = positionName;
 	}
 
-	/**
-	 * @return the profileImage
-	 */
-	public String getProfileImage() {
-		return profileImage;
-	}
-
-	/**
-	 * @param profileImage the profileImage to set
-	 */
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
 
 	/**
 	 * @return the empId

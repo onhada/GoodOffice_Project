@@ -141,7 +141,7 @@
 								</a>
 							</div>
 							<div data-v-9d7b8978="" class="circle-wrap">
-								<a data-v-9d7b8978="" href="https://office.hiworks.com/gabia.biz/h_admin/adminhome" target="_self" class="menu office">
+								<a data-v-9d7b8978="" href="<%=ctxPath %>/admin/userManage.gw" target="_self" class="menu office">
 									<span data-v-9d7b8978="" class="circle">
 										<span data-v-9d7b8978="" class="alarm-cnt" style="display: none;">0</span>
 										<span data-v-9d7b8978="" class="icon">

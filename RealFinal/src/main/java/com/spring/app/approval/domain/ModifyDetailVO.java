@@ -78,6 +78,10 @@ public class ModifyDetailVO {
 	 * @return the workType
 	 */
 	public String getWorkType() {
+		return workType;
+	}
+	
+	public String getWorkType_Kor() {
 		switch (workType) {
 		case "1":
 			return "업무";
@@ -102,6 +106,7 @@ public class ModifyDetailVO {
 		}
 	}
 
+
 	/**
 	 * @param workType the workType to set
 	 */
@@ -113,6 +118,10 @@ public class ModifyDetailVO {
 	 * @return the requestType
 	 */
 	public String getRequestType() {
+		return requestType;
+	}
+	
+	public String getRequestType_Kor() {
 		switch(requestType) {
 		case "1" : 
 			return "수정";

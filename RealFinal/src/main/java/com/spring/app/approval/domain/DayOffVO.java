@@ -25,6 +25,11 @@ public class DayOffVO {
 	 * 전자결재id
 	 */
 	private Long approvalId;
+	
+	/**
+	 * 적용사원id
+	 */
+	private Long empId;
 
 	/**
 	 * 사용자명
@@ -50,6 +55,20 @@ public class DayOffVO {
 	 * 휴가일자
 	 */
 	private String dayOffDay;
+
+	/**
+	 * @return the empId
+	 */
+	public Long getEmpId() {
+		return empId;
+	}
+
+	/**
+	 * @param empId the empId to set
+	 */
+	public void setEmpId(Long empId) {
+		this.empId = empId;
+	}
 
 	/**
 	 * @return the approvalId

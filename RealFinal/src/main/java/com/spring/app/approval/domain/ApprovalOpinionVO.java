@@ -38,10 +38,6 @@ public class ApprovalOpinionVO {
 	 */
 	private String content;
 	
-	/**
-	 * 프로필이미지
-	 */
-	private String profileImage;
 	
 	/**
 	 * 등록일시
@@ -76,19 +72,6 @@ public class ApprovalOpinionVO {
 		this.content = content;
 	}
 
-	/**
-	 * @return the profileImage
-	 */
-	public String getProfileImage() {
-		return profileImage;
-	}
-
-	/**
-	 * @param profileImage the profileImage to set
-	 */
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
-	}
 
 	/**
 	 * @return the registerDay

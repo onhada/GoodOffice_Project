@@ -19,42 +19,190 @@ $(document).ready(function() {
 		
 		$(location).attr('href', window.location.origin + window.location.pathname);
 	})
+	
+	
+	
+	
+	
+	
+$("button.impt").click(function(){
+		
+		if($(this).hasClass("on")){
+			// 이미 중요에 등록되어 있어 삭제하려고 누른 경우
+			
+			if(confirm("중요문서에서 지우시겠습니까?")){
+				//ajax
+				$.ajax({
+				url: "<%=ctxPath%>/approval/deleteImportant.gw",
+				data: { "empId": ${sessionScope.loginUser.empId}, "approvalId": $(this).attr('id')},
+				type: "post",
+				async: true,
+				dataType: "json",
+				success: function(text) {
+					console.log(JSON.stringify(text));
+					if(text.isDelete){
+						location.reload();
+					}else{
+						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+					}
+					
+				},
+				error: function(request, status, error) {
+					alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+				}
+			});
+			}
+			
+		}else{
+			// 등록되어있지 않아 등록하려고 누른 경우
+			
+			if(confirm("중요문서로 등록하시겠습니까?")){
+				//ajax
+				$.ajax({
+				url: "<%=ctxPath%>/approval/insertImportant.gw",
+				data: { "empId": ${sessionScope.loginUser.empId}, "approvalId": $(this).attr('id')},
+				type: "post",
+				async: true,
+				dataType: "json",
+				success: function(text) {
+					console.log(JSON.stringify(text));
+					if(text.isAdd){
+						location.reload();
+					}else{
+						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+					}
+				},
+				error: function(request, status, error) {
+					alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+				}
+			});
+			}
+			
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	$("td.tableData").each(function(){
+		$(this).click(function(){
+			let approvalId = $(this).parent().attr('id');
+			console.log(approvalId)
+			//console.log(formId)
+			// post로 수정필필필
+			$(location).attr('href',`<%=ctxPath%>/approval/document/write/temp.gw?approvalId=`+approvalId);
+		})
+	})
+	
+	
+	
+	$("a#importantDoc").click(function(){
+		// 드롭리스트에서 중요 문서 클릭했을 경우
+		
+		let searchParam = decodeURI(window.location.search);
+		searchParam = searchParam.substring(1, searchParam.length);
+		
+		let searchParamArr = searchParam.split("&");
+		
+		
+		let hasImportantView = false;
+		
+		for(let i = 0 ; i < searchParamArr.length ; i++){
+			if(searchParamArr[i].indexOf('listType') != -1){
+				searchParamArr[i] = 'listType=1';
+				hasImportantView = true;
+				break;
+			}
+		}
+		
+		
+		if(hasImportantView){
+			$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&'));
+		}else{
+			if(searchParam.length == 0){
+				$(location).attr('href',  origin + window.location.pathname + '?listType=1');
+			}else{
+				$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&') + '&listType=1');
+			}
+			
+			
+		}
+	})
+	
+	
+	$("a#fileDoc").click(function(){
+		// 드롭리스트에서 중요 문서 클릭했을 경우
+		
+		let searchParam = decodeURI(window.location.search);
+		searchParam = searchParam.substring(1, searchParam.length);
+		
+		let searchParamArr = searchParam.split("&");
+		
+		
+		let hasImportantView = false;
+		
+		for(let i = 0 ; i < searchParamArr.length ; i++){
+			if(searchParamArr[i].indexOf('listType') != -1){
+				searchParamArr[i] = 'listType=2';
+				hasImportantView = true;
+				break;
+			}
+		}
+		
+		
+		if(hasImportantView){
+			$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&'));
+		}else{
+			if(searchParam.length == 0){
+				$(location).attr('href',  origin + window.location.pathname + '?listType=2');
+			}else{
+				$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&') + '&listType=2');
+			}
+			
+			
+		}
+	})
+	
+	
+	
+	
+	$("button#anchorApprovalType").click(function(){
+		$("ul#menuApprovalTypeMode").show()
+	})
 })
 </script>
 <div id="contents">
 	<div class="content_approval" style="overflow: auto; position: relative; width: 100%; height: 100%">
 		<div class="content_title js-approval-box-type">
 			<span class="detail_select mgl_5">
-				<a href="수정필" class="js-approval-btn-box-mode js-approval-check-before" id="anchorApprovalType">보기: 모든 문서</a>
-				<img src="<%= ctxPath %>/resources/image/icon/btn_drop.gif" alt="DROPDOWN" class="open_drop vm js-approval-check-before">
+				<c:choose>
+					<c:when test="${requestScope.listType eq '1'}">
+						<button class="js-approval-btn-box-mode js-approval-check-before" id="anchorApprovalType">보기: 중요 문서</button>
+					</c:when>
+					<c:when test="${requestScope.listType eq '2'}">
+						<button class="js-approval-btn-box-mode js-approval-check-before" id="anchorApprovalType">보기: 첨부 문서</button>
+					</c:when>
+					<c:otherwise>
+						<button class="js-approval-btn-box-mode js-approval-check-before" id="anchorApprovalType">보기: 모든 문서</button>
+					</c:otherwise>
+				</c:choose>
+
+				<img src="<%=ctxPath%>/resources/image/icon/btn_drop.gif" alt="DROPDOWN" class="open_drop vm js-approval-check-before">
 				<ul class="dropdown-menu block hide" style="max-height: 550px; overflow-y: auto; padding-right: 8px; top: 20px; left: 0;" id="menuApprovalTypeMode">
 					<li>
-						<a href="수정필" class="js-approval-li-types" value="">모든 문서</a>
+						<a href="<%=ctxPath%>/approval/document/box/all.gw" class="js-approval-li-types">모든 문서</a>
 					</li>
 					<li>
-						<a href="수정필" class="js-approval-li-types" value="favorites">관심 문서</a>
+						<a id="importantDoc" class="js-approval-li-types">중요 문서</a>
 					</li>
 					<li>
-						<a href="수정필" class="js-approval-li-types" value="attached">첨부 있음</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="수정필" class="js-approval-li-line-types" value="write">기안</a>
-					</li>
-					<li>
-						<a href="수정필" class="js-approval-li-line-types" value="approval">결재</a>
-					</li>
-					<li>
-						<a href="수정필" class="js-approval-li-line-types" value="refer">수신</a>
-					</li>
-					<li>
-						<a href="수정필" class="js-approval-li-line-types" value="read">참조</a>
-					</li>
-					<li>
-						<a href="수정필" class="js-approval-li-line-types" value="reading">열람</a>
-					</li>
-					<li>
-						<a href="수정필" class="js-approval-li-line-types" value="return">반려</a>
+						<a id="fileDoc" class="js-approval-li-types">첨부 있음</a>
 					</li>
 				</ul>
 			</span>
@@ -163,32 +311,30 @@ $(document).ready(function() {
 								<!-- c:for -->
 
 								<c:forEach var="approvalVo" items="${requestScope.boxList}">
-
-
-									<tr>
+									<tr id="${approvalVo.fk_approvalId}">
 										<td>
 											<c:if test="${approvalVo.isImportant eq 0}">
-												<a href="수정필" class="sp_menu impt " onclick="수정필">
+												<button type="button" class="sp_menu impt" id="${approvalVo.fk_approvalId}">
 													<span class="blind"></span>
-												</a>
+												</button>
 											</c:if>
 											<c:if test="${approvalVo.isImportant eq 1}">
-												<a href="수정필" class="sp_menu impt on" onclick="수정필">
+												<button type="button" class="sp_menu impt on" id="${approvalVo.fk_approvalId}">
 													<span class="blind"></span>
-												</a>
+												</button>
 											</c:if>
 										</td>
-										<td class="new-open-window resizable-pdl-0 resizable-pdr-0" data-href="수정필">
+										<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData" data-href="수정필">
 											<span class="icon h_new span-new-link" style="margin-top: 0px; display: none;" data-link-url="수정필"></span>
 										</td>
-										<td class="title new-window" data-href="수정필">${approvalVo.title}
+										<td class="title new-window tableData" data-href="수정필">${approvalVo.title}
 											<c:if test="${approvalVo.isFile eq 1}">
 												<a href="수정필" class="icon file fr">
 													<span class="blind">첨부 파일 표시</span>
 												</a>
 											</c:if>
 										</td>
-										<td class="docu-form" data-href="수정필">
+										<td class="docu-form tableData">
 											<div title="${approvalVo.formName}">${approvalVo.formName}</div>
 										</td>
 									</tr>

@@ -42,6 +42,11 @@ public class SearchApprovalVO {
 	 * 열람 보기 여부 (0: 열람 보지않음, 1: 열람 허용)
 	 */
 	private String isViewAll;
+	
+	/**
+	 * (1: 중요문서 모아보기, 2: 파일첨부 문서 모아보기)
+	 */
+	private String listType;
 
 	/**
 	 * @return the searchType
@@ -112,6 +117,21 @@ public class SearchApprovalVO {
 	public void setIsViewAll(String isViewAll) {
 		this.isViewAll = isViewAll;
 	}
+
+	/**
+	 * @return the listType
+	 */
+	public String getListType() {
+		return listType;
+	}
+
+	/**
+	 * @param listType the listType to set
+	 */
+	public void setListType(String listType) {
+		this.listType = listType;
+	}
+
 
 	
 	
