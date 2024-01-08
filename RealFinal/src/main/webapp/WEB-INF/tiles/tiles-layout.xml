@@ -25,7 +25,7 @@
 	
 	<!-- ==== 메일 tiles 설정 시작  ==== -->
 	<definition name="layout-mail"  template="/WEB-INF/tiles/layout/layout-mail.jsp"> 
-		<put-attribute name="header"  value="/WEB-INF/tiles/header_search.jsp" />
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
 		<put-attribute name="side"  value="/WEB-INF/tiles/mail/side.jsp" />
 		<put-attribute name="content" value="" />
 	</definition>
@@ -81,7 +81,7 @@
 	
 	<!-- ==== 예약 tiles 설정 시작  ==== -->
 	<definition name="layout-reservation"  template="/WEB-INF/tiles/layout/layout-reservation.jsp"> 
-		<put-attribute name="header"  value="/WEB-INF/tiles/header_search.jsp" />
+		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
 		<put-attribute name="side"  value="/WEB-INF/tiles/reservation/side.jsp" />
 		<put-attribute name="content" value="" />
 	</definition>
