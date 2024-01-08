@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-  <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>  
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <%
 	String ctxPath = request.getContextPath();
@@ -21,17 +23,17 @@
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/common/inHTML.css">
 <meta name="viewport" content="width=1024">
 <link rel="shortcut icon" type="image/x-icon"	href="https://hr.office.hiworks.com/static/images/favicon/favicon.ico">
-<link rel="stylesheet" type="text/css"	href="<%=ctxPath%>/resources/css/personnel_insa/style.css">
-<link rel="stylesheet" type="text/css"	href="<%=ctxPath%>/resources/css/personnel_insa/style_new.css">
-<link rel="stylesheet" type="text/css"	href="<%=ctxPath%>/resources/css/personnel_insa/style_tutorial.css">
-<link rel="stylesheet" type="text/css"	href="<%=ctxPath%>/resources/css/personnel_insa/jquery-ui.min.css">
-<link rel="stylesheet" type="text/css"	href="<%=ctxPath%>/resources/css/personnel_insa/jquery.toastmessage-min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/personnel/app.ff1d5947.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/style.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/style_new.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/style_tutorial.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/jquery.toastmessage-min.css">
 
- 
- 
+
 
 <!-- 예인추가 시작-->
-<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/personnel_insa/insa.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/insa.css">
 <!-- 예인추가 끝-->
 
 
