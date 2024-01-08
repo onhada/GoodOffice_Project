@@ -1,31 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
 	String ctxPath = request.getContextPath();
 %>
 
-
-
-
 <script type="text/javascript">
 
-$(document).ready(function(){
-  
-});// end of $(document).ready(function(){})--------------
-
-
-
-// Function Declaration
-<%-- 나의 프로필 보여주기 --%> 
-function myProfileView() {
-	if($("div#profileDetail").attr("style")=='display: none;'){
-		$("div#profileDetail").css("display", "block");  
-	}
-	else if($("div#profileDetail").attr("style")=='display: block;'){
-		$("div#profileDetail").css("display", "none");  
-	}
- }// end of function myProfileView()--------------------------
-  
-</script>
+	$(document).ready(function(){
+	  
+	});// end of $(document).ready(function(){})--------------
+	
+	
+	
+	// Function Declaration
+	<%-- 나의 프로필 보여주기 --%> 
+	function myProfileView() {
+		if($("div#profileDetail").attr("style")=='display: none;'){
+			$("div#profileDetail").css("display", "block");  
+		}
+		else if($("div#profileDetail").attr("style")=='display: block;'){
+			$("div#profileDetail").css("display", "none");  
+		}
+	 }// end of function myProfileView()--------------------------
+	  
+	</script>
 
 
 
@@ -33,6 +31,8 @@ function myProfileView() {
 
 <div id="gnb-root">
 	<div data-v-3a88b4b3="" class="new_gnb">
+		<!---->
+		<!---->
 		<header data-v-3a88b4b3="" class="new_header">
 			<div data-v-3a88b4b3="" class="header-item header-item__left">
 				<div data-v-87615cf4="" data-v-3a88b4b3="" class="logo hiworks_logo">
@@ -54,21 +54,126 @@ function myProfileView() {
 						</a>
 					</h1>
 				</div>
+				<!---->
 				<div data-v-236a7242="" data-v-3a88b4b3="" class="menu-btns">
 					<div data-v-236a7242="" class="menu-btns-toggle">
 						<span data-v-236a7242="" class="btn-main">수정필</span>
 						<svg data-v-236a7242="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-caret-down fa-w-10">
 							<path data-v-236a7242="" fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" class=""></path></svg>
 					</div>
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
 				</div>
 			</div>
+			<div data-v-54660eae="" data-v-3a88b4b3="" class="logo customer_logo"
+				style="display: none;">
+				<img data-v-54660eae="" alt="" width="140" height="30.5"
+					class="customer-logo">
+			</div>
 			<div data-v-3a88b4b3="" class="header-item header-item__right">
-
+				<button data-v-3a88b4b3="" class="icon-button"
+					style="display: none;">
+					<i data-v-3a88b4b3="" class="fal fa-search"></i>
+				</button>
+				<div data-v-182e9b7a="" data-v-3a88b4b3=""
+					class="gnb-search-box grow" style="">
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+					<button data-v-182e9b7a="" class="close-button">닫기</button>
+				</div>
+				<div data-v-1c21cc0a="" data-v-3a88b4b3="" class="info-menu"
+					style="">
+					<button data-v-1c21cc0a="" type="button" class="info-button new">
+						<i data-v-1c21cc0a="" class="fal fa-exclamation-circle"></i>
+					</button>
+					<div data-v-1c21cc0a="" tabindex="0" class="alarm-detail"
+						style="display: none;">
+						<div data-v-1c21cc0a=""
+							class="alarm-header gt-d-flex gt-align-items-center">
+							<div data-v-1c21cc0a="" class="info-icon-mini"></div>
+							<p data-v-1c21cc0a="" class="info-main-title">1건의 보안 이벤트가
+								있습니다.</p>
+							<a data-v-1c21cc0a=""
+								href="https://office.hiworks.com/gabia.biz/mypage/manager/security_alert"
+								target="_self" class="hw-button text only-right-item">알림 끄기</a>
+						</div>
+						<div data-v-1c21cc0a="" class="alarm-list">
+							<a data-v-1c21cc0a=""
+								href="https://office.hiworks.com/gabia.biz/mypage/manager/security_center"
+								target="_self" class="alarm-list-item"><div
+									data-v-1c21cc0a="" class="blit"></div>
+								<div data-v-1c21cc0a="">
+									<p class="desc-txt">2단계 인증 설정을 사용하고 있지 않습니다.</p>
+									<p>설정의 보안 취약점에 대해 알아보세요.</p>
+								</div></a>
+						</div>
+						<div data-v-1c21cc0a="" class="alarm-footer">
+							<a data-v-1c21cc0a=""
+								href="https://office.hiworks.com/gabia.biz/mypage/manager/security_center"
+								target="_self" class="hw-button danger"> 조치하기 </a>
+						</div>
+					</div>
+				</div>
+				<button data-v-3a88b4b3="" class="icon-button more-button new"
+					style="display: none;">
+					<i data-v-3a88b4b3="" class="far fa-ellipsis-h"></i>
+				</button>
 				<div data-v-3a88b4b3="" class="more-menus" style="">
-
-
-
-
+					<div data-v-78ce58a9="" data-v-3a88b4b3="" class="help">
+						<button data-v-78ce58a9="" type="button" class="help-button new">
+							<!---->
+						</button>
+						<div data-v-78ce58a9="" tabindex="0" class="alarm-detail"
+							style="display: none;">
+							<div data-v-78ce58a9="" class="alarm-list">
+								<a data-v-78ce58a9=""
+									href="https://www.hiworks.com/manual/hiworks/104"
+									target="_blank" class="alarm-list-item"> 이용 가이드 </a><a
+									data-v-78ce58a9="" href="https://www.hiworks.com/faq"
+									target="_blank" class="alarm-list-item"> 자주 하는 질문 </a><a
+									data-v-78ce58a9="" href="https://www.hiworks.com/cs/notice"
+									target="_blank" class="alarm-list-item"> 공지사항
+									<div data-v-78ce58a9="" class="notice-circle"></div>
+								</a><a data-v-78ce58a9="" href="https://www.hiworks.com/cs"
+									target="_blank" class="alarm-list-item"> 고객센터 </a>
+							</div>
+						</div>
+					</div>
+					<div data-v-4a5801a1="" data-v-3a88b4b3="" class="alarm">
+						<button data-v-4a5801a1="" type="button" class="alarm-button new">
+							<!---->
+						</button>
+						<div data-v-4a5801a1="" tabindex="0" class="alarm-detail"
+							style="display: none;">
+							<div data-v-4a5801a1="" class="alarm-header">
+								<p data-v-4a5801a1="" class="gt-float-left">알림</p>
+								<button data-v-4a5801a1="" type="button" title="모든 알림 읽음으로 표시"
+									class="hw-icon">
+									<i data-v-4a5801a1="" class="fal fa-tasks"></i>
+								</button>
+							</div>
+							<div data-v-4a5801a1="" class="no-alarm">알림이 없습니다</div>
+							<div data-v-4a5801a1=""></div>
+						</div>
+					</div>
 					<!---->
 					<div data-v-5f00f128="" data-v-3a88b4b3="" class="user-info">
 						<button data-v-5f00f128="" type="button" class="user-profile-button" onclick="myProfileView();">
@@ -93,6 +198,7 @@ function myProfileView() {
 					</div>
 
 
+					<!---->
 				</div>
 			</div>
 		</header>
