@@ -45,24 +45,22 @@ public class PersonnelController {
 	private PersonnelService service;
 
 	 
-	@GetMapping("/index.gw")
-	public String index(HttpServletRequest request, HttpServletResponse response) {
-
-		// 테스트 코드 시작
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 200);
-		loginUser.setEmpName("정호석");
-		HttpSession session = request.getSession();
-		session.setAttribute("loginUser", loginUser);
-
-		long empid = loginUser.getEmpId();
-		request.setAttribute("empid", empid);
-		// 테스트 코드 끝
-
-		return "index.index";
-
-	}
-
+	
+	  @GetMapping("/index.gw") 
+	  public String index(HttpServletRequest request    ) {
+	  
+	  // 테스트 코드 시작
+		  EmployeeVO loginUser = new EmployeeVO();
+	  loginUser.setEmpId((long) 200); loginUser.setEmpName("정호석");
+	  HttpSession session = request.getSession(); session.setAttribute("loginUser", loginUser);
+	  
+	  long empid = loginUser.getEmpId();
+	  request.setAttribute("empid", empid); //테스트 코드 끝
+	  
+	  return "index.index";
+	  
+	  }
+	 
 	/** 
 	* @Method Name  : work_modify 
 	* @작성일   : 2024. 1. 7 
@@ -177,7 +175,7 @@ public class PersonnelController {
 	 * @param request
 	 * @param response @return 
 	 */
-	@GetMapping("/personal_index.gw")
+	@GetMapping("/personnel/personal_index.gw")
 	public String personal_index(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession session = request.getSession();

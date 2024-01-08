@@ -30,38 +30,20 @@
 	  
 	 
 	
-	$('button#work_status').on('click', (e) => {
+	$('button#work_status').on('click', (e) => {  //출근, 퇴큰 버튼
 		  console.log(e.target.value);
 		  const type=e.target.parentElement.value;
-		  alert(type);
+		  //alert(type);
 		  
-		  $.ajax({
-	          url : "<%= ctxPath%>/workstatus_insert.gw",
-	          type : "post",
-	          data : { "worktype":6  },
-	         // processData:false,  // 파일 전송시 설정 
-	          //contentType:false,  // 파일 전송시 설정 
-	          dataType:"json",
-	          success:function(json){
-	             // console.log("~~~ 확인용 : " + JSON.stringify(json));
-	              // ~~~ 확인용 : {"result":1}
-	              if(json.result == 1) {
-	                 alert("엑셀파일 업로드 성공했습니다.^^");
-	              }
-	              else {
-	                 alert("엑셀파일 업로드 실패했습니다.ㅜㅜ");
-	              }
-	          },
-	          error: function(request, status, error){
-	          alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-	          }
-	      });
+		  workstatus_insert(type);
+		  
+		  
 		  
 		
 	 });
 	
 	
-	$('button#work_status_four').on('click', (e) => {
+	$('button#work_status_four').on('click', (e) => {  
 		
 		
 		  console.log(e.target.value);
@@ -71,15 +53,88 @@
 			  
 			  
 			  const typeRe=e.target.parentElement.value;
+			 // alert(typeRe);
+			  
+			  workstatus_insert(typeRe);
+			   
+		  }
+		  else{
+			  
+			  //alert(type);
+			  
+			  workstatus_insert(type);
+			   
+			  
+		  }
+		  
+		  
+		 
+		  
+		
+	 });
+	
+	
+	$('button#modify').on('click', (e) => {  //근무수정 버튼 클릭시
+		
+		
+		  
+		  const type=e.target.value;
+		  
+			$(location).attr("href", `<%=ctxPath%>/work_modify.gw`)
+			 
+		  /* 
+		  if(typeof type=="undefined"){
+			  
+			  
+			  const typeRe=e.target.parentElement.value;
 			  alert(typeRe);
+			  
+			  //workstatus_insert(typeRe);
+			   
 		  }
 		  else{
 			  
 			  alert(type);
 			  
+			  //workstatus_insert(type);
+			   
+			  
 		  }
 		  
+		   */
+		 
 		  
+		
+	 });
+	
+	$('button#work_vaction').on('click', (e) => {  //휴가신청 버튼 클릭시
+		
+		
+		  console.log(e.target.value);
+		  const type=e.target.value;
+		  
+			$(location).attr("href", `<%=ctxPath%>/personal_vaction_application.gw`)
+			 
+		  /* 
+		  if(typeof type=="undefined"){
+			  
+			  
+			  const typeRe=e.target.parentElement.value;
+			  alert(typeRe);
+			  
+			  //workstatus_insert(typeRe);
+			   
+		  }
+		  else{
+			  
+			  alert(type);
+			  
+			  //workstatus_insert(type);
+			   
+			  
+		  }
+		  
+		   */
 		 
 		  
 		
@@ -107,6 +162,28 @@
   
   
 
+  	function workstatus_insert(type){
+	
+	  
+	  //alert("ee");
+  		 $.ajax({
+	          url : "<%= ctxPath%>/workstatus_insert.gw",
+	          type : "post",
+	          data : { "worktype":type  },
+	         // processData:false,  // 파일 전송시 설정 
+	          //contentType:false,  // 파일 전송시 설정 
+	          dataType:"json",
+	          success:function(json){
+	             // console.log("~~~ 확인용 : " + JSON.stringify(json));
+	              // ~~~ 확인용 : {"result":1}
+	        	  work_status_print();
+	          },
+	          error: function(request, status, error){
+	          alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	          }
+	      });
+  }
+  
 	   /* 
 	   function start_img(){
 		   
@@ -309,7 +386,7 @@
 						<div data-v-ca725702="" class="box-title">
 							<i data-v-ca725702=""
 								class="gis gi-calendar-check gt-icon-solid-color mr-10"></i><span
-								data-v-ca725702="">휴가 d현황</span>
+								data-v-ca725702="">휴가 현황</span>
 						</div>
 						<div data-v-ca725702=""
 							class="box d-flex align-items-center justify-content-between ph-30">
@@ -331,7 +408,7 @@
 									</button>
 									<div data-v-ca725702="" class="divider ml-15"></div>
 								</div>
-								<button data-v-cde747bc="" data-v-ca725702="" type="button"
+								<button data-v-cde747bc="" data-v-ca725702="" type="button" id="work_vaction" value="7"
 									class="hu-button pill-shape-outline font-size-13 ml-15">
 									<!---->
 									<span data-v-cde747bc="" class="label">휴가 신청 </span>
@@ -546,11 +623,11 @@
 										<div class="vb-dragger-styler"></div>
 									</div>
 								</div>
-								<button data-v-cde747bc="" data-v-41cd5b14="" type="button"
+								<button data-v-cde747bc="" data-v-41cd5b14="" type="button" id="modify"
 									class="hu-button pill-shape-outline font-size-13"
 									style="position: absolute; right: 24px; bottom: 24px;">
 									<!---->
-									<span data-v-cde747bc="" class="label">근무체크수정 </span>
+									<span data-v-cde747bc="" class="label"  >근무체크수정 </span>
 									<!---->
 								</button>
 							</div>
