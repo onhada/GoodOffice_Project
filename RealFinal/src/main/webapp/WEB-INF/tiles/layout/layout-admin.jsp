@@ -66,7 +66,7 @@ saved from url=(0067)https://office.hiworks.com/gabia.biz/h_admin/Adminconfig/se
 
 <!-- 예진 추가 -->
 <!-- JavaScript -->
-<script src="<%=ctxPath%>/resources/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+<script src="<%=ctxPath%>/resources/jquery/jquery-3.7.1.min.js" type="text/javascript"></script>
 <script src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 
 

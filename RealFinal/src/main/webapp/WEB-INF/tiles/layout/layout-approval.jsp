@@ -100,7 +100,7 @@ Frontend devteam
 
 <!-- 예진 추가 -->
 <!-- JavaScript -->
-<script src="<%=ctxPath%>/resources/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+<script src="<%=ctxPath%>/resources/jquery/jquery-3.7.1.min.js" type="text/javascript"></script>
 <%-- <script src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script> --%>
 <!-- CSS -->
 <%-- <link rel="stylesheet" href="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css"> --%>
@@ -1434,11 +1434,11 @@ Frontend devteam
 
 
 	<!-- 상세보기_결재선 변경 버튼 클릭시 모달 시작 -->
-	<div class="layer_box large address line universal" id="universal_approval_layer" style="margin-left: -560px; margin-top: -364.5px; display: none;">
+	<!-- <div class="layer_box large address line universal" id="universal_approval_layer" style="margin-left: -560px; margin-top: -364.5px; display: none;">
 		<div id="titleApprovalLineSetting" class="title_layer text_variables">결재선 변경</div>
 		<div>
 			<div class="gt-d-table">
-				<!-- 조직도 영역 -->
+				조직도 영역
 				<div class="area-tree gt-d-table-cell">
 					<div class="flex-container">
 						<div class="search-field">
@@ -1516,7 +1516,7 @@ Frontend devteam
 						</div>
 					</div>
 				</div>
-				<!-- 결재선 영역 -->
+				결재선 영역
 				<div class="area-target gt-d-table-cell gt-align-top">
 					<div class="row-space js-show-personal-approval-line" style="visibility: hidden;">
 						<select style="width: 304px" id="show-personal-approval-line">
@@ -1524,7 +1524,7 @@ Frontend devteam
 						</select>
 					</div>
 					<div class="gt-d-table gt-mt-15">
-						<!-- 이동 버튼 영역 -->
+						이동 버튼 영역
 						<div class="area-ctrls gt-d-table-cell">
 							<button type="button" class="hw-button outline-gray2 rounded" id="btn_approval_add_type_of_a">
 								결재<i class="far fa-chevron-right"></i>
@@ -1539,7 +1539,7 @@ Frontend devteam
 								참조<i class="far fa-chevron-right"></i>
 							</button>
 						</div>
-						<!-- 결재선 -->
+						결재선
 						<div class="approval-step-line gt-d-table-cell">
 							<div id="draggable_group" class="step-scroll-box-tall ui-sortable">
 								<div class="approval-sortable-group approval-type-A disabled group-0">
@@ -1680,10 +1680,10 @@ Frontend devteam
 								</div>
 							</div>
 						</div>
-						<!-- <div class="approval-step-direction gt-d-table-cell gt-pl-10">
+						<div class="approval-step-direction gt-d-table-cell gt-pl-10">
             <div class="stem">결<br>재<br>방<br>향</div>
           </div>
-           -->
+          
 					</div>
 					<p class="gt-mt-30 font-size-14 text-333 row-space">참조</p>
 					<div class="row-space">
@@ -1718,7 +1718,7 @@ Frontend devteam
 				<span class="blind">레이어 닫기</span>
 			</button>
 		</div>
-	</div>
+	</div> -->
 
 
 	<!-- 상세보기_결재선 변경 버튼 클릭시 모달 끝 -->

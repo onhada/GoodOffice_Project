@@ -1153,7 +1153,14 @@ public class ApprovalService_imple implements ApprovalService {
 	@Override
 	public int getUserProcedureType(Map<String, Long> paraMap) {
 		// 유저 결재절차 타입
-		return dao.getUserProcedureType(paraMap);
+		
+		Integer userProcedureType = dao.getUserProcedureType(paraMap);
+		
+		if(userProcedureType == null) {
+			return 0;
+		}else {
+			return userProcedureType;
+		}
 	}
 
 	@Override
@@ -2682,6 +2689,25 @@ public class ApprovalService_imple implements ApprovalService {
 	@Override
 	public boolean isReadAble(Map<String, Long> paraMap) {
 		if(dao.isReadAble(paraMap) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isAlreadyAdmin(Long empId) {
+		if(dao.isAlreadyAdmin(empId) > 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExistApproval(Map<String, Long> paraMap) {
+		
+		if(dao.isExistApproval(paraMap) == 1) {
 			return true;
 		}else {
 			return false;

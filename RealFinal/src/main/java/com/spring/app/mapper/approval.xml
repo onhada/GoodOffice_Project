@@ -332,6 +332,7 @@
         (
         select
         fk_approvalId,
+        fk_empId,
         isReadReturn,
         status,
         procedureType,
@@ -347,7 +348,7 @@
 		join tbl_team t on e.fk_teamId = t.teamId
 		join tbl_department d on t.fk_depid = d.depId
 		join tbl_security s on s.securityId = a.fk_securityId
-		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
+		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
 		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
 		
 		where
@@ -399,7 +400,7 @@
 		join tbl_team t on e.fk_teamId = t.teamId
 		join tbl_department d on t.fk_depid = d.depId
         join tbl_security s on s.securityId = a.fk_securityId
-		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
+		left join tbl_importantApproval ia on a.approvalId = ia.fk_approvalId
 		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
 
 		where
@@ -428,7 +429,7 @@
 		<!-- and <![CDATA[ e.fk_positionId < s.fk_positionId ]]> -->
 		)
 		)
-		
+		where isImportant = 1
 		<if test='orderType == "desc"'>order by draftDay desc</if>
 		<if test='orderType == "asc"'>order by draftDay asc</if>
 
@@ -1233,7 +1234,7 @@
 	
 	<!-- 전자결재_상세보기_유저의 절차 타입 취득 -->
 	<select id="getUserProcedureType"
-		parameterType="HashMap" resultType="int">
+		parameterType="HashMap" resultType="Integer">
 
 		select
 		procedureType
@@ -1568,7 +1569,7 @@
    
    <!-- 전자결재_상세보기_기안 취소-->
    <update id="cancleApproval" parameterType="HashMap">
-   		update tbl_approval set isDelete = 4 where approvalId = #{approvalId}
+   		update tbl_approval set isDelete = 2 where approvalId = #{approvalId}
    </update>
    
    
@@ -1899,7 +1900,6 @@
 		formId = #{formId}
 	</update>
 	
-	
 	<!-- 전자결재_문서 상세보기_열람 허용 여부 -->
 	<select id="isReadAble" parameterType="HashMap" resultType="int">
 		select
@@ -1908,9 +1908,29 @@
 		tbl_approval a 
 		join tbl_security s on s.securityid = a.fk_securityid
 		join tbl_position p on p.positionid = s.fk_positionid
+        
 		where
 		approvalId = #{approvalId}
-		and s.fk_positionid >= #{positionId}
+		and s.fk_positionid >= 4
+        and (select count(*) from tbl_approvalProcedure where fk_approvalId = #{approvalId} and fk_empId = #{empId}) = 0 
+	</select>
+	
+	<!-- 전자결재_관리자 설정_관리자 추가 전 다른 기능 관리자인지 체크 -->
+	<select id="isAlredayAdmin" parameterType="Long" resultType="int">
+		select
+		count(*)
+		from
+		tbl_admin
+		where isDelete = 0 and fk_empId = #{empId} and adminType != 1
+	</select>
+	
+	<!-- 전자결재_상세보기_존재하는 전자결재 문서인지 확인 -->
+	<select id="isExistApproval" parameterType="HashMap" resultType="int">
+		select
+		count(*)
+		from
+		tbl_approval
+		where fk_formId = #{formId} and approvalId = #{approvalId}
 	</select>
 	
 </mapper>

@@ -17,28 +17,40 @@ $(document).ready(function() {
 	
 	$("div#cookie_approval_menu_first").click(function(){
 		
-		
-		//alert($("div.wrap_menu_first").css("display")); 
 		$("div.wrap_menu_first").slideToggle();
-		//alert($("div.wrap_menu_first").css("display")); 
-		/* if($("div.wrap_menu_first").css("display") != "none"){
-			// 상세메뉴가 보여지고 있을 경우엔 화살표가 위를 향해야
-			
-			alert("true : 화살표 위로")
-			//$("div#cookie_approval_menu_first i.fa-chevron-up").css({'transform' : 'scaleY(-1)', 'transition' : '.3s'});
-
+		
+		if($("i.ing").hasClass("fa-chevron-up")){
+			$("i.ing").removeClass("fa-chevron-up");
+			$("i.ing").addClass("fa-chevron-down");
 		}else{
-			alert("false : 화살표 아래")
-			//$("div#cookie_approval_menu_first i.fa-chevron-up").css({'transform' : 'scaleY(-1)', 'transition' : '.3s'});
+			$("i.ing").removeClass("fa-chevron-down");
+			$("i.ing").addClass("fa-chevron-up");
+		}
 
-		} */
-		//$("div#cookie_approval_menu_first i.fa-chevron-up").toggleClass('mirror_v');
 	})
 	
 	$("div#cookie_approval_menu_second").click(function(){
 		$("div.wrap_menu_second").slideToggle();
-		//$("div#cookie_approval_menu_second i.fa-chevron-up").css({'transform' : 'scaleY(-1)', 'transition' : '.3s'});
-		//$("div#cookie_approval_menu_second i.fa-chevron-up").toggleClass('mirror_v');
+		
+		if($("i.docBox").hasClass("fa-chevron-up")){
+			$("i.docBox").removeClass("fa-chevron-up");
+			$("i.docBox").addClass("fa-chevron-down");
+		}else{
+			$("i.docBox").removeClass("fa-chevron-down");
+			$("i.docBox").addClass("fa-chevron-up");
+		}
+	})
+	
+	$("div#cookie_approval_menu_third").click(function(){
+		$("div.wrap_menu_third").slideToggle();
+		
+		if($("i.adminToggle").hasClass("fa-chevron-up")){
+			$("i.adminToggle").removeClass("fa-chevron-up");
+			$("i.adminToggle").addClass("fa-chevron-down");
+		}else{
+			$("i.adminToggle").removeClass("fa-chevron-down");
+			$("i.adminToggle").addClass("fa-chevron-up");
+		}
 	})
 
 
@@ -71,10 +83,10 @@ $(document).ready(function() {
 				<ul>
 					<li class="el-collapse">
 						<div class="el-collapse-item ">
-							<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_first" onclick="new_sidebar.toggleParent(this.id)">
+							<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_first">
 								<span class="link gt-pl-10">
 									<span class="collapse-prefix-icon open">
-										<i class="fal fa-chevron-up"></i>
+										<i class="fal fa-chevron-up ing"></i>
 									</span>
 									<span class="flex-truncate collapse">진행 중인 문서</span>
 								</span>
@@ -154,10 +166,10 @@ $(document).ready(function() {
 
 					<li class="el-collapse">
 						<div class="el-collapse-item ">
-							<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_second" onclick="new_sidebar.toggleParent(this.id)">
+							<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_second">
 								<a class="link gt-pl-10">
 									<span class="collapse-prefix-icon open">
-										<i class="fal fa-chevron-up"></i>
+										<i class="fal fa-chevron-up docBox"></i>
 									</span>
 									<span class="flex-truncate collapse">문서함</span>
 								</a>
@@ -238,19 +250,18 @@ $(document).ready(function() {
 
 					<hr>
 					
-					<!-- 수정필))))))))))) 관리자인지 아닌지 확인 -->
-					<%-- <c:if test="${not empty sessionScope.loginUser && (sessionScope.loginUser.adminType eq 'Approval' || sessionScope.loginUser.adminType eq 'All')}"> --%>
+					<c:if test="${not empty sessionScope.loginUser && (sessionScope.loginUser.adminType eq 'Approval' || sessionScope.loginUser.adminType eq 'All')}">
 						<li class="el-collapse">
 							<div class="el-collapse-item ">
-								<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_third" onclick="수정필">
+								<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_third">
 									<span class="link gt-pl-10">
 										<span class="collapse-prefix-icon open">
-											<i class="fal fa-chevron-up"></i>
+											<i class="fal fa-chevron-up adminToggle"></i>
 										</span>
 										<span class="flex-truncate collapse">관리자 설정</span>
 									</span>
 								</div>
-								<div class="el-collapse-item__wrap" style="display: block;">
+								<div class="el-collapse-item__wrap wrap_menu_third" style="display: block;">
 									<ul class="el-collapse-item__content">
 										<li class="menu-item">
 											<a href="<%= ctxPath %>/approval/settings/basic.gw" id="settings_basic" class="link ">
@@ -269,7 +280,7 @@ $(document).ready(function() {
 											</a>
 										</li>
 										
-										<%-- <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.isReadAllDocument eq 1}"> --%>
+										<c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.isReadAllDocument eq 1}">
 											<li class="menu-item">
 												<a href="<%= ctxPath %>/approval/settings/document.gw" id="settings_document" class="link ">
 													<span class="link-prefix-icon">
@@ -286,7 +297,7 @@ $(document).ready(function() {
 													<span class="flex-truncate">삭제 문서 목록</span>
 												</a>
 											</li>
-										<%-- </c:if> --%>
+										</c:if>
 										<%-- <li class="menu-item">
 											<a href="<%= ctxPath %>/approval/settings/backup.gw" class="link ">
 												<span class="link-prefix-icon">
@@ -309,7 +320,7 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</li>
-					<%-- </c:if> --%>
+					</c:if>
 					<!-- <li class="menu-item only">
 						<a href="/gabia.biz/accounting/basic/criteria" class="link gt-pl-10">
 							<span class="link-prefix-icon">

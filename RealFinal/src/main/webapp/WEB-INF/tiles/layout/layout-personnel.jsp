@@ -46,15 +46,11 @@
 
 
 <!-- Optional JavaScript -->
-<%-- <script type="text/javascript" src="<%= ctxPath%>/resources/jquery/jquery-3.7.1.min.js"></script> --%>
-<script type="text/javascript" src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="<%= ctxPath%>/resources/jquery/jquery-3.7.1.min.js"></script>
+<%-- <script type="text/javascript" src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script> --%>
 <script type="text/javascript" src="<%=ctxPath%>/resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 <!-- 예진 추가 -->
-<!-- JavaScript -->
-<script src="<%=ctxPath%>/resources/js/jquery-3.7.1.min.js" type="text/javascript"></script>
-
-
 
 <script src="<%=ctxPath%>/resources/js/personnel/jquery.ui.monthpicker.js" type="text/javascript"></script>
 <script type="text/javascript" src="<%=ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
@@ -1079,7 +1075,7 @@
 						<div data-v-4faad0e8="" class="text-right mt-40">
 							<div data-v-4faad0e8="">
 								<span data-v-4faad0e8="" class="font-weight-bold">회사명</span>
-								: 하이웍스오피스
+								: GoodOffice
 							</div>
 							<!---->
 						</div>

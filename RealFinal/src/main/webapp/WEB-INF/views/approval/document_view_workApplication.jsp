@@ -1206,15 +1206,6 @@ $(document).ready(function() {
 	
 	
 	
-	/* ? 박스 hover 시*/
-	$("button.tipsIcon").hover(function(){
-		$("div.tooltip").show();
-	},
-	function(){
-		$("div.tooltip").hide();
-	}
-	);
-	
 	
 	
 	
@@ -1871,18 +1862,6 @@ function deleteThis(id) {
 										</c:if>
 									</c:forEach>
 								</c:if>
-								<button type = "button" class="icon question tipsIcon" style="position: relative; top: 4px; margin-left: 10px;">
-									<span class="blind">세부 설명</span>
-								</button>
-								<div class="tooltip" style="left: -290px; top: 0; display: none;">
-									<div class="tooltip-box" style="width: 570px;">
-										<p>보안 등급</p>
-										<p>ㆍS등급: 기안 상에 설정된 관련자들만 문서를 볼 수 있으며, 결재자와 합의자만 참조자를 추가할 수 있음.</p>
-										<p>ㆍA등급: 기안 상에 설정된 관련자들과 관리자가 설정한 5등급(부장)등급 이상인 사람이 문서를 볼 수 있음. 결재자와 합의자는 참조자를 추가할 수 있음.</p>
-										<p>ㆍB등급: 기안 상에 설정된 관련자들과 관리자가 설정한 7등급(과장)등급 이상인 사람이 문서를 볼 수 있음. 결재자, 합의자, 참조자 모두 참조자를 추가할 수 있음.</p>
-										<p>ㆍC등급: 모든 임직원이 문서를 열람할 수 있지만, 기안 상에 설정된 관련자들만 참조자를 추가할 수 있음.</p>
-									</div>
-								</div>
 
 							</td>
 						</tr>

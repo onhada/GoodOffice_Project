@@ -22,7 +22,7 @@
 
 <script>
 $(document).ready(function() {
-	$("input.yearpicker").yearpicker({
+	$("input#yearpicker").yearpicker({
 		// Initial Year
 		year : Number('${requestScope.year}'),
 		// Start Year 수정필
@@ -33,8 +33,6 @@ $(document).ready(function() {
 		itemTag : 'li',
 		// Default CSS classes
 		selectedClass : 'selected',
-		onShow: null,
-		onHide: null,
 		onChange: function(value){
 			  $(location).attr('href', '<%=ctxPath%>/personnel/payAnnualList.gw?year=' + value);
 		}
@@ -42,7 +40,7 @@ $(document).ready(function() {
 	
 	
 
-	$("div.yearpicker-container").css('top', '109px');
+	$("div.yearpicker-container").css('top', '123px');
 	
 	$("button#downloadPrivatePayrollExcelBtn").click(function(){
 		const frm = document.yearFrm;
@@ -169,7 +167,7 @@ function addComma(value){
 					<div data-v-9252af6e="" class="section-content">
 
 						<div data-v-6443cae4="" data-v-9252af6e="" class="picker_wrap">
-							<input type="text" class="yearpicker" name="year" value="${requestScope.year}" readonly="readonly" style="width: 50px; text-align: center;" />
+							<input type="text" class="yearpicker" id="yearpicker" name="year" value="${requestScope.year}" readonly="readonly" style="width: 150px;text-align: center;font-size: 24px; border: 1px solid #d6d6d6;border-radius: 50px;" />
 							<input type="hidden" name="orderType" value="${requestScope.orderType}" />
 							<!-- <button data-v-6443cae4="" class="hw-icon">
 								<i data-v-6443cae4="" class="gi gi-short-arrow-left-alt"></i>
@@ -191,11 +189,13 @@ function addComma(value){
 								<span data-v-9252af6e="" class="primary-color ml-10"></span>
 								<span data-v-9252af6e="" class="font-size-15">모두</span>
 							</div> -->
-							<div data-v-9252af6e="" class="d-flex align-items-center" style="display: table !important; margin-left: auto;">
-								<button data-v-9252af6e="" class="el-tooltip excel-button" type="button" id="downloadPrivatePayrollExcelBtn" aria-describedby="el-tooltip-558" tabindex="0">
-									<img data-v-9252af6e="" src="https://static.hiworks.com/hr/svg/xls.svg" alt="download excel">
-								</button>
-							</div>
+							<c:if test="${not empty requestScope.svoList}">
+								<div data-v-9252af6e="" class="d-flex align-items-center" style="display: table !important; margin-left: auto;">
+									<button data-v-9252af6e="" class="el-tooltip excel-button" type="button" id="downloadPrivatePayrollExcelBtn" aria-describedby="el-tooltip-558" tabindex="0">
+										<img data-v-9252af6e="" src="https://static.hiworks.com/hr/svg/xls.svg" alt="download excel">
+									</button>
+								</div>
+							</c:if>
 						</div>
 
 					</div>
@@ -274,7 +274,7 @@ function addComma(value){
 
 						<c:if test="${empty requestScope.svoList}">
 							<tr data-v-9252af6e="">
-								<td data-v-9252af6e="" colspan="8">급여명세서 내역이 없습니다.</td>
+								<td data-v-9252af6e="" colspan="7">급여명세서 내역이 없습니다.</td>
 							</tr>
 						</c:if>
 					</tbody>

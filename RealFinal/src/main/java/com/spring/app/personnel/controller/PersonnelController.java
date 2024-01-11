@@ -853,765 +853,723 @@ public class PersonnelController {
 	
 	
 	
-	
 	// 예진 코드 시작 ---------------------------------------------------------------------------------------------
-	@GetMapping("/personnel/approvalForms.gw")
-	public ModelAndView personnelApprovalForms(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+		@GetMapping("/personnel/approvalForms.gw")
+		public ModelAndView personnelApprovalForms(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
-		mav.addObject("formList", service.getFormList());
-		mav.addObject("type", "approvalForms");
-		mav.setViewName("approval-forms.personnel");
+			mav.addObject("formList", service.getFormList());
+			mav.addObject("type", "approvalForms");
+			mav.setViewName("approval-forms.personnel");
 
-		return mav;
-	}
+			return mav;
+		}
 
-	@GetMapping("/personnel/modifyApprovalForm.gw")
-	public ModelAndView personnelModifyApprovalForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+//		@GetMapping("/personnel/modifyApprovalForm.gw")
+//		public ModelAndView personnelModifyApprovalForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+	//
+//			mav.addObject("formList", service.getFormList());
+//			mav.addObject("type", "approvalForms");
+//			mav.setViewName("approval-forms.personnel");
+	//
+//			return mav;
+//		}
 
-		mav.addObject("formList", service.getFormList());
-		mav.addObject("type", "approvalForms");
-		mav.setViewName("approval-forms.personnel");
+		@GetMapping("/personnel/insaManager.gw")
+		public ModelAndView personnelAdminInsaManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+			// 관리자
 
-		return mav;
-	}
+			mav.addObject("type", "insaManager");
+			mav.addObject("adminList", service.getAdminList());
+			mav.setViewName("insa_manage_insamanager.personnel");
 
-	@GetMapping("/personnel/insaManager.gw")
-	public ModelAndView personnelInsaManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
-		// 관리자
+			return mav;
 
-		HttpSession session = req.getSession();
+		}
 
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
+		@ResponseBody
+		@PostMapping(value = "/personnel/addPersonnelAdminManager.gw", produces = "text/plain;charset=UTF-8")
+		public String addPersonnelAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+				Long empId) {
 
-		mav.addObject("type", "insaManager");
-		mav.addObject("adminList", service.getAdminList());
-		mav.setViewName("insa_manage_insamanager.personnel");
+			HttpSession session = req.getSession();
 
-		return mav;
+			Map<String, Long> paraMap = new HashMap<>();
+			paraMap.put("empId", empId);
+			paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+			paraMap.put("adminType", 2L);
 
-	}
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("isAdd", aService.addAppovalAdminManager(paraMap));
 
-	@ResponseBody
-	@PostMapping(value = "/personnel/addPersonnelAdminManager.gw", produces = "text/plain;charset=UTF-8")
-	public String addPersonnelAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			Long empId) {
+			return jsonObj.toString();
+		}
 
-		HttpSession session = req.getSession();
+		@ResponseBody
+		@PostMapping(value = "/personnel/deletePersonnelAdminManager.gw", produces = "text/plain;charset=UTF-8")
+		public String deletePersonnelAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+				Long adminId) {
 
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
+			HttpSession session = req.getSession();
 
-		Map<String, Long> paraMap = new HashMap<>();
-		paraMap.put("empId", empId);
-		paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
-		paraMap.put("adminType", 2L);
+			Map<String, Long> paraMap = new HashMap<>();
+			paraMap.put("adminId", adminId);
+			paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
 
-		JSONObject jsonObj = new JSONObject();
-		jsonObj.put("isAdd", aService.addAppovalAdminManager(paraMap));
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("isDelete", aService.deleteAppovalAdminManager(paraMap));
 
-		return jsonObj.toString();
-	}
+			return jsonObj.toString();
+		}
 
-	@ResponseBody
-	@PostMapping(value = "/personnel/deletePersonnelAdminManager.gw", produces = "text/plain;charset=UTF-8")
-	public String deletePersonnelAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			Long adminId) {
+		@ResponseBody
+		@PostMapping(value = "/personnel/getAdminHistory.gw", produces = "text/plain;charset=UTF-8")
+		public String getAdminHistory(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
-		HttpSession session = req.getSession();
+			List<AdminHistoryVO> adminHistoryList = service.getAdminHistoryList();
 
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
+			JSONArray jsonArr = new JSONArray();
 
-		Map<String, Long> paraMap = new HashMap<>();
-		paraMap.put("adminId", adminId);
-		paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+			for (AdminHistoryVO ahvo : adminHistoryList) {
+				JSONObject jsonObj = new JSONObject();
 
-		JSONObject jsonObj = new JSONObject();
-		jsonObj.put("isDelete", aService.deleteAppovalAdminManager(paraMap));
+				jsonObj.put("id", ahvo.getId());
+				jsonObj.put("empName", ahvo.getEmpName());
+				jsonObj.put("registerId", ahvo.getRegisterId());
+				jsonObj.put("registerEmpName", ahvo.getRegisterEmpName());
+				jsonObj.put("registerDay", ahvo.getRegisterDay());
+				jsonObj.put("registerType", ahvo.getRegisterType());
 
-		return jsonObj.toString();
-	}
+				jsonArr.put(jsonObj);
+			}
 
-	@ResponseBody
-	@PostMapping(value = "/personnel/getAdminHistory.gw", produces = "text/plain;charset=UTF-8")
-	public String getAdminHistory(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+			return jsonArr.toString();
+		}
 
-		HttpSession session = req.getSession();
+		// 급여 관리자 aop 수정필
+		// --------------------------------------------------------------------------------------------------------------------------
 
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
+		@GetMapping("/personnel/payrollSetting.gw")
+		public ModelAndView personnelAdminPayrollSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+				SearchEmployeeVO sevo) {
 
-		List<AdminHistoryVO> adminHistoryList = service.getAdminHistoryList();
+			String searchWord = sevo.getSearchWord();
+			String orderType = sevo.getOrderType();
 
-		JSONArray jsonArr = new JSONArray();
+			if (searchWord == null) {
+				searchWord = "";
+			} else {
+				searchWord = searchWord.trim();
+			}
 
-		for (AdminHistoryVO ahvo : adminHistoryList) {
+			if (orderType == null) {
+				orderType = "asc";
+			}
+
+			// 특정 일자
+			String month = req.getParameter("monthPicker");
+
+			if (month == null) {
+				// 이번달 1일 구하기 (귀속월에 사용)
+				YearMonth today1 = YearMonth.now();
+
+				month = today1.toString();
+			}
+
+			Map<String, String> paraMap = new HashMap<>();
+			paraMap.put("searchWord", searchWord);
+			paraMap.put("orderType", orderType);
+
+			SalaryVO svo = service.isExistPayrollThisMonth(month);
+			mav.addObject("salary", svo);
+
+			if (svo != null) {
+				// 존재 한다면
+
+				paraMap.put("salaryId", String.valueOf(svo.getSalaryId()));
+				List<SalaryDetailVO> sdList = service.getSalaryDetail_withSearch(paraMap);
+				mav.addObject("sdList", sdList);
+			}
+
+			mav.addObject("searchWord", searchWord);
+			mav.addObject("orderType", orderType);
+			mav.addObject("month", month);
+			mav.addObject("type", "payrollSetting");
+
+			mav.setViewName("payroll_setting_payroll.personnel");
+
+			return mav;
+
+		}
+
+		@GetMapping(value = "/personnel/salaryFormDownload.gw")
+		public void approvalAdminFileDownload(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+
+			// *** 웹브라우저에 출력하기 시작 *** //
+			// HttpServletResponse response 객체는 전송되어져온 데이터를 조작해서 결과물을 나타내고자 할때 쓰인다.
+			res.setContentType("text/html; charset=UTF-8");
+
+			PrintWriter out = null;
+			// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
+
+			try {
+				// 정상적으로 다운로드를 할 경우
+
+				String fileName = "payroll_sample_excel.xlsx";
+				// 20231124124825759362098213700.pdf 이것이 바로 WAS(톰캣) 디스크에 저장된 파일명이다.
+
+				String orgFilename = "payroll_sample_excel.xlsx";
+				// LG_싸이킹청소기_사용설명서.pdf 다운로드시 보여줄 파일명
+
+				// 첨부파일이 저장되어 있는 WAS(톰캣) 디스크 경로명을 알아와야만 다운로드를 해줄 수 있다.
+				// 이 경로는 우리가 파일첨부를 위해서 /addEnd.action 에서 설정해두었던 경로와 똑같아야 한다.
+				// WAS 의 webapp 의 절대경로를 알아와야 한다.
+				HttpSession session = req.getSession();
+				String root = session.getServletContext().getRealPath("/");
+
+				// System.out.println("~~~ 확인용 webapp 의 절대경로 => " + root);
+				// ~~~ 확인용 webapp 의 절대경로 =>
+				// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\
+
+				String path = root + "resources" + File.separator + "file";
+				/*
+				 * File.separator 는 운영체제에서 사용하는 폴더와 파일의 구분자이다. 운영체제가 Windows 이라면 File.separator
+				 * 는 "\" 이고, 운영체제가 UNIX, Linux, 매킨토시(맥) 이라면 File.separator 는 "/" 이다.
+				 */
+
+				// path 가 첨부파일이 저장될 WAS(톰캣)의 폴더가 된다.
+				// System.out.println("~~~ 확인용 path => " + path);
+				// ~~~ 확인용 path =>
+				// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\resources\files
+
+				// ***** file 다운로드 하기 ***** //
+				boolean flag = false; // file 다운로드 성공, 실패인지 여부를 알려주는 용도
+				flag = fileManager.doFileDownload(fileName, orgFilename, path, res);
+				// file 다운로드 성공시 flag 는 true,
+				// file 다운로드 실패시 flag 는 false 를 가진다.
+
+				if (!flag) {
+					// 다운로드가 실패한 경우 메시지를 띄워준다.
+					out = res.getWriter();
+					// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
+
+					out.println("<script type='text/javascript'>alert('파일다운로드가 실패되었습니다.'); history.back();</script>");
+				}
+
+			} catch (NumberFormatException | IOException e) {
+				try {
+					out = res.getWriter();
+					// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
+
+					out.println("<script type='text/javascript'>alert('파일다운로드가 불가합니다.'); history.back();</script>");
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+
+		@ResponseBody
+		@PostMapping(value = "/personnel/fixPayroll.gw", produces = "text/plain;charset=UTF-8")
+		public String personnelAdminFixPayroll(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+			// 확정여부 변경
+
+			Map<String, String> paraMap = new HashMap<>();
+			paraMap.put("salaryId", req.getParameter("salaryId"));
+			paraMap.put("isFix", req.getParameter("isFix"));
+
 			JSONObject jsonObj = new JSONObject();
 
-			jsonObj.put("id", ahvo.getId());
-			jsonObj.put("empName", ahvo.getEmpName());
-			jsonObj.put("registerId", ahvo.getRegisterId());
-			jsonObj.put("registerEmpName", ahvo.getRegisterEmpName());
-			jsonObj.put("registerDay", ahvo.getRegisterDay());
-			jsonObj.put("registerType", ahvo.getRegisterType());
+			jsonObj.put("isFix", service.fixPayroll(paraMap));
 
-			jsonArr.put(jsonObj);
+			return jsonObj.toString();
 		}
 
-		return jsonArr.toString();
-	}
+		@ResponseBody
+		@PostMapping(value = "/personnel/deletePayroll.gw", produces = "text/plain;charset=UTF-8")
+		public String personnelAdminDeletePayroll(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+				Long salaryId) {
+			// 삭제
 
-	// 급여 관리자 aop 수정필
-	// --------------------------------------------------------------------------------------------------------------------------
+			JSONObject jsonObj = new JSONObject();
 
-	@GetMapping("/personnel/payrollSetting.gw")
-	public ModelAndView personnelPayrollSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			SearchEmployeeVO sevo) {
+			jsonObj.put("isDelete", service.deletePayroll(salaryId));
 
-		String searchWord = sevo.getSearchWord();
-		String orderType = sevo.getOrderType();
-
-		if (searchWord == null) {
-			searchWord = "";
-		} else {
-			searchWord = searchWord.trim();
+			return jsonObj.toString();
 		}
 
-		if (orderType == null) {
-			orderType = "asc";
-		}
+		@ResponseBody
+		@PostMapping(value = "/personnel/isExistThisMonth.gw", produces = "text/plain;charset=UTF-8")
+		public String personnelAdminAdminIsExistThisMonth(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+			// 급여 대장_등록 모달_확인버튼 클릭시 이미 급여정보가 존재하는 귀속월인지 확인
 
-		// 특정 일자
-		String month = req.getParameter("monthPicker");
+			// 특정 일자
+			String month = req.getParameter("month");
 
-		if (month == null) {
-			// 이번달 1일 구하기 (귀속월에 사용)
-			YearMonth today1 = YearMonth.now();
+			SalaryVO svo = service.isExistPayrollThisMonth(month);
 
-			month = today1.toString();
-		}
+			JSONObject jsonObj = new JSONObject();
 
-		Map<String, String> paraMap = new HashMap<>();
-		paraMap.put("searchWord", searchWord);
-		paraMap.put("orderType", orderType);
-
-		SalaryVO svo = service.isExistPayrollThisMonth(month);
-		mav.addObject("salary", svo);
-
-		if (svo != null) {
-			// 존재 한다면
-
-			paraMap.put("salaryId", String.valueOf(svo.getSalaryId()));
-			List<SalaryDetailVO> sdList = service.getSalaryDetail_withSearch(paraMap);
-			mav.addObject("sdList", sdList);
-		}
-
-		mav.addObject("searchWord", searchWord);
-		mav.addObject("orderType", orderType);
-		mav.addObject("month", month);
-		mav.addObject("type", "payrollSetting");
-
-		mav.setViewName("payroll_setting_payroll.personnel");
-
-		return mav;
-
-	}
-
-	@GetMapping(value = "/personnel/salaryFormDownload.gw")
-	public void approvalFileDownload(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
-
-		// *** 웹브라우저에 출력하기 시작 *** //
-		// HttpServletResponse response 객체는 전송되어져온 데이터를 조작해서 결과물을 나타내고자 할때 쓰인다.
-		res.setContentType("text/html; charset=UTF-8");
-
-		PrintWriter out = null;
-		// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
-
-		try {
-			// 정상적으로 다운로드를 할 경우
-
-			String fileName = "payroll_sample_excel.xlsx";
-			// 20231124124825759362098213700.pdf 이것이 바로 WAS(톰캣) 디스크에 저장된 파일명이다.
-
-			String orgFilename = "payroll_sample_excel.xlsx";
-			// LG_싸이킹청소기_사용설명서.pdf 다운로드시 보여줄 파일명
-
-			// 첨부파일이 저장되어 있는 WAS(톰캣) 디스크 경로명을 알아와야만 다운로드를 해줄 수 있다.
-			// 이 경로는 우리가 파일첨부를 위해서 /addEnd.action 에서 설정해두었던 경로와 똑같아야 한다.
-			// WAS 의 webapp 의 절대경로를 알아와야 한다.
-			HttpSession session = req.getSession();
-			String root = session.getServletContext().getRealPath("/");
-
-			// System.out.println("~~~ 확인용 webapp 의 절대경로 => " + root);
-			// ~~~ 확인용 webapp 의 절대경로 =>
-			// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\
-
-			String path = root + "resources" + File.separator + "file";
-			/*
-			 * File.separator 는 운영체제에서 사용하는 폴더와 파일의 구분자이다. 운영체제가 Windows 이라면 File.separator
-			 * 는 "\" 이고, 운영체제가 UNIX, Linux, 매킨토시(맥) 이라면 File.separator 는 "/" 이다.
-			 */
-
-			// path 가 첨부파일이 저장될 WAS(톰캣)의 폴더가 된다.
-			// System.out.println("~~~ 확인용 path => " + path);
-			// ~~~ 확인용 path =>
-			// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\resources\files
-
-			// ***** file 다운로드 하기 ***** //
-			boolean flag = false; // file 다운로드 성공, 실패인지 여부를 알려주는 용도
-			flag = fileManager.doFileDownload(fileName, orgFilename, path, res);
-			// file 다운로드 성공시 flag 는 true,
-			// file 다운로드 실패시 flag 는 false 를 가진다.
-
-			if (!flag) {
-				// 다운로드가 실패한 경우 메시지를 띄워준다.
-				out = res.getWriter();
-				// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
-
-				out.println("<script type='text/javascript'>alert('파일다운로드가 실패되었습니다.'); history.back();</script>");
+			if (svo != null) {
+				// 존재 한다면
+				jsonObj.put("isExist", true);
+			} else {
+				jsonObj.put("isExist", false);
 			}
 
-		} catch (NumberFormatException | IOException e) {
-			try {
-				out = res.getWriter();
-				// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
-
-				out.println("<script type='text/javascript'>alert('파일다운로드가 불가합니다.'); history.back();</script>");
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-		}
-	}
-
-	@ResponseBody
-	@PostMapping(value = "/personnel/fixPayroll.gw", produces = "text/plain;charset=UTF-8")
-	public String personnelFixPayroll(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
-		// 확정여부 변경
-
-		Map<String, String> paraMap = new HashMap<>();
-		paraMap.put("salaryId", req.getParameter("salaryId"));
-		paraMap.put("isFix", req.getParameter("isFix"));
-
-		JSONObject jsonObj = new JSONObject();
-
-		jsonObj.put("isFix", service.fixPayroll(paraMap));
-
-		return jsonObj.toString();
-	}
-
-	@ResponseBody
-	@PostMapping(value = "/personnel/deletePayroll.gw", produces = "text/plain;charset=UTF-8")
-	public String personnelDeletePayroll(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			Long salaryId) {
-		// 삭제
-
-		JSONObject jsonObj = new JSONObject();
-
-		jsonObj.put("isDelete", service.deletePayroll(salaryId));
-
-		return jsonObj.toString();
-	}
-
-	@ResponseBody
-	@PostMapping(value = "/personnel/isExistThisMonth.gw", produces = "text/plain;charset=UTF-8")
-	public String personnelIsExistThisMonth(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
-		// 급여 대장_등록 모달_확인버튼 클릭시 이미 급여정보가 존재하는 귀속월인지 확인
-
-		// 특정 일자
-		String month = req.getParameter("month");
-
-		SalaryVO svo = service.isExistPayrollThisMonth(month);
-
-		JSONObject jsonObj = new JSONObject();
-
-		if (svo != null) {
-			// 존재 한다면
-			jsonObj.put("isExist", true);
-		} else {
-			jsonObj.put("isExist", false);
+			return jsonObj.toString();
 		}
 
-		return jsonObj.toString();
-	}
+		@ResponseBody
+		@PostMapping(value = "/personnel/insertPayroll.gw", produces = "text/plain;charset=UTF-8")
+		public String personnelAdminInsertPayroll(MultipartHttpServletRequest mtp_request, HttpServletResponse res,
+				ModelAndView mav) {
+			// 급여 대장_등록 모달_확인버튼 클릭시 급여 등록
 
-	@ResponseBody
-	@PostMapping(value = "/personnel/insertPayroll.gw", produces = "text/plain;charset=UTF-8")
-	public String personnelInsertPayroll(MultipartHttpServletRequest mtp_request, HttpServletResponse res,
-			ModelAndView mav) {
-		// 급여 대장_등록 모달_확인버튼 클릭시 급여 등록
+			HttpSession session = mtp_request.getSession();
 
-		HttpSession session = mtp_request.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
+			// 엑셀
+			MultipartFile mtp_excel_file = mtp_request.getFile("payrollFile");
 
-		// 엑셀
-		MultipartFile mtp_excel_file = mtp_request.getFile("payrollFile");
+			JSONObject jsonObj = new JSONObject();
 
-		JSONObject jsonObj = new JSONObject();
+			if (mtp_excel_file != null) {
+				System.out.println("응 여기야");
 
-		if (mtp_excel_file != null) {
-			System.out.println("응 여기야");
+				try {
+					// == MultipartFile 을 File 로 변환하기 시작 ==
+					// WAS 의 webapp 의 절대경로를 알아와야 한다.
+					String root = session.getServletContext().getRealPath("/");
+					String path = root + "resources" + File.separator + "file";
 
-			try {
-				// == MultipartFile 을 File 로 변환하기 시작 ==
-				// WAS 의 webapp 의 절대경로를 알아와야 한다.
-				String root = session.getServletContext().getRealPath("/");
-				String path = root + "resources" + File.separator + "file";
+					File excel_file = new File(path + File.separator + mtp_excel_file.getOriginalFilename());
+					mtp_excel_file.transferTo(excel_file);
+					// == MultipartFile 을 File 로 변환하기 끝 ==
 
-				File excel_file = new File(path + File.separator + mtp_excel_file.getOriginalFilename());
-				mtp_excel_file.transferTo(excel_file);
-				// == MultipartFile 을 File 로 변환하기 끝 ==
+					OPCPackage opcPackage = OPCPackage.open(excel_file);
+					/*
+					 * 아파치 POI(Apache POI)는 아파치 소프트웨어 재단에서 만든 라이브러리로서 마이크로소프트 오피스파일 포맷을 순수 자바 언어로서
+					 * 읽고 쓰는 기능을 제공한다. 주로 워드, 엑셀, 파워포인트와 파일을 지원하며 최근의 오피스 포맷인 Office Open XML File
+					 * Formats(OOXML, 즉 xml 기반의 *.docx, *.xlsx, *.pptx 등) 이나 아웃룩, 비지오, 퍼블리셔 등으로 지원
+					 * 파일 포맷을 늘려가고 있다.
+					 */
+					XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
 
-				OPCPackage opcPackage = OPCPackage.open(excel_file);
-				/*
-				 * 아파치 POI(Apache POI)는 아파치 소프트웨어 재단에서 만든 라이브러리로서 마이크로소프트 오피스파일 포맷을 순수 자바 언어로서
-				 * 읽고 쓰는 기능을 제공한다. 주로 워드, 엑셀, 파워포인트와 파일을 지원하며 최근의 오피스 포맷인 Office Open XML File
-				 * Formats(OOXML, 즉 xml 기반의 *.docx, *.xlsx, *.pptx 등) 이나 아웃룩, 비지오, 퍼블리셔 등으로 지원
-				 * 파일 포맷을 늘려가고 있다.
-				 */
-				XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
+					// 첫번째 시트 불러오기
+					XSSFSheet sheet = workbook.getSheetAt(0);
 
-				// 첫번째 시트 불러오기
-				XSSFSheet sheet = workbook.getSheetAt(0);
+					List<Map<String, String>> paraMapList = new ArrayList<>();
+					List<SalaryDetailVO> paraList = new ArrayList<>();
+					List<SalaryDetailVO> errorList = new ArrayList<>();
 
-				List<Map<String, String>> paraMapList = new ArrayList<>();
-				List<SalaryDetailVO> paraList = new ArrayList<>();
-				List<SalaryDetailVO> errorList = new ArrayList<>();
+					// 11번째 행부터
+					for (int i = 10; i < sheet.getLastRowNum() + 1; i++) {
+						Map<String, String> paraMap = new HashMap<>();
 
-				String cellStr = "";
+						SalaryDetailVO sdvo = new SalaryDetailVO();
 
-				// 11번째 행부터
-				for (int i = 10; i < sheet.getLastRowNum() + 1; i++) {
-					Map<String, String> paraMap = new HashMap<>();
+						XSSFRow row = sheet.getRow(i);
 
-					SalaryDetailVO sdvo = new SalaryDetailVO();
+						// 행이 존재하지 않으면 건너띈다.
+						if (row == null) {
+							continue;
+						}
 
-					XSSFRow row = sheet.getRow(i);
+						// 행의 1번째 열(이름)
+						XSSFCell cell = row.getCell(0);
+						if (cell != null) {
+							paraMap.put("empName", String.valueOf(cellReader(cell)));
+							sdvo.setEmpName(String.valueOf(cellReader(cell)));
+						}else {
+							continue;
+						}
 
-					// 행이 존재하지 않으면 건너띈다.
-					if (row == null) {
-						continue;
+						// 행의 2번째 열(id)
+						cell = row.getCell(1);
+
+						if (cell != null) {
+							paraMap.put("id", String.valueOf(cellReader(cell)));
+							sdvo.setId(String.valueOf(cellReader(cell)));
+						}else {
+							continue;
+						}
+
+						// 행의 3번째 열(기본급)
+						cell = row.getCell(2);
+
+						if (cell != null) {
+							paraMap.put("basePay", String.valueOf(cellReader(cell)));
+
+							sdvo.setBasePay(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 4번째 열(연장근로수당)
+						cell = row.getCell(3);
+
+						if (cell != null) {
+							paraMap.put("overTimePay", String.valueOf(cellReader(cell)));
+
+							sdvo.setOverTimePay(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 5번째 열(야간근로수당)
+						cell = row.getCell(4);
+
+						if (cell != null) {
+							paraMap.put("overTimePay", String.valueOf(cellReader(cell)));
+
+							sdvo.setNightTimePay(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 6번째 열(휴일근로수당)
+						cell = row.getCell(5);
+
+						if (cell != null) {
+							paraMap.put("holidayPay", String.valueOf(cellReader(cell)));
+
+							sdvo.setHolidayPay(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 7번째 열(미사용연차수당)
+						cell = row.getCell(6);
+
+						if (cell != null) {
+							paraMap.put("unUsedAnnualPay", String.valueOf(cellReader(cell)));
+
+							sdvo.setUnUsedAnnualPay(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 8번째 열(지급총액은 앞의 값들을 더해 얻는다)
+						sdvo.setTotalPay(sdvo.getBasePay() + sdvo.getOverTimePay() + sdvo.getNightTimePay()
+								+ sdvo.getHolidayPay() + sdvo.getUnUsedAnnualPay());
+
+						// 행의 9번째 열(소득세)
+						cell = row.getCell(8);
+
+						if (cell != null) {
+							paraMap.put("incomeTax", String.valueOf(cellReader(cell)));
+
+							sdvo.setIncomeTax(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 10번째 열(지방소득세)
+						cell = row.getCell(9);
+
+						if (cell != null) {
+							paraMap.put("localTax", String.valueOf(cellReader(cell)));
+
+							sdvo.setLocalTax(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 11번째 열(국민연금)
+						cell = row.getCell(10);
+
+						if (cell != null) {
+							paraMap.put("nationalPension", String.valueOf(cellReader(cell)));
+
+							sdvo.setNationalPension(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 12번째 열(건강보험)
+						cell = row.getCell(11);
+
+						if (cell != null) {
+							paraMap.put("healthInsurance", String.valueOf(cellReader(cell)));
+
+							sdvo.setHealthInsurance(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 13번째 열(장기요양보험)
+						cell = row.getCell(12);
+
+						if (cell != null) {
+							paraMap.put("longTermCareInsurance", String.valueOf(cellReader(cell)));
+
+							sdvo.setLongTermCareInsurance(Long.parseLong(cellReader(cell)));
+						}
+
+						// 행의 14번째 열(공제총액)
+
+						sdvo.setTotalDeduction(sdvo.getIncomeTax() + sdvo.getLocalTax() + sdvo.getNationalPension()
+								+ sdvo.getHealthInsurance() + sdvo.getLongTermCareInsurance());
+
+						// 행의 15번째 열(실 지급액)
+						sdvo.setActualPay(sdvo.getTotalPay() - sdvo.getTotalDeduction());
+
+						// 존재여부 확인하는 겸 empId를 받아온다
+						sdvo.setEmpId(service.isExistEmployee(sdvo));
+						if (sdvo.getEmpId() == null || sdvo.getEmpId() == 0) {
+							// 존재하지 않는다면
+							System.out.println("존재 여부 확인 : 존재하지 않는다면 errorList.add");
+
+							errorList.add(sdvo);
+						} else {
+							// 존재한다면
+							System.out.println("존재 여부 확인 : 존재한다면 paraList.add");
+							paraList.add(sdvo);
+						}
+
+						paraMapList.add(paraMap);
+
+					} // end of for----------------------------
+
+					workbook.close();
+
+					// 엑셀에 넣은 id값을 저장시킬 List이자 중복되지 않은 경우의 id를 넣어 중복체크 활용
+					List<String> idList = new ArrayList<>();
+					// 중복 체크
+					for (SalaryDetailVO sdvo : paraList) {
+						String id = sdvo.getId();
+
+						if (idList.contains(id)) {
+							// 중복되었다
+							errorList.add(sdvo);
+						} else {
+							// 중복되지 않아 유저id에 넣고 중복체크에 사용하겠다
+							idList.add(id);
+						}
 					}
 
-					// 행의 1번째 열(이름)
-					XSSFCell cell = row.getCell(0);
-					if (cell != null) {
-						paraMap.put("empName", String.valueOf(cellReader(cell)));
-						sdvo.setEmpName(String.valueOf(cellReader(cell)));
-					}else {
-						continue;
-					}
+					boolean isCheck = true;
 
-					// 행의 2번째 열(id)
-					cell = row.getCell(1);
+					if (errorList.size() > 0) {
+						// 에러 값이 하나라도 있다면 등록시키지 않는다
+						System.out.println("errorList.size > 0");
 
-					if (cell != null) {
-						paraMap.put("id", String.valueOf(cellReader(cell)));
-						sdvo.setId(String.valueOf(cellReader(cell)));
-					}else {
-						continue;
-					}
+						// 에러 값 저장용
+						JSONArray jsonArr = new JSONArray();
 
-					// 행의 3번째 열(기본급)
-					cell = row.getCell(2);
+						for (SalaryDetailVO sdvo : errorList) {
+							JSONObject json = new JSONObject();
 
-					if (cell != null) {
-						paraMap.put("basePay", String.valueOf(cellReader(cell)));
+							json.put("empName", sdvo.getEmpName());
+							json.put("id", sdvo.getId());
+							json.put("basePay", sdvo.getBasePay());
+							json.put("overTimePay", sdvo.getOverTimePay());
+							json.put("nightTimePay", sdvo.getNightTimePay());
+							json.put("holidayPay", sdvo.getHolidayPay());
+							json.put("unUsedAnnualPay", sdvo.getUnUsedAnnualPay());
+							json.put("totalPay", sdvo.getTotalPay());
+							json.put("incomeTax", sdvo.getIncomeTax());
+							json.put("localTax", sdvo.getLocalTax());
+							json.put("nationalPension", sdvo.getNationalPension());
+							json.put("healthInsurance", sdvo.getHealthInsurance());
+							json.put("longTermCareInsurance", sdvo.getLongTermCareInsurance());
+							json.put("totalDeduction", sdvo.getTotalDeduction());
+							json.put("actualPay", sdvo.getActualPay());
 
-						sdvo.setBasePay(Long.parseLong(cellReader(cell)));
-					}
+							jsonArr.put(json);
+						}
 
-					// 행의 4번째 열(연장근로수당)
-					cell = row.getCell(3);
+						return jsonArr.toString();
 
-					if (cell != null) {
-						paraMap.put("overTimePay", String.valueOf(cellReader(cell)));
-
-						sdvo.setOverTimePay(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 5번째 열(야간근로수당)
-					cell = row.getCell(4);
-
-					if (cell != null) {
-						paraMap.put("overTimePay", String.valueOf(cellReader(cell)));
-
-						sdvo.setNightTimePay(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 6번째 열(휴일근로수당)
-					cell = row.getCell(5);
-
-					if (cell != null) {
-						paraMap.put("holidayPay", String.valueOf(cellReader(cell)));
-
-						sdvo.setHolidayPay(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 7번째 열(미사용연차수당)
-					cell = row.getCell(6);
-
-					if (cell != null) {
-						paraMap.put("unUsedAnnualPay", String.valueOf(cellReader(cell)));
-
-						sdvo.setUnUsedAnnualPay(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 8번째 열(지급총액은 앞의 값들을 더해 얻는다)
-					sdvo.setTotalPay(sdvo.getBasePay() + sdvo.getOverTimePay() + sdvo.getNightTimePay()
-							+ sdvo.getHolidayPay() + sdvo.getUnUsedAnnualPay());
-
-					// 행의 9번째 열(소득세)
-					cell = row.getCell(8);
-
-					if (cell != null) {
-						paraMap.put("incomeTax", String.valueOf(cellReader(cell)));
-
-						sdvo.setIncomeTax(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 10번째 열(지방소득세)
-					cell = row.getCell(9);
-
-					if (cell != null) {
-						paraMap.put("localTax", String.valueOf(cellReader(cell)));
-
-						sdvo.setLocalTax(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 11번째 열(국민연금)
-					cell = row.getCell(10);
-
-					if (cell != null) {
-						paraMap.put("nationalPension", String.valueOf(cellReader(cell)));
-
-						sdvo.setNationalPension(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 12번째 열(건강보험)
-					cell = row.getCell(11);
-
-					if (cell != null) {
-						paraMap.put("healthInsurance", String.valueOf(cellReader(cell)));
-
-						sdvo.setHealthInsurance(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 13번째 열(장기요양보험)
-					cell = row.getCell(12);
-
-					if (cell != null) {
-						paraMap.put("longTermCareInsurance", String.valueOf(cellReader(cell)));
-
-						sdvo.setLongTermCareInsurance(Long.parseLong(cellReader(cell)));
-					}
-
-					// 행의 14번째 열(공제총액)
-
-					sdvo.setTotalDeduction(sdvo.getIncomeTax() + sdvo.getLocalTax() + sdvo.getNationalPension()
-							+ sdvo.getHealthInsurance() + sdvo.getLongTermCareInsurance());
-
-					// 행의 15번째 열(실 지급액)
-					sdvo.setActualPay(sdvo.getTotalPay() - sdvo.getTotalDeduction());
-
-					// 존재여부 확인하는 겸 empId를 받아온다
-					sdvo.setEmpId(service.isExistEmployee(sdvo));
-					if (sdvo.getEmpId() == null || sdvo.getEmpId() == 0) {
-						// 존재하지 않는다면
-						System.out.println("존재 여부 확인 : 존재하지 않는다면 errorList.add");
-
-						errorList.add(sdvo);
 					} else {
-						// 존재한다면
-						System.out.println("존재 여부 확인 : 존재한다면 paraList.add");
-						paraList.add(sdvo);
+						// 에러가 없을 경우 등록 시킨다
+
+						SalaryVO svo = new SalaryVO();
+						svo.setSalaryId(service.getSalarySequence());
+						svo.setEmpId(((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
+						svo.setMonth(mtp_request.getParameter("month"));
+						svo.setStartDay(mtp_request.getParameter("startDay"));
+						svo.setEndDay(mtp_request.getParameter("endDay"));
+						svo.setPayDay(mtp_request.getParameter("payDay"));
+						svo.setSalaryId(service.getSalarySequence());
+
+						isCheck = service.insertPayroll(paraList, svo);
+
 					}
 
-					paraMapList.add(paraMap);
+					jsonObj.put("isInsert", isCheck);
 
-				} // end of for----------------------------
+					excel_file.delete(); // 업로드된 파일 삭제하기
 
-				workbook.close();
-
-				// 엑셀에 넣은 id값을 저장시킬 List이자 중복되지 않은 경우의 id를 넣어 중복체크 활용
-				List<String> idList = new ArrayList<>();
-				// 중복 체크
-				for (SalaryDetailVO sdvo : paraList) {
-					String id = sdvo.getId();
-
-					if (idList.contains(id)) {
-						// 중복되었다
-						errorList.add(sdvo);
-					} else {
-						// 중복되지 않아 유저id에 넣고 중복체크에 사용하겠다
-						idList.add(id);
-					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					jsonObj.put("isInsert", false);
 				}
 
-				boolean isCheck = true;
-
-				if (errorList.size() > 0) {
-					// 에러 값이 하나라도 있다면 등록시키지 않는다
-					System.out.println("errorList.size > 0");
-
-					// 에러 값 저장용
-					JSONArray jsonArr = new JSONArray();
-
-					for (SalaryDetailVO sdvo : errorList) {
-						JSONObject json = new JSONObject();
-
-						json.put("empName", sdvo.getEmpName());
-						json.put("id", sdvo.getId());
-						json.put("basePay", sdvo.getBasePay());
-						json.put("overTimePay", sdvo.getOverTimePay());
-						json.put("nightTimePay", sdvo.getNightTimePay());
-						json.put("holidayPay", sdvo.getHolidayPay());
-						json.put("unUsedAnnualPay", sdvo.getUnUsedAnnualPay());
-						json.put("totalPay", sdvo.getTotalPay());
-						json.put("incomeTax", sdvo.getIncomeTax());
-						json.put("localTax", sdvo.getLocalTax());
-						json.put("nationalPension", sdvo.getNationalPension());
-						json.put("healthInsurance", sdvo.getHealthInsurance());
-						json.put("longTermCareInsurance", sdvo.getLongTermCareInsurance());
-						json.put("totalDeduction", sdvo.getTotalDeduction());
-						json.put("actualPay", sdvo.getActualPay());
-
-						jsonArr.put(json);
-					}
-
-					return jsonArr.toString();
-
-				} else {
-					// 에러가 없을 경우 등록 시킨다
-
-					SalaryVO svo = new SalaryVO();
-					svo.setSalaryId(service.getSalarySequence());
-					svo.setEmpId(((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
-					svo.setMonth(mtp_request.getParameter("month"));
-					svo.setStartDay(mtp_request.getParameter("startDay"));
-					svo.setEndDay(mtp_request.getParameter("endDay"));
-					svo.setPayDay(mtp_request.getParameter("payDay"));
-					svo.setSalaryId(service.getSalarySequence());
-
-					isCheck = service.insertPayroll(paraList, svo);
-
-				}
-
-				jsonObj.put("isInsert", isCheck);
-
-				excel_file.delete(); // 업로드된 파일 삭제하기
-
-			} catch (Exception e) {
-				e.printStackTrace();
+			} else {
 				jsonObj.put("isInsert", false);
 			}
 
-		} else {
-			jsonObj.put("isInsert", false);
+			return jsonObj.toString();
 		}
 
-		return jsonObj.toString();
-	}
-
-	
-	
-	
-	
-	@PostMapping("/personnel/downloadPayroll.gw") 
-	public String downloadExcelFile(@RequestParam(defaultValue = "") String salaryId,
-                                    Model model) {
 		
 		
-		service.payrollToExcel(salaryId, model);
-		
-		return "excelDownloadView";
-        //	"excelDownloadView" 은 
-		//  /webapp/WEB-INF/spring/appServlet/servlet-context.xml 파일에서
-		//  기술된 bean 의 id 값이다. 	
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	@GetMapping("/personnel/payAnnualList.gw")
-	public ModelAndView payAnnualList(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
-		// 인사_개인이 급여 버튼 눌렀을 경우 메인화면
-
-
-		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
 		
 		
-		// 현재연도 구하기  
-		String strYear = req.getParameter("year");
-		
-		if(strYear == null || strYear.isEmpty()) {
-			LocalDate now = LocalDate.now();      
-			strYear = String.valueOf(now.getYear());
+		@PostMapping("/personnel/downloadPayroll.gw") 
+		public String downloadAdminExcelFile(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, @RequestParam(defaultValue = "") String salaryId,
+	                                    Model model) {
+			
+			
+			service.payrollToExcel(salaryId, model);
+			
+			return "excelDownloadView";
+	        //	"excelDownloadView" 은 
+			//  /webapp/WEB-INF/spring/appServlet/servlet-context.xml 파일에서
+			//  기술된 bean 의 id 값이다. 	
 		}
 		
-		String orderType = req.getParameter("orderType");
-		if(orderType == null || orderType.isEmpty()) {
-			orderType = "desc";
-		}
 		
-		Map<String, String> paraMap = new HashMap<>();
-		paraMap.put("year", strYear);
-		paraMap.put("orderType", orderType);
-		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
 		
-		List<SalaryVO> svoList = service.getSalaryByYear(paraMap);
 		
-		mav.addObject("svoList", svoList);
-		mav.addObject("year", strYear);
-		mav.addObject("orderType", orderType);
-		mav.addObject("type", "payAnnualList");
-		mav.setViewName("pay_annual_list.personnel");
-
-		return mav;
-	}
-	
-	
-	
-	@ResponseBody
-	@PostMapping(value = "/personnel/detailPrivatePayroll.gw", produces = "text/plain;charset=UTF-8")
-	public String personnelDetailPrivatePayroll(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
-		// 인사_급여_급여명세서 보기버튼 눌렀을 경우
+		
+		
+		
+		
+		@GetMapping("/personnel/payAnnualList.gw")
+		public ModelAndView payAnnualList(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+			// 인사_개인이 급여 버튼 눌렀을 경우 메인화면
 
 
-		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
-		
-		String salaryId = req.getParameter("salaryId");
-		
-		Map<String, String> paraMap = new HashMap<>();
-		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
-		paraMap.put("salaryId", salaryId);
-		
-		
-		SalaryVO svo = service.getSalary(salaryId);
-		SalaryDetailVO sdvo = service.getSalaryDetailBySalaryIdAndEmpId(paraMap);
-		
-		JSONObject jsonObj = new JSONObject();
-		
-		if(svo != null || sdvo != null) {
-			jsonObj.put("isExist", true);
+			HttpSession session = req.getSession();
 			
+			// 현재연도 구하기  
+			String strYear = req.getParameter("year");
 			
-			jsonObj.put("month", svo.getMonth());
-			jsonObj.put("startDay", svo.getStartDay());
-			jsonObj.put("endDay", svo.getEndDay());
-			jsonObj.put("payDay", svo.getPayDay());
-			
-			
-			jsonObj.put("basePay", sdvo.getBasePay());
-			jsonObj.put("overTimePay", sdvo.getOverTimePay());
-			jsonObj.put("nightTimePay", sdvo.getNightTimePay());
-			jsonObj.put("holidayPay", sdvo.getHolidayPay());
-			jsonObj.put("unUsedAnnualPay", sdvo.getUnUsedAnnualPay());
-			jsonObj.put("totalPay", sdvo.getTotalPay());
-			jsonObj.put("incomeTax", sdvo.getIncomeTax());
-			jsonObj.put("localTax", sdvo.getLocalTax());
-			jsonObj.put("nationalPension", sdvo.getNationalPension());
-			jsonObj.put("healthInsurance", sdvo.getHealthInsurance());
-			jsonObj.put("longTermCareInsurance", sdvo.getLongTermCareInsurance());
-			jsonObj.put("totalDeduction", sdvo.getTotalDeduction());
-			jsonObj.put("actualPay", sdvo.getActualPay());
-			jsonObj.put("empName", sdvo.getEmpName());
-			jsonObj.put("team", sdvo.getTeam());
-			
-		}else {
-			jsonObj.put("isExist", false);
-		}
-		
-		return jsonObj.toString();
-	}
-	
-	
-	
-	@PostMapping("/personnel/downloadPrivatePayroll.gw") 
-	public String downloadPrivateExcelFile(HttpServletRequest req, @RequestParam(defaultValue = "") String year, @RequestParam(defaultValue = "") String orderType, Model model) {
-		
-		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
-		
-		
-		Map<String, String> paraMap = new HashMap<>();
-		paraMap.put("year", year);
-		paraMap.put("orderType", orderType);
-		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
-		
-		
-		
-		
-		service.privatePayrollToExcel(paraMap, model);
-		
-		return "excelDownloadView";
-        //	"excelDownloadView" 은 
-		//  /webapp/WEB-INF/spring/appServlet/servlet-context.xml 파일에서
-		//  기술된 bean 의 id 값이다. 	
-	}
-	
-	//	---------------------------------------------------------------------------
-	@SuppressWarnings("incomplete-switch")
-	private static String cellReader(XSSFCell cell) {
-		// 엑셀 셀 리더기
-
-		String value = "0";
-		CellType ct = cell.getCellType();
-		if (ct != null) {
-			switch (cell.getCellType()) {
-			case FORMULA:
-				value = cell.getCellFormula() + "";
-				break;
-			case NUMERIC:
-				value = String.format("%.0f", cell.getNumericCellValue());
-				break;
-			case STRING:
-				value = cell.getStringCellValue() + "";
-				break;
-			case BOOLEAN:
-				value = cell.getBooleanCellValue() + "";
-				break;
-			case ERROR:
-				value = cell.getErrorCellValue() + "";
-				break;
+			if(strYear == null || strYear.isEmpty()) {
+				LocalDate now = LocalDate.now();      
+				strYear = String.valueOf(now.getYear());
 			}
+			
+			String orderType = req.getParameter("orderType");
+			if(orderType == null || orderType.isEmpty()) {
+				orderType = "desc";
+			}
+			
+			Map<String, String> paraMap = new HashMap<>();
+			paraMap.put("year", strYear);
+			paraMap.put("orderType", orderType);
+			paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+			
+			List<SalaryVO> svoList = service.getSalaryByYear(paraMap);
+			
+			mav.addObject("svoList", svoList);
+			mav.addObject("year", strYear);
+			mav.addObject("orderType", orderType);
+			mav.addObject("type", "payAnnualList");
+			mav.setViewName("pay_annual_list.personnel");
+
+			return mav;
 		}
-		return value;
-	}
-	
-	// 예진 코드 끝 ---------------------------------------------------------------------------------------------
+		
+		
+		
+		@ResponseBody
+		@PostMapping(value = "/personnel/detailPrivatePayroll.gw", produces = "text/plain;charset=UTF-8")
+		public String personnelDetailPrivatePayroll(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+			// 인사_급여_급여명세서 보기버튼 눌렀을 경우
+
+
+			HttpSession session = req.getSession();
+			
+			String salaryId = req.getParameter("salaryId");
+			
+			Map<String, String> paraMap = new HashMap<>();
+			paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+			paraMap.put("salaryId", salaryId);
+			
+			
+			SalaryVO svo = service.getSalary(salaryId);
+			SalaryDetailVO sdvo = service.getSalaryDetailBySalaryIdAndEmpId(paraMap);
+			
+			JSONObject jsonObj = new JSONObject();
+			
+			if(svo != null || sdvo != null) {
+				jsonObj.put("isExist", true);
+				
+				
+				jsonObj.put("month", svo.getMonth());
+				jsonObj.put("startDay", svo.getStartDay());
+				jsonObj.put("endDay", svo.getEndDay());
+				jsonObj.put("payDay", svo.getPayDay());
+				
+				
+				jsonObj.put("basePay", sdvo.getBasePay());
+				jsonObj.put("overTimePay", sdvo.getOverTimePay());
+				jsonObj.put("nightTimePay", sdvo.getNightTimePay());
+				jsonObj.put("holidayPay", sdvo.getHolidayPay());
+				jsonObj.put("unUsedAnnualPay", sdvo.getUnUsedAnnualPay());
+				jsonObj.put("totalPay", sdvo.getTotalPay());
+				jsonObj.put("incomeTax", sdvo.getIncomeTax());
+				jsonObj.put("localTax", sdvo.getLocalTax());
+				jsonObj.put("nationalPension", sdvo.getNationalPension());
+				jsonObj.put("healthInsurance", sdvo.getHealthInsurance());
+				jsonObj.put("longTermCareInsurance", sdvo.getLongTermCareInsurance());
+				jsonObj.put("totalDeduction", sdvo.getTotalDeduction());
+				jsonObj.put("actualPay", sdvo.getActualPay());
+				jsonObj.put("empName", sdvo.getEmpName());
+				jsonObj.put("team", sdvo.getTeam());
+				
+			}else {
+				jsonObj.put("isExist", false);
+			}
+			
+			return jsonObj.toString();
+		}
+		
+		
+		
+		@PostMapping("/personnel/downloadPrivatePayroll.gw") 
+		public String downloadPrivateExcelFile(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, @RequestParam(defaultValue = "") String year, @RequestParam(defaultValue = "") String orderType, Model model) {
+			
+			HttpSession session = req.getSession();
+			
+			Map<String, String> paraMap = new HashMap<>();
+			paraMap.put("year", year);
+			paraMap.put("orderType", orderType);
+			paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+			
+			
+			
+			
+			service.privatePayrollToExcel(paraMap, model);
+			
+			return "excelDownloadView";
+	        //	"excelDownloadView" 은 
+			//  /webapp/WEB-INF/spring/appServlet/servlet-context.xml 파일에서
+			//  기술된 bean 의 id 값이다. 	
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//	---------------------------------------------------------------------------
+		@SuppressWarnings("incomplete-switch")
+		private static String cellReader(XSSFCell cell) {
+			// 엑셀 셀 리더기
+
+			String value = "0";
+			CellType ct = cell.getCellType();
+			if (ct != null) {
+				switch (cell.getCellType()) {
+				case FORMULA:
+					value = cell.getCellFormula() + "";
+					break;
+				case NUMERIC:
+					value = String.format("%.0f", cell.getNumericCellValue());
+					break;
+				case STRING:
+					value = cell.getStringCellValue() + "";
+					break;
+				case BOOLEAN:
+					value = cell.getBooleanCellValue() + "";
+					break;
+				case ERROR:
+					value = cell.getErrorCellValue() + "";
+					break;
+				}
+			}
+			return value;
+		}
+		
+		// 예진 코드 끝 ---------------------------------------------------------------------------------------------
 
 }

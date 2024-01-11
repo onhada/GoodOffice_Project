@@ -81,9 +81,6 @@ public class ApprovalController {
 		mav.addObject("type", type);
 
 		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		session.setAttribute("loginUser", loginUser);
 
 		String searchType = savo.getSearchType();
 		String searchWord = savo.getSearchWord();
@@ -331,15 +328,12 @@ public class ApprovalController {
 		mav.addObject("type", type);
 
 		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
 
 		String searchType = savo.getSearchType();
 		String searchWord = savo.getSearchWord();
 		String orderType = savo.getOrderType();
 		String listType = savo.getListType();
+		String isViewAll = savo.getIsViewAll();
 		String str_currentShowPageNo = savo.getCurrentShowPageNo();
 
 		if (searchType == null) {
@@ -365,6 +359,10 @@ public class ApprovalController {
 		if (listType == null) {
 			listType = "";
 		}
+		
+		if (isViewAll == null) {
+			isViewAll = "0";
+		}
 
 
 		Map<String, String> paraMap = new HashMap<>();
@@ -372,6 +370,7 @@ public class ApprovalController {
 		paraMap.put("searchWord", searchWord);
 		paraMap.put("orderType", orderType);
 		paraMap.put("listType", listType);
+		paraMap.put("isViewAll", isViewAll);
 		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
 		paraMap.put("positionId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getFk_positionId()));
 
@@ -837,11 +836,6 @@ public class ApprovalController {
 
 		mav.addObject("type", "settings_document");
 
-		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		session.setAttribute("loginUser", loginUser);
-
 		String searchType = savo.getSearchType();
 		String searchWord = savo.getSearchWord();
 		String orderType = savo.getOrderType();
@@ -1040,11 +1034,6 @@ public class ApprovalController {
 
 		mav.addObject("type", "settings_deleted_document");
 
-		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		session.setAttribute("loginUser", loginUser);
-
 		String searchType = savo.getSearchType();
 		String searchWord = savo.getSearchWord();
 		String orderType = savo.getOrderType();
@@ -1239,16 +1228,6 @@ public class ApprovalController {
 	@GetMapping("/approval/settings/admin.gw")
 	public ModelAndView approvalAdminSettingsAdminList_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
-		HttpSession session = req.getSession();
-		
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
-		
-		
-		
 		mav.addObject("type", "settings_admin");
 		mav.addObject("noSearch", true);
 		mav.addObject("adminList", service.getAdminList());
@@ -1278,132 +1257,155 @@ public class ApprovalController {
 			Long approvalId, Long formId, @PathVariable String viewType, @PathVariable String type) {
 
 		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 4);
-		loginUser.setAdminType("1");
-		session.setAttribute("loginUser", loginUser);
+		EmployeeVO loginUser = (EmployeeVO)session.getAttribute("loginUser");
 		
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("approvalId", approvalId);
 		paraMap.put("empId", loginUser.getEmpId());
 		paraMap.put("positonId", loginUser.getFk_positionId());
 		paraMap.put("formId", formId);
-
-		// 수정필 !!!!!!!!!!!!!!!!! 폼id에 따라 더 추가될 내용이 있음 그거 추가해서 넣기
-		if (formId == 109) {
-			// 재직증명서
-			mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
-		} else if (formId == 108) {
-			// 품의서 합의 부분
-			mav.addObject("agreeList", service.getProcedureTypeAgree(approvalId));
-		} else if (formId == 101 || formId == 102) {
-			// 연장근무 신청 혹은 휴일 근무 신청
-			mav.addObject("workApplication", service.getWorkApplicationDetail(approvalId));
-		} else if (formId == 104) {
-			// 휴가 신청
-			mav.addObject("dayOffDetail", service.getDayOffDetail(approvalId));
-		} else if (formId == 103) {
-			// 근무체크 수정 요청
-			mav.addObject("modifyWorkRequest", service.getModifyWorkRequest(approvalId));
-		}
-
-		/////////////////////////////////////////////////////////////
-
-		ApprovalDetailVO approvalDetail = service.getApprovalDocumentView(paraMap);
-
-		mav.addObject("approvalDetail", approvalDetail);
-
-		// 의견
-		mav.addObject("opinionList", service.getApprovalOpinionList(approvalId));
-		mav.addObject("securityLevelList", service.getSecurityLevelList());
-
-		// 기안자인지 확인하기
-		// 1: 기안 or 신청자
-		mav.addObject("isDraftEmp", service.isDraftEmp(paraMap));
 		
 		
-		
-		// 유저 결재절차 타입
-		if("Approval".equals(loginUser.getAdminType()) || "All".equals(loginUser.getAdminType()) || service.isReadAble(paraMap)) {
-			// 전자 결재 관리자일 경우 혹은 전체 관리자일 경우 혹은 열람 허용된 경우
-			mav.addObject("userProcedureType", 0);
-		}else {
-			mav.addObject("userProcedureType", service.getUserProcedureType(paraMap));
-		}
-		
-
-		// 반려된 것인지 확인하기
-		if ("list".equals(viewType)) {
-			boolean isReturn = service.isReturn(approvalId);
-			if (isReturn) {
-				// 반려된 것일 경우 읽음으로 바꾸기
-				if (service.updateReadReturn(paraMap) != 1) {
-					// 읽음처리 실패했을 경우
-
-					// 에러 표시
-
-					mav.addObject("message", "에러가 발생하였습니다. 다시 시도해주세요.");
+		// formId, approvalId 가 존재하는지 확인한다
+		if(service.isExistApproval(paraMap)) {
+			/*
+			 * 존재할 경우
+			 * 읽으려고 하는 자의 권한을 확인한다
+			 * 프로시저 안에 있는 사람일 경우
+			 * 전자결재 관리자, 전체 관리자 일경우
+			 * 
+			 * */
+			// 전자결재 절차에 유저가 존재하는지 확인한다
+			int userProcedureType = service.getUserProcedureType(paraMap);
+			
+			if(userProcedureType != 0) {
+				// 전자결재 절차에 존재할 경우
+				mav.addObject("userProcedureType", userProcedureType);
+			}else{
+				if("Approval".equals(loginUser.getAdminType()) || "All".equals(loginUser.getAdminType())) {
+					// 전자결재 관리자 혹은 전체 관리자일 경우 userProcedureType = 0 으로 넣는다
+					mav.addObject("userProcedureType", userProcedureType);
+				}else {
+					// 읽을 권한이 없을 경우
+					
+					// 에러 처리
+					mav.addObject("message", "읽을 권한이 없습니다.");
 					// 이전 페이지로 이동
 					mav.addObject("loc", req.getHeader("referer"));
-					mav.setViewName("msg");
+					mav.setViewName("/common/msg");
 					return mav;
-
 				}
 			}
-			mav.addObject("isReturn", isReturn);
+			
+			
+			
+			
+
+			// 수정필 !!!!!!!!!!!!!!!!! 폼id에 따라 더 추가될 내용이 있음 그거 추가해서 넣기
+			if (formId == 109) {
+				// 재직증명서
+				mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
+			} else if (formId == 108) {
+				// 품의서 합의 부분
+				mav.addObject("agreeList", service.getProcedureTypeAgree(approvalId));
+			} else if (formId == 101 || formId == 102) {
+				// 연장근무 신청 혹은 휴일 근무 신청
+				mav.addObject("workApplication", service.getWorkApplicationDetail(approvalId));
+			} else if (formId == 104) {
+				// 휴가 신청
+				mav.addObject("dayOffDetail", service.getDayOffDetail(approvalId));
+			} else if (formId == 103) {
+				// 근무체크 수정 요청
+				mav.addObject("modifyWorkRequest", service.getModifyWorkRequest(approvalId));
+			}
+
+			/////////////////////////////////////////////////////////////
+
+			ApprovalDetailVO approvalDetail = service.getApprovalDocumentView(paraMap);
+
+			mav.addObject("approvalDetail", approvalDetail);
+
+			// 의견
+			mav.addObject("opinionList", service.getApprovalOpinionList(approvalId));
+			mav.addObject("securityLevelList", service.getSecurityLevelList());
+
+			// 기안자인지 확인하기
+			// 1: 기안 or 신청자
+			mav.addObject("isDraftEmp", service.isDraftEmp(paraMap));
+			
+			
+			// 반려된 것인지 확인하기
+			if ("list".equals(viewType)) {
+				boolean isReturn = service.isReturn(approvalId);
+				if (isReturn) {
+					// 반려된 것일 경우 읽음으로 바꾸기
+					if (service.updateReadReturn(paraMap) != 1) {
+						// 읽음처리 실패했을 경우
+
+						// 에러 표시
+
+						mav.addObject("message", "에러가 발생하였습니다. 다시 시도해주세요.");
+						// 이전 페이지로 이동
+						mav.addObject("loc", req.getHeader("referer"));
+						mav.setViewName("msg");
+						return mav;
+
+					}
+				}
+				mav.addObject("isReturn", isReturn);
+			}
+
+			String url = "";
+			switch (approvalDetail.getFormName()) {
+			case "업무연락":
+				url = "document_view_businessContact.approval";
+				break;
+			case "회람":
+				url = "document_view_circulation.approval";
+				break;
+			case "재직증명서":
+				url = "document_view_empProof.approval";
+				break;
+			case "품의서":
+				url = "document_view_roundRobin.approval";
+				break;
+			case "급여 지급 품의서":
+				url = "document_view_salary.approval";
+				break;
+			case "연장근무 신청":
+			case "휴일근무 신청":
+				url = "document_view_workApplication.approval";
+				break;
+			case "휴가 신청":
+				url = "document_view_dayOffApplication.approval";
+				break;
+			case "근무체크 수정 요청":
+				url = "document_view_modifyWorkRequest.approval";
+				break;
+			}
+			mav.setViewName(url);
+
+			mav.addObject("viewType", viewType);
+			mav.addObject("type", type);
+			mav.addObject("noSearch", true);
+
+			return mav;
+			
+			
+		}else {
+			// 존재하지 않을 경우
+			// 에러 처리
+			mav.addObject("message", "존재하지 않는 문서입니다.");
+			// 이전 페이지로 이동
+			mav.addObject("loc", req.getHeader("referer"));
+			mav.setViewName("/common/msg");
+			return mav;
 		}
-		///////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+		
 
-//		Map<String, String> sizeMap = new HashMap<>();
-//		sizeMap.put("searchType", "");
-//		sizeMap.put("searchWord", "");
-//		sizeMap.put("orderType", "desc");
-//		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
-//
-//		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(sizeMap).size());
-//		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
-//		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
-//		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
-//		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
-
-		//////////////////////////////////////////////////////////////////////////////
-
-		String url = "";
-		switch (approvalDetail.getFormName()) {
-		case "업무연락":
-			url = "document_view_businessContact.approval";
-			break;
-		case "회람":
-			url = "document_view_circulation.approval";
-			break;
-		case "재직증명서":
-			url = "document_view_empProof.approval";
-			break;
-		case "품의서":
-			url = "document_view_roundRobin.approval";
-			break;
-		case "급여 지급 품의서":
-			url = "document_view_salary.approval";
-			break;
-		case "연장근무 신청":
-		case "휴일근무 신청":
-			url = "document_view_workApplication.approval";
-			break;
-		case "휴가 신청":
-			url = "document_view_dayOffApplication.approval";
-			break;
-		case "근무체크 수정 요청":
-			url = "document_view_modifyWorkRequest.approval";
-			break;
-		}
-		mav.setViewName(url);
-
-		mav.addObject("viewType", viewType);
-		mav.addObject("type", type);
-		mav.addObject("noSearch", true);
-
-		return mav;
 
 	}
 
@@ -2080,18 +2082,11 @@ public class ApprovalController {
 		// 작성하기 및 수정
 
 		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setDepName("부서명");
-		loginUser.setTeamName("팀명");
-		loginUser.setEmpName("이름");
-		loginUser.setPositionName("직위");
-
-		session.setAttribute("loginUser", loginUser);
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 
 		mav.addObject("formList", service.getFormNameListByWrite());
 		mav.addObject("securityLevelList", service.getSecurityLevelList());
-
+		mav.addObject("noSearch", true);
 		if ("index".equals(writeType)) {
 			// 작성하기 눌렀을 경우
 			mav.setViewName("document_write_index.approval");
@@ -2153,19 +2148,10 @@ public class ApprovalController {
 			@PathVariable String writeType, Long formId) {
 		// 작성하기 및 수정
 
-		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setDepName("부서명");
-		loginUser.setTeamName("팀명");
-		loginUser.setEmpName("이름");
-		loginUser.setPositionName("직위");
-
-		session.setAttribute("loginUser", loginUser);
-
 		mav.addObject("formList", service.getFormNameListByWrite());
 		mav.addObject("securityLevelList", service.getSecurityLevelList());
-
+		mav.addObject("noSearch", true);
+		
 		if ("form".equals(writeType)) {
 			// 문서 종류를 선택했을 경우
 
@@ -2708,14 +2694,11 @@ public class ApprovalController {
 		mav.addObject("type", type);
 
 		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
 
 		String searchType = savo.getSearchType();
 		String searchWord = savo.getSearchWord();
 		String orderType = savo.getOrderType();
+		String isViewAll = savo.getIsViewAll();
 		String str_currentShowPageNo = savo.getCurrentShowPageNo();
 
 		if (searchType == null) {
@@ -2724,6 +2707,10 @@ public class ApprovalController {
 
 		if (searchWord == null) {
 			searchWord = "";
+		}
+		
+		if (isViewAll == null) {
+			isViewAll = "0";
 		}
 
 		if ("approvalId".equals(searchType) && searchWord != "") {
@@ -2962,11 +2949,6 @@ public class ApprovalController {
 		
 		HttpSession session = req.getSession();
 		
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
-		
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("empId", empId);
 		paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
@@ -2998,11 +2980,6 @@ public class ApprovalController {
 		
 		HttpSession session = req.getSession();
 		
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
-		
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("adminId", adminId);
 		paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
@@ -3031,13 +3008,6 @@ public class ApprovalController {
 	public String grantAdminSettingRead(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			Long adminId, int isReadAble) {
 		
-		HttpSession session = req.getSession();
-		
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
-		
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("adminId", adminId);
 		paraMap.put("isReadAllDocument", (long)isReadAble);
@@ -3062,14 +3032,6 @@ public class ApprovalController {
 	@ResponseBody
 	@PostMapping(value = "/approval/getAdminHistory.gw", produces = "text/plain;charset=UTF-8")
 	public String getAdminSettingHistory(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
-		
-		HttpSession session = req.getSession();
-		
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
-		
 		
 		List<AdminHistoryVO> adminHistoryList = service.getAdminHistoryList();
 
@@ -3170,6 +3132,21 @@ public class ApprovalController {
 		}
 		
 		return mav;
+	}
+	
+	
+	
+	
+	@ResponseBody
+	@PostMapping(value = "/approval/isAlreadyAdmin.gw", produces = "text/plain;charset=UTF-8")
+	public String getAdminSettingIsAlreadyAdmin(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+			Long empId) {
+		
+		JSONObject jsonObj = new JSONObject();
+		
+		jsonObj.put("isExist", service.isAlreadyAdmin(empId));
+		
+		return jsonObj.toString();
 	}
 
 

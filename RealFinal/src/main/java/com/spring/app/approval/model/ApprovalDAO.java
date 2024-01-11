@@ -801,7 +801,7 @@ public interface ApprovalDAO {
 	* @param paraMap
 	* @return 
 	*/
-	int getUserProcedureType(Map<String, Long> paraMap);
+	Integer getUserProcedureType(Map<String, Long> paraMap);
 
 
 
@@ -2009,6 +2009,48 @@ public interface ApprovalDAO {
 	* @return 
 	*/
 	int isReadAble(Map<String, Long> paraMap);
+
+
+
+
+
+
+
+
+
+
+
+	/** 
+	* @Method Name  : isAlreadyAdmin 
+	* @작성일   : 2024. 1. 11 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empId
+	* @return 
+	*/
+	int isAlreadyAdmin(Long empId);
+
+
+
+
+
+
+
+
+
+
+
+	/** 
+	* @Method Name  : isExistApproval 
+	* @작성일   : 2024. 1. 11 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	int isExistApproval(Map<String, Long> paraMap);
 
 
 

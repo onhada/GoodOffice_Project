@@ -159,10 +159,10 @@ function searchUser(){
 				<div class="office-manage-tab gt-tab" id="officeManageTab">
 					<div class="office-manage-tab gt-tab" id="officeManageTab">
 						<div class="gt-tab-nav gt-mb-30">
-							<a href="수정필" target="_self" class="gt-nav-item gt-active">전체 관리자</a>
-							<a href=수정필" target="_blank" class="gt-nav-item ">인사 관리자</a>
+							<a href="<%=ctxPath %>/admin/managerSet.gw" target="_self" class="gt-nav-item gt-active">전체 관리자</a>
+							<a href="<%=ctxPath %>/personnel/insaManager.gw" target="_blank" class="gt-nav-item ">인사 관리자</a>
 							<a href="<%=ctxPath %>/approval/settings/admin.gw" target="_blank" class="gt-nav-item ">전자결재 관리자</a>
-							<a href="수정필" target="_blank" class="gt-nav-item ">예약 관리자</a>
+							<a href="<%= ctxPath %>/reservation/rsvAdminManageAdmin.gw" target="_blank" class="gt-nav-item ">예약 관리자</a>
 						</div>
 					</div>
 					<!-- content -->

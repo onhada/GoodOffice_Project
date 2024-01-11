@@ -23,7 +23,55 @@ $(document).ready(function() {
 	
 	
 	$("input#view_all_documents").change(function(){
-		let url = window.location.origin + window.location.pathname + '?';
+		
+		let searchParam = decodeURI(window.location.search);
+		searchParam = searchParam.substring(1, searchParam.length);
+		
+		let searchParamArr = searchParam.split("&");
+		
+		let isViewAll;
+		
+		if($("input#view_all_documents").is(":checked")){
+			
+			isViewAll = 1;
+			
+		}else{
+			isViewAll = 0;
+		}
+		
+		let hasIsViewAll = false;
+		
+		for(let i = 0 ; i < searchParamArr.length ; i++){
+			if(searchParamArr[i].indexOf('isViewAll') != -1){
+				// orderType값이 존재할 경우 확인용 플래그
+				searchParamArr[i] = 'isViewAll=' + isViewAll;
+				hasIsViewAll = true;
+				break;
+			}
+		}
+		
+		
+		if(hasIsViewAll){
+			$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&'));
+		}else{
+			if(searchParam.length == 0){
+				$(location).attr('href',  origin + window.location.pathname + '?isViewAll=' + isViewAll);
+			}else{
+				$(location).attr('href',  origin + window.location.pathname + '?' + searchParamArr.join('&') + '&isViewAll=' + isViewAll);
+			}
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/* let url = window.location.origin + window.location.pathname + '?';
 		const searchParams = new URLSearchParams(location.search);
 		
 		for (let param of searchParams) {
@@ -31,6 +79,7 @@ $(document).ready(function() {
 			  url += param[0] + '=' + param[1] + '&';
 		  }
 		}
+		
 			
 		if($("input#view_all_documents").is(":checked")){
 			
@@ -38,7 +87,7 @@ $(document).ready(function() {
 			
 		}else{
 			$(location).attr('href', url + 'isViewAll=0');
-		}
+		} */
 	})
 	
 	

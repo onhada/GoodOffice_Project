@@ -519,9 +519,7 @@ public class ApprovalVO {
 		case "1":
 			return "관리자에 의한 삭제";
 		case "2":
-			return "보존 연한 경과";
-		case "3":
-			return "완전 삭제";
+			return "기안 취소";
 		default:
 			return isDelete;
 		}

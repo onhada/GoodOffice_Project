@@ -539,7 +539,7 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 
 
 	@Override
-	public int getUserProcedureType(Map<String, Long> paraMap) {
+	public Integer getUserProcedureType(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.getUserProcedureType", paraMap);
 	}
 
@@ -1216,6 +1216,42 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	@Override
 	public int isReadAble(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.isReadAble",paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int isAlreadyAdmin(Long empId) {
+		return sqlSession.selectOne("approval.isAlredayAdmin", empId);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public int isExistApproval(Map<String, Long> paraMap) {
+		return sqlSession.selectOne("approval.isExistApproval", paraMap);
 	}
 
 

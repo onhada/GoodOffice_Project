@@ -161,19 +161,24 @@ $(document).ready(function() {
 				$("ul.admin_autocomplete").html(prev_autoComplete);
 				$("ul.admin_autocomplete").hide();
 				
-				//ajax
+				
+				
+				// 다른 기능의 관리자인지 먼저 확인한다
+				// 다른 기능의 관리자라면 추가하지 않는다
+				
+				let isAlreadyAdmin = false;
+				
 				$.ajax({
-					url: "<%= ctxPath%>/approval/addApprovalAdminManager.gw",
+					url: "<%= ctxPath%>/approval/isAlreadyAdmin.gw",
 					data: { "empId": empId },
 					type: "post",
-					async: true,
+					async: false,
 					dataType: "json",
 					success: function(text) {
 						console.log(JSON.stringify(text));
-						if(text.isAdd){
-							$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
-						}else{
-							alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+						if(text.isExist){
+							alert("다른 기능의 관리자 입니다. 삭제 후 시도하여 주세요.")
+							isAlreadyAdmin = true;
 						}
 						
 					},
@@ -181,6 +186,34 @@ $(document).ready(function() {
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
 				});
+				
+				
+				if(!isAlreadyAdmin){
+					// 다른 기능의 관리자가 아닐 경우
+					
+					//ajax
+					$.ajax({
+						url: "<%= ctxPath%>/approval/addApprovalAdminManager.gw",
+						data: { "empId": empId },
+						type: "post",
+						async: false,
+						dataType: "json",
+						success: function(text) {
+							console.log(JSON.stringify(text));
+							if(text.isAdd){
+								$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
+							}else{
+								alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+							}
+							
+						},
+						error: function(request, status, error) {
+							alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+						}
+					});
+				}
+				
+				
 			}
 		}
 	})

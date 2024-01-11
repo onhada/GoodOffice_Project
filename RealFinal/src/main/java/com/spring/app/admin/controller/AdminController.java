@@ -105,14 +105,12 @@ public class AdminController {
 
 		int totalCount = 0; // 총 게시물 건수
 		// 수정필
-		int sizePerPage = 5; // 한 페이지당 보여줄 게시물 건수
+		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
 		totalCount = service.getTotalCountEmployeeList(paraMap);
-
-		System.out.println("totalCount" + totalCount);
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -154,16 +152,13 @@ public class AdminController {
 		paraMap.put("startRno", String.valueOf(startRno));
 		paraMap.put("endRno", String.valueOf(endRno));
 
-		System.out.println("currentShowPageNo : " + currentShowPageNo);
-		System.out.println("startRno : " + startRno);
-		System.out.println("endRno : " + endRno);
 
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		mav.addObject("employeeList", service.getEmployeeList_withSearchAndPaging(paraMap));
 
 		// === #121. 페이지바 만들기 === //
 		// 수정필
-		int blockSize = 2;
+		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
 		/*
 		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
@@ -372,18 +367,6 @@ public class AdminController {
 	public String adminConfirmFullAdmin(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, String[] addAdminList, String[] delAdminList) {
 		
 		HttpSession session = req.getSession();
-		EmployeeVO loginUser = new EmployeeVO();
-		loginUser.setEmpId((long) 101);
-		loginUser.setFk_positionId((long) 6);
-		session.setAttribute("loginUser", loginUser);
-		
-		/*
-		 * System.out.println("add"); for(int i = 0 ; i < addAdminList.length ; i++) {
-		 * System.out.println(addAdminList[i]); }
-		 * 
-		 * System.out.println("del"); for(int i = 0 ; i < delAdminList.length ; i++) {
-		 * System.out.println(delAdminList[i]); }
-		 */
 		
 		JSONObject jsonObj = new JSONObject();
 

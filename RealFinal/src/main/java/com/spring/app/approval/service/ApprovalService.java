@@ -8,6 +8,7 @@
 */
 package com.spring.app.approval.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -770,6 +771,28 @@ public interface ApprovalService {
 	* @return 
 	*/
 	public boolean isReadAble(Map<String, Long> paraMap);
+
+	/** 
+	* @Method Name  : isAlreadyAdmin 
+	* @작성일   : 2024. 1. 11 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empId
+	* @return 
+	*/
+	public boolean isAlreadyAdmin(Long empId);
+
+	/** 
+	* @Method Name  : isExistApproval 
+	* @작성일   : 2024. 1. 11 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	public boolean isExistApproval(Map<String, Long> paraMap);
 
 
 }

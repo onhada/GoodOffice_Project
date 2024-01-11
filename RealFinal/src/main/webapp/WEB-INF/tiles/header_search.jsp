@@ -111,8 +111,23 @@ $(document).ready(function() {
 				<div data-v-236a7242="" data-v-3a88b4b3="" class="menu-btns">
 					<div data-v-236a7242="" class="menu-btns-toggle">
 
-						<c:if test="${requestScope.headerManage eq 'Approval'}">
-							<span data-v-236a7242="" class="btn-main">전자결재</span>
+						<c:if test="${requestScope.headerManage eq 'Index'}">
+							<span data-v-236a7242="" class="btn-main">홈</span>
+						</c:if>
+						<c:if test="${requestScope.headerManage eq 'Mail'}">
+							<span data-v-236a7242="" class="btn-main">사내메일</span>
+						</c:if>
+						<c:if test="${requestScope.headerManage eq 'Reservation'}">
+							<span data-v-236a7242="" class="btn-main">예약</span>
+						</c:if>
+						<c:if test="${requestScope.headerManage eq 'Organization'}">
+							<span data-v-236a7242="" class="btn-main">조직</span>
+						</c:if>
+						<c:if test="${requestScope.headerManage eq 'Personnel'}">
+							<span data-v-236a7242="" class="btn-main">인사</span>
+						</c:if>
+						<c:if test="${requestScope.headerManage eq 'Admin'}">
+							<span data-v-236a7242="" class="btn-main">오피스 관리</span>
 						</c:if>
 
 						<svg data-v-236a7242="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-caret-down fa-w-10">

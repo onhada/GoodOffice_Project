@@ -10,8 +10,6 @@
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_new.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_tutorial.css">
-<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/jquery-ui.min.css">
-<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/jquery.toastmessage-min.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_approval.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/new_lnb.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/contentsEditStyle.css">
@@ -20,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/editor_custom.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/synapeditor.min.css">
 <!-- 예인추가 -->
-<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/approval.css">
+<%-- <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/approval.css"> --%>
 
 
 <script>
@@ -176,26 +174,58 @@ $(document).ready(function() {
 				$("ul.admin_autocomplete").html(prev_autoComplete);
 				$("ul.admin_autocomplete").hide();
 				
-				//ajax
+				
+				
+				// 다른 기능의 관리자인지 먼저 확인한다
+				// 다른 기능의 관리자라면 추가하지 않는다
+				
+				let isAlreadyAdmin = false;
+				
 				$.ajax({
-					url: "<%= ctxPath%>/personnel/addPersonnelAdminManager.gw",
+					url: "<%= ctxPath%>/approval/isAlreadyAdmin.gw",
 					data: { "empId": empId },
 					type: "post",
-					async: true,
+					async: false,
 					dataType: "json",
 					success: function(text) {
 						console.log(JSON.stringify(text));
-						if(text.isAdd){
-							$(location).attr('href', `<%= ctxPath %>/personnel/insaManager.gw`);
-						}else{
-							alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+						if(text.isExist){
+							alert("다른 기능의 관리자 입니다. 삭제 후 시도하여 주세요.")
+							isAlreadyAdmin = true;
 						}
-						
 					},
 					error: function(request, status, error) {
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
 				});
+				
+				
+				if(!isAlreadyAdmin){
+					// 다른 기능의 관리자가 아닐 경우
+					
+					//ajax
+					$.ajax({
+						url: "<%= ctxPath%>/personnel/addPersonnelAdminManager.gw",
+						data: { "empId": empId },
+						type: "post",
+						async: true,
+						dataType: "json",
+						success: function(text) {
+							console.log(JSON.stringify(text));
+							if(text.isAdd){
+								$(location).attr('href', `<%= ctxPath %>/personnel/insaManager.gw`);
+							}else{
+								alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+							}
+							
+						},
+						error: function(request, status, error) {
+							alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+						}
+					});
+				}
+				
+				
 			}
 		}
 	})
@@ -248,9 +278,10 @@ function deleteAdmin(adminId){
 
 
 function showSettingHistory(){
-
+	console.log('보여집니다')
+	$("div#layerPersonnelManagerHistory").show();
 	//ajax
-	$.ajax({
+	 $.ajax({
 		url: "<%= ctxPath%>/personnel/getAdminHistory.gw",
 		type: "post",
 		async: true,
@@ -291,7 +322,7 @@ function showSettingHistory(){
 		error: function(request, status, error) {
 			alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 		}
-	});
+	}); 
 	
 	
 	
@@ -303,7 +334,7 @@ function showSettingHistory(){
 
 
 <div id="contents">
-	<div class="setting_title">
+	<div class="setting_title" style="height: 60px;">
 		<h3 class="fl">인사 관리자</h3>
 	</div>
 	<div class="content_inbox approval-admin">
