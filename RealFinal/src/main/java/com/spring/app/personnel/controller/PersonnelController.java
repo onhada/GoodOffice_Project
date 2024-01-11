@@ -188,7 +188,7 @@ public class PersonnelController {
 	 * @param response @return 
 	 */
 	@GetMapping("/personnel/personal_index.gw")
-	public String  personal_index(HttpServletRequest request, HttpServletResponse response , ModelAndView mav ) {
+	public String personal_index(HttpServletRequest request, HttpServletResponse response , ModelAndView mav ) {
 
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
@@ -196,8 +196,8 @@ public class PersonnelController {
 		String sysdate = service.sysdate_get(); // 현재날짜 가져오기
 		request.setAttribute("sysdate", sysdate);
 		
+		request.setAttribute("type", "workside");
 		 
-		mav.addObject("type", "workside");
 		 
 		String empid = String.valueOf(loginUser.getEmpId()); // 로그인한 사원 아이디
 
@@ -251,6 +251,7 @@ public class PersonnelController {
 		return "personal_index.personnel";
 
 		 
+		
 
 	}
 
@@ -398,7 +399,7 @@ public class PersonnelController {
 
 		String vaction_cnt = service.vaction_cnt(empid);
 
-		 
+		mav.addObject("type", "vactionside");
 
 		request.setAttribute("vaction_cnt", vaction_cnt);
 
