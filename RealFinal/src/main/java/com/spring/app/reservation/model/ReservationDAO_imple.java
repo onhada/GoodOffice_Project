@@ -163,11 +163,11 @@ public class ReservationDAO_imple implements ReservationDAO {
 	
 	
 	// === 로그인 사원이 인사관리자인지 확인 === //
-	@Override
-	public String isAdmin(Map<String, Object> paraMap) {
-		String rsvAdminEmpId = sqlsession.selectOne("reservation.isAdmin", paraMap);
-		return rsvAdminEmpId;
-	}
+//	@Override
+//	public String isAdmin(Map<String, Object> paraMap) {
+//		String rsvAdminEmpId = sqlsession.selectOne("reservation.isAdmin", paraMap);
+//		return rsvAdminEmpId;
+//	}
 
 
 	// === 총 예약 건수 가져오기 === //

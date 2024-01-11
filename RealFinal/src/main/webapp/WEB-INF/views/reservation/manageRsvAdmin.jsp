@@ -82,9 +82,6 @@ function delRsvAdmin(adminId){
 								<td>[${rsvAdmin.depName}] ${rsvAdmin.teamName}</td>
 								<td>${rsvAdmin.registerDay}</td>
 								<td>
-									<%-- <c:if test="${rsvAdmin.email != 'admin'}">
-										<button type="button" name="button" class="weakblue" onclick="delRsvAdmin(${rsvAdmin.adminId});">삭제</button>
-									</c:if> --%>
 								</td>
 							</tr>
 						</c:forEach>
