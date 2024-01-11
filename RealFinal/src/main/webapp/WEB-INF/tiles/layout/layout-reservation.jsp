@@ -451,7 +451,7 @@ function rsvApproveModalOpen(rsvId){
 function rsvApprove(rsvId){		
 	console.log(rsvId);
 	$.ajax({
-  //  	url : "<%=ctxPath%>/reservation/rsvApprove.gw",
+    	url : "<%=ctxPath%>/reservation/rsvApprove.gw",
 		type : "get",
 		data : {"rsvResourceId":rsvId},	
 		dataType : "json",

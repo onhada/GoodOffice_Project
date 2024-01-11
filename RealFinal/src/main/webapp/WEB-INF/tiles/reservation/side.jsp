@@ -72,7 +72,7 @@ function toggleShowHide(id){
 					</c:if>
 					
 					<%--  관리자 카테고리 : 예약 관리자인 경우에만 보여주기 --%>
-					<c:if test="${sessionScope.loginUser.empId == requestScope.rsvAdminEmpId}">
+					<c:if test="${not empty sessionScope.loginUser && (sessionScope.loginUser.adminType eq 'Reservation' || sessionScope.loginUser.adminType eq 'All')}"> 
 						<li class="el-collapse gt-mt-8">
 							<div class="el-collapse-item is-active">
 								<div class="el-collapse-item__header menu-item" id="reserveManage" onclick="toggleShowHide(this.id)">

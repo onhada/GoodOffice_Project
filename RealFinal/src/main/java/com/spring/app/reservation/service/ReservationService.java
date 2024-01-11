@@ -201,7 +201,7 @@ public interface ReservationService {
 	* @param paraMap
 	* @return 
 	*/
-	String isAdmin(Map<String, Object> paraMap);
+//	String isAdmin(Map<String, Object> paraMap);
 
 	/** 
 	* @Method Name  : getTotalCount 

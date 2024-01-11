@@ -70,21 +70,15 @@ public class ReservationController {
 	@GetMapping("myReservationList.gw")
 	public ModelAndView myReservationList(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
-		
+System.out.println("["+loginEmpId);		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);
 		
 		
 		// ----- 자원카테고리 목록 가져오기 시작 ----- //
@@ -131,21 +125,15 @@ session.setAttribute("loginUser", loginUser);
 	@GetMapping("reservationResource.gw")
 	public ModelAndView reservationResource(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);	
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);	
 		
 		
 		// ----- 자원카테고리 목록 가져오기 시작 ----- //
@@ -386,14 +374,10 @@ session.setAttribute("loginUser", loginUser);
 	@GetMapping("addReservation.gw")
 	public String addReservation(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-		
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
+		
 		String resourceId = request.getParameter("resourceId");
 		String rsvStartDayTime = request.getParameter("rsvStartDayTime");
 		String rsvEndDayTime = request.getParameter("rsvEndDayTime");
@@ -447,14 +431,8 @@ session.setAttribute("loginUser", loginUser);
 	@GetMapping("getReservationInfoDetail.gw")
 	public String getReservationInfoDetail(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999);
-loginUser.setEmpName("어드민");		// @@@@@@@@@@ 여기는 이것도 있으니까 확인할 때 잊지마 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-		
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
 		String rsvResourceId = request.getParameter("rsvResourceId");
 		
@@ -620,21 +598,16 @@ session.setAttribute("loginUser", loginUser);
 		// ----- 자원카테고리 목록 가져오기 끝 ----- //	
 		
 		
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);		
 		
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);
 		
 		
 		
@@ -685,15 +658,11 @@ session.setAttribute("loginUser", loginUser);
 	@GetMapping("rsvApprove.gw")
 	public String rsvApprove(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+		long loginEmpId = loginUser.getEmpId();	
 
 
-		long loginEmpId = loginUser.getEmpId();
 		String rsvResourceId = request.getParameter("rsvResourceId");
 		
 		Map<String, Object> paraMap = new HashMap<>();
@@ -727,15 +696,10 @@ session.setAttribute("loginUser", loginUser);
 	@GetMapping("rsvReject.gw")
 	public String rsvReject(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
+		
 		String rsvResourceId = request.getParameter("rsvResourceId");
 		String rejectReason = request.getParameter("rejectReason");
 		
@@ -778,21 +742,16 @@ session.setAttribute("loginUser", loginUser);
 		// ----- 자원카테고리 목록 가져오기 끝 ----- //	
 		
 		
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);		
 		
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);
 		
 		
 		String type = request.getParameter("type"); 	
@@ -837,21 +796,17 @@ session.setAttribute("loginUser", loginUser);
 
 		
 		
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
-		long loginEmpId = loginUser.getEmpId();
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+		long loginEmpId = loginUser.getEmpId();	
+		
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);		
 		
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
 		
 		
 		// 카테고리에 속하는 자원 수 알아오기
@@ -940,21 +895,16 @@ session.setAttribute("loginUser", loginUser);
 		// ----- 자원카테고리 목록 가져오기 끝 ----- //	
 		
 		
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);		
 		
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
 		
 		
 		// 카테고리에 속하는 자원 수 알아오기
@@ -1112,54 +1062,34 @@ session.setAttribute("loginUser", loginUser);
 	@GetMapping("resourceManageAdmin.gw")
 	public ModelAndView resourceManageAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 		
-		
-		
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);		
 		
-		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
-		
-		
-		// 카테고리에 속하는 자원 수 알아오기
-		// 수정필) 할거임?? 할거면 자원케테고리 목록 가져오기처럼 해도 될 것 같기도...? 
-		
-		
-		
-		
-
 		String type = "resource"; 
 		request.setAttribute("type", type);
 		
 		
 		// ----- 자원카테고리 목록 가져오기 시작 ----- //
-				List<Map<String, String>> resourceCategoryList = null;
-				resourceCategoryList = service.getResourceCategoryList();
-				mav.addObject("resourceCategoryList", resourceCategoryList);
-				// ----- 자원카테고리 목록 가져오기 끝 ----- //	
+		List<Map<String, String>> resourceCategoryList = null;
+		resourceCategoryList = service.getResourceCategoryList();
+		mav.addObject("resourceCategoryList", resourceCategoryList);
+		// ----- 자원카테고리 목록 가져오기 끝 ----- //	
 		
 		
 		
 		String resourceCategoryId = request.getParameter("resourceCategoryId");
 		if(resourceCategoryId == null) {
-			String firstCategoryId = service.getFirstCategoryId(); // 존재하는 첫번째 카테고리id 가져오기
-			resourceCategoryId = firstCategoryId; 
+			resourceCategoryId = service.getFirstCategoryId(); // 존재하는 첫번째 카테고리id 가져오기
+//			resourceCategoryId = firstCategoryId; 
 		}
 		paraMap.put("resourceCategoryId", resourceCategoryId);		
 		request.setAttribute("resourceCategoryId", resourceCategoryId);
 		
 		
-//	야ㅕ기다라 카데고리아이디 가져와서 파라맵에 넣어! 그리고 그거 들어간거로 자원 목록 가져오게 할 수 있게 !!!	
 		
 		// ----- 관리자_자원 목록 가져오기 시작 ----- //
 		List<Map<String, String>> adminResourceList = null;
@@ -1204,21 +1134,17 @@ session.setAttribute("loginUser", loginUser);
 		// ----- 자원카테고리 목록 가져오기 끝 ----- //	
 		
 		
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
+		
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);		
 		
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
 		
 		
 		// 카테고리에 속하는 자원 수 알아오기
@@ -1426,22 +1352,17 @@ session.setAttribute("loginUser", loginUser);
 		mav.addObject("resourceCategoryList", resourceCategoryList);
 		// ----- 자원카테고리 목록 가져오기 끝 ----- //	
 		
-		
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
+		
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);		
 		
 		
-		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
-		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
+//		String rsvAdminEmpId = service.isAdmin(paraMap); // 로그인 사원이 인사관리자인지 확인
+//		mav.addObject("rsvAdminEmpId", rsvAdminEmpId);		
 	
 		
 		// ----- 예약관리자 목록 가져오기 시작 ----- //
@@ -1481,14 +1402,10 @@ session.setAttribute("loginUser", loginUser);
 	@GetMapping("delRsvAdmin.gw")
 	public String delRsvAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-
-		long loginEmpId = loginUser.getEmpId();	
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+		long loginEmpId = loginUser.getEmpId();
+		
 		String adminId = request.getParameter("adminId");
 	
 		Map<String, Object> paraMap = new HashMap<>();

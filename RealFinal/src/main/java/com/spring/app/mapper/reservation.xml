@@ -306,7 +306,7 @@
  	<select id="isAdmin" parameterType="HashMap" resultType="String">
 	 	select fk_empId
 	 	from tbl_admin
-	 	where adminType = 1 and fk_empId = #{loginEmpId}
+	 	where adminType = 1 or adminType = 2
  	</select>
  	
  	
