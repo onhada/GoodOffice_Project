@@ -83,9 +83,9 @@ public class CommonController {
 		paraMap.put("loginId", loginId);
 		paraMap.put("loginPasswd", Sha256.encrypt(loginPasswd));
 		
-		EmployeeVO loginuser = service.getLoginMember(paraMap); // 로그인 처리하기
+		EmployeeVO loginUser = service.getLoginMember(paraMap); // 로그인 처리하기
 	
-		if(loginuser == null) { // 로그인 실패시
+		if(loginUser == null) { // 로그인 실패시
 			String message = "아이디 또는 암호가 틀립니다.";
 		 	String loc = request.getHeader("referer");
 			
@@ -96,7 +96,7 @@ public class CommonController {
 		}
 		else { // 아이디와 암호가 존재하는 경우 	
 			HttpSession session = request.getSession();
-			session.setAttribute("loginuser", loginuser);
+			session.setAttribute("loginUser", loginUser);
 			
 		// 수정필 이거 살려야 하나...?고민해보고 		
 			// 로그인을 해야만 접근할 수 있는 페이지에 로그인을 하지 않은 상태에서 접근을 시도한 경우 
@@ -114,10 +114,8 @@ public class CommonController {
 			}
 		}
 		
-			
 		return mav;
 	}
-	
 	
 	
 	/** 
