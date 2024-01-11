@@ -17,7 +17,7 @@
 			<div class="vb-content" style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 8px);">
 				<nav data-v-3c987196="" class="menu-container">
 
-					<a data-v-3c987196="" href="https://hr.office.hiworks.com/gabia.biz/insa/info/member/lists" class="menu-item mt-8">
+					<a data-v-3c987196="" href="<%= ctxPath%>/organization/empInfoViewPage.gw" class="menu-item mt-8">
 						<i data-v-3c987196="" class="gis gi-chart-hr link-prefix-icon"></i>
 						<span data-v-3c987196="" class="collapse-title">임직원정보</span>
 					</a>
@@ -37,15 +37,11 @@
 							</div>
 							<div role="tabpanel" aria-labelledby="el-collapse-head-8720" id="el-collapse-content-8720" class="el-collapse-item__wrap">
 								<div class="el-collapse-item__content">
-									<a data-v-318760de="" href="https://hr-work.office.hiworks.com/management/departments" class="menu-item sub">
+									<a data-v-318760de="" href="<%= ctxPath%>/organization/organizationManage.gw" class="menu-item sub">
 										<i data-v-318760de="" class="gis  gi-user-group link-prefix-icon"></i>
 										<span data-v-318760de="">조직관리</span>
 									</a>
-									<a data-v-318760de="" href="https://hr-work.office.hiworks.com/management/employees" class="menu-item sub">
-										<i data-v-318760de="" class="gis gi-user link-prefix-icon"></i>
-										<span data-v-318760de="">임직원 관리</span>
-									</a>
-									<a data-v-318760de="" href="https://hr-work.office.hiworks.com/management/grade-manage" class="menu-item sub">
+									<a data-v-318760de="" href="<%= ctxPath%>/organization/positionManage.gw" class="menu-item sub">
 										<i data-v-318760de="" class="gis gi-hr-menu link-prefix-icon"></i>
 										<span data-v-318760de="">직위/직무설정</span>
 									</a>
@@ -55,9 +51,6 @@
 					</div>
 
 				</nav>
-			</div>
-			<div class="vb-dragger" style="position: absolute; height: 716px; top: 0px;">
-				<div class="vb-dragger-styler"></div>
 			</div>
 		</div>
 	</div>

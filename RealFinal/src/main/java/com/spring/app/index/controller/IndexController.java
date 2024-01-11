@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 * @FileName  : IndexController.java 
 * @Project   : TempFinal 
 * @Date      : Jan 8, 2024 
-* @작성자      : hada 
+* @작성자      : 김민경 
 * @변경이력    : 
 * @프로그램설명    : 인덱스 컨트롤러입니다.
 */
@@ -28,7 +28,7 @@ public class IndexController {
 	/** 
 	* @Method Name  : myReservationList 
 	* @작성일   : Jan 8, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 인덱스창을 보여주기
 	* @param request

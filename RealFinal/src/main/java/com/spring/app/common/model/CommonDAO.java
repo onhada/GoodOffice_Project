@@ -9,7 +9,7 @@ public interface CommonDAO {
 	/** 
 	* @Method Name  : getLoginMember 
 	* @작성일   : Jan 7, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 로그인 처리하기
 	* @param paraMap

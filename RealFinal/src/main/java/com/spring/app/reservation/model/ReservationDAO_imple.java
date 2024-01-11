@@ -15,7 +15,7 @@ import com.spring.app.reservation.domain.ReservationVO;
 * @FileName  : ReservationDAO_imple.java 
 * @Project   : TempFinal 
 * @Date      : Dec 28, 2023 
-* @작성자      : hada 
+* @작성자      : 김민경 
 * @변경이력    : 
 * @프로그램설명    : Repository(DAO) 선언
 */

@@ -791,7 +791,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : mailView 
 	* @작성일   : Dec 21, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 하나의 메일 보여주기
 	* @param request
@@ -871,7 +871,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : saveMemo 
 	* @작성일   : Dec 21, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 메일메모 추가하기
 	* @param request
@@ -926,7 +926,7 @@ System.out.println("메모있음?"+isMemo);
 	/** 
 	* @Method Name  : selectMemo 
 	* @작성일   : Dec 23, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 메일메모 조회하기 
 	* @param request
@@ -987,7 +987,7 @@ System.out.println(incomeMail);
 	/** 
 	* @Method Name  : mailboxManage 
 	* @작성일   : Dec 26, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 환경설정_편지함관리 뷰페이지로 이동
 	* @param request
@@ -1032,7 +1032,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : makePersonalMailbox 
 	* @작성일   : Dec 26, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 개인편지함 만들기
 	* @param request
@@ -1073,7 +1073,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : deletePersonalMailbox 
 	* @작성일   : Dec 27, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 개인편지함 삭제하기 
 	* @param request
@@ -1115,7 +1115,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : emptyMailbox 
 	* @작성일   : Dec 27, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 편지함 비우기
 	* @param request

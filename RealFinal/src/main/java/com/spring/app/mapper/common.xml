@@ -10,7 +10,7 @@
 
 	<!-- === 로그인 완료 요청하기 === --> 
 	<select id="getLoginMember" resultType="com.spring.app.common.domain.EmployeeVO" parameterType="HashMap"> 
-		select empId, empName, SUBSTR(email, 0,INSTR(email, '@')) as id, fk_teamId, teamName, fk_positionId, positionName, fk_jobId, empType
+		select empId, empName, SUBSTR(email, 0,INSTR(email, '@')-1) as id, fk_teamId, teamName, fk_positionId, positionName, fk_jobId, empType
 	         , companyTel, tel, email
 	         , to_char(startWorkDay, 'yyyy-mm-dd') AS startWorkDay
 	         , to_char(birth, 'yyyy-mm-dd') AS birth, address, detailAddress, postCode, status

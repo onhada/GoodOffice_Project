@@ -26,7 +26,7 @@ import com.spring.app.common.service.CommonService;
 * @FileName  : CommonController.java 
 * @Project   : TempFinal 
 * @Date      : Jan 7, 2024 
-* @작성자      : hada 
+* @작성자      : 김민경 
 * @변경이력    : 
 * @프로그램설명    : 공통 컨트롤러입니다.
 */
@@ -41,7 +41,7 @@ public class CommonController {
 	/** 
 	* @Method Name  : login 
 	* @작성일   : Jan 7, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 로그인 페이지 요청하기
 	* @param request
@@ -61,7 +61,7 @@ public class CommonController {
 	/** 
 	* @Method Name  : loginEnd 
 	* @작성일   : Jan 7, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 로그인 완료 요청하기
 	* @param request
@@ -94,8 +94,7 @@ public class CommonController {
 			
 			mav.setViewName("common/msg");
 		}
-		else { // 아이디와 암호가 존재하는 경우 
-			System.out.println(loginuser.getAdminType());		
+		else { // 아이디와 암호가 존재하는 경우 	
 			HttpSession session = request.getSession();
 			session.setAttribute("loginuser", loginuser);
 			
@@ -124,7 +123,7 @@ public class CommonController {
 	/** 
 	* @Method Name  : logout 
 	* @작성일   : Jan 8, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 로그아웃 처리하기
 	* @param request

@@ -1,5 +1,13 @@
 package com.spring.app.reservation.domain;
 
+/** 
+* @FileName  : ReservationVO.java 
+* @Project   : TempFinal 
+* @Date      : Dec 28, 2023 
+* @작성자      : 김민경
+* @변경이력    : 
+* @프로그램설명    : 
+*/
 public class ReservationVO {
 	
 	
