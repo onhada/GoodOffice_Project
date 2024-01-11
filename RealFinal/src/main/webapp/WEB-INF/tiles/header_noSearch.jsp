@@ -231,8 +231,8 @@ function myProfileView() {
 								<img data-v-4ded8394="" src="<%= ctxPath%>/resources/image/profileImg.png" alt="" class="photo-75">
 							</div>
 							<div data-v-4ded8394="" class="info-wrap">
-								<p data-v-4ded8394="" class="my-name text-truncate">${sessionScope.loginuser.empName}</p>
-								<p data-v-4ded8394="" class="my-email text-truncate">${sessionScope.loginuser.email}</p>
+								<p data-v-4ded8394="" class="my-name text-truncate">${sessionScope.loginUser.empName}</p>
+								<p data-v-4ded8394="" class="my-email text-truncate">${sessionScope.loginUser.email}</p>
 							</div>
 						</div>
 						<div data-v-4ded8394="" class="bottom-menu">
