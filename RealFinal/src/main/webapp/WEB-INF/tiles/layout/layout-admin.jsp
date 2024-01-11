@@ -179,7 +179,7 @@ function closeModal(id) {
 
 
 	<!-- 근로 형태 드롭다운리스트 시작 -->
-	<div class="el-select-dropdown el-popper workingTypeList" style="display: none; min-width: 200px; transform-origin: center top; z-index: 2013; position: absolute; top: 355px; left: 870px;" x-placement="bottom-start">
+	<div class="el-select-dropdown el-popper workingTypeList" style="display: none; min-width: 200px; transform-origin: center top; z-index: 2013; position: absolute; top: 340px; left: 870px;" x-placement="bottom-start">
 		<div class="el-scrollbar" style="">
 			<div class="el-select-dropdown__wrap el-scrollbar__wrap" style="margin-bottom: -8px; margin-right: -8px;">
 				<ul class="el-scrollbar__view el-select-dropdown__list workTypeUl">
@@ -213,7 +213,7 @@ function closeModal(id) {
 
 	<!-- 조직 선택 드롭다운리스트 시작 -->
 	<div data-v-206790f8="" class="hu-popover-container teamDropDown" style="z-index: 2000; display: none;">
-		<div data-v-068c5c92="" data-v-206790f8="" class="hu-popover-layer layer-fade-in" style="top: 350px; left: 1137px; visibility: visible; animation-duration: 0.25s;">
+		<div data-v-068c5c92="" data-v-206790f8="" class="hu-popover-layer layer-fade-in" style="top: 345px; left: 1137px; visibility: visible; animation-duration: 0.25s;">
 			<div data-v-38d3eddf="" data-v-068c5c92="" class="organization-popover-wrapper" style="width: 280px; height: auto;">
 				<!---->
 				<div data-v-38d3eddf="">
@@ -281,7 +281,7 @@ function closeModal(id) {
 
 
 	<!-- 직위 선택 드롭다운리스트 시작 -->
-	<div class="el-select-dropdown el-popper positionDropDown" style="display: none; min-width: 200px; position: absolute; top: 355px; left: 1440px; transform-origin: center top; z-index: 2001;" x-placement="bottom-start">
+	<div class="el-select-dropdown el-popper positionDropDown" style="display: none; min-width: 200px; position: absolute; top: 340px; left: 1440px; transform-origin: center top; z-index: 2001;" x-placement="bottom-start">
 		<div class="el-scrollbar" style="">
 			<div class="el-select-dropdown__wrap el-scrollbar__wrap" style="margin-bottom: -8px; margin-right: -8px;">
 				<ul class="el-scrollbar__view el-select-dropdown__list positionUl">
