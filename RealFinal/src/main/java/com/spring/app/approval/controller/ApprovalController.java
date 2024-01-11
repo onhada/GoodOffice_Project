@@ -2979,11 +2979,12 @@ public class ApprovalController {
 			Long adminId) {
 		
 		HttpSession session = req.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("adminId", adminId);
-		paraMap.put("userEmpId", ((EmployeeVO) session.getAttribute("loginUser")).getEmpId());
-
+		paraMap.put("userEmpId", loginUser.getEmpId());
+		
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("isDelete", service.deleteAppovalAdminManager(paraMap));
 

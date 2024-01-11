@@ -559,7 +559,7 @@
 	function insertUser(){
 		
 		$.ajax({
-			url: "<%=ctxPath%>/approval/insertUser.gw",
+			url: "<%=ctxPath%>/admin/insertUser.gw",
 			data: { "id": $("input.inputId").val().trim(),
 					"empName" : $("input.inputName").val().trim(),
 					"pwd" : $("input.inputPwd").val(),

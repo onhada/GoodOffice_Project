@@ -68,7 +68,7 @@ public class AdminController {
 	 * @param sevo @return 
 	 */
 	@GetMapping("/admin/userManage.gw")
-	public ModelAndView userManage(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView userManageAdmin(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			SearchEmployeeVO sevo) {
 
 		String searchWord = sevo.getSearchWord();
@@ -286,8 +286,8 @@ public class AdminController {
 	 * @param evo @return 
 	 */
 	@ResponseBody
-	@PostMapping(value = "/approval/insertUser.gw", produces = "text/plain;charset=UTF-8")
-	public String insertUser(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, EmployeeVO evo) {
+	@PostMapping(value = "/admin/insertUser.gw", produces = "text/plain;charset=UTF-8")
+	public String insertUserAdmin(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, EmployeeVO evo) {
 
 		JSONObject jsonObj = new JSONObject();
 
@@ -297,7 +297,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/admin/batch/{type}.gw")
-	public ModelAndView adminBatch(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView adminBatchAdmin(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			@PathVariable String type) {
 
 		BatchModifyUserVO bvo = new BatchModifyUserVO();
@@ -342,7 +342,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/admin/managerSet.gw")
-	public ModelAndView adminManagerSet(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+	public ModelAndView adminManagerSetAdmin(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
 		String searchWord = req.getParameter("searchWord");
 		if (searchWord == null) {
