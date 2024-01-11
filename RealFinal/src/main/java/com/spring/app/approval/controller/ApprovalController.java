@@ -357,7 +357,7 @@ public class ApprovalController {
 		}
 		
 		if (listType == null) {
-			listType = "";
+			listType = "0";
 		}
 		
 		if (isViewAll == null) {
@@ -2390,7 +2390,7 @@ public class ApprovalController {
 		if (!service.insertOrUpdateApprovalFile(approvalId, afList)) {
 			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기 수정필
 
-			System.out.println("에러랍니다");
+			//System.out.println("에러랍니다");
 		}
 
 		if ("".equals(approvalId)) {
@@ -2593,7 +2593,7 @@ public class ApprovalController {
 		if (!service.insertOrUpdateApprovalFile(approvalId, afList)) {
 			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기 수정필
 
-			System.out.println("에러랍니다");
+			//System.out.println("에러랍니다");
 		}
 
 		if ("".equals(approvalId)) {
@@ -2638,7 +2638,7 @@ public class ApprovalController {
 
 				mav.setViewName("redirect:/approval/document/list/W.gw");
 			} else {
-				System.out.println("에러");
+				//System.out.println("에러");
 			}
 
 		} else if ("check".equals(type)) {
@@ -2647,7 +2647,7 @@ public class ApprovalController {
 
 				mav.setViewName("redirect:/approval/document/list/V.gw");
 			} else {
-				System.out.println("에러");
+				//System.out.println("에러");
 			}
 		} else if ("delete".equals(type)) {
 			
@@ -2656,7 +2656,7 @@ public class ApprovalController {
 
 				mav.setViewName("redirect:/approval/settings/document.gw");
 			} else {
-				System.out.println("에러");
+				//System.out.println("에러");
 			}
 		} else if("restore".equals(type)) {
 			// 잘 끝
@@ -2666,7 +2666,7 @@ public class ApprovalController {
 
 				mav.setViewName("redirect:/approval/settings/deleted_document.gw");
 			} else {
-				System.out.println("에러");
+				//System.out.println("에러");
 			}
 		}
 		

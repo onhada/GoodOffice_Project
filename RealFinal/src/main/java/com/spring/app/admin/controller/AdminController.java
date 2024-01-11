@@ -313,7 +313,7 @@ public class AdminController {
 
 				mav.setViewName("redirect:/admin/userManage.gw");
 			} else {
-				System.out.println("에러");
+				//System.out.println("에러");
 			}
 
 		} else if ("position".equals(type)) {
@@ -324,7 +324,7 @@ public class AdminController {
 
 				mav.setViewName("redirect:/admin/userManage.gw");
 			} else {
-				System.out.println("에러");
+				//System.out.println("에러");
 			}
 		} else if ("status".equals(type)) {
 			bvo.setStatus(req.getParameter("userStatus"));
@@ -334,7 +334,7 @@ public class AdminController {
 
 				mav.setViewName("redirect:/admin/userManage.gw");
 			} else {
-				System.out.println("에러");
+				//System.out.println("에러");
 			}
 		}
 
