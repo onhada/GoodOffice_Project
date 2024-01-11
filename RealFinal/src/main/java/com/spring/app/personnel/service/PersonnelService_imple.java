@@ -119,6 +119,76 @@ public class PersonnelService_imple implements PersonnelService {
 		return procedure_insert;
 	}
 
+
+	@Override
+	public String tardy_cnt(String empid) {
+		String tardy_cnt=dao.tardy_cnt(empid);
+		return tardy_cnt;
+	}
+
+
+	@Override
+	public String early_work_cnt(String empid) {
+		String early_work_cnt=dao.early_work_cnt(empid);
+		return early_work_cnt;
+	}
+
+
+	@Override
+	public String not_leave_work(String empid) {
+		String not_leave_work=dao.not_leave_work(empid);
+		return not_leave_work;
+	}
+
+
+	@Override
+	public String workday_cnt(String empid) {
+		String workday_cnt=dao.workday_cnt(empid);
+		return workday_cnt;
+	}
+
+
+	@Override
+	public String absenteeism(String empid) {
+		String absenteeism=dao.absenteeism(empid);
+		return absenteeism;
+	}
+
+
+	@Override
+	public int mowork_approval_insert(String empid) {
+		int mowork_approval_insert=dao.mowork_approval_insert(empid);
+		return mowork_approval_insert;
+	}
+
+
+	@Override
+	public int work_modify_add_insert(Map<String, String> paraMaps) {
+		int work_modify_add_insert=dao.work_modify_add_insert(paraMaps);
+		return work_modify_add_insert;
+	}
+
+
+	@Override
+	public int work_modify_del_insert(Map<String, String> paraMaps) {
+		int work_modify_del_insert=dao.work_modify_del_insert(paraMaps);
+		return work_modify_del_insert;
+	}
+
+
+	@Override
+	public int work_modify_edit_insert(Map<String, String> paraMaps) {
+		int work_modify_edit_insert=dao.work_modify_edit_insert(paraMaps);
+		return work_modify_edit_insert;
+	}
+
+
+	@Override
+	public String avg_hour(Map<String, String> paraMapYear) {
+		String avg_hour=dao.avg_hour(paraMapYear);
+		return avg_hour;
+	}
+
  
 	 
 

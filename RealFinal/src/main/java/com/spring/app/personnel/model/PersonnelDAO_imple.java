@@ -144,6 +144,115 @@ public class PersonnelDAO_imple implements PersonnelDAO {
 		return procedure_insert;
 	}
 
+	@Override
+	public String tardy_cnt(String empid) {
+		String tardy_cnt=sqlsession.selectOne("personnel.tardy_cnt",empid);
+		return tardy_cnt;
+	}
+
+	@Override
+	public String early_work_cnt(String empid) {
+		String early_work_cnt=sqlsession.selectOne("personnel.early_work_cnt",empid);
+		return early_work_cnt;
+	}
+
+	@Override
+	public String not_leave_work(String empid) {
+		 String not_leave_work=sqlsession.selectOne("personnel.not_leave_work",empid);
+		return not_leave_work;
+	}
+
+	@Override
+	public String workday_cnt(String empid) {
+		String workday_cnt=sqlsession.selectOne("personnel.workday_cnt",empid);
+		return workday_cnt;
+	}
+
+	@Override
+	public String absenteeism(String empid) {
+		String absenteeism=sqlsession.selectOne("personnel.absenteeism",empid);
+		return absenteeism;
+	}
+
+	@Override
+	public int mowork_approval_insert(String empid) {
+		int mowork_approval_insert=sqlsession.insert("personnel.mowork_approval_insert",empid);
+		return mowork_approval_insert;
+	}
+
+	@Override
+	public int work_modify_add_insert(Map<String, String> paraMaps) {
+		int work_modify_add_insert=sqlsession.insert("personnel.work_modify_add_insert",paraMaps);
+		return work_modify_add_insert;
+	}
+
+	@Override
+	public int work_modify_del_insert(Map<String, String> paraMaps) {
+		int work_modify_del_insert=sqlsession.insert("personnel.work_modify_del_insert",paraMaps);
+		return work_modify_del_insert;
+	}
+
+	@Override
+	public int work_modify_edit_insert(Map<String, String> paraMaps) {
+		int work_modify_edit_insert=sqlsession.insert("personnel.work_modify_edit_insert",paraMaps);
+		return work_modify_edit_insert;
+	}
+
+	@Override
+	public String avg_hour(Map<String, String> paraMapYear) {
+
+		//외출 한번도 안했나 체크하기
+		List<String> outingCheck= sqlsession.selectList("personnel.outingCheck",paraMapYear);
+		
+		//연장근무 한적 있나 체크하기
+		int overtimeCheck= sqlsession.selectOne("personnel.overtimeCheck",paraMapYear);		
+		 
+		int overtimeSum=0; //연장근무만 총시간
+		
+		if(overtimeCheck > 0) { //연장근무 내역이 있다면
+			
+			overtimeSum= sqlsession.selectOne("personnel.overtimeSum",paraMapYear);
+			 
+		}
+		
+		String year_hour_str="";
+		int a=0,b=0;
+		
+		if( outingCheck.size()==0  ) { //사원이 외출을 한날이 없는 경우
+			
+			//외출 안한날
+			int year_hour=sqlsession.selectOne("personnel.year_hour",paraMapYear);
+			
+			  a=  year_hour   /60;
+			  a=a+overtimeSum;
+			  b=  year_hour  %60;
+			
+			year_hour_str= Integer.toString(year_hour)  ;
+			
+		}
+		else {//사원이 외출을 한날이 있는 경우
+			
+			//외출 안한날
+			int year_hour=sqlsession.selectOne("personnel.year_hour",paraMapYear);
+			
+			 
+			
+			//외출 한날
+			int year_hour_outing =sqlsession.selectOne("personnel.year_hour_out",paraMapYear);
+			 
+			
+			  a= (year_hour+year_hour_outing) /60;
+			  a=a+overtimeSum;
+			  b= (year_hour+year_hour_outing) %60;
+			
+			  year_hour_str= Integer.toString(year_hour+year_hour_outing);
+		}
+		 
+		
+		return year_hour_str;
+	 
+	}
+
 	 
 	
 }

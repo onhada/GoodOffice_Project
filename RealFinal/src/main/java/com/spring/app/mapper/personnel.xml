@@ -246,8 +246,8 @@ from
 	<insert id="workhistory_insert" parameterType="HashMap" > 
 		
 		insert into tbl_workhistory
-		values (360, #{empid}, #{worktype}, sysdate, default)
-	<!--  시퀀스 수정필-->
+		values (WORKHISTORYSEQ.nextval, #{empid}, #{worktype}, sysdate, default)
+	 
 	</insert>
 
 
@@ -304,7 +304,12 @@ from
 		on count>=0
 	 ]]>
 	</select>
-	
+	<insert id="mowork_approval_insert" parameterType="HashMap" > 
+		
+		insert into tbl_approval(approvalid, fk_formid, fk_empid, title, draftday, istemporary, fk_securityid, isdelete)
+		values (APPROVALSEQ.nextval, 103, #{empid}, '근무체크수정신청', sysdate, 0,3,0)
+	 
+	</insert>
 	
 	<insert id="va_approval_insert" parameterType="HashMap" > 
 		
@@ -319,11 +324,103 @@ from
 		values (DAYOFFAPPROVALSEQ.nextval , APPROVALSEQ.CURRVAL ,   #{datepi}, #{vtype}, 1, #{reason})
 	</insert>
 	
+	<insert id="work_modify_add_insert" parameterType="HashMap" > 
+		
+		insert into tbl_modifyworkrequest 
+		values (MODIFYWORKREQUESTSEQ.nextval, APPROVALSEQ.CURRVAL, default,  to_date(#{time},'yyyy-mm-dd hh24:mi'), 3,'추가 요청',#{typemod})	
+	</insert>
+	
+	<insert id="work_modify_del_insert" parameterType="HashMap" > 
+		
+		insert into tbl_modifyworkrequest 
+		values (MODIFYWORKREQUESTSEQ.nextval, APPROVALSEQ.CURRVAL, #{deleteid},  default, 2,'삭제 요청',default)	
+	</insert>
+	
+	<insert id="work_modify_edit_insert" parameterType="HashMap" > 
+		
+		insert into tbl_modifyworkrequest 
+		values (MODIFYWORKREQUESTSEQ.nextval, APPROVALSEQ.CURRVAL, #{editid}, to_date(#{time},'yyyy-mm-dd hh24:mi'), 1,'수정 요청',default)	
+	</insert>
+	
+	
 	
 	<insert id="procedure_insert" parameterType="HashMap" > 
 		insert into tbl_approvalprocedure
 	values(APPROVALPROCEDURESEQ.nextval,APPROVALSEQ.CURRVAL,#{ptype},#{empid}, #{status}, #{seq},0, sysdate  )
 </insert>
+
+	<select id="tardy_cnt"	parameterType="String" resultType="String">
+
+	<![CDATA[ 
+		 select count(*)
+		from tbl_workhistory
+		where ((worktype =6 and fk_empid =#{empid}) and( to_char(resisterdaytime,'yyyy' ) = to_char(sysdate, 'yyyy')  )  )
+		        and to_char(resisterdaytime,'hh24:mi:ss' ) >  '09:00:00'
+	 ]]>
+	</select>
+	
+	<select id="early_work_cnt"	parameterType="String" resultType="String">
+
+	<![CDATA[ 
+	select  count(*)
+	from tbl_workhistory
+	where ((worktype =5 and fk_empid =#{empid}) and( to_char(resisterdaytime,'yyyy' ) = to_char(sysdate, 'yyyy')  )  )
+	        and to_char(resisterdaytime,'hh24:mi:ss' ) <  '18:00:00'
+		  ]]>
+	</select>
+	
+	<select id="not_leave_work"	parameterType="String" resultType="String">
+
+	<![CDATA[ 
+	select  count(*)
+	from tbl_workhistory
+	where ((worktype =6 and fk_empid =#{empid}) and( to_char(resisterdaytime,'yyyy' ) = to_char(sysdate, 'yyyy')  )  )
+	        and to_char(resisterDayTime,'yyyy-mm-dd') not in (select to_char(resisterDayTime,'yyyy-mm-dd') from tbl_workhistory where fk_empId = #{empid} and worktype =5)
+	        
+		  ]]>
+	</select>
+	
+	<select id="workday_cnt"	parameterType="String" resultType="String">
+
+	<![CDATA[ 
+		select count(*) 
+		from tbl_workhistory
+		where (worktype =6 and fk_empid =#{empid}) and( to_char(resisterdaytime,'yyyy' ) = to_char(sysdate, 'yyyy')  ) 
+		  ]]>
+	</select>
+	
+	
+	<select id="absenteeism"	parameterType="String" resultType="String">
+
+	<![CDATA[ 
+		select daysum-day as absen
+from 
+(
+    SELECT count(TM.DATES)-1 as daysum
+        
+    FROM (	SELECT
+                TO_CHAR(START_DT + LEVEL - 1, 'YYYY-MM-DD') DATES  
+                ,TO_CHAR (START_DT + LEVEL - 1, 'D') DAYS  
+            FROM (	SELECT 
+                        TRUNC(SYSDATE,'MM') START_DT  
+                        ,TO_NUMBER(TO_CHAR(SYSDATE, 'DD')) END_DT   
+                    FROM DUAL ) A
+            CONNECT BY LEVEL <= A.END_DT ) TM  
+    WHERE TM.DAYS NOT IN ('1', '7')  
+    ORDER BY TM.DATES ASC
+)a join
+
+(
+    select  count(*)  as day
+    from tbl_workhistory
+    where (( worktype =6 and fk_empid =#{empid}) and( to_char(resisterdaytime,'yyyy' ) = to_char(sysdate, 'yyyy')  )  )
+            and (TO_CHAR(resisterdaytime,'D') not IN ('1','7') )
+)
+b
+on b.day >=0
+		
+		  ]]>
+	</select>
 	
 	 
 	

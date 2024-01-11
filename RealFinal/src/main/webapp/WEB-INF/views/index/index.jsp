@@ -1,13 +1,154 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+ --%>
 <%
 	String ctxPath = request.getContextPath();
 %>
 
+ <script type="text/javascript">
 
+  $(document).ready(function(){
+	  
+	  loopshowNowTime();
+	  
+	
+	$('button#work_status').on('click', (e) => {  //출근, 퇴큰 버튼
+		  console.log(e.target.value);
+		  const type=e.target.parentElement.value;
+		  //alert(type);
+		  
+		  workstatus_insert(type);
+		  
+		  
+		  
+		
+	 });
+	
+	
+	$('button#work_status_four').on('click', (e) => {  
+		
+		
+		  console.log(e.target.value);
+		  const type=e.target.value;
+		  
+		  if(typeof type=="undefined"){
+			  
+			  
+			  const typeRe=e.target.parentElement.value;
+			 // alert(typeRe);
+			  
+			  workstatus_insert(typeRe);
+			   
+		  }
+		  else{
+			  
+			  //alert(type);
+			  
+			  workstatus_insert(type);
+			   
+			  
+		  }
+		  
+		  
+		 
+		  
+		
+	 });
+	
+	
+
+  	
+	  
+	 
+  });// end of $(document).ready(function(){})------------
+  
+function workstatus_insert(type){
+	
+	  
+	  //alert("ee");
+  		 $.ajax({
+	          url : "<%= ctxPath%>/personnel/workstatus_insert.gw",
+	          type : "post",
+	          data : { "worktype":type  },
+	         // processData:false,  // 파일 전송시 설정 
+	          //contentType:false,  // 파일 전송시 설정 
+	          dataType:"json",
+	          success:function(json){
+	             // console.log("~~~ 확인용 : " + JSON.stringify(json));
+	              // ~~~ 확인용 : {"result":1}
+	        	  //work_status_print();
+	          },
+	          error: function(request, status, error){
+	          alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	          }
+	      });
+  }
+	 
+  //////////////
+
+	function showNowTime() {
+	      
+	      const now = new Date();
+	   
+	      let month = now.getMonth() + 1;
+	      if(month < 10) {
+	         month = "0"+month;
+	      }
+	      
+	      let date = now.getDate();
+	      if(date < 10) {
+	         date = "0"+date;
+	      }
+	      
+	      let strNow_back = now.getFullYear() + "-" + month + "-" + date;
+	      
+	       
+	    
+	      
+	      let hour = "";
+	       if(now.getHours() < 10) {
+	           hour = "0"+now.getHours();
+	       } 
+	       else {
+	          hour = now.getHours();
+	       }
+	      
+	       
+	      let minute = "";
+	      if(now.getMinutes() < 10) {
+	         minute = "0"+now.getMinutes();
+	      } else {
+	         minute = now.getMinutes();
+	      }
+	      
+	      let second = "";
+	      if(now.getSeconds() < 10) {
+	         second = "0"+now.getSeconds();
+	      } else {
+	         second = now.getSeconds();
+	      }
+	      
+	      let strNow = hour + " : " + minute + " : " + second;
+	      
+	      $("span#clock").html(strNow);
+	   
+	   }// end of function showNowTime() -----------------------------
+	   
+	   
+	   function loopshowNowTime() {
+		      showNowTime();
+		      
+		      const timejugi = 1000;   // 시간을 1초 마다 자동 갱신하려고.
+		      
+		      setTimeout(function() {
+		                  loopshowNowTime();   
+		               }, timejugi);
+		      
+	   }// end of loopshowNowTime() 
+	   
+  </script>    
 
 <style>
 .home-header .wrapper {
@@ -141,7 +282,7 @@
 								</a>
 							</div>
 							<div data-v-9d7b8978="" class="circle-wrap">
-								<a data-v-9d7b8978="" href="<%=ctxPath %>/admin/userManage.gw" target="_self" class="menu office">
+								<a data-v-9d7b8978="" href="https://office.hiworks.com/gabia.biz/h_admin/adminhome" target="_self" class="menu office">
 									<span data-v-9d7b8978="" class="circle">
 										<span data-v-9d7b8978="" class="alarm-cnt" style="display: none;">0</span>
 										<span data-v-9d7b8978="" class="icon">
@@ -180,20 +321,21 @@
 					<div class="contents">
 						<div class="today-info" style="margin: 5% 0 0 30%">
 							<div class="today-status">
-								<span class="current-time">14:06:15</span>
+								<span  id="clock" class="current-time"></span>
 							</div>
 						</div>
 						<div class="today-detail">
 							<ul class="division-list">
 								<li>
-									<button type="button" class="">
-										<img src="/img/checkin.f9ea117e.svg" alt="" class="icon-in-out">
+									<button type="button" class="" id="work_status"  value="6" >
+										<img src="<%= ctxPath%>/resources/image/icon/checkin.ac627d8a.svg" alt="" class="icon-in-out">
 										<div class="check-btn">출근하기</div>
 									</button>
 								</li>
 								<li>
-									<button type="button" disabled="disabled" class="inactive">
-										<img src="/img/checkout.7dffcbcf.svg" alt="" class="icon-in-out">
+									<button type="button"  id="work_status" value="5"  >
+									 <!--disabled="disabled" class="inactive"  -->
+										<img src="<%= ctxPath%>/resources/image/icon/checkout.4919929e.svg" alt="" class="icon-in-out">
 										<div class="check-btn">퇴근하기</div>
 									</button>
 								</li>
@@ -201,29 +343,29 @@
 							<div class="list-btns-wrap" style="margin: 0 0 5% 0">
 								<div class="list-btns less-six-etc-check">
 									<div class="list-btn-item">
-										<button data-v-f8d3258e="" type="button" disabled="disabled" class="hw-button pill-shape-outline">
+										<button data-v-f8d3258e="" type="button"  id="work_status_four" value="1" class="hw-button pill-shape-outline">
 											<!---->
 											<span data-v-f8d3258e="" class="label">업무</span>
 											<!---->
 										</button>
 									</div>
 									<div class="list-btn-item">
-										<button data-v-f8d3258e="" type="button" disabled="disabled" class="hw-button pill-shape-outline">
-											<!---->
+										<button data-v-f8d3258e="" type="button" id="work_status_four" value="2" class="hw-button pill-shape-outline">
+											<!--disabled="disabled"-->
 											<span data-v-f8d3258e="" class="label">외출</span>
 											<!---->
 										</button>
 									</div>
 									<div class="list-btn-item">
-										<button data-v-f8d3258e="" type="button" disabled="disabled" class="hw-button pill-shape-outline">
-											<!---->
+										<button data-v-f8d3258e="" type="button" id="work_status_four" value="3" class="hw-button pill-shape-outline">
+											<!--disabled="disabled"-->
 											<span data-v-f8d3258e="" class="label">회의</span>
 											<!---->
 										</button>
 									</div>
 									<div class="list-btn-item">
-										<button data-v-f8d3258e="" type="button" disabled="disabled" class="hw-button pill-shape-outline">
-											<!---->
+										<button data-v-f8d3258e="" type="button" id="work_status_four" value="4" class="hw-button pill-shape-outline">
+											<!--disabled="disabled"-->
 											<span data-v-f8d3258e="" class="label">외근</span>
 											<!---->
 										</button>

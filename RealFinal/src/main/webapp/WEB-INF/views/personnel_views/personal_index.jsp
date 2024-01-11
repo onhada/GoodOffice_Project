@@ -80,7 +80,7 @@
 		  
 		  const type=e.target.value;
 		  
-			$(location).attr("href", `<%=ctxPath%>/work_modify.gw`)
+			$(location).attr("href", `<%=ctxPath%>/personnel/work_modify.gw`)
 			 
 		  /* 
 		  if(typeof type=="undefined"){
@@ -113,7 +113,7 @@
 		  console.log(e.target.value);
 		  const type=e.target.value;
 		  
-			$(location).attr("href", `<%=ctxPath%>/personal_vaction_application.gw`)
+			$(location).attr("href", `<%=ctxPath%>/personnel/personal_vaction_application.gw`)
 			 
 		  /* 
 		  if(typeof type=="undefined"){
@@ -167,7 +167,7 @@
 	  
 	  //alert("ee");
   		 $.ajax({
-	          url : "<%= ctxPath%>/workstatus_insert.gw",
+	          url : "<%= ctxPath%>/personnel/workstatus_insert.gw",
 	          type : "post",
 	          data : { "worktype":type  },
 	         // processData:false,  // 파일 전송시 설정 
@@ -201,7 +201,7 @@
 	function work_status_print(){
 		
 		$.ajax({
-	          url : "<%= ctxPath%>/workstatus_print.gw",
+	          url : "<%= ctxPath%>/personnel/workstatus_print.gw",
 	          type : "post",
 	          data : { "worktype":6  },
 	         
@@ -273,6 +273,47 @@
 	      }
 	      
 	      let strNow_back = now.getFullYear() + "-" + month + "-" + date;
+	      
+	      month+="월";
+	    
+	      $("div#monthdiv").html(month);
+	      $("div#datediv").html(date);
+	      
+	      let dayOfWeek = now.getDay(); 
+	     let wok="근무일";
+	     let woho="09:00 ~ 18:00 (소정 8시간)";
+	      
+	      if(dayOfWeek==0){
+	    	  dayOfWeek="일요일";
+	    	  wok="휴무일";
+	    	  woho="";
+	      }
+	      else if (dayOfWeek==1){
+	    	  dayOfWeek="월요일";
+	      }
+		else if (dayOfWeek==2){
+			  
+			dayOfWeek="화요일";
+		 			      }
+		else if (dayOfWeek==3){
+			dayOfWeek="수요일";
+		}
+		else if (dayOfWeek==4){
+			dayOfWeek="목요일";
+		}
+		else if (dayOfWeek==5){
+			dayOfWeek="금요일";
+		}
+		else{
+			dayOfWeek="토요일";
+			wok="휴무일";
+			 woho="";
+		}
+	      
+	      $("div#daydiv").html(dayOfWeek);
+	      
+	      $("span#working").html(wok);
+	      $("span#workho").html(woho);
 	      
 	      let hour = "";
 	       if(now.getHours() < 10) {
@@ -350,7 +391,7 @@
 										<!---->
 									</div>
 									<div data-v-4292f724="" class="mt-20">
-										<span  id="tardy" data-v-4292f724="">${requestScope.empid}</span>회
+										<span  id="tardy" data-v-4292f724="">${requestScope.tardy_cnt}</span>회
 									</div></li>
 								<li data-v-4292f724="" data-v-52107848=""><div
 										data-v-4292f724="" class="font-weight-bold">
@@ -358,7 +399,7 @@
 										<!---->
 									</div>
 									<div data-v-4292f724="" class="mt-20">
-										<span data-v-4292f724="">0</span>회
+										<span data-v-4292f724="">${requestScope.early_work_cnt}</span>회
 									</div></li>
 								<li data-v-4292f724="" data-v-52107848=""><div
 										data-v-4292f724="" class="font-weight-bold">
@@ -366,7 +407,7 @@
 										<!---->
 									</div>
 									<div data-v-4292f724="" class="mt-20">
-										<span data-v-4292f724="">0</span>회
+										<span data-v-4292f724="">${requestScope.not_leave_work}</span>회
 									</div></li>
 								<li data-v-4292f724="" data-v-52107848=""><div
 										data-v-4292f724="" class="font-weight-bold">
@@ -374,7 +415,7 @@
 										<!---->
 									</div>
 									<div data-v-4292f724="" class="mt-20">
-										<span data-v-4292f724="">0</span>회
+										<span data-v-4292f724="">${requestScope.absenteeism}</span>회
 									</div></li>
 							</ul>
 						</div>
@@ -395,7 +436,7 @@
 								<div data-v-ca725702=""
 									class="font-weight-bold rest-vacation-title">잔여 휴가</div>
 								<div data-v-ca725702="" class="mt-20 rest-vacation-value">
-									<span>19</span><span>일</span>
+									<span>${requestScope.vaction_cnt}</span><span>일</span>
 								</div>
 							</div>
 							<div data-v-ca725702="" class="flex-grow-1 text-right">
@@ -403,10 +444,10 @@
 									<button  id="vacationBtn"  data-v-f8d3258e="" data-v-ca725702="" type="button"
 										class="hw-button text">
 										<!---->
-										<span data-v-f8d3258e="" class="label">휴가 현황</span>
+										<!-- <span data-v-f8d3258e="" class="label">휴가 현황</span> -->
 										<!---->
 									</button>
-									<div data-v-ca725702="" class="divider ml-15"></div>
+									<!-- <div data-v-ca725702="" class="divider ml-15"></div> -->
 								</div>
 								<button data-v-cde747bc="" data-v-ca725702="" type="button" id="work_vaction" value="7"
 									class="hu-button pill-shape-outline font-size-13 ml-15">
@@ -431,7 +472,7 @@
 										<!---->
 									</div>
 									<div data-v-4292f724="" class="mt-20">
-										<span data-v-4292f724="">0</span>일
+										<span data-v-4292f724="">${requestScope.workday_cnt}</span>일
 									</div></li>
 								<li data-v-4292f724="" data-v-b43a2120=""><div
 										data-v-4292f724="" class="font-weight-bold">
@@ -446,11 +487,13 @@
 									</div></li>
 								<li data-v-4292f724="" data-v-b43a2120=""><div
 										data-v-4292f724="" class="font-weight-bold">
-										<span data-v-4292f724="">보정평균</span><span data-v-4292f724=""><div
+										<span data-v-4292f724="">보정평균</span>
+										
+										<!-- <span data-v-4292f724=""><div
 												role="tooltip" id="el-popover-5295" aria-hidden="true"
 												class="el-popover el-popper tooltip-popover el-popover--plain"
 												tabindex="0" style="width: 340px; display: none;">
-												<!---->
+												
 												보정평균근무시간=(총근무시간+시간차휴가)/근무일수
 											</div>
 											<span class="el-popover__reference-wrapper"><button
@@ -459,12 +502,14 @@
 													aria-describedby="el-popover-5295" tabindex="0">
 													<i data-v-4292f724=""
 														class="gi gi-question-alt font-size-15 ml-5"></i>
-												</button></span></span>
+												</button></span></span> -->
+												
+												
 									</div>
 									<div data-v-4292f724="" class="mt-20">
 										<span data-v-4292f724=""></span>
 										<div data-v-b43a2120="" data-v-4292f724="">
-											<span>0</span><span>시간</span>
+											<span>${requestScope.avg_str}</span><!-- <span>ㅇ시간</span> -->
 										</div>
 									</div></li>
 							</ul>
@@ -482,41 +527,50 @@
 						</div>
 						<div data-v-afc08ac2="" class="box p-24">
 							<div data-v-afc08ac2="" class="calendar-icon">
-								<div data-v-afc08ac2="" class="head">12월</div>
+								<div data-v-afc08ac2="" class="head" id ="monthdiv"></div>
 								<div data-v-afc08ac2="" class="body">
-									<div data-v-afc08ac2="" class="date">2</div>
-									<div data-v-afc08ac2="" class="day">토요일</div>
+									<div data-v-afc08ac2="" class="date" id="datediv"></div>
+									<div data-v-afc08ac2="" class="day" id ="daydiv"></div>
 								</div>
 							</div>
 							<div data-v-afc08ac2="" class="calendar-description">
 								<div data-v-afc08ac2="">
-									<span data-v-afc08ac2="" class="rule-type-area align-middle">휴무일</span>
+									<span data-v-afc08ac2="" class="rule-type-area align-middle" id="working"></span>
+								</div>
+								<div data-v-afc08ac2="">
+									<span data-v-afc08ac2="" class="rule-type-area align-middle" id="workho"></span>
 								</div>
 								<!---->
 								<div data-v-afc08ac2="" class="button-area">
+								
+								<!-- 
 									<div data-v-afc08ac2="" class="my-work-plan">
 										<button data-v-cde747bc="" data-v-afc08ac2="" type="button"
 											class="hu-button text">
-											<!---->
+											
 											<span data-v-cde747bc="" class="label">내 근무 계획</span>
-											<!---->
+											
 										</button>
 									</div>
 									<div data-v-afc08ac2="" class="apply">
 										<button data-v-cde747bc="" data-v-afc08ac2="" type="button"
 											class="hu-button pill-shape-outline font-size-13">
-											<!---->
+											
 											<span data-v-cde747bc="" class="label">연장근무신청 </span>
-											<!---->
+											
 										</button>
 										<button data-v-cde747bc="" data-v-afc08ac2="" type="button"
 											class="hu-button pill-shape-outline font-size-13">
-											<!---->
+											
 											<span data-v-cde747bc="" class="label">휴(무)일근무신청 </span>
-											<!---->
+											
 										</button>
 									</div>
+									
+									 -->
+									
 								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -530,7 +584,7 @@
 							class="box flex-column justify-content-between">
 							<div data-v-39e81d47="" class="timer-wrapper">
 								<span id="clock" data-v-39e81d47="" class="current-time">
-									</span><span data-v-39e81d47="" class="tag blue">근무 종료</span>
+									</span><!-- <span data-v-39e81d47="" class="tag blue">근무 종료</span> -->
 									<!-- 현재시각 :&nbsp; <span  style="color:green; font-weight:bold;"></span> -->
 							</div>
 							<ul data-v-39e81d47="" class="division-list">
@@ -540,7 +594,7 @@
 										  <img data-v-39e81d47="" src="<%= ctxPath%>/resources/image/icon/checkin.ac627d8a.svg"
 											alt="출근하기" class="icon-in-out"  > 
 										<div data-v-39e81d47="" class="check-btn"    >출근하기</div>
-										<div data-v-39e81d47="" class="check-time">01:53:56</div>
+										<!-- <div data-v-39e81d47="" class="check-time">01:53:56</div> -->
 									</button></li>
 								<li data-v-39e81d47="" value="5"><button data-v-39e81d47=""
 										type="button"  id="work_status" value="5" >
@@ -548,7 +602,7 @@
 										  <img data-v-39e81d47="" src="<%= ctxPath%>/resources/image/icon/checkout.4919929e.svg"
 											alt="퇴근하기" class="icon-in-out"    >   
 										<div data-v-39e81d47="" class="check-btn">퇴근하기</div>
-										<div data-v-39e81d47="" class="check-time">13:44:58</div>
+										<!-- <div data-v-39e81d47="" class="check-time">13:44:58</div> -->
 									</button></li>
 							</ul>
 							<div data-v-39e81d47="" class="list-btns-wrap">
@@ -635,7 +689,7 @@
 					</div>
 				</div>
 			</section>
-			<section data-v-63c5cb89="" class="info-week">
+			<!-- <section data-v-63c5cb89="" class="info-week">
 				<h2 data-v-63c5cb89="" class="section-title">주간 근무현황</h2>
 				<div data-v-366f4357="" data-v-63c5cb89=""
 					class="calendar-container">
@@ -649,9 +703,9 @@
 						</button>
 						<button data-v-f8d3258e="" data-v-366f4357="" type="button"
 							class="hw-button pill-shape-outline font-size-13 ml-15">
-							<!---->
+							
 							<span data-v-f8d3258e="" class="label">이번 주</span>
-							<!---->
+							
 						</button>
 					</section>
 					<section data-v-366f4357="">
@@ -678,9 +732,9 @@
 								<p data-v-366f4357="">
 									<button data-v-f8d3258e="" data-v-366f4357="" type="button"
 										class="hw-button pill-shape-outline font-size-13 ml-15">
-										<!---->
+										
 										<span data-v-f8d3258e="" class="label">근무계획보기 </span>
-										<!---->
+										
 									</button>
 								</p>
 							</div>
@@ -713,93 +767,93 @@
 										<td data-v-aa5e3de2="" class=""><div data-v-aa5e3de2=""
 												class="work-status-cell">
 												<div data-v-aa5e3de2="" class="note">
-													<!---->
-													<!---->
+													
+													
 												</div>
-												<!---->
-												<!---->
-												<!---->
+												
+												
+												
 												<div data-v-aa5e3de2="" class="note"></div>
-												<!---->
-												<!---->
+												
+												
 											</div></td>
 										<td data-v-aa5e3de2="" class=""><div data-v-aa5e3de2=""
 												class="work-status-cell">
 												<div data-v-aa5e3de2="" class="note">
-													<!---->
-													<!---->
+													
+													
 												</div>
-												<!---->
-												<!---->
-												<!---->
+												
+												
+												
 												<div data-v-aa5e3de2="" class="note"></div>
-												<!---->
-												<!---->
+												
+												
 											</div></td>
 										<td data-v-aa5e3de2="" class=""><div data-v-aa5e3de2=""
 												class="work-status-cell">
 												<div data-v-aa5e3de2="" class="note">
-													<!---->
-													<!---->
+													
+													
 												</div>
-												<!---->
-												<!---->
-												<!---->
+												
+												
+												
 												<div data-v-aa5e3de2="" class="note"></div>
-												<!---->
-												<!---->
+												
+												
 											</div></td>
 										<td data-v-aa5e3de2="" class=""><div data-v-aa5e3de2=""
 												class="work-status-cell">
 												<div data-v-aa5e3de2="" class="note">
-													<!---->
-													<!---->
+													
+													
 												</div>
-												<!---->
-												<!---->
-												<!---->
+												
+												
+												
 												<div data-v-aa5e3de2="" class="note"></div>
-												<!---->
-												<!---->
+												
+												
 											</div></td>
 										<td data-v-aa5e3de2="" class=""><div data-v-aa5e3de2=""
 												class="work-status-cell">
 												<div data-v-aa5e3de2="" class="note">
-													<!---->
-													<!---->
+													
+													
 												</div>
-												<!---->
-												<!---->
-												<!---->
+												
+												
+												
 												<div data-v-aa5e3de2="" class="note"></div>
-												<!---->
-												<!---->
+												
+												
 											</div></td>
 										<td data-v-aa5e3de2="" class="today"><div
 												data-v-aa5e3de2="" class="work-status-cell">
 												<div data-v-aa5e3de2="" class="note">
-													<!---->
+													
 													<p data-v-aa5e3de2="" class="day_off">휴무일</p>
 												</div>
-												<!---->
-												<!---->
-												<!---->
-												<!---->
-												<!---->
-												<!---->
+												
+												
+												
+												
+												
+												
 											</div></td>
 										<td data-v-aa5e3de2="" class=""><div data-v-aa5e3de2=""
 												class="work-status-cell">
 												<div data-v-aa5e3de2="" class="note">
 													<p data-v-aa5e3de2="" class="day_off">휴일</p>
-													<!---->
+													
 												</div>
-												<!---->
+												
 												<div data-v-aa5e3de2="" class="note"></div>
-												<!---->
-												<!---->
-												<!---->
-												<!---->
+												
+												
+												
+												
 											</div></td>
 										<td data-v-aa5e3de2="" class="aside"><div
 												data-v-aa5e3de2="" class="date-info">
@@ -811,8 +865,8 @@
 													<div data-v-aa5e3de2="" class="status-content">
 														<strong data-v-aa5e3de2="">실근무</strong>
 														<p data-v-aa5e3de2="">총: 0시간</p>
-														<!---->
-														<!---->
+														
+														
 														<p data-v-aa5e3de2="">야간: 0시간</p>
 													</div>
 												</div>
@@ -875,7 +929,7 @@
 					</table>
 					<br data-v-67f262b7="">
 				</div>
-			</section>
+			</section> -->
 			<div data-v-b2fca032="" data-v-63c5cb89="" class="el-dialog__wrapper"
 				style="display: none;">
 				<div role="dialog" aria-modal="true" aria-label="dialog"

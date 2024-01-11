@@ -121,6 +121,116 @@ public interface PersonnelDAO {
 	*/
 	int procedure_insert(Map<String, String> paraMaps);
 
+	/** 
+	* @Method Name  : tardy_cnt 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empid
+	* @return 
+	*/
+	String tardy_cnt(String empid);
+
+	/** 
+	* @Method Name  : early_work_cnt 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empid
+	* @return 
+	*/
+	String early_work_cnt(String empid);
+
+	/** 
+	* @Method Name  : not_leave_work 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empid
+	* @return 
+	*/
+	String not_leave_work(String empid);
+
+	/** 
+	* @Method Name  : workday_cnt 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empid
+	* @return 
+	*/
+	String workday_cnt(String empid);
+
+	/** 
+	* @Method Name  : absenteeism 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empid
+	* @return 
+	*/
+	String absenteeism(String empid);
+
+	/** 
+	* @Method Name  : mowork_approval_insert 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empid
+	* @return 
+	*/
+	int mowork_approval_insert(String empid);
+
+	/** 
+	* @Method Name  : work_modify_add_insert 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMaps
+	* @return 
+	*/
+	int work_modify_add_insert(Map<String, String> paraMaps);
+
+	/** 
+	* @Method Name  : work_modify_del_insert 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMaps
+	* @return 
+	*/
+	int work_modify_del_insert(Map<String, String> paraMaps);
+
+	/** 
+	* @Method Name  : work_modify_edit_insert 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMaps
+	* @return 
+	*/
+	int work_modify_edit_insert(Map<String, String> paraMaps);
+
+	/** 
+	* @Method Name  : avg_hour 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMapYear
+	* @return 
+	*/
+	String avg_hour(Map<String, String> paraMapYear);
+
 	 
 
 }
