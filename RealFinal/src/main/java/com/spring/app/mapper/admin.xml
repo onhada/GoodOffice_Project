@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==== #29. mapper 기본설정 ==== -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="admin">
+	
+	
+	<!-- 오피스관리_사용자관리_사원 리스트 총 카운트 수 -->
+   <select id="getTotalCountEmployeeList" parameterType="HashMap" resultType="int">
+   
+  		select
+        count(*)
+		
+		from tbl_employee e
+		join tbl_team t on e.fk_teamID = t.teamId
+		join tbl_position p on e.fk_positionId = p.positionId
+        
+        
+        <if test='searchWord != ""'>
+        	where 
+				(empName like '%'||lower(#{searchWord})||'%'
+				or substr(email, 0, instr(email, '@')-1) like '%'||lower(#{searchWord})||'%')
+		</if>
+   		
+		<!-- select
+		empName,
+		substr(email, 0, instr(email, '@')-1) as id,
+		
+		case empType when '1' then '일반직'
+		when '2' then '임원,촉탁'
+		when '3' then '연구직'
+		when '4' then '생산직' end
+		as empType,
+		
+		teamName,
+		positionName,
+		case status when '1' then '정상'
+		when '2' then '퇴직'
+		when '3' then '휴직' end
+		as status
+		
+		from tbl_employee e
+		join tbl_team t on e.fk_teamID = t.teamId
+		join tbl_position p on e.fk_positionId = p.positionId -->
+   </select>
+	
+	<!-- 오피스관리_사용자관리_사원 리스트 -->
+   <select id="getEmployeeList_withSearchAndPaging" parameterType="HashMap" resultType="com.spring.app.common.domain.EmployeeVO">
+   
+   
+   		select
+        *
+        from
+        (
+        select
+        row_number() over(
+		<if test='orderType == "desc"'>order by ${orderCol} desc</if>
+		<if test='orderType == "asc"'>order by ${orderCol} asc</if>
+		) AS rno,
+		empId,
+		empName,
+		substr(email, 0, instr(email, '@')-1) as id,
+		
+		case empType when '1' then '일반직'
+		when '2' then '임원,촉탁'
+		when '3' then '연구직'
+		when '4' then '생산직' end
+		as empType,
+		
+		teamName,
+		positionName,
+		case status when '1' then '정상'
+		when '2' then '퇴직'
+		when '3' then '휴직' end
+		as status
+		
+		from tbl_employee e
+		join tbl_team t on e.fk_teamID = t.teamId
+		join tbl_position p on e.fk_positionId = p.positionId
+        
+         
+        <if test='searchWord != ""'>
+        	where
+				(empName like '%'||lower(#{searchWord})||'%'
+				or substr(email, 0, instr(email, '@')-1) like '%'||lower(#{searchWord})||'%')
+		</if>
+        )
+   		where rno between #{startRno} and #{endRno}
+		<!-- select
+		empName,
+		substr(email, 0, instr(email, '@')-1) as id,
+		
+		case empType when '1' then '일반직'
+		when '2' then '임원,촉탁'
+		when '3' then '연구직'
+		when '4' then '생산직' end
+		as empType,
+		
+		teamName,
+		positionName,
+		case status when '1' then '정상'
+		when '2' then '퇴직'
+		when '3' then '휴직' end
+		as status
+		
+		from tbl_employee e
+		join tbl_team t on e.fk_teamID = t.teamId
+		join tbl_position p on e.fk_positionId = p.positionId -->
+   </select>
+   
+	<!-- 오피스관리_사용자관리_조직 리스트 -->
+	<resultMap type="com.spring.app.common.domain.DepartmentVO" id="resultMap_depTeam">
+	   <result property="depId" column="depId"/>
+	   <result property="depName" column="depName"/>
+	   <collection property="teamList" column="depId" javaType="List" ofType="com.spring.app.common.domain.TeamVO" select="getTeamList"/>
+	</resultMap>
+	
+	<!-- 오피스관리_사용자관리_조직 리스트 부서 -->
+	<select id="getDepList" resultMap="resultMap_depTeam">
+		select
+		depId,
+		depName
+		from tbl_department
+		order by depName
+	</select>
+   
+   <!-- 오피스관리_사용자관리_조직 리스트 팀 -->
+   <select id="getTeamList" resultType="com.spring.app.common.domain.TeamVO">
+		select 
+		teamId,
+		teamName
+		from tbl_team
+		where fk_depId = #{depId}
+		order by teamName
+   </select>
+   
+   
+   <!-- 오피스관리_사용자관리_직위 리스트 -->
+   <select id="getPositionList" resultType="com.spring.app.common.domain.PositionVO">
+		select 
+		positionId,
+		positionName
+		from tbl_position
+		order by positionId
+   </select>
+   
+   
+   
+   
+    <!-- 오피스관리_사용자관리_아이디 존재여부 -->
+   <select id="isExistId" parameterType="String" resultType="int">
+		select 
+		count(email)
+		from tbl_employee
+		where substr(email, 0, instr(email, '@')-1) = #{id}
+   </select>
+   
+   <!-- 오피스관리_사용자관리_사용자 등록 -->
+   <insert id="insertUser" parameterType="com.spring.app.common.domain.EmployeeVO">
+   
+		insert into tbl_employee (empId, fk_teamId, fk_positionId, fk_jobId, empType, email, pwd, status, registerDay, empName)
+		values
+		(EMPLOYEESEQ.nextVal, #{fk_teamId}, #{fk_positionId}, 1, #{empType}, #{email}, #{pwd}, 1, sysdate, #{empName})
+   </insert>
+   
+   
+   
+   <!-- 오피스관리_사용자관리_일괄 근무수정 -->
+	<update id="batchWorkType" parameterType="com.spring.app.admin.domain.BatchModifyUserVO">
+		UPDATE tbl_employee
+		SET empType = #{empType}, updateDay = sysdate
+		WHERE
+		empId in 
+		<foreach collection="empIdList" item="empId" open="(" close=")" separator=",">
+			#{empId}
+		</foreach>
+		
+	</update>
+	
+	<!-- 오피스관리_사용자관리_일괄 직위 수정 -->
+	<update id="batchPosition" parameterType="com.spring.app.admin.domain.BatchModifyUserVO">
+		UPDATE tbl_employee
+		SET fk_positionId = #{positionId}, updateDay = sysdate
+		WHERE
+		empId in 
+		<foreach collection="empIdList" item="empId" open="(" close=")" separator=",">
+			#{empId}
+		</foreach>
+		
+	</update>
+	
+	<!-- 오피스관리_사용자관리_일괄 상태 수정 -->
+	<update id="batchStatus" parameterType="com.spring.app.admin.domain.BatchModifyUserVO">
+		UPDATE tbl_employee
+		SET status = #{status}, updateDay = sysdate
+		WHERE
+		empId in 
+		<foreach collection="empIdList" item="empId" open="(" close=")" separator=",">
+			#{empId}
+		</foreach>
+		
+	</update>
+	
+	
+	
+	
+	 <!-- 오피스관리_관리자 설정_전체 관리자 리스트 -->
+   <select id="getFullAdminList" resultType="com.spring.app.common.domain.AdminVO">
+		select
+		adminId,
+		empId,
+		substr(email, 0, instr(email, '@')-1) as id,
+		empName,
+		'['|| depName || '] ' || teamName as team
+		from
+		tbl_employee e
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depId = d.depId
+		join tbl_admin a on a.fk_empId = e.empId
+		where
+		adminType = 1
+		and isDelete = 0
+		order by empName
+   </select>
+   
+    <!-- 오피스관리_관리자 설정_전체 관리자가 아닌 사원 리스트  -->
+   <select id="getNoneFullAdminEmployeeList" parameterType="String" resultType="com.spring.app.common.domain.EmployeeVO">
+		select
+		empId,
+		substr(email, 0, instr(email, '@')-1) as id,
+		empName,
+		'['|| depName || '] ' || teamName as team,
+        adminType
+		from
+		tbl_employee e
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depId = d.depId
+		left join (select fk_empId, adminType from tbl_admin where isDelete = 0) a on a.fk_empId = e.empId
+		where nvl(adminType, -1) != 1 
+		
+		 <if test='searchWord != ""'>
+        	and
+				(empName like '%'||lower(#{searchWord})||'%'
+				or substr(email, 0, instr(email, '@')-1) like '%'||lower(#{searchWord})||'%')
+		</if>
+		order by empName
+   </select>
+   
+   
+   
+   
+   
+    <!-- 오피스관리_관리자 설정_다른 기능 관리자인지 확인한다  -->
+   <select id="isAlreadyAdmin" parameterType="HashMap" resultType="int">
+		select
+		count(*)
+		from tbl_admin
+		where 
+		fk_empId = #{empId} and adminType != '1' and isDelete = 0
+   </select>
+   
+	<!-- 오피스관리_관리자설정_전체관리자 등록시 다른기능 관리자일 경우 삭제 -->
+	<update id="deleteAdminByEmpId" parameterType="HashMap">
+		UPDATE tbl_admin
+		SET isDelete = 1
+		WHERE
+		fk_empId = #{empId}
+	</update>
+	
+	<!-- 오피스관리_관리자설정_전체관리자 등록시 다른기능 관리자일 경우 삭제 이력 넣기 -->
+	<update id="updateAdminHistoryByEmpId" parameterType="HashMap">
+		UPDATE tbl_adminHistory
+		SET DELETEDAY = sysdate, FK_DELEMPID = #{userEmpId}
+		WHERE
+		fk_adminId = 
+		(select 
+        adminId
+        from tbl_admin a
+        join tbl_adminHistory ah on a.adminId = ah.fk_adminid
+        where fk_empId = #{empId} and fk_delEmpId is null)
+	</update>
+	
+	
+	
+	<!-- 오피스관리_관리자설정 _관리자 추가-->
+	<insert id="addFullAdminManager"
+		parameterType="HashMap">
+		insert into tbl_admin values (#{adminId}, #{adminType}, #{empId}, 1, 0)
+	</insert>
+</mapper>

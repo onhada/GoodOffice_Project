@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -6,6 +7,20 @@
 	String ctxPath = request.getContextPath();
 %>
 
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_new.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_tutorial.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/jquery.toastmessage-min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/style_approval.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/new_lnb.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/contentsEditStyle.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/characterPicker.min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/codemirror.min.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/editor_custom.css">
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/synapeditor.min.css">
+<!-- 예인추가 -->
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/approval/approval.css">
 
 
 <script>
@@ -20,16 +35,16 @@ $(document).ready(function() {
 	// 관리자 추가 입력시
 	
 	let prev_autoComplete = $("ul.admin_autocomplete").html();
-	$(document).on("focus", "input#inputApprovalManager", function(){
+	$(document).on("focus", "input#inputPersonnelManager", function(){
 		
-		if($("input#inputApprovalManager").val().trim() != ''){
+		if($("input#inputPersonnelManager").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalManager").val())
+			console.log($("input#inputPersonnelManager").val())
 			
 			$.ajax({
 				url: "<%= ctxPath%>/approval/searchEmpName.gw",
-				data: { "empName": $("input#inputApprovalManager").val().trim()},
+				data: { "empName": $("input#inputPersonnelManager").val().trim()},
 				type: "post",
 				async: true,
 				dataType: "json",
@@ -74,16 +89,16 @@ $(document).ready(function() {
 		
 	});
 	
-	$(document).on("keyup", "input#inputApprovalManager", function(){
+	$(document).on("keyup", "input#inputPersonnelManager", function(){
 		
-		if($("input#inputApprovalManager").val().trim() != ''){
+		if($("input#inputPersonnelManager").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalManager").val())
+			console.log($("input#inputPersonnelManager").val())
 			
 			$.ajax({
 				url: "<%= ctxPath%>/approval/searchEmpName.gw",
-				data: { "empName": $("input#inputApprovalManager").val().trim()},
+				data: { "empName": $("input#inputPersonnelManager").val().trim()},
 				type: "post",
 				async: true,
 				dataType: "json",
@@ -127,7 +142,7 @@ $(document).ready(function() {
 	})
 	
 	// 입력하다가 다른 거 선택했을경우
-	$(document).on("focusout", "input#inputApprovalManager", function(){
+	$(document).on("focusout", "input#inputPersonnelManager", function(){
 		$("ul.admin_autocomplete").html(prev_autoComplete);
 		$("ul.admin_autocomplete").hide();
 	}) 
@@ -152,7 +167,7 @@ $(document).ready(function() {
 		if(isExist){
 			// 이미 존재한다면
 			alert("이미 포함된 관리자는 중복으로 설정할 수 없습니다.")
-			$("input#inputApprovalManager").val('');
+			$("input#inputPersonnelManager").val('');
 			
 		}else{
 			
@@ -163,7 +178,7 @@ $(document).ready(function() {
 				
 				//ajax
 				$.ajax({
-					url: "<%= ctxPath%>/approval/addApprovalAdminManager.gw",
+					url: "<%= ctxPath%>/personnel/addPersonnelAdminManager.gw",
 					data: { "empId": empId },
 					type: "post",
 					async: true,
@@ -171,7 +186,7 @@ $(document).ready(function() {
 					success: function(text) {
 						console.log(JSON.stringify(text));
 						if(text.isAdd){
-							$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
+							$(location).attr('href', `<%= ctxPath %>/personnel/insaManager.gw`);
 						}else{
 							alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 						}
@@ -187,68 +202,6 @@ $(document).ready(function() {
 	
 	
 	
-	$("input[name='checkRead']").change(function(){
-		if($(this).is(':checked')){
-			console.log("체크했쪄요")
-			
-			// 체크 하였을 경우
-			if(confirm("열람 권한을 부여하시겠습니까?")){
-				// yes일 경우
-				
-				//ajax
-				$.ajax({
-					url: "<%= ctxPath%>/approval/grantAdminRead.gw",
-					data: { "adminId": $(this).val(), "isReadAble" : 1 },
-					type: "post",
-					async: true,
-					dataType: "json",
-					success: function(text) {
-						console.log(JSON.stringify(text));
-						if(text.isUpdate){
-							$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
-							alert("열람권한이 부여되었습니다.")
-						}else{
-							alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
-						}
-						
-					},
-					error: function(request, status, error) {
-						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
-					}
-				});
-			}
-		}else{
-			console.log("체크해제")
-			
-			// 체크해제 하였을 경우
-			if(confirm("열람 권한을 해제하시겠습니까?")){
-				// yes일 경우
-				
-				//ajax
-				$.ajax({
-					url: "<%= ctxPath%>/approval/grantAdminRead.gw",
-					data: { "adminId": $(this).val(), "isReadAble" : 0 },
-					type: "post",
-					async: true,
-					dataType: "json",
-					success: function(text) {
-						console.log(JSON.stringify(text));
-						if(text.isUpdate){
-							$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
-							alert("열람권한이 해제되었습니다.")
-						}else{
-							alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
-						}
-						
-					},
-					error: function(request, status, error) {
-						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
-					}
-				});
-			}
-		}
-	});
-		
 	
 	
 	
@@ -269,7 +222,7 @@ function deleteAdmin(adminId){
 		
 		//ajax
 		$.ajax({
-			url: "<%= ctxPath%>/approval/deleteApprovalAdminManager.gw",
+			url: "<%= ctxPath%>/personnel/deletePersonnelAdminManager.gw",
 			data: { "adminId": adminId },
 			type: "post",
 			async: true,
@@ -277,7 +230,7 @@ function deleteAdmin(adminId){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isDelete){
-					$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
+					$(location).attr('href', `<%= ctxPath %>/personnel/insaManager.gw`);
 				}else{
 					alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 				}
@@ -298,7 +251,7 @@ function showSettingHistory(){
 
 	//ajax
 	$.ajax({
-		url: "<%= ctxPath%>/approval/getAdminHistory.gw",
+		url: "<%= ctxPath%>/personnel/getAdminHistory.gw",
 		type: "post",
 		async: true,
 		dataType: "json",
@@ -316,10 +269,10 @@ function showSettingHistory(){
 				
 				if(text[i]['registerType'] == 1){
 					// 등록
-					html += text[i]['empName'] + `(` + text[i]['id'] + `)의 전자결재 관리자 권한이 부여되었습니다.`;
+					html += text[i]['empName'] + `(` + text[i]['id'] + `)의 인사 관리자 권한이 부여되었습니다.`;
 				}else{
 					// 삭제
-					html += text[i]['empName'] + `(` + text[i]['id'] + `)의 전자결재 관리자 권한이 해제되었습니다.`;
+					html += text[i]['empName'] + `(` + text[i]['id'] + `)의 인사 관리자 권한이 해제되었습니다.`;
 				}
 				
 				html += `</div>
@@ -332,8 +285,8 @@ function showSettingHistory(){
 						</tr>`;
 			}
 			
-			$("div#layerApprovalManagerHistory tbody").html(html);
-			$("div#layerApprovalManagerHistory").show();
+			$("div#layerPersonnelManagerHistory tbody").html(html);
+			$("div#layerPersonnelManagerHistory").show();
 		},
 		error: function(request, status, error) {
 			alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
@@ -351,7 +304,7 @@ function showSettingHistory(){
 
 <div id="contents">
 	<div class="setting_title">
-		<h3 class="fl">전자결재 관리자</h3>
+		<h3 class="fl">인사 관리자</h3>
 	</div>
 	<div class="content_inbox approval-admin">
 		<div class="cont_box">
@@ -367,11 +320,7 @@ function showSettingHistory(){
 						<col style="width: 150px;">
 						<col>
 						<col style="width: 150px;">
-						<c:if test="${sessionScope.loginUser.adminType eq 'All'}">
-								<col style="width: 180px;">
-						</c:if>
-						
-						<col style="width: 120px;">
+						<col style="width: 150px;">
 					</colgroup>
 					<thead>
 						<tr>
@@ -379,9 +328,6 @@ function showSettingHistory(){
 							<th scope="col">아이디</th>
 							<th scope="col">소속</th>
 							<th scope="col">등록일</th>
-							<c:if test="${sessionScope.loginUser.adminType eq 'All'}">
-								<th scope="col">전체 문서 열람</th>
-							</c:if>
 							<th scope="col"></th>
 						</tr>
 
@@ -389,7 +335,7 @@ function showSettingHistory(){
 						<tr class="addAdminManager" style="display:none">
 							<td colspan="6" class="input-admin-name">
 								<label>
-									<input type="text" class="js-complete ui-autocomplete-input" id="inputApprovalManager" placeholder="관리자 이름" title="관리자 이름" autocomplete="off">
+									<input type="text" class="js-complete ui-autocomplete-input" id="inputPersonnelManager" placeholder="관리자 이름" title="관리자 이름" autocomplete="off">
 								</label>
 							</td>
 						</tr>
@@ -406,28 +352,6 @@ function showSettingHistory(){
 									</td>
 									<td class="center">${adminVo.registerDay}</td>
 									
-									
-									<!-- 전체 관리자일 경우에만 이 부분이 보여져야한다 -->									
-									<c:if test="${sessionScope.loginUser.adminType eq 'All'}">
-										<c:if test="${adminVo.isReadAllDocument eq '0'}">
-											<td>
-												<label>
-													<input type="checkbox" name="checkRead" value = "${adminVo.adminId}">
-													허용
-												</label>
-											</td>
-										</c:if>
-										
-										<c:if test="${adminVo.isReadAllDocument eq '1'}">
-											<td>
-												<label>
-													<input type="checkbox" name="checkRead" value = "${adminVo.adminId}" checked>
-													허용
-												</label>
-											</td>
-										</c:if>
-									</c:if>
-
 
 									<c:if test="${adminVo.isFullAdmin eq '1'}">
 										<td class="center">전체 관리자</td>
@@ -441,12 +365,6 @@ function showSettingHistory(){
 								</tr>
 
 							</c:forEach>
-						</c:if>
-						
-						
-						
-						<c:if test="${empty requestScope.adminList}">
-							<td colspan="7">관리자가 존재하지 않습니다.</td>
 						</c:if>
 
 					</thead>

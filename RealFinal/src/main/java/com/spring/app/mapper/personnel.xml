@@ -424,4 +424,367 @@ on b.day >=0
 	
 	 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 예진 코드 시작 -->
+	
+	
+	<!-- 인사설정_결재양식 -->
+	<select id="getFormList" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.FormVO">
+		select
+		formId,
+		formName,
+		description,
+		isUse
+		from tbl_form
+		where <![CDATA[ formId <= 106 ]]>
+	</select>
+
+
+
+	<!-- 인사_관리자 설정_메인 화면 -->
+	<select id="getAdminList"
+		resultType="com.spring.app.common.domain.AdminVO">
+		select
+		adminId,
+		empId,
+		empName,
+		substr(email, 0, instr(email,
+		'@')-1) as id,
+		'['||depName||'] '||teamName as team,
+		to_char(ah.registerDay,'yyyy-mm-dd') as registerDay,
+		isReadAllDocument,
+		case adminType when '1' then '1' else '0' end as
+		isFullAdmin
+		from tbl_admin a
+		join tbl_adminHistory ah on a.adminid =
+		ah.fk_adminId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_team
+		t on e.fk_teamId = t.teamId
+		join tbl_department d on d.depid =
+		t.fk_depid
+		where (adminType = 1 or adminType = 2) and isDelete = 0
+		order by empName
+	</select>
+
+
+	<!-- 인사_관리자설정 _관리자 설정 이력 -->
+	<select id="getAdminHistoryList"
+		resultType="com.spring.app.approval.domain.AdminHistoryVO">
+		select * from
+		(
+		(
+		select
+		substr(e1.email, 0, instr(e1.email, '@')-1) as id,
+		e1.empName,
+
+		substr(e2.email, 0, instr(e2.email, '@')-1) as registerId,
+		e2.empName as registerEmpName,
+		to_char(ah.registerDay, 'yyyy-mm-dd hh24:mi:ss') as registerDay,
+		1 as registerType
+
+		from
+		tbl_adminHistory ah
+		join tbl_admin a on ah.fk_adminId = a.adminId
+		join tbl_employee e1 on a.fk_empId = e1.empId
+		join tbl_employee e2 on ah.fk_resEmpId = e2.empId
+		where adminType = 1 or adminType = 2
+		)
+
+		union
+
+		(
+		select
+		substr(e1.email, 0, instr(e1.email, '@')-1) as id,
+		e1.empName,
+
+		substr(e2.email, 0, instr(e2.email, '@')-1) as registerId,
+		e2.empName as registerEmpName,
+		to_char(ah.deleteDay, 'yyyy-mm-dd hh24:mi:ss') as registerDay,
+		2 as registerType
+
+		from
+		tbl_adminHistory ah
+		join tbl_admin a on ah.fk_adminId = a.adminId
+		join tbl_employee e1 on a.fk_empId = e1.empId
+		join tbl_employee e2 on ah.fk_delEmpId = e2.empId
+		where adminType = 1 or adminType = 2
+		)
+		)
+
+		order by registerDay desc
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 급여 -->
+	
+	
+	<!-- 급여대장_메인 -->
+	<select id="isExistPayrollThisMonth" parameterType="String"
+		resultType="com.spring.app.personnel.domain.SalaryVO">
+		select
+		
+		salaryId,
+		s.fk_empId as empId,
+		to_char(month, 'YYYY"년 "MM"월 "') as month,
+		to_char(startDay, 'YYYY"년 "MM"월 "DD"일"') as startDay,
+		to_char(endDay, 'YYYY"년 "MM"월 "DD"일"') as endDay,
+		to_char(endDay, 'YYYY"년 "MM"월 "DD"일"') as payDay,
+		to_char(registerDay, 'yyyy-mm-dd hh24:mi:iss') as registerDay,
+		isFix,
+        totalPay,
+        totalDeduction,
+        actualPay
+        
+		from
+		tbl_salary s
+        join 
+        (select fk_salaryId,
+        sum(totalPay) as totalPay,
+        sum(totalDeduction) as totalDeduction,
+        sum(actualPay) as actualPay 
+        from
+        tbl_salaryDetail group by 
+        fk_salaryId)
+        sd on s.salaryId = sd.fk_salaryid
+		where to_char(month, 'yyyy-mm') = #{month}
+	</select>
+	
+	<!-- 급여대장_메인 -->
+	<select id="getSalaryDetail_withSearch" parameterType="HashMap"
+		resultType="com.spring.app.personnel.domain.SalaryDetailVO">
+		
+		select
+		
+		salaryDetailId,
+		fk_salaryId as salaryId,
+		fk_empId as empId,
+		basePay,
+		overTimePay,
+		nightTimePay,
+		holidayPay,
+		unUsedAnnualPay,
+		totalPay,
+		incomeTax,
+		localTax,
+		nationalPension,
+		healthInsurance,
+		longTermCareInsurance,
+		totalDeduction,
+		actualPay,
+        empName,
+        substr(e.email, 0, instr(e.email, '@')-1) as id,
+        '[' || depName || '] ' || teamName as team,
+        positionName
+		
+		from
+		tbl_salaryDetail sd
+        join tbl_employee e on sd.fk_empId = e.empId
+        join tbl_team t on e.fk_teamId = t.teamId
+        join tbl_department d on t.fk_depId = d.depId
+        join tbl_position p on e.fk_positionId = p.positionId
+        
+		where fk_salaryId = #{salaryId}
+		
+		<if test='searchWord != ""'>
+        	and
+				(empName like '%'||lower(#{searchWord})||'%'
+				or substr(email, 0, instr(email, '@')-1) like '%'||lower(#{searchWord})||'%')
+		</if>
+		<if test='orderType == "desc"'>order by empName desc</if>
+		<if test='orderType == "asc"'>order by empName asc</if>
+	</select>
+	
+	
+	<!-- 급여대장_급여 확정 -->
+	<update id="fixPayroll" parameterType="HashMap">
+		update tbl_salary
+		set isFix = #{isFix}
+		where salaryId = #{salaryId}
+	</update>
+	
+	
+	<!-- 급여대장_급여 확정 삭제 위해 급여 상세 우선 삭제 -->
+	<delete id="deleteSalaryDetail" parameterType="Long">
+		delete from tbl_salaryDetail where fk_salaryId = #{salaryId}
+	</delete>
+	
+	<!-- 급여대장_급여 확정 삭제 위해 급여 삭제 -->
+	<delete id="deleteSalary" parameterType="Long">
+		delete from tbl_salary where salaryId = #{salaryId}
+	</delete>
+	
+	
+	
+	
+	
+	<!-- 급여대장_급여 등록_존재하는 사원인지 확인-->
+	<select id="getEmpId" resultType="Long">
+		select
+		empId
+		from tbl_employee
+		where substr(email, 0, instr(email, '@')-1) = #{id} and empName = #{empName}
+	</select>
+	
+	<!-- 급여대장_급여 등록용 시퀀스 값 취득 -->
+	<select id="getSalarySequence"
+		resultType="Long">
+		select
+		SALARYSEQ.nextVal
+		from dual
+	</select>
+	
+	<!-- 급여대장_급여 등록 -->
+	<insert id="insertSalary" parameterType="com.spring.app.personnel.domain.SalaryVO">
+		insert into tbl_salary
+		values
+		(#{salaryId}, #{empId}, to_date(#{month}||'-01', 'yyyy-mm-dd'), to_date(#{startDay}, 'yyyy-mm-dd'), to_date(#{endDay}, 'yyyy-mm-dd'), to_date(#{payDay}, 'yyyy-mm-dd'), default, 0)
+	</insert>
+	
+	<!-- 급여대장_급여상세 등록 -->
+	<insert id="insertSalaryDetail" parameterType="com.spring.app.personnel.domain.SalaryDetailVO">
+		insert into tbl_salaryDetail
+		values
+		(SALARYDETAILSEQ.nextVal, #{salaryId}, #{empId}, #{basePay}, #{overTimePay}, #{nightTimePay}, #{holidayPay}, #{unUsedAnnualPay}, #{totalPay}, #{incomeTax}, #{localTax}, #{nationalPension}, #{healthInsurance}, #{longTermCareInsurance}, #{totalDeduction}, #{actualPay})
+	</insert>
+
+
+	<!-- 급여대장_급여 다운로드 받을시에 필요한 정보  -->
+	<select id="getSalary" parameterType="String"
+		resultType="com.spring.app.personnel.domain.SalaryVO">
+		select
+		
+		salaryId,
+		s.fk_empId as empId,
+		to_char(month, 'YYYY"년 "MM"월 "') as month,
+		to_char(startDay, 'YYYY"년 "MM"월 "DD"일"') as startDay,
+		to_char(endDay, 'YYYY"년 "MM"월 "DD"일"') as endDay,
+		to_char(payDay, 'YYYY"년 "MM"월 "DD"일"') as payDay,
+		to_char(registerDay, 'yyyy-mm-dd hh24:mi:iss') as registerDay,
+		isFix,
+        totalPay,
+        totalDeduction,
+        actualPay
+        
+		from
+		tbl_salary s
+        join 
+        (select fk_salaryId,
+        sum(totalPay) as totalPay,
+        sum(totalDeduction) as totalDeduction,
+        sum(actualPay) as actualPay 
+        from
+        tbl_salaryDetail group by 
+        fk_salaryId)
+        sd on s.salaryId = sd.fk_salaryid
+		where salaryId = #{salaryId}
+	</select>
+	
+	
+	
+	
+	<!-- 인사_급여 (개인) 메인화면  -->
+	<select id="getSalaryByYear" parameterType="HashMap"
+		resultType="com.spring.app.personnel.domain.SalaryVO">
+		select
+		
+		salaryId,
+		to_char(month, 'yyyy-mm') as month,
+		to_char(startDay, 'yyyy-mm-dd') as startDay,
+		to_char(endDay, 'yyyy-mm-dd') as endDay,
+		to_char(payDay, 'yyyy-mm-dd') as payDay,
+		totalPay,
+		totalDeduction,
+		actualPay
+		
+		from
+		tbl_salary s
+		join tbl_salaryDetail sd on s.salaryId = sd.fk_salaryId
+		
+		where
+		sd.fk_empId = #{empId}
+		and to_char(month, 'yyyy') = #{year}
+		and isFix = 1
+		
+		<if test='orderType == "desc"'>order by month desc</if>
+		<if test='orderType == "asc"'>order by month asc</if>
+	</select>
+	
+	
+	<!-- 인사_급여_급여명세서 보기 버튼 클릭시  -->
+	<select id="getSalaryDetailBySalaryIdAndEmpId" parameterType="HashMap"
+		resultType="com.spring.app.personnel.domain.SalaryDetailVO">
+		select
+		
+		basePay,
+		overTimePay,
+		nightTimePay,
+		holidayPay,
+		unUsedAnnualPay,
+		totalPay,
+		incomeTax,
+		localTax,
+		nationalPension,
+		healthInsurance,
+		longTermCareInsurance,
+		totalDeduction,
+		actualPay,
+		
+        empName,
+        '[' || depName || '] ' || teamName as team
+		
+		from
+		tbl_salaryDetail sd
+        join tbl_employee e on sd.fk_empId = e.empId
+        join tbl_team t on e.fk_teamId = t.teamId
+        join tbl_department d on t.fk_depId = d.depId
+        join tbl_position p on e.fk_positionId = p.positionId
+        
+		where fk_salaryId = #{salaryId} and fk_empId = #{empId}
+	</select>
+	
+	<!-- 예진 코드 끝 -->
 </mapper>

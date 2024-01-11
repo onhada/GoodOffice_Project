@@ -483,7 +483,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
-						$(location).attr('href',`<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -524,7 +524,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isDelete == true){
-						$(location).attr('href', `<%= ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -550,7 +550,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
-						$(location).attr('href', `<%= ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -636,7 +636,7 @@ function deleteSavedFile(fileId){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isDelete == true){
-				$(location).attr('href', `<%= ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 			}
@@ -685,9 +685,9 @@ function updateApprovalFile(file_arr){
 				contentType:false,  // 파일 전송시 설정 
 				dataType:"json",
 				success:function(text){
-				if(text.isUpdate == true) {
+					if(text.isUpdate == true) {
 					/* contextPath를 ctxPath로 변경하기 */
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else {
 						alert("파일 첨부가 실패했습니다.");
 					}
@@ -706,9 +706,9 @@ function updateApprovalFile(file_arr){
 			contentType:false,  // 파일 전송시 설정 
 			dataType:"json",
 			success:function(text){
-			if(text.isUpdate == true) {
-				/* contextPath를 ctxPath로 변경하기 */
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				if(text.isUpdate == true) {
+					/* contextPath를 ctxPath로 변경하기 */
+					location.reload()
 				}else {
 					alert("파일 첨부가 실패했습니다.");
 				}
@@ -759,7 +759,7 @@ function deleteRef(id){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isDelete){
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -785,7 +785,7 @@ function updateRefRead(){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isUpdate){
-				$(location).attr('href', `<%= ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 			}
@@ -813,7 +813,7 @@ function insertOpinion(){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isInsert){
-					$(location).attr('href', `<%= ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("등록에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -842,7 +842,7 @@ function deleteOpinion(opinionId){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isDelete){
-					$(location).attr('href', `<%= ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -961,7 +961,9 @@ function deleteOpinion(opinionId){
 							<th scope="row">
 								<div class="choice" style="min-height: 45px; height: 44px; display: table-cell; width: 116px; vertical-align: middle; text-align: center;">
 									회람
-									<span class="spr-approval set" title="회람" onclick="showInputReference();"></span>
+									<c:if test="${requestScope.viewType eq 'list' && requestScope.isReturn eq false && (requestScope.userProcedureType eq 1 || requestScope.userProcedureType eq 5)}">
+										<span class="spr-approval set" title="회람" onclick="showInputReference();"></span>
+									</c:if>
 								</div>
 							</th>
 							<td id="approvalFirstLine">

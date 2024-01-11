@@ -177,7 +177,7 @@ $(document).ready(function() {
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
-						html += `<li class="ui-menu-item" id="ui-id-11" tabindex="-1"><div><span class="team-membername">` + text[i]['empName'] + `</span><span class="team-name">` + [text[i]['depName']] + ` ` +  text[i]['teamName'] + `</span></div></li>`;
+						html += `<li class="ui-menu-item" id="ui-id-11" tabindex="-1"><div><span class="team-membername" id="addEmpId_` + text[i]['empId'] +`">` + text[i]['empName'] + `</span><span class="team-name">` + [text[i]['depName']] + ` ` +  text[i]['teamName'] + `</span></div></li>`;
 					}
 					
 					if(text.length > 0){
@@ -765,7 +765,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
-						$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -1114,7 +1114,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isDelete == true){
-						$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -1140,7 +1140,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
-						$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -1217,7 +1217,7 @@ function deleteSavedFile(fileId){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isDelete == true){
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 			}
@@ -1268,7 +1268,7 @@ function updateApprovalFile(file_arr){
 				success:function(text){
 				if(text.isUpdate == true) {
 					/* contextPath를 ctxPath로 변경하기 */
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 					}else {
 						alert("파일 첨부가 실패했습니다.");
 					}
@@ -1289,7 +1289,7 @@ function updateApprovalFile(file_arr){
 			success:function(text){
 			if(text.isUpdate == true) {
 				/* contextPath를 ctxPath로 변경하기 */
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 				}else {
 					alert("파일 첨부가 실패했습니다.");
 				}
@@ -1337,7 +1337,7 @@ function deleteRefOrIncOrIncR(id){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isDelete){
-					$(location).attr('href',  `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1371,7 +1371,7 @@ function insertOpinion(){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isInsert){
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("등록에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1400,7 +1400,7 @@ function deleteOpinion(opinionId){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isDelete){
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1460,7 +1460,7 @@ function enterActionOfApproval(){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isUpdate){
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("등록에 실패하였습니다. 다시 시도해주세요.")
 			}
@@ -1484,7 +1484,7 @@ function updateRefRead(){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isUpdate){
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 			}
@@ -1496,40 +1496,6 @@ function updateRefRead(){
 	});
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
-
-// 결재선 변경 버튼 클릭하였을 경우
-<%-- function changeLineSetting(){
-	
-	
-	$.ajax({
-		url: "<%= ctxPath%>/approval/getTeamList.gw",
-		type: "post",
-		async: true,
-		dataType:"json",
-		success: function(text) {
-			console.log(JSON.stringify(text));
-			if(text.isUpdate){
-				$(location).attr('href', `<%= ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
-			}else{
-				alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
-			}
-		},
-		error: function(request, status, error) {
-			// 수정필
-			alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
-		}
-	});
-	
-	
-	
-	
-	
-	
-	$("div#universal_approval_layer").show();
-}
- --%>
-// 결재선 변경 모달 속 처리 ----------------------------------------------------------
 
 
 
@@ -1601,7 +1567,7 @@ function updateApprovalLineSetting(){
 				console.log(JSON.stringify(text));
 				console.log(text.isSuccess);
 				if(text.isSuccess){
-					$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1613,7 +1579,7 @@ function updateApprovalLineSetting(){
 		});
 	}else{
 		alert("결재자 수는 한 명 이상 일곱 명 이하로 존재하여야 합니다.")
-		$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+		location.reload()
 	}
 }
 
@@ -1686,7 +1652,7 @@ function updateAgreeLineSetting(){
 				console.log(JSON.stringify(text));
 				console.log(text.isSuccess);
 				if(text.isSuccess){
-					$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1771,7 +1737,7 @@ function updateFiAgreeLineSetting(){
 				console.log(JSON.stringify(text));
 				console.log(text.isSuccess);
 				if(text.isSuccess){
-					$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 				}

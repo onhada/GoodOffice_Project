@@ -75,7 +75,7 @@ public class ApprovalController {
 	 * @param req @return 
 	 */
 	@GetMapping("/approval/document/list/{type}.gw")
-	public ModelAndView approvalListAll_ing(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalListAll_ing_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			SearchApprovalVO savo, @PathVariable String type) {
 
 		mav.addObject("type", type);
@@ -83,7 +83,6 @@ public class ApprovalController {
 		HttpSession session = req.getSession();
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
-		loginUser.setAdminType("2");
 		session.setAttribute("loginUser", loginUser);
 
 		String searchType = savo.getSearchType();
@@ -111,10 +110,6 @@ public class ApprovalController {
 			searchWord = searchWord.trim();
 		}
 
-		System.out.println("searchType : " + searchType);
-		System.out.println("searchWord : " + searchWord);
-		System.out.println("orderType : " + orderType);
-
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("searchType", searchType);
 		paraMap.put("searchWord", searchWord);
@@ -139,30 +134,28 @@ public class ApprovalController {
 			ingList = service.getApprovalProgressList_withSearchAndPaging(paraMap);
 		}
 
-		if (!"".equals(searchType) && !"".equals(searchWord)) {
-			paraMap.put("searchType", "");
-			paraMap.put("searchWord", "");
+//		if (!"".equals(searchType) && !"".equals(searchWord)) {
+//			paraMap.put("searchType", "");
+//			paraMap.put("searchWord", "");
+//
 
-			mav.addObject("searchType", searchType);
-			mav.addObject("searchWord", searchWord);
-		}
-
-		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
-		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
-		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
-		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
-		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
+//		}
+//
+//		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
 
 		int totalCount = 0; // 총 게시물 건수
 		// 수정필
-		int sizePerPage = 1; // 한 페이지당 보여줄 게시물 건수
+		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
 		totalCount = ingList.size();
 
-		System.out.println("totalCount" + totalCount);
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -199,9 +192,6 @@ public class ApprovalController {
 		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
 		 */
 
-		System.out.println("currentShowPageNo : " + currentShowPageNo);
-		System.out.println("startRno : " + startRno);
-		System.out.println("endRno : " + endRno);
 
 		/*
 		 * paraMap.put("startRno", String.valueOf(startRno)); paraMap.put("endRno",
@@ -211,7 +201,12 @@ public class ApprovalController {
 		if (totalCount == 0) {
 			mav.addObject("ingList", ingList);
 		} else {
-			mav.addObject("ingList", ingList.subList(startRno, endRno));
+			
+			if(ingList.size() < sizePerPage) {
+				mav.addObject("ingList", ingList);
+			}else {
+				mav.addObject("ingList", ingList.subList(startRno, endRno));
+			}
 		}
 
 //		mav.addObject("allIngList", allIngList.subList(startRno-1, endRno +1));
@@ -223,7 +218,7 @@ public class ApprovalController {
 
 		// === #121. 페이지바 만들기 === //
 		// 수정필
-		int blockSize = 2;
+		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
 		/*
 		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
@@ -305,7 +300,9 @@ public class ApprovalController {
 		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("orderType", orderType);
-
+		mav.addObject("searchType", searchType);
+		mav.addObject("searchWord", searchWord);
+		
 		mav.setViewName("document_lists_" + type + ".approval");
 
 		return mav;
@@ -314,8 +311,21 @@ public class ApprovalController {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	/** 
+	* @Method Name  : approvalDocumentBox_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함
+	* @param req
+	* @param res
+	* @param mav
+	* @param savo
+	* @param type
+	* @return 
+	*/
 	@GetMapping("/approval/document/box/{type}.gw")
-	public ModelAndView approvalDocumentBox(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalDocumentBox_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			SearchApprovalVO savo, @PathVariable String type) {
 
 		mav.addObject("type", type);
@@ -392,29 +402,28 @@ public class ApprovalController {
 			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
 		}
 
-		if (!"".equals(searchType) && !"".equals(searchWord)) {
-			paraMap.put("searchType", "");
-			paraMap.put("searchWord", "");
-
-			mav.addObject("searchType", searchType);
-			mav.addObject("searchWord", searchWord);
-		}
-		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
-		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
-		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
-		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
-		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
+//		if (!"".equals(searchType) && !"".equals(searchWord)) {
+//			paraMap.put("searchType", "");
+//			paraMap.put("searchWord", "");
+//
+//			mav.addObject("searchType", searchType);
+//			mav.addObject("searchWord", searchWord);
+//		}
+//		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
+//		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
 
 		int totalCount = 0; // 총 게시물 건수
 		// 수정필
-		int sizePerPage = 1; // 한 페이지당 보여줄 게시물 건수
+		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
 		totalCount = boxList.size();
 
-		System.out.println("totalCount" + totalCount);
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -453,9 +462,6 @@ public class ApprovalController {
 		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
 		 */
 
-		System.out.println("currentShowPageNo : " + currentShowPageNo);
-		System.out.println("startRno : " + startRno);
-		System.out.println("endRno : " + endRno);
 
 		/*
 		 * paraMap.put("startRno", String.valueOf(startRno)); paraMap.put("endRno",
@@ -465,7 +471,11 @@ public class ApprovalController {
 		if (totalCount == 0) {
 			mav.addObject("boxList", boxList);
 		} else {
-			mav.addObject("boxList", boxList.subList(startRno, endRno));
+			if(boxList.size() < sizePerPage) {
+				mav.addObject("boxList", boxList);
+			}else {
+				mav.addObject("boxList", boxList.subList(startRno, endRno));
+			}
 		}
 
 //		mav.addObject("allIngList", allIngList.subList(startRno-1, endRno +1));
@@ -477,7 +487,7 @@ public class ApprovalController {
 
 		// === #121. 페이지바 만들기 === //
 		// 수정필
-		int blockSize = 2;
+		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
 		/*
 		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
@@ -559,6 +569,8 @@ public class ApprovalController {
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("orderType", orderType);
+		mav.addObject("searchType", searchType);
+		mav.addObject("searchWord", searchWord);
 		mav.addObject("listType", listType);
 
 		mav.setViewName("document_box_" + type + ".approval");
@@ -568,28 +580,49 @@ public class ApprovalController {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
+	/** 
+	* @Method Name  : approvalAdminSettingBasicShow_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 관리자 설정_기본 설정
+	* @param req
+	* @param res
+	* @param mav
+	* @return 
+	*/
 	@GetMapping("/approval/settings/basic.gw")
-	public ModelAndView approvalAdminSettingBasicShow(HttpServletRequest req, HttpServletResponse res,
+	public ModelAndView approvalAdminSettingBasicShow_AfterGetListSize(HttpServletRequest req, HttpServletResponse res,
 			ModelAndView mav) {
 		// 관리자 설정_기본 설정 보여주기용
 
 		mav.setViewName("settings_basic.approval");
 		mav.addObject("securityLevelList", service.getSecurityLevelList());
 		mav.addObject("securityLevelDetailList", service.getSecurityLevelDetailList());
+		
 		mav.addObject("type", "settings_basic");
+		mav.addObject("noSearch", true);
 		return mav;
 
 	}
 
+	/** 
+	* @Method Name  : approvalAdminSettingBasic 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전자결재관리자_기본 설정 설정하기
+	* @param req
+	* @param res
+	* @param mav
+	* @return 
+	*/
 	@PostMapping("/approval/settings/basic.gw")
-	public ModelAndView approvalAdminSettingBasic(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+	public ModelAndView approvalAdminSettingBasic_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 		// 관리자 설정_기본 설정 설정하기
 
 		String levelA = req.getParameter("security_level_a");
 		String levelB = req.getParameter("security_level_b");
-
-		System.out.println("levelA : " + levelA);
-		System.out.println("levelB : " + levelB);
 
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("levelA", levelA);
@@ -611,8 +644,19 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : approvalAdminSettingForm_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_양식함 관리 메인 화면
+	* @param req
+	* @param res
+	* @param mav
+	* @return 
+	*/
 	@GetMapping("/approval/settings/forms.gw")
-	public ModelAndView approvalAdminSettingForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+	public ModelAndView approvalAdminSettingForm_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
 		String searchWord = req.getParameter("searchWord");
 		String str_currentShowPageNo = req.getParameter("currentShowPageNo");
@@ -627,14 +671,12 @@ public class ApprovalController {
 
 		int totalCount = 0; // 총 게시물 건수
 		// 수정필
-		int sizePerPage = 5; // 한 페이지당 보여줄 게시물 건수
+		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
 		totalCount = service.getTotalCountApprovalFormList(searchWord);
-
-		System.out.println("totalCount" + totalCount);
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -673,10 +715,6 @@ public class ApprovalController {
 		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
 		 */
 
-		System.out.println("currentShowPageNo : " + currentShowPageNo);
-		System.out.println("startRno : " + startRno);
-		System.out.println("endRno : " + endRno);
-
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("startRno", String.valueOf(startRno));
 		paraMap.put("endRno", String.valueOf(endRno));
@@ -695,7 +733,7 @@ public class ApprovalController {
 
 		// === #121. 페이지바 만들기 === //
 		// 수정필
-		int blockSize = 2;
+		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
 		/*
 		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
@@ -781,8 +819,20 @@ public class ApprovalController {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	/** 
+	* @Method Name  : approvalAdminSettingsDocument_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전체문서목록
+	* @param req
+	* @param res
+	* @param mav
+	* @param savo
+	* @return 
+	*/
 	@GetMapping("/approval/settings/document.gw")
-	public ModelAndView approvalSettingsDocument(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalAdminSettingsDocument_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			SearchApprovalVO savo) {
 
 		mav.addObject("type", "settings_document");
@@ -821,8 +871,6 @@ public class ApprovalController {
 			searchWord = searchWord.trim();
 		}
 
-		System.out.println("orderType : " + orderType);
-
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("searchType", searchType);
 		paraMap.put("searchWord", searchWord);
@@ -830,14 +878,12 @@ public class ApprovalController {
 
 		int totalCount = 0; // 총 게시물 건수
 		// 수정필
-		int sizePerPage = 1; // 한 페이지당 보여줄 게시물 건수
+		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
 		totalCount = service.getTotalCountDocumentAllList(paraMap);
-
-		System.out.println("totalCount" + totalCount);
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -879,16 +925,12 @@ public class ApprovalController {
 		paraMap.put("startRno", String.valueOf(startRno));
 		paraMap.put("endRno", String.valueOf(endRno));
 
-		System.out.println("currentShowPageNo : " + currentShowPageNo);
-		System.out.println("startRno : " + startRno);
-		System.out.println("endRno : " + endRno);
-
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		mav.addObject("documentList", service.getDocumentAllList_withSearchAndPaging(paraMap));
 
 		// === #121. 페이지바 만들기 === //
 		// 수정필
-		int blockSize = 2;
+		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
 		/*
 		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
@@ -966,6 +1008,7 @@ public class ApprovalController {
 		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
 		// 현재 페이지 주소를 뷰단으로 넘겨준다.
 		String goBackURL = MyUtil.getCurrentURL(req);
+		
 
 		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
@@ -979,8 +1022,20 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : approvalAdminSettingsDeleteDocument_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 삭제 문서 목록
+	* @param req
+	* @param res
+	* @param mav
+	* @param savo
+	* @return 
+	*/
 	@GetMapping("/approval/settings/deleted_document.gw")
-	public ModelAndView approvalSettingsDeleteDocument(HttpServletRequest req, HttpServletResponse res,
+	public ModelAndView approvalAdminSettingsDeleteDocument_AfterGetListSize(HttpServletRequest req, HttpServletResponse res,
 			ModelAndView mav, SearchApprovalVO savo) {
 
 		mav.addObject("type", "settings_deleted_document");
@@ -1019,10 +1074,6 @@ public class ApprovalController {
 			searchWord = searchWord.trim();
 		}
 
-		System.out.println("searchType : " + searchType);
-		System.out.println("searchWord : " + searchWord);
-		System.out.println("orderType : " + orderType);
-
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("searchType", searchType);
 		paraMap.put("searchWord", searchWord);
@@ -1030,14 +1081,13 @@ public class ApprovalController {
 
 		int totalCount = 0; // 총 게시물 건수
 		// 수정필
-		int sizePerPage = 1; // 한 페이지당 보여줄 게시물 건수
+		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
 		totalCount = service.getTotalCountDocumentDeleteList(paraMap);
 
-		System.out.println("totalCount" + totalCount);
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -1079,16 +1129,12 @@ public class ApprovalController {
 		paraMap.put("startRno", String.valueOf(startRno));
 		paraMap.put("endRno", String.valueOf(endRno));
 
-		System.out.println("currentShowPageNo : " + currentShowPageNo);
-		System.out.println("startRno : " + startRno);
-		System.out.println("endRno : " + endRno);
-
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		mav.addObject("documentList", service.getDocumentDeleteList_withSearchAndPaging(paraMap));
 
 		// === #121. 페이지바 만들기 === //
 		// 수정필
-		int blockSize = 2;
+		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
 		/*
 		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
@@ -1166,7 +1212,7 @@ public class ApprovalController {
 		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
 		// 현재 페이지 주소를 뷰단으로 넘겨준다.
 		String goBackURL = MyUtil.getCurrentURL(req);
-
+		
 		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("orderType", orderType);
@@ -1179,16 +1225,29 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : approvalAdminSettingsAdminList_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전자결재 관리자
+	* @param req
+	* @param res
+	* @param mav
+	* @return 
+	*/
 	@GetMapping("/approval/settings/admin.gw")
-	public ModelAndView approvalSettingsAdminList(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+	public ModelAndView approvalAdminSettingsAdminList_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
 		HttpSession session = req.getSession();
 		
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
 		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("4");
+		loginUser.setAdminType("1");
 		session.setAttribute("loginUser", loginUser);
+		
+		
 		
 		mav.addObject("type", "settings_admin");
 		mav.addObject("noSearch", true);
@@ -1199,17 +1258,36 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : approvalDocumentView_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기
+	* @param req
+	* @param res
+	* @param mav
+	* @param approvalId
+	* @param formId
+	* @param viewType
+	* @param type
+	* @return 
+	*/
 	@GetMapping("/approval/documentDetail/{viewType}/{type}/view.gw")
-	public ModelAndView approvalDocumentView(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalDocumentView_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			Long approvalId, Long formId, @PathVariable String viewType, @PathVariable String type) {
 
 		HttpSession session = req.getSession();
-		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
-		loginUser.setAdminType("2");
+		EmployeeVO loginUser = new EmployeeVO();
+		loginUser.setEmpId((long) 101);
+		loginUser.setFk_positionId((long) 4);
+		loginUser.setAdminType("1");
+		session.setAttribute("loginUser", loginUser);
 		
 		Map<String, Long> paraMap = new HashMap<>();
 		paraMap.put("approvalId", approvalId);
 		paraMap.put("empId", loginUser.getEmpId());
+		paraMap.put("positonId", loginUser.getFk_positionId());
 		paraMap.put("formId", formId);
 
 		// 수정필 !!!!!!!!!!!!!!!!! 폼id에 따라 더 추가될 내용이 있음 그거 추가해서 넣기
@@ -1247,8 +1325,8 @@ public class ApprovalController {
 		
 		
 		// 유저 결재절차 타입
-		if("Approval".equals(loginUser.getAdminType())) {
-			// 전자 결재 관리자일 경우
+		if("Approval".equals(loginUser.getAdminType()) || "All".equals(loginUser.getAdminType()) || service.isReadAble(paraMap)) {
+			// 전자 결재 관리자일 경우 혹은 전체 관리자일 경우 혹은 열람 허용된 경우
 			mav.addObject("userProcedureType", 0);
 		}else {
 			mav.addObject("userProcedureType", service.getUserProcedureType(paraMap));
@@ -1277,17 +1355,17 @@ public class ApprovalController {
 		}
 		///////////////////////////////////////////////////////////////////////////////
 
-		Map<String, String> sizeMap = new HashMap<>();
-		sizeMap.put("searchType", "");
-		sizeMap.put("searchWord", "");
-		sizeMap.put("orderType", "desc");
-		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
-
-		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
+//		Map<String, String> sizeMap = new HashMap<>();
+//		sizeMap.put("searchType", "");
+//		sizeMap.put("searchWord", "");
+//		sizeMap.put("orderType", "desc");
+//		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+//
+//		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(sizeMap).size());
+//		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
+//		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
+//		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
+//		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
 
 		//////////////////////////////////////////////////////////////////////////////
 
@@ -1329,6 +1407,19 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : approvalUpdateSecurity 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_보안등급 변경
+	* @param req
+	* @param res
+	* @param mav
+	* @param securityId
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/updateSecurity.gw", produces = "text/plain;charset=UTF-8")
 	public String approvalUpdateSecurity(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1349,6 +1440,18 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : approvalSearchEmpName 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 사원명 검색
+	* @param req
+	* @param res
+	* @param mav
+	* @param empName
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/searchEmpName.gw", produces = "text/plain;charset=UTF-8")
 	public String approvalSearchEmpName(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1373,6 +1476,18 @@ public class ApprovalController {
 		return jsonArr.toString();
 	}
 
+	/** 
+	* @Method Name  : updateApprovalLineSetting 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_결재자 수정
+	* @param req
+	* @param res
+	* @param mav
+	* @param approvalList
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping("/approval/updateApprovalLineSetting.gw")
 	public String updateApprovalLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1397,6 +1512,20 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : addRef 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_참조, 수신참조, 수신 추가
+	* @param req
+	* @param res
+	* @param mav
+	* @param refType
+	* @param empId
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping("/approval/add/{refType}.gw")
 	public String addRef(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1409,6 +1538,19 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : delRef 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_참조, 수신참조, 수신 삭제
+	* @param req
+	* @param res
+	* @param mav
+	* @param empId
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping("/approval/del/refOrIncOrIncR.gw")
 	public String delRef(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
@@ -1422,6 +1564,17 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : updateApprovalFile 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_파일 첨부
+	* @param req
+	* @param res
+	* @param mav
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/updateApprovalFile.gw", produces = "text/plain;charset=UTF-8")
 	public String updateApprovalFile(MultipartHttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
@@ -1440,9 +1593,6 @@ public class ApprovalController {
 				afList.add(service.getApprovalDocumentFile(Long.parseLong(str)));
 			}
 		}
-
-		System.out.println("////////////////////////////////////////////////////");
-		System.out.println("fileList 사이즈 : " + fileList.size());
 
 		// WAS 의 webapp 의 절대경로를 알아와야 한다.
 		HttpSession session = req.getSession();
@@ -1507,6 +1657,18 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : deleteSavedFile 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_파일 첨부 삭제
+	* @param req
+	* @param res
+	* @param mav
+	* @param fileId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping("/approval/deleteSavedFile.gw")
 	public String deleteSavedFile(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long fileId) {
@@ -1519,6 +1681,16 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : approvalFileDownload 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_파일 다운로드
+	* @param req
+	* @param res
+	* @param mav 
+	*/
 	@GetMapping(value = "/approval/fileDownload.gw")
 	public void approvalFileDownload(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
@@ -1558,7 +1730,6 @@ public class ApprovalController {
 				HttpSession session = req.getSession();
 				String root = session.getServletContext().getRealPath("/");
 
-				// System.out.println("~~~ 확인용 webapp 의 절대경로 => " + root);
 				// ~~~ 확인용 webapp 의 절대경로 =>
 				// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\
 
@@ -1602,6 +1773,19 @@ public class ApprovalController {
 		}
 	}
 
+	/** 
+	* @Method Name  : insertOpinion 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_의견 작성
+	* @param req
+	* @param res
+	* @param mav
+	* @param opinion
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/insertOpinion.gw", produces = "text/plain;charset=UTF-8")
 	public String insertOpinion(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, String opinion,
@@ -1620,10 +1804,21 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : deleteOpinion 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_의견 삭제
+	* @param req
+	* @param res
+	* @param mav
+	* @param opinionId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/deleteOpinion.gw", produces = "text/plain;charset=UTF-8")
 	public String deleteOpinion(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long opinionId) {
-		System.out.println("opinionId : " + opinionId);
 		JSONObject jsonObj = new JSONObject();
 
 		jsonObj.put("isDelete", service.deleteOpinion(opinionId));
@@ -1631,6 +1826,19 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : deleteImportant 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_중요문서 삭제
+	* @param req
+	* @param res
+	* @param mav
+	* @param empId
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/deleteImportant.gw", produces = "text/plain;charset=UTF-8")
 	public String deleteImportant(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
@@ -1647,6 +1855,19 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : insertImportant 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_중요문서 추가
+	* @param req
+	* @param res
+	* @param mav
+	* @param empId
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/insertImportant.gw", produces = "text/plain;charset=UTF-8")
 	public String insertImportant(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
@@ -1663,6 +1884,18 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : updateActionOfApproval 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_결재 처리하기
+	* @param req
+	* @param res
+	* @param mav
+	* @param aavo
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/updateActionOfApproval.gw", produces = "text/plain;charset=UTF-8")
 	public String updateActionOfApproval(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1682,6 +1915,19 @@ public class ApprovalController {
 
 	}
 
+	/** 
+	* @Method Name  : updateRefRead 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_읽음 처리하기
+	* @param req
+	* @param res
+	* @param mav
+	* @param empId
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/updateRefRead.gw", produces = "text/plain;charset=UTF-8")
 	public String updateRefRead(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
@@ -1747,6 +1993,18 @@ public class ApprovalController {
 //		return jsonObj.toString();
 //	}
 
+	/** 
+	* @Method Name  : updateRoundRobinApprovalLineSetting 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_품의서 상세보기_결재자 수정시
+	* @param req
+	* @param res
+	* @param mav
+	* @param approvalList
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping("/approval/updateRoundRobinApprovalLineSetting.gw")
 	public String updateRoundRobinApprovalLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -1758,7 +2016,6 @@ public class ApprovalController {
 		for (int i = 0; i < approvalList.size(); i++) {
 			ApprovalProcedureVO apvo = new ApprovalProcedureVO();
 
-			System.out.println("받아온 empID : " + approvalList.get(i).get("empId").toString());
 			apvo.setEmpId(approvalList.get(i).get("empId").toString());
 			apvo.setSequence((int) approvalList.get(i).get("sequence"));
 			updateList.add(apvo);
@@ -1773,31 +2030,20 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
-	@ResponseBody
-	@PostMapping("/approval/updateAgreeLineSetting.gw")
-	public String updateAgreeLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			@RequestBody List<Map<String, Object>> approvalList) {
-		// 신청 + 버튼 _ 확인 버튼
 
-		List<ApprovalProcedureVO> updateList = new ArrayList<>();
-
-		for (int i = 0; i < approvalList.size(); i++) {
-			ApprovalProcedureVO apvo = new ApprovalProcedureVO();
-
-			System.out.println("empID : " + approvalList.get(i).get("empId").toString());
-			apvo.setEmpId(approvalList.get(i).get("empId").toString());
-			apvo.setSequence((int) approvalList.get(i).get("sequence"));
-			updateList.add(apvo);
-		}
-
-		JSONObject jsonObj = new JSONObject();
-
-		jsonObj.put("isSuccess",
-				service.updateAgreeLineSetting(updateList, new Long((int) approvalList.get(0).get("approvalId"))));
-
-		return jsonObj.toString();
-	}
-
+	/** 
+	* @Method Name  : cancleApproval 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서 상세보기_기안 취소
+	* @param req
+	* @param res
+	* @param mav
+	* @param empId
+	* @param approvalId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping("/approval/cancleApproval.gw")
 	public String cancleApproval(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, Long empId,
@@ -1815,8 +2061,21 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : approvalDocumentWrite 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_작성하기 및 임시저장에서 불러오기
+	* @param req
+	* @param res
+	* @param mav
+	* @param writeType
+	* @param approvalId
+	* @return 
+	*/
 	@GetMapping("/approval/document/write/{writeType}.gw")
-	public ModelAndView approvalDocumentWrite(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalDocumentWrite_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			@PathVariable String writeType, Long approvalId) {
 		// 작성하기 및 수정
 
@@ -1836,9 +2095,6 @@ public class ApprovalController {
 		if ("index".equals(writeType)) {
 			// 작성하기 눌렀을 경우
 			mav.setViewName("document_write_index.approval");
-
-		} else if ("modify".equals(writeType)) {
-			// 수정하기일 경우
 
 		} else if ("temp".equals(writeType)) {
 			// 임시저장에서 불러온 경우
@@ -1876,12 +2132,24 @@ public class ApprovalController {
 		} else {
 			// 에러 수정필
 		}
-
 		return mav;
 	}
 
+	/** 
+	* @Method Name  : approvalDocumentWriteForm 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_작성하기 및 임시저장에서 불러오기
+	* @param req
+	* @param res
+	* @param mav
+	* @param writeType
+	* @param formId
+	* @return 
+	*/
 	@PostMapping("/approval/document/write/{writeType}.gw")
-	public ModelAndView approvalDocumentWriteForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalDocumentWriteForm_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			@PathVariable String writeType, Long formId) {
 		// 작성하기 및 수정
 
@@ -1929,6 +2197,18 @@ public class ApprovalController {
 		return mav;
 	}
 
+	/** 
+	* @Method Name  : insertDocumentWrite 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_기안하기
+	* @param req
+	* @param res
+	* @param mav
+	* @param formType
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/insertDocumentWrite/{formType}.gw", produces = "text/plain;charset=UTF-8")
 	public String insertDocumentWrite(MultipartHttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -2008,7 +2288,6 @@ public class ApprovalController {
 			// 임시저장했던 애를 기안하려고 하는 경우
 			approvalId = req.getParameter("approvalId");
 			paraMap.put("approvalId", approvalId);
-			System.out.println("approvalID: " + approvalId);
 
 		}
 
@@ -2140,6 +2419,18 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : insertTempDocumentWrite 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_작성하기_임시저장하기
+	* @param req
+	* @param res
+	* @param mav
+	* @param formType
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/insertTempDocumentWrite/{formType}.gw", produces = "text/plain;charset=UTF-8")
 	public String insertTempDocumentWrite(MultipartHttpServletRequest req, HttpServletResponse res, ModelAndView mav,
@@ -2163,7 +2454,6 @@ public class ApprovalController {
 
 		if (orgFileIdList != null) {
 			for (String str : orgFileIdList) {
-				System.out.println("일단 들어왔따능 : " + orgFileIdList);
 				afList.add(service.getApprovalDocumentFile(Long.parseLong(str)));
 			}
 		}
@@ -2215,11 +2505,6 @@ public class ApprovalController {
 			}
 		}
 
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		for (ApprovalFileVO fvo : afList) {
-			System.out.println("fvo name : " + fvo.getFileRName());
-		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 		String approvalId = "";
 		if (req.getParameter("approvalId") != null) {
@@ -2336,8 +2621,20 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 
+	/** 
+	* @Method Name  : approvalBatch 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_일괄 처리
+	* @param req
+	* @param res
+	* @param mav
+	* @param type
+	* @return 
+	*/
 	@PostMapping("/approval/batch/{type}.gw")
-	public ModelAndView approvalBatch(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalBatch_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			@PathVariable String type) {
 
 		HttpSession session = req.getSession();
@@ -2346,10 +2643,6 @@ public class ApprovalController {
 		BatchVO bvo = new BatchVO();
 		bvo.setEmpId(empId);
 		bvo.setApprovalIdList(req.getParameterValues("checkApproval"));
-
-		for (String str : bvo.getApprovalIdList()) {
-			System.out.println("str : " + str);
-		}
 
 		if ("approval".equals(type)) {
 			// 일괄 결재
@@ -2390,12 +2683,27 @@ public class ApprovalController {
 				System.out.println("에러");
 			}
 		}
+		
+		
 
 		return mav;
 	}
 
+	/** 
+	* @Method Name  : approvalViewImportantDoc 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_중요문서 보기
+	* @param req
+	* @param res
+	* @param mav
+	* @param type
+	* @param savo
+	* @return 
+	*/
 	@GetMapping("/approval/importantDoc/{viewType}.gw")
-	public ModelAndView approvalViewImportantDoc(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public ModelAndView approvalViewImportantDoc_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			@PathVariable String type, SearchApprovalVO savo) {
 		mav.addObject("type", type);
 
@@ -2430,7 +2738,6 @@ public class ApprovalController {
 			searchWord = searchWord.trim();
 		}
 
-		System.out.println("orderType : " + orderType);
 
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("searchType", searchType);
@@ -2473,22 +2780,15 @@ public class ApprovalController {
 			mav.addObject("searchType", searchType);
 			mav.addObject("searchWord", searchWord);
 		}
-		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
-		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
-		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
-		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
-		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
 
 		int totalCount = 0; // 총 게시물 건수
 		// 수정필
-		int sizePerPage = 1; // 한 페이지당 보여줄 게시물 건수
+		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
 		totalCount = boxList.size();
-
-		System.out.println("totalCount" + totalCount);
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -2527,10 +2827,6 @@ public class ApprovalController {
 		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
 		 */
 
-		System.out.println("currentShowPageNo : " + currentShowPageNo);
-		System.out.println("startRno : " + startRno);
-		System.out.println("endRno : " + endRno);
-
 		/*
 		 * paraMap.put("startRno", String.valueOf(startRno)); paraMap.put("endRno",
 		 * String.valueOf(endRno));
@@ -2551,7 +2847,7 @@ public class ApprovalController {
 
 		// === #121. 페이지바 만들기 === //
 		// 수정필
-		int blockSize = 2;
+		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
 		/*
 		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
@@ -2647,9 +2943,21 @@ public class ApprovalController {
 	
 	
 	
+	/** 
+	* @Method Name  : addAppovalAdminSettingManager 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전자결재 관리자_추가
+	* @param req
+	* @param res
+	* @param mav
+	* @param empId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/addApprovalAdminManager.gw", produces = "text/plain;charset=UTF-8")
-	public String addAppovalAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public String addAppovalAdminSettingManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			Long empId) {
 		
 		HttpSession session = req.getSession();
@@ -2657,7 +2965,6 @@ public class ApprovalController {
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
 		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("4");
 		session.setAttribute("loginUser", loginUser);
 		
 		Map<String, Long> paraMap = new HashMap<>();
@@ -2672,9 +2979,21 @@ public class ApprovalController {
 	}
 	
 	
+	/** 
+	* @Method Name  : deleteApprovalAdminSettingManager 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전자결재 관리자_삭제
+	* @param req
+	* @param res
+	* @param mav
+	* @param adminId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/deleteApprovalAdminManager.gw", produces = "text/plain;charset=UTF-8")
-	public String deleteApprovalAdminManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public String deleteApprovalAdminSettingManager(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			Long adminId) {
 		
 		HttpSession session = req.getSession();
@@ -2682,7 +3001,6 @@ public class ApprovalController {
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
 		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("4");
 		session.setAttribute("loginUser", loginUser);
 		
 		Map<String, Long> paraMap = new HashMap<>();
@@ -2695,9 +3013,22 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 	
+	/** 
+	* @Method Name  : grantAdminSettingRead 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전자결재 관리자_전체 문서 허용
+	* @param req
+	* @param res
+	* @param mav
+	* @param adminId
+	* @param isReadAble
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/grantAdminRead.gw", produces = "text/plain;charset=UTF-8")
-	public String grantAdminRead(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
+	public String grantAdminSettingRead(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			Long adminId, int isReadAble) {
 		
 		HttpSession session = req.getSession();
@@ -2705,7 +3036,6 @@ public class ApprovalController {
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
 		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("4");
 		session.setAttribute("loginUser", loginUser);
 		
 		Map<String, Long> paraMap = new HashMap<>();
@@ -2718,16 +3048,26 @@ public class ApprovalController {
 		return jsonObj.toString();
 	}
 	
+	/** 
+	* @Method Name  : getAdminSettingHistory 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전자결재 관리자_관리자 설정 이력
+	* @param req
+	* @param res
+	* @param mav
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/getAdminHistory.gw", produces = "text/plain;charset=UTF-8")
-	public String getAdminHistory(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
+	public String getAdminSettingHistory(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 		
 		HttpSession session = req.getSession();
 		
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
 		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("4");
 		session.setAttribute("loginUser", loginUser);
 		
 		
@@ -2756,8 +3096,20 @@ public class ApprovalController {
 	
 	
 	
+	/** 
+	* @Method Name  : approvalAdminSettingFormDetail_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_양식함관리_양식함 상세보기
+	* @param req
+	* @param res
+	* @param mav
+	* @param formId
+	* @return 
+	*/
 	@GetMapping("/approval/formDetail.gw")
-	public ModelAndView approvalFormDetail(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,Long formId) {
+	public ModelAndView approvalAdminSettingFormDetail_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,Long formId) {
 		
 		mav.addObject("formDetail", service.getFormDetail(formId));
 		mav.setViewName("settings_forms_detail.approval");
@@ -2766,8 +3118,20 @@ public class ApprovalController {
 	}
 	
 	
+	/** 
+	* @Method Name  : approvalAdminSettingModifyForm_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_양식함관리_양식함 상세보기_수정
+	* @param req
+	* @param res
+	* @param mav
+	* @param formId
+	* @return 
+	*/
 	@GetMapping("/approval/modifyForm.gw")
-	public ModelAndView approvalModifyForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,Long formId) {
+	public ModelAndView approvalAdminSettingModifyForm_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,Long formId) {
 		
 		mav.addObject("formDetail", service.getFormDetail(formId));
 		mav.setViewName("settings_forms_modify.approval");
@@ -2776,8 +3140,21 @@ public class ApprovalController {
 	}
 	
 	
+	/** 
+	* @Method Name  : approvalAdminSettingUpdateForm_AfterGetListSize 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_양식함관리_양식함 상세보기_등록
+	* @param req
+	* @param res
+	* @param mav
+	* @param formId
+	* @param preserved_term
+	* @return 
+	*/
 	@PostMapping("/approval/updateForm.gw")
-	public ModelAndView approvalUpdateForm(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, String formId, String preserved_term) {
+	public ModelAndView approvalAdminSettingUpdateForm_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav, String formId, String preserved_term) {
 		
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("formId", formId);
@@ -2791,7 +3168,6 @@ public class ApprovalController {
 			mav.addObject("loc", req.getContextPath() + "/approval/modifyForm.gw?formId=" + formId);
 			mav.setViewName("msg");
 		}
-		
 		
 		return mav;
 	}

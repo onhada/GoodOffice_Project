@@ -266,9 +266,9 @@ $(document).ready(function() {
 						<input type="checkbox" id="view_all_documents">
 						<label for="view_all_documents"></label>
 					</span>
-					<button id="exportDocumentBox" class="hw-tooltip-file-icon">
+					<!-- <button id="exportDocumentBox" class="hw-tooltip-file-icon">
 						<img src="https://static.hiworks.com/hr/svg/excel.svg" alt="download excel" title="엑셀다운로드">
-					</button>
+					</button> -->
 				</div>
 			</div>
 		</div>

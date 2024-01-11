@@ -779,7 +779,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isDelete == true){
-						$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -805,7 +805,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
-						$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -1036,7 +1036,7 @@ $(document).ready(function() {
 				success: function(text) {
 					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
-						$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+						location.reload()
 					}else{
 						alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 					}
@@ -1103,7 +1103,7 @@ function deleteSavedFile(fileId){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isDelete == true){
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
 			}
@@ -1154,8 +1154,8 @@ function updateApprovalFile(file_arr){
 				success:function(text){
 				if(text.isUpdate == true) {
 					/* contextPath를 ctxPath로 변경하기 */
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
-					}else {
+					location.reload()
+				}else {
 						alert("파일 첨부가 실패했습니다.");
 					}
 				},
@@ -1175,7 +1175,7 @@ function updateApprovalFile(file_arr){
 			success:function(text){
 			if(text.isUpdate == true) {
 				/* contextPath를 ctxPath로 변경하기 */
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 				}else {
 					alert("파일 첨부가 실패했습니다.");
 				}
@@ -1223,7 +1223,7 @@ function deleteRefOrIncOrIncR(id){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isDelete){
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1256,7 +1256,7 @@ function insertOpinion(){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isInsert){
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("등록에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1285,7 +1285,7 @@ function deleteOpinion(opinionId){
 			success: function(text) {
 				console.log(JSON.stringify(text));
 				if(text.isDelete){
-					$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1342,7 +1342,7 @@ function enterActionOfApproval(){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isUpdate){
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("등록에 실패하였습니다. 다시 시도해주세요.")
 			}
@@ -1365,7 +1365,7 @@ function updateRefRead(){
 		success: function(text) {
 			console.log(JSON.stringify(text));
 			if(text.isUpdate){
-				$(location).attr('href', `<%=ctxPath%>/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+				location.reload()
 			}else{
 				alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 			}
@@ -1461,7 +1461,7 @@ function updateApprovalLineSetting(){
 				console.log(JSON.stringify(text));
 				console.log(text.isSuccess);
 				if(text.isSuccess){
-					$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1473,7 +1473,7 @@ function updateApprovalLineSetting(){
 		}); 
 	}else{
 		alert("처리자 수는 한 명 이상 네 명 이하로 존재하여야 합니다.")
-		$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+		location.reload()
 	}
 	
 }
@@ -1552,7 +1552,7 @@ function updateApplicationLineSetting(){
 				console.log(JSON.stringify(text));
 				console.log(text.isSuccess);
 				if(text.isSuccess){
-					$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+					location.reload()
 				}else{
 					alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 				}
@@ -1564,7 +1564,7 @@ function updateApplicationLineSetting(){
 		});
 	}else{
 		alert("신청자 수는 한 명 이상 네 명 이하로 존재하여야 합니다.")
-		$(location).attr('href', contextPath +`/approval/documentDetail/${requestScope.viewType}/view.gw?formId=${requestScope.approvalDetail.formId}&approvalId=${requestScope.approvalDetail.approvalId}`);
+		location.reload()
 	}
 }
 

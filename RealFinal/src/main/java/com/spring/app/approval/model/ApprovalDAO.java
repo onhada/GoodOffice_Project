@@ -1999,6 +1999,27 @@ public interface ApprovalDAO {
 
 
 
+	/** 
+	* @Method Name  : isReadAble 
+	* @작성일   : 2024. 1. 11 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	int isReadAble(Map<String, Long> paraMap);
+
+
+
+
+
+
+
+
+
+
+
 
 
 

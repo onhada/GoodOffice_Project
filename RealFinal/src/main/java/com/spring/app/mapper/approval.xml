@@ -24,10 +24,10 @@
         a.title,
         apd.procedureId,
         e.empName,
-        apd.sequence,
+        ap.sequence,
 		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
-		apd.procedureType,
-		apd.status,
+		ap.procedureType,
+		ap.status,
 		ap.isReadReturn,
 		nvl2(af.fk_approvalId, 1, 0) as isFile,
 		a.fk_formId
@@ -37,7 +37,10 @@
         (
         select
         fk_approvalId,
-        isReadReturn
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
         from tbl_approvalProcedure
         where fk_empId = #{empId}
         order by fk_approvalId
@@ -317,9 +320,9 @@
         a.fk_formId,
         formName,
         s.fk_positionId,
-        apd.procedureType,
-		apd.status,
-        apd.sequence,
+        ap.procedureType,
+		ap.status,
+        ap.sequence,
 		nvl2(importantApprovalId, 1, 0) as isImportant,
 		nvl2(af.fk_approvalId, 1, 0) as isFile,
 		ap.isReadReturn
@@ -329,7 +332,10 @@
         (
         select
         fk_approvalId,
-        isReadReturn
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
         from tbl_approvalProcedure
         where fk_empId = #{empId}
         order by fk_approvalId
@@ -384,19 +390,9 @@
         apd.sequence,
 		nvl2(importantApprovalId, 1, 0) as isImportant,
 		nvl2(af.fk_approvalId, 1, 0) as isFile,
-		ap.isReadReturn
+		apd.isReadReturn
 		
 		from tbl_approval a
-        join 
-        (
-        select
-        fk_approvalId,
-        isReadReturn
-        from tbl_approvalProcedure
-        where sequence = 1
-        order by fk_approvalId
-        ) ap
-        on a.approvalid = ap.fk_approvalid
         join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId
         join tbl_employee e on apd.fk_empId = e.empId
         join tbl_form f on a.fk_formId = f.formId
@@ -477,6 +473,18 @@
 		apd.fk_empId = #{empId}
 		and isTemporary = 0
 		and isDelete = 0
+		
+		<choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+		
+		
+		
 		
 		<if test='searchType != "" and searchWord != ""'>
 			<if test='searchType == "all" and searchWord != ""'>
@@ -568,31 +576,21 @@
 		apd.fk_approvalId,
 		title,
 		formName,
-		nvl2(importantApprovalId, 1, 0)
-		as isImportant,
+		nvl2(importantApprovalId, 1, 0) as isImportant,
 		nvl2(fileId, 1, 0) as isFile
+		
 		from tbl_approval a
-		join
-		tbl_employee e on a.fk_empId =
-		e.empId
-		join tbl_approvalprocedure apd on
-		a.approvalId =
-		apd.fk_approvalId
-		join tbl_form f on a.fk_formId =
-		f.formId
-		join
-		tbl_team t on e.fk_teamId = t.teamId
-		join tbl_department d
-		on
-		t.fk_depid = d.depId
-		left join tbl_importantApproval ia on
-		apd.fk_empId = ia.fk_empid and
-		apd.fk_approvalId = ia.fk_approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_approvalprocedure apd on a.approvalId = apd.fk_approvalId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
 		left join tbl_approvalFile af on apd.fk_approvalId = af.fk_approvalId
+		
 		where
 		apd.fk_empId = #{empId}
-		and ( procedureType = 1 or procedureType =
-		2 )
+		and ( procedureType = 1 or procedureType = 2 )
 		and sequence = 1
 		and isTemporary = 1
 		and isDelete = 0
@@ -720,6 +718,18 @@
 		where isUse = 1
 		
 	</select>
+	
+	<!-- 전자결재_문서 작성시 드롭다운 리스트에 보여줄 문서 종류 리스트 -->
+	<select id="getFormNameListByWrite"
+		resultType="com.spring.app.approval.domain.FormVO">
+
+		select
+		formId,
+		formName
+		from tbl_form
+		where <![CDATA[ formId >= 106 ]]> and isUse = 1
+		
+	</select>
 
 
 
@@ -740,6 +750,7 @@
 		approvalId as fk_approvalId,
 		title,
 		empName,
+		fk_formId,
 		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
 		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
 		apd.status,
@@ -842,6 +853,7 @@
 		approvalId as fk_approvalId,
 		title,
 		empName,
+		fk_formId,
 		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
 		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
 		apd.status,
@@ -930,22 +942,23 @@
 
 	<!-- 전자결재_관리자 설정_전자결재 관리자_메인 화면 -->
 	<select id="getAdminList"
-		resultType="com.spring.app.approval.domain.AdminVO">
+		resultType="com.spring.app.common.domain.AdminVO">
 		select
 		adminId,
+		empId,
 		empName,
 		substr(email, 0, instr(email, '@')-1) as id,
 		'['||depName||'] '||teamName as team,
 		to_char(ah.registerDay,'yyyy-mm-dd') as registerDay,
 		isReadAllDocument,
-		case adminType when '4' then '1' else '0' end as isFullAdmin
+		case adminType when '1' then '1' else '0' end as isFullAdmin
 		from tbl_admin a
 		join tbl_adminHistory ah on a.adminid = ah.fk_adminId
 		join tbl_employee e on a.fk_empId = e.empId
 		join tbl_team t on e.fk_teamId = t.teamId
 		join tbl_department d on d.depid = t.fk_depid
-		where adminType = 4 or adminType = 2
-		order by ah.registerDay
+		where (adminType = 1 or adminType = 3) and isDelete = 0
+		order by empName
 	</select>
 	
 	
@@ -1073,7 +1086,6 @@
 		empId,
 		empName,
         positionName,
-        profileImage,
 		to_char(ap.registerDay,'yyyy-mm-dd hh24:mi:ss') as registerDay,
 		rn.sequence
 		from tbl_approvalProcedure ap
@@ -1112,7 +1124,6 @@
 		opinionId,
 		empId,
         empName,
-        profileImage,
         to_char(ao.registerDay, 'yyyy-mm-dd hh24:mi:dd') as registerDay,
         content
         from tbl_approvalOpinion ao
@@ -1444,10 +1455,11 @@
 	
 	
 	
-	<!-- 전자결재_상세보기_휴무 신청 -->
+	<!-- 전자결재_상세보기_휴가 신청 -->
 	<select id="getDayOffDetail" parameterType="Long" resultType="com.spring.app.approval.domain.DayOffVO">
 		select
 		approvalId,
+		empId,
 		empName,
 		'[' || depName || '] ' || teamName as team,
 		dayOffTypeName,
@@ -1491,33 +1503,414 @@
    
    <!-- 전자결재_상세보기_근무체크 수정 정보 목록 -->
    <select id="getModifyDetailList" resultType="com.spring.app.approval.domain.ModifyDetailVO">
-      	select
+      	(select
 		fk_workHistoryId as workHistoryId,
-		workType,
+		w.fk_empId as empId,
+		w.workType,
 		requestType,
 		to_char(resisterDayTime, 'yyyy-mm-dd hh24:mi:ss') as orgWorkDateTime,
 		to_char(modifyRequestDateTime, 'yyyy-mm-dd hh24:mi:ss') as modifyRequestDateTime
 		from
 		tbl_approval a
 		join tbl_modifyWorkRequest m on a.approvalId = m.fk_approvalid
-		join tbl_workHistory w on m.fk_workhistoryid = w.workhistoryid
-		where approvalId = #{approvalId}
+		left join tbl_workHistory w on m.fk_workhistoryid = w.workhistoryid
+		where approvalId = #{approvalId} and mod_workType = 0)
+        
+        union
+        
+        (select
+        fk_workHistoryId as workHistoryId,
+		a.fk_empId as empId,
+		mod_workType as workType,
+		requestType,
+		to_char(resisterDayTime, 'yyyy-mm-dd hh24:mi:ss') as orgWorkDateTime,
+		to_char(modifyRequestDateTime, 'yyyy-mm-dd hh24:mi:ss') as modifyRequestDateTime
+		from
+		tbl_approval a
+		join tbl_modifyWorkRequest m on a.approvalId = m.fk_approvalid
+		left join tbl_workHistory w on m.fk_workhistoryid = w.workhistoryid
+		where approvalId = #{approvalId} and mod_workType != 0
+        )
    </select>
    
    <!-- 전자결재_상세보기_근무체크 수정 -->
    <update id="updateWorkHistoryByRequest" parameterType="com.spring.app.approval.domain.ModifyDetailVO">
-   		update tbl_workHistory set resisterDayTime = #{modifyRequestDateTime} where workHistoryId = #{workHistoryId} and workType = #{workType}
+   		update tbl_workHistory set resisterDayTime = to_date(#{modifyRequestDateTime}, 'yyyy-mm-dd hh24:mi:ss') where workHistoryId = #{workHistoryId}
    </update>
    
    <!-- 전자결재_상세보기_근무체크 추가 -->
    <insert id="insertWorkHistoryByRequest" parameterType="com.spring.app.approval.domain.ModifyDetailVO">
-   		insert into tbl_workHistory values (WORKHISTORYSEQ.nextVal, #{empId}, #{workType}, #{modifyRequestDateTime})
+   		insert into tbl_workHistory values (WORKHISTORYSEQ.nextVal, #{empId}, #{workType}, to_date(#{modifyRequestDateTime}, 'yyyy-mm-dd hh24:mi:ss'), default)
    </insert>
    
    <!-- 전자결재_상세보기_근무체크 삭제 -->
-   <delete id="deleteWorkHistoryByRequest" parameterType="com.spring.app.approval.domain.ModifyDetailVO">
-   		delete from tbl_workHistory where workHistoryId = #{workHistoryId};
-   </delete>
+   <update id="deleteWorkHistoryByRequest" parameterType="com.spring.app.approval.domain.ModifyDetailVO">
+   		update tbl_workHistory set isDelete = 1 where workHistoryId = #{workHistoryId}
+   </update>
    
+   
+   <!-- 전자결재_상세보기_휴가 신청 _ sql문에 사용하기 위해 간단한 정보 취득 -->
+	<select id="getDayOffSimple" parameterType="Long" resultType="com.spring.app.approval.domain.DayOffVO">
+		select
+		empId,
+		to_char(dayOffDay, 'yyyy-mm-dd') as dayOffDay
+        from tbl_dayOffApplication d
+		join tbl_approval a on d.fk_approvalId = a.approvalId
+		join tbl_employee e on a.fk_empId = e.empId
+		where d.fk_approvalId = #{approvalId}
+	</select>
+	
+	
+	<!-- 전자결재_상세보기_반려 읽었을 경우 읽음처리 -->
+   <update id="updateReadReturn" parameterType="HashMap">
+   		update tbl_approvalProcedure set isReadReturn = 1 where fk_approvalId = #{approvalId} and fk_empId = ${empId}
+   </update>
+   
+   <!-- 전자결재_상세보기_기안 취소-->
+   <update id="cancleApproval" parameterType="HashMap">
+   		update tbl_approval set isDelete = 4 where approvalId = #{approvalId}
+   </update>
+   
+   
+   
+   
+   
+   
+   
+   <!-- 전자결재_작성하기 _문서종류에 따른 보존연한 취득 -->
+	<select id="getPreservationYear" parameterType="Long" resultType="int">
+		select
+		preservationYear
+		from tbl_form
+		where formId = #{formId}
+	</select>
+   
+   
+   
+   
+   <!-- 전자결재_작성하기 _시퀀스값 취득-->
+	<select id="getApprovalSequence" resultType="String">
+		select
+		APPROVALSEQ.nextVal
+		from dual
+	</select>
+   
+   
+   <!-- 전자결재_기안하기_기안하기 -->
+   <insert id="insertApprovalDocument" parameterType="HashMap">
+   		insert into tbl_approval values (#{approvalId}, #{formId}, #{empId}, #{title}, default, null, #{isTemporary}, #{securityId}, 0)
+   </insert>
+   
+   <!-- 전자결재_기안하기_임시저장 -->
+   <insert id="insertTempApprovalDocument" parameterType="HashMap">
+   		insert into tbl_approval values (#{approvalId}, #{formId}, #{empId}, #{title}, default, null, 1, #{securityId}, 0)
+   </insert>
+   
+   <!-- 전자결재_기안하기_본문 정보_업무연락 -->
+	<insert id="insertBusinessContact"
+		parameterType="HashMap">
+		insert into tbl_businessContact values (BUSINESSCONTACTSEQ.nextVal, #{approvalId}, #{content})
+	</insert>
+	
+	<!-- 전자결재_기안하기_기안하기 (회람) -->
+   <insert id="insertApprovalDocument_circular" parameterType="HashMap">
+   		insert into tbl_approval values (#{approvalId}, #{formId}, #{empId}, #{title}, default, default, #{isTemporary}, #{securityId}, 0)
+   </insert>
+	
+	<!-- 전자결재_기안하기_본문 정보_회람 -->
+	<insert id="insertCircular"
+		parameterType="HashMap">
+		insert into tbl_circular values (CIRCULARSEQ.nextVal, #{approvalId}, #{content})
+	</insert>
+	
+	<!-- 전자결재_기안하기_본문 정보_재직증명서 -->
+	<insert id="insertEmpProof"
+		parameterType="HashMap">
+		insert into tbl_empProof values (EMPPROOFSEQ.nextVal, #{approvalId}, #{submit}, #{reason}, to_date(#{issueDay}, 'yyyy-mm-dd'))
+	</insert>
+	
+   <!-- 전자결재_기안하기_본문 정보_품의서 -->
+	<insert id="insertRoundRobin"
+		parameterType="HashMap">
+		insert into tbl_approvalLetter values (APPROVALLETTERSEQ.nextVal, #{approvalId}, #{content})
+	</insert>
+   
+   
+   <!-- 전자결재_기안하기_기안자 넣기-->
+	<insert id="insertApplicant"
+		parameterType="HashMap">
+		insert into tbl_approvalProcedure values (APPROVALPROCEDURESEQ.nextVal, #{approvalId}, #{procedureType}, #{empId}, 2, #{sequence}, 0, default)
+	</insert>
+	
+	
+	<!-- 전자결재_작성하기 _formId 취득-->
+	<select id="getFormId" parameterType="Long" resultType="Long">
+		select
+		fk_formId
+		from tbl_approval
+		where approvalId = #{approvalId}
+	</select>
+	
+	
+	
+	<!-- 전자결재_임시저장 되어있던 절차 내용_삭제-->
+	<delete id="deleteApprovalProcedure" parameterType="String">
+		delete from tbl_approvalProcedure where fk_approvalId = #{approvalId}
+	</delete>
+	
+	
+	
+	<!-- 전자결재_임시저장 되어있던 내용_수정 -->
+	<update id="updateApprovalDocument" parameterType="HashMap">
+		UPDATE tbl_approval
+		SET title = #{title}, draftDay = default, fk_securityId = #{securityId}, isTemporary = #{isTemporary}
+		WHERE approvalId = #{approvalId}
+	</update>
+	
+	<!-- 전자결재_임시저장 되어있던 내용(회람)_수정 -->
+	<update id="updateApprovalDocument_circular" parameterType="HashMap">
+		UPDATE tbl_approval
+		SET title = #{title}, draftDay = default, completeDay = sysdate, fk_securityId = #{securityId}, isTemporary = #{isTemporary}
+		WHERE approvalId = #{approvalId}
+
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	 <!-- 전자결재_임시저장_임시저장_본문 정보_업무연락 -->
+	<update id="updateBusinessContact"
+		parameterType="HashMap">
+		
+		UPDATE tbl_businessContact
+		SET content = #{content}
+		WHERE fk_approvalId = #{approvalId}
+		
+	</update>
+	
+	<!-- 전자결재_임시저장_임시저장_본문 정보_회람 -->
+	<update id="updateCircular"
+		parameterType="HashMap">
+		
+		UPDATE tbl_circular
+		SET content = #{content}
+		WHERE fk_approvalId = #{approvalId}
+	</update>
+	
+	<!-- 전자결재_임시저장_임시저장_본문 정보_재직증명서 -->
+	<update id="updateEmpProof"
+		parameterType="HashMap">
+		UPDATE tbl_empProof
+		SET submit = #{submit}, reason = #{reason}, issueDay = to_date(#{issueDay}, 'yyyy-mm-dd')
+		WHERE fk_approvalId = #{approvalId}
+	</update>
+	
+   <!-- 전자결재_임시저장_임시저장_본문 정보_품의서 -->
+	<update id="updateRoundRobin"
+		parameterType="HashMap">
+		UPDATE tbl_approvalLetter
+		SET content = #{content}
+		WHERE fk_approvalId = #{approvalId}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_일괄 결재 -->
+	<update id="batchApproval" parameterType="com.spring.app.approval.domain.BatchVO">
+		UPDATE tbl_approvalProcedure
+		SET status = 2, registerDay = default
+		WHERE
+		fk_empId = #{empId} 
+		and (procedureType = 2 or procedureType = 3 or procedureType = 4)
+		and fk_approvalId in 
+		<foreach collection="approvalIdList" item="approvalId" open="(" close=")" separator=",">
+			#{approvalId}
+		</foreach>
+		
+	</update>
+	
+	<!-- 전자결재_일괄 확인 -->
+	<update id="batchCheck" parameterType="com.spring.app.approval.domain.BatchVO">
+		UPDATE tbl_approvalProcedure
+		SET status = 4, registerDay = default
+		WHERE
+		fk_empId = #{empId} 
+		and (procedureType = 5 or procedureType = 6 or procedureType = 7)
+		and fk_approvalId in 
+		<foreach collection="approvalIdList" item="approvalId" open="(" close=")" separator=",">
+			#{approvalId}
+		</foreach>
+		
+	</update>
+	
+	<!-- 전자결재_일괄 삭제 -->
+	<update id="batchDelete" parameterType="com.spring.app.approval.domain.BatchVO">
+		UPDATE tbl_approval
+		SET isDelete = 1
+		WHERE
+		approvalId in 
+		<foreach collection="approvalIdList" item="approvalId" open="(" close=")" separator=",">
+			#{approvalId}
+		</foreach>
+		
+	</update>
+	
+	<!-- 전자결재_일괄 복원 -->
+	<update id="batchRestore" parameterType="com.spring.app.approval.domain.BatchVO">
+		UPDATE tbl_approval
+		SET isDelete = 0
+		WHERE
+		approvalId in 
+		<foreach collection="approvalIdList" item="approvalId" open="(" close=")" separator=",">
+			#{approvalId}
+		</foreach>
+	</update>
+	
+	
+	
+	
+	
+	<!-- 전자결재_관리자설정 _관리자 추가-->
+	<insert id="addAppovalAdminManager"
+		parameterType="HashMap">
+		insert into tbl_admin values (#{adminId}, #{adminType}, #{empId}, 0, 0)
+	</insert>
+	
+	<!-- 전자결재_관리자설정 _관리자 추가_시퀀스값 취득-->
+	<select id="getAdminSequence" resultType="Long">
+		select
+		ADMINSEQ.nextVal
+		from dual
+	</select>
+	
+	<!-- 전자결재_관리자설정 _관리자 추가 이력 넣기-->
+	<!-- 오피스관리_관리자설정_전체관리자 추가 이력 넣기 -->
+	<insert id="addAdminHistory" parameterType="HashMap">
+		insert into tbl_adminHistory values (ADMINHISTORYSEQ.nextVal, #{adminId}, default, #{userEmpId}, null, null)
+	</insert>
+	
+	
+	
+	
+	
+	<!-- 전자결재_관리자설정 _관리자 삭제 -->
+	<!-- 오피스관리_관리자설정_전체관리자 삭제 -->
+	<update id="deleteAppovalAdminManager" parameterType="HashMap">
+		UPDATE tbl_admin
+		SET isDelete = 1
+		WHERE
+		adminId = #{adminId}
+	</update>
+	
+	<!-- 전자결재_관리자설정 _관리자 삭제 이력 넣기 -->
+	<update id="updateAdminHistory" parameterType="HashMap">
+		UPDATE tbl_adminHistory
+		SET DELETEDAY = sysdate, FK_DELEMPID = #{userEmpId}
+		WHERE
+		fk_adminId = #{adminId}
+	</update>
+	
+	<!-- 전자결재_관리자설정 _관리자 전체문서 열람 허용 비허용 설정 -->
+	<update id="grantAdminRead" parameterType="HashMap">
+		UPDATE tbl_admin
+		SET ISREADALLDOCUMENT = #{isReadAllDocument}
+		WHERE 
+		adminId = #{adminId}
+	</update>
+	
+	 <!-- 전자결재_관리자설정 _관리자 설정 이력-->
+	<select id="getAdminHistoryList" resultType="com.spring.app.approval.domain.AdminHistoryVO">
+		select * from
+		(
+			(
+				select
+				substr(e1.email, 0, instr(e1.email, '@')-1) as id,
+				e1.empName,
+				
+				substr(e2.email, 0, instr(e2.email, '@')-1) as registerId,
+				e2.empName as registerEmpName,
+				to_char(ah.registerDay, 'yyyy-mm-dd hh24:mi:ss') as registerDay,
+				1 as registerType
+				
+				from
+				tbl_adminHistory ah
+				join tbl_admin a on ah.fk_adminId = a.adminId
+				join tbl_employee e1 on a.fk_empId = e1.empId
+				join tbl_employee e2 on ah.fk_resEmpId = e2.empId
+				where adminType = 1 or adminType = 3
+			)
+			
+			union
+			
+			(
+				select
+				substr(e1.email, 0, instr(e1.email, '@')-1) as id,
+				e1.empName,
+				
+				substr(e2.email, 0, instr(e2.email, '@')-1) as registerId,
+				e2.empName as registerEmpName,
+				to_char(ah.deleteDay, 'yyyy-mm-dd hh24:mi:ss') as registerDay,
+				2 as registerType
+				
+				from
+				tbl_adminHistory ah
+				join tbl_admin a on ah.fk_adminId = a.adminId
+				join tbl_employee e1 on a.fk_empId = e1.empId
+				join tbl_employee e2 on ah.fk_delEmpId = e2.empId
+				where adminType = 1 or adminType = 3
+			)
+		)
+		
+		order by registerDay desc
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_양식함 관리_양식 상세-->
+	<select id="getFormDetail" parameterType="Long" resultType="com.spring.app.approval.domain.FormVO">
+		select 
+		formId, 
+		formName, 
+		description, 
+		preservationYear,
+		isUse
+		from tbl_form
+		where formId = #{formId}
+	</select>
+	
+	
+	<!-- 전자결재_양식함 관리_양식 상세_수정-->
+	<update id="updateForm" parameterType="HashMap">
+		UPDATE tbl_form
+		SET preservationYear = #{preservationYear}, updateDay = sysdate
+		WHERE 
+		formId = #{formId}
+	</update>
+	
+	
+	<!-- 전자결재_문서 상세보기_열람 허용 여부 -->
+	<select id="isReadAble" parameterType="HashMap" resultType="int">
+		select
+		count(*)
+		from
+		tbl_approval a 
+		join tbl_security s on s.securityid = a.fk_securityid
+		join tbl_position p on p.positionid = s.fk_positionid
+		where
+		approvalId = #{approvalId}
+		and s.fk_positionid >= #{positionId}
+	</select>
 	
 </mapper>

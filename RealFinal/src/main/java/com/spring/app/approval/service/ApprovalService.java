@@ -504,29 +504,6 @@ public interface ApprovalService {
 	*/
 	public EmpProofDetailVO getEmpProofDetail(Map<String, Long> paraMap);
 
-	/** 
-	* @Method Name  : updateProcessLineSetting 
-	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
-	* @변경이력  : 
-	* @Method 설명 : 
-	* @param updateList
-	* @param long1
-	* @return 
-	*/
-	//public boolean updateProcessLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId, Long procedureType);
-
-	/** 
-	* @Method Name  : updateApplicationLineSetting 
-	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
-	* @변경이력  : 
-	* @Method 설명 : 
-	* @param updateList
-	* @param long1
-	* @return 
-	*/
-	//public boolean updateApplicationLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId);
 
 	/** 
 	* @Method Name  : updateRoundRobinApprovalLineSetting 
@@ -541,17 +518,6 @@ public interface ApprovalService {
 	*/
 	public boolean updateRoundRobinApprovalLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId, Long procedureType);
 
-	/** 
-	* @Method Name  : updateAgreeLineSetting 
-	* @작성일   : 2023. 12. 26 
-	* @작성자   : syxzi 
-	* @변경이력  : 
-	* @Method 설명 : 
-	* @param updateList
-	* @param long1
-	* @return 
-	*/
-	public boolean updateAgreeLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId);
 
 	/** 
 	* @Method Name  : getProcedureTypeAgree 
@@ -793,6 +759,17 @@ public interface ApprovalService {
 	* @return 
 	*/
 	public boolean updateForm(Map<String, String> paraMap);
+
+	/** 
+	 * @param paraMap 
+	* @Method Name  : isReadAble 
+	* @작성일   : 2024. 1. 11 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @return 
+	*/
+	public boolean isReadAble(Map<String, Long> paraMap);
 
 
 }

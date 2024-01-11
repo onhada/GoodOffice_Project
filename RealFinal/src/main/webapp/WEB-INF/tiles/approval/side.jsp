@@ -53,14 +53,14 @@ $(document).ready(function() {
 	<!-- left -->
 	<div class="new-split-item left">
 		<div class="new-sidebar">
-			<div class="fixed-area">
+			<!-- <div class="fixed-area">
 				<button type="button" class="hw-button plain" style="display: flex; height: 40px; align-items: center; justify-content: center;">
 					<i class="gi gi-info gt-mr-8" style="font-size: 16px;"></i>
 					<a href="https://www.hiworks.com/hiworks_beta/" target="_blank">
 						<span class="gt-pb-2">전자결재 매뉴얼</span>
 					</a>
 				</button>
-			</div>
+			</div> -->
 			<a href="<%=ctxPath%>/approval/document/write/index.gw">
 				<button type="button" class="main-btn">
 					<i class="gi gi-plus"></i>
@@ -239,7 +239,7 @@ $(document).ready(function() {
 					<hr>
 					
 					<!-- 수정필))))))))))) 관리자인지 아닌지 확인 -->
-					<%-- <c:if test="${not empty sessionScope.loginUser && sessionScope.loginUser.adminType eq 'Approval'}"> --%>
+					<%-- <c:if test="${not empty sessionScope.loginUser && (sessionScope.loginUser.adminType eq 'Approval' || sessionScope.loginUser.adminType eq 'All')}"> --%>
 						<li class="el-collapse">
 							<div class="el-collapse-item ">
 								<div class="el-collapse-item__header menu-item" id="cookie_approval_menu_third" onclick="수정필">

@@ -161,7 +161,7 @@ function searchUser(){
 						<div class="gt-tab-nav gt-mb-30">
 							<a href="수정필" target="_self" class="gt-nav-item gt-active">전체 관리자</a>
 							<a href=수정필" target="_blank" class="gt-nav-item ">인사 관리자</a>
-							<a href="수정필" target="_blank" class="gt-nav-item ">전자결재 관리자</a>
+							<a href="<%=ctxPath %>/approval/settings/admin.gw" target="_blank" class="gt-nav-item ">전자결재 관리자</a>
 							<a href="수정필" target="_blank" class="gt-nav-item ">예약 관리자</a>
 						</div>
 					</div>

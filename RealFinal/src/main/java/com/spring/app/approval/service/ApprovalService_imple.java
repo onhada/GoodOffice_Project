@@ -59,18 +59,12 @@ public class ApprovalService_imple implements ApprovalService {
 		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
 		List<ApprovalVO> approvalAllIngList = dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
 
-		System.out.println("approvalAllIngList Size : " + approvalAllIngList.size());
 
 		// 전체 결과값 저장용
 		List<ApprovalVO> personalApprovalList = new ArrayList<>();
 		Map<String, Long> paramMap = new HashMap<>();
 
 		for (ApprovalVO avo : approvalAllIngList) {
-
-			System.out.println("//////////////////////////////////");
-			System.out.println(avo.getFk_approvalId());
-			System.out.println(avo.getIsReadReturn());
-			System.out.println("//////////////////////////////////");
 
 			String userProcedureType = avo.getProcedureType();
 			String userStatus = avo.getStatus();
@@ -82,27 +76,19 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "미읽음".equals(avo.getIsReadReturn())) {
 				// 반려가 있으면서 미읽음일 경우
 
-				System.out.println("수정필) 반려가 있을 경우");
 				avo.setStatus("확인");
 				personalApprovalList.add(avo);
 
 			} else {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
 					// 유저가 신청 혹은 기안자일 경우
 
-					System.out.println("수정필) 유저가 신청 혹은 기안자일 경우");
-
 					if ("대기".equals(userStatus)) {
-						System.out.println("수정필) 유저가 신청 혹은 기안자이면서 대기일 경우");
 
 						if (dao.hasLowerApplicantAllAccept(paramMap) == 0) {
 							// 유저보다 하위 신청 or 기안자들이 다 승인한 경우
-
-							System.out.println("수정필) 유저보다 하위 신청 or 기안자들이 다 승인한 경우");
 
 							avo.setStatus("대기");
 							personalApprovalList.add(avo);
@@ -110,8 +96,6 @@ public class ApprovalService_imple implements ApprovalService {
 						} else {
 							if (dao.hasLowerApplicantWait(paramMap) != 0) {
 								// 하위 신청 or 기안자 중에 대기가 있을 경우
-
-								System.out.println("수정필) 하위 신청 or 기안자 중에 대기가 있을 경우");
 
 								avo.setStatus("예정");
 								personalApprovalList.add(avo);
@@ -123,15 +107,11 @@ public class ApprovalService_imple implements ApprovalService {
 						if (dao.hasLowerApplicantWait(paramMap) != 0) {
 							// 하위 신청 or 기안자 중에 대기가 있을 경우
 
-							System.out.println("수정필) 하위 신청 or 기안자 중에 대기가 있을 경우");
-
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
 						} else {
 							if (dao.hasUpperApplicantAndApproverWait(paramMap) != 0) {
 								// 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우
-
-								System.out.println("수정필) 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우");
 
 								avo.setStatus("진행");
 								personalApprovalList.add(avo);
@@ -141,17 +121,11 @@ public class ApprovalService_imple implements ApprovalService {
 				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
 					// 유저가 결재 or 처리자일 경우
 
-					System.out.println("수정필) 유저가 결재 or 처리자일 경우");
-
 					if ("대기".equals(userStatus)) {
 						// 유저가 대기상태일 경우
 
-						System.out.println("수정필) 유저가 대기상태일 경우");
-
 						if (dao.hasLowerApplicantAndApproverAllAccept(paramMap) == 0) {
 							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0:전원 승인)
-
-							System.out.println("수정필) 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우");
 
 							avo.setStatus("대기");
 							personalApprovalList.add(avo);
@@ -159,26 +133,19 @@ public class ApprovalService_imple implements ApprovalService {
 						} else if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
 							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
 
-							System.out.println("수정필) 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우");
-
 							avo.setStatus("예정");
 							personalApprovalList.add(avo);
 						}
 
 					} else if ("승인".equals(userStatus)) {
-						System.out.println("수정필) 유저가 승인상태일 경우");
 
 						if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
 							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							System.out.println("수정필) 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
 						} else if (dao.hasUpperApproverWait(paramMap) != 0) {
 							// 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							System.out.println("수정필) 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
@@ -188,24 +155,16 @@ public class ApprovalService_imple implements ApprovalService {
 				} else if ("참조".equals(userProcedureType)) {
 					// 유저가 참조자일 경우
 
-					System.out.println("수정필)  유저가 참조자일 경우");
-
 					if ("미확인".equals(userStatus)) {
 						// 미확인하였을 경우
 
-						System.out.println("수정필) 미확인하였을 경우");
-
 						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
 							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							System.out.println("수정필) 결재자와 신청자가 모두 승인하기 전일 경우");
 
 							avo.setStatus("예정");
 							personalApprovalList.add(avo);
 						} else {
 							// 결재자와 신청자가 모두 승인하였을 경우
-
-							System.out.println("수정필) 결재자와 신청자가 모두 승인하였을 경우");
 
 							avo.setStatus("완료");
 							personalApprovalList.add(avo);
@@ -213,12 +172,8 @@ public class ApprovalService_imple implements ApprovalService {
 					} else if ("확인".equals(userStatus)) {
 						// 확인하였을 경우
 
-						System.out.println("수정필) 확인하였을 경우");
-
 						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
 							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							System.out.println("수정필) 결재자와 신청자가 모두 승인하기 전일 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
@@ -226,16 +181,12 @@ public class ApprovalService_imple implements ApprovalService {
 					}
 				} else if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
 					// 유저가 수신 혹은 수신참조일경우
-					System.out.println("수정필) 유저가 수신 혹은 수신참조일 경우");
 
 					if ("미확인".equals(userStatus)) {
 						// 미확인하였을 경우
-						System.out.println("수정필) 미확인하였을 경우");
 
 						if (dao.hasApplicantAndApproverAllAccept(paramMap) == 0) {
 							// 결재자와 신청자 모두 승인하였을 경우
-
-							System.out.println("수정필) 결재자와 신청자 모두 승인하였을 경우");
 
 							avo.setStatus("완료");
 							personalApprovalList.add(avo);
@@ -244,43 +195,30 @@ public class ApprovalService_imple implements ApprovalService {
 
 				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
 					// 유저가 재무합의 혹은 합의일 경우
-					System.out.println("수정필) 유저가 재무합의 혹은 합의일 경우");
 
 					if ("대기".equals(userStatus)) {
 						// 대기 상태일 경우
 
-						System.out.println("수정필) 유저가 대기 상태일 경우");
-
 						if (dao.hasUnderRankerAllAccept(paramMap) == 0) {
 							// 하위 순서가 모두 승인하였을 경우 (0: 전원 승인)
-
-							System.out.println("수정필) 하위 순서가 모두 승인하였을 경우 (0: 전원 승인)");
 
 							avo.setStatus("대기");
 							personalApprovalList.add(avo);
 						} else if (dao.hasUnderRankerWait(paramMap) != 0) {
 							// 하위 순서 중에 대기가 있을 경우
 
-							System.out.println("수정필) 하위 순서 중에 대기가 있을 경우");
-
 							avo.setStatus("예정");
 							personalApprovalList.add(avo);
 						}
 					} else if ("승인".equals(userStatus)) {
 
-						System.out.println("수정필) 유저가 승인 상태일 경우");
-
 						if (dao.hasUnderRankerWait(paramMap) != 0) {
 							// 하위 순서 중에 대기가 있을 경우
-
-							System.out.println("수정필) 하위 순서 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
 						} else if (dao.hasUpperRankerWait(paramMap) != 0) {
 							// 상위 순서 중에 대기가 있을 경우
-
-							System.out.println("수정필) 상위 순서 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
@@ -298,7 +236,6 @@ public class ApprovalService_imple implements ApprovalService {
 
 	@Override
 	public List<ApprovalVO> getApprovalWaitingList_withSearchAndPaging(Map<String, String> paraMap) {
-		System.out.println("대기 리스트라능");
 
 		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
 		List<ApprovalVO> approvalAllIngList = dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
@@ -316,26 +253,16 @@ public class ApprovalService_imple implements ApprovalService {
 			paramMap.put("fk_approvalId", avo.getFk_approvalId());
 			paramMap.put("sequence", (long) userSequence);
 
-			System.out.println("//////////////////////////////////////////////");
-			System.out.println("approvalID : " + avo.getFk_approvalId());
-			
 			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
 				// 반려가 없을 경우
-
-				System.out.println("수정필) 반려가 없을 경우");
 
 				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
 					// 유저가 신청 혹은 기안자일 경우
 
-					System.out.println("수정필) 유저가 신청 혹은 기안자일 경우");
-
 					if ("대기".equals(userStatus)) {
-						System.out.println("수정필) 유저가 신청 혹은 기안자이면서 대기일 경우");
 
 						if (dao.hasLowerApplicantAllAccept(paramMap) == 0) {
 							// 유저보다 하위 신청 or 기안자들이 다 승인한 경우
-
-							System.out.println("수정필) 유저보다 하위 신청 or 기안자들이 다 승인한 경우");
 
 							avo.setStatus("대기");
 							personalApprovalList.add(avo);
@@ -345,17 +272,11 @@ public class ApprovalService_imple implements ApprovalService {
 				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
 					// 유저가 결재 or 처리자일 경우
 
-					System.out.println("수정필) 유저가 결재 or 처리자일 경우");
-
 					if ("대기".equals(userStatus)) {
 						// 유저가 대기상태일 경우
 
-						System.out.println("수정필) 유저가 대기상태일 경우");
-
 						if (dao.hasLowerApplicantAndApproverAllAccept(paramMap) == 0) {
 							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0:전원 승인)
-
-							System.out.println("수정필) 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우");
 
 							avo.setStatus("대기");
 							personalApprovalList.add(avo);
@@ -366,17 +287,12 @@ public class ApprovalService_imple implements ApprovalService {
 
 				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
 					// 유저가 재무합의 혹은 합의일 경우
-					System.out.println("수정필) 유저가 재무합의 혹은 합의일 경우");
 
 					if ("대기".equals(userStatus)) {
 						// 대기 상태일 경우
 
-						System.out.println("수정필) 유저가 대기 상태일 경우");
-
 						if (dao.hasUnderRankerAllAccept(paramMap) == 0) {
 							// 하위 순서가 모두 승인하였을 경우 (0: 전원 승인)
-
-							System.out.println("수정필) 하위 순서가 모두 승인하였을 경우 (0: 전원 승인)");
 
 							avo.setStatus("대기");
 							personalApprovalList.add(avo);
@@ -414,29 +330,20 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "미읽음".equals(avo.getIsReadReturn())) {
 				// 반려가 있으면서 미확인일 경우
 
-				System.out.println("수정필) 반려가 있을 경우");
 				avo.setStatus("반려");
 				personalApprovalList.add(avo);
 
 			} else {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if ("참조".equals(userProcedureType)) {
 					// 유저가 참조자일 경우
-
-					System.out.println("수정필)  유저가 참조자일 경우");
 
 					if ("미확인".equals(userStatus)) {
 						// 미확인하였을 경우
 
-						System.out.println("수정필) 미확인하였을 경우");
-
 						if (dao.hasApplicantAndApproverAllAccept(paramMap) == 0) {
 							// 결재자와 신청자가 모두 승인하였을 경우
-
-							System.out.println("수정필) 결재자와 신청자가 모두 승인하였을 경우");
 
 							avo.setStatus("승인");
 							personalApprovalList.add(avo);
@@ -444,16 +351,12 @@ public class ApprovalService_imple implements ApprovalService {
 					}
 				} else if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
 					// 유저가 수신 혹은 수신참조일경우
-					System.out.println("수정필) 유저가 수신 혹은 수신참조일 경우");
 
 					if ("미확인".equals(userStatus)) {
 						// 미확인하였을 경우
-						System.out.println("수정필) 미확인하였을 경우");
 
 						if (dao.hasApplicantAndApproverAllAccept(paramMap) == 0) {
 							// 결재자와 신청자 모두 승인하였을 경우
-
-							System.out.println("수정필) 결재자와 신청자 모두 승인하였을 경우");
 
 							avo.setStatus("승인");
 							personalApprovalList.add(avo);
@@ -489,20 +392,13 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
 					// 유저가 신청 혹은 기안자일 경우
 
-					System.out.println("수정필) 유저가 신청 혹은 기안자일 경우");
-
 					if ("대기".equals(userStatus)) {
-						System.out.println("수정필) 유저가 신청 혹은 기안자이면서 대기일 경우");
 
 						if (dao.hasLowerApplicantWait(paramMap) != 0) {
 							// 하위 신청 or 기안자 중에 대기가 있을 경우
-
-							System.out.println("수정필) 하위 신청 or 기안자 중에 대기가 있을 경우");
 
 							avo.setStatus("예정");
 							personalApprovalList.add(avo);
@@ -512,17 +408,11 @@ public class ApprovalService_imple implements ApprovalService {
 				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
 					// 유저가 결재 or 처리자일 경우
 
-					System.out.println("수정필) 유저가 결재 or 처리자일 경우");
-
 					if ("대기".equals(userStatus)) {
 						// 유저가 대기상태일 경우
 
-						System.out.println("수정필) 유저가 대기상태일 경우");
-
 						if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
 							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							System.out.println("수정필) 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우");
 
 							avo.setStatus("예정");
 							personalApprovalList.add(avo);
@@ -533,17 +423,11 @@ public class ApprovalService_imple implements ApprovalService {
 				} else if ("참조".equals(userProcedureType)) {
 					// 유저가 참조자일 경우
 
-					System.out.println("수정필)  유저가 참조자일 경우");
-
 					if ("미확인".equals(userStatus)) {
 						// 미확인하였을 경우
 
-						System.out.println("수정필) 미확인하였을 경우");
-
 						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
 							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							System.out.println("수정필) 결재자와 신청자가 모두 승인하기 전일 경우");
 
 							avo.setStatus("예정");
 							personalApprovalList.add(avo);
@@ -552,17 +436,11 @@ public class ApprovalService_imple implements ApprovalService {
 
 				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
 					// 유저가 재무합의 혹은 합의일 경우
-					System.out.println("수정필) 유저가 재무합의 혹은 합의일 경우");
-
 					if ("대기".equals(userStatus)) {
 						// 대기 상태일 경우
 
-						System.out.println("수정필) 유저가 대기 상태일 경우");
-
 						if (dao.hasUnderRankerWait(paramMap) != 0) {
 							// 하위 순서 중에 대기가 있을 경우
-
-							System.out.println("수정필) 하위 순서 중에 대기가 있을 경우");
 
 							avo.setStatus("예정");
 							personalApprovalList.add(avo);
@@ -599,26 +477,18 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
 					// 유저가 신청 혹은 기안자일 경우
-
-					System.out.println("수정필) 유저가 신청 혹은 기안자일 경우");
 
 					if ("승인".equals(userStatus)) {
 
 						if (dao.hasLowerApplicantWait(paramMap) != 0) {
 							// 하위 신청 or 기안자 중에 대기가 있을 경우
 
-							System.out.println("수정필) 하위 신청 or 기안자 중에 대기가 있을 경우");
-
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
 						} else if (dao.hasUpperApplicantAndApproverWait(paramMap) != 0) {
 							// 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우
-
-							System.out.println("수정필) 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
@@ -627,23 +497,16 @@ public class ApprovalService_imple implements ApprovalService {
 				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
 					// 유저가 결재 or 처리자일 경우
 
-					System.out.println("수정필) 유저가 결재 or 처리자일 경우");
-
 					if ("승인".equals(userStatus)) {
-						System.out.println("수정필) 유저가 승인상태일 경우");
 
 						if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
 							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							System.out.println("수정필) 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
 
 						} else if (dao.hasUpperApproverWait(paramMap) != 0) {
 							// 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							System.out.println("수정필) 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
@@ -653,17 +516,11 @@ public class ApprovalService_imple implements ApprovalService {
 				} else if ("참조".equals(userProcedureType)) {
 					// 유저가 참조자일 경우
 
-					System.out.println("수정필)  유저가 참조자일 경우");
-
 					if ("확인".equals(userStatus)) {
 						// 확인하였을 경우
 
-						System.out.println("수정필) 확인하였을 경우");
-
 						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
 							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							System.out.println("수정필) 결재자와 신청자가 모두 승인하기 전일 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
@@ -672,23 +529,16 @@ public class ApprovalService_imple implements ApprovalService {
 
 				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
 					// 유저가 재무합의 혹은 합의일 경우
-					System.out.println("수정필) 유저가 재무합의 혹은 합의일 경우");
 
 					if ("승인".equals(userStatus)) {
 
-						System.out.println("수정필) 유저가 승인 상태일 경우");
-
 						if (dao.hasUnderRankerWait(paramMap) != 0) {
 							// 하위 순서 중에 대기가 있을 경우
-
-							System.out.println("수정필) 하위 순서 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
 						} else if (dao.hasUpperRankerWait(paramMap) != 0) {
 							// 상위 순서 중에 대기가 있을 경우
-
-							System.out.println("수정필) 상위 순서 중에 대기가 있을 경우");
 
 							avo.setStatus("진행");
 							personalApprovalList.add(avo);
@@ -731,16 +581,8 @@ public class ApprovalService_imple implements ApprovalService {
 			paramMap.put("fk_approvalId", avo.getFk_approvalId());
 			paramMap.put("sequence", (long) userSequence);
 
-			System.out.println("///////////////////////////////////////////////////////////////////////////");
-			System.out.println("approvalId : " + avo.getFk_approvalId());
-			System.out.println("empId : " + avo.getEmpId());
-			System.out.println("procedureType : " + userProcedureType);
-			System.out.println("userStatus : " + userStatus);
-
 			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "읽음".equals(avo.getIsReadReturn())) {
 				// 반려가 있으면서 읽음일 경우
-
-				System.out.println("수정필) 반려가 있을 경우");
 
 				if ("읽음".equals(avo.getIsReadReturn())) {
 					// 반려 내용을 읽었을 경우
@@ -751,8 +593,6 @@ public class ApprovalService_imple implements ApprovalService {
 			} else {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if (avo.getEmpId() == Long.parseLong(paraMap.get("empId"))) {
 					// 유저가 관련되어있는 전자결재의 경우
 
@@ -760,8 +600,6 @@ public class ApprovalService_imple implements ApprovalService {
 							|| "결재".equals(userProcedureType) || "처리".equals(userProcedureType)
 							|| "재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
 						// 유저가 신청 or 기안 or 결재 or 처리 or 재무합의 or 합의일 경우
-
-						System.out.println("수정필) 유저가 신청 or 기안 or 결재 or 처리자일 경우");
 
 						if (dao.hasAllAccept(paramMap) == 0) {
 							// 전원이 승인했다면
@@ -772,12 +610,8 @@ public class ApprovalService_imple implements ApprovalService {
 					} else if ("참조".equals(userProcedureType)) {
 						// 유저가 참조자일 경우
 
-						System.out.println("수정필)  유저가 참조자일 경우");
-
 						if ("확인".equals(userStatus)) {
 							// 확인하였을 경우
-
-							System.out.println("수정필) 확인하였을 경우");
 
 							if (dao.hasAllAccept(paramMap) == 0) {
 								// 전원이 승인했다면
@@ -787,11 +621,9 @@ public class ApprovalService_imple implements ApprovalService {
 						}
 					} else if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
 						// 유저가 수신 혹은 수신참조일경우
-						System.out.println("수정필) 유저가 수신 혹은 수신참조일 경우");
 
 						if ("확인".equals(userStatus)) {
 							// 미확인하였을 경우
-							System.out.println("수정필) 확인하였을 경우");
 
 							if (dao.hasAllAccept(paramMap) == 0) {
 								// 전원이 승인했다면
@@ -803,9 +635,6 @@ public class ApprovalService_imple implements ApprovalService {
 
 				} else {
 					// 유저와 관계 없으나 보안단계에서 허용된 경우
-
-					System.out.println("paraMap : " + paraMap.get("positionId"));
-					System.out.println("avo.getFk_positionId : " + avo.getFk_positionId());
 
 					if (Long.parseLong(paraMap.get("positionId")) <= avo.getFk_positionId()) {
 						if (dao.hasAllAccept(paramMap) == 0) {
@@ -847,12 +676,8 @@ public class ApprovalService_imple implements ApprovalService {
 				if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
 					// 반려가 없을 경우
 
-					System.out.println("수정필) 반려가 없을 경우");
-
 					if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
 						// 유저가 신청 or 기안 or 결재 or 처리 or 재무합의 or 합의일 경우
-
-						System.out.println("수정필) 유저가 신청 or 기안자일 경우");
 
 						if (dao.hasAllAccept(paramMap) == 0) {
 							// 전원이 승인했다면
@@ -892,13 +717,9 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType) || "재무합의".equals(userProcedureType)
 						|| "합의".equals(userProcedureType)) {
 					// 유저가 결재 or 처리 or 재무합의 or 합의일 경우
-
-					System.out.println("수정필) 유저가 신청 or 기안 or 결재 or 처리자일 경우");
 
 					if (dao.hasAllAccept(paramMap) == 0) {
 						// 전원이 승인했다면
@@ -916,8 +737,6 @@ public class ApprovalService_imple implements ApprovalService {
 	@Override
 	public List<ApprovalVO> getApprovalReferBox_withSearchAndPaging(Map<String, String> paraMap) {
 		// 문서함_수신
-
-		System.out.println("문서함_수신");
 
 		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
 		List<ApprovalVO> approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
@@ -938,15 +757,11 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
 					// 유저가 수신 혹은 수신참조일경우
-					System.out.println("수정필) 유저가 수신 혹은 수신참조일 경우");
 
 					if ("확인".equals(userStatus)) {
 						// 확인하였을 경우
-						System.out.println("수정필) 확인하였을 경우");
 
 						if (dao.hasAllAccept(paramMap) == 0) {
 							// 전원이 승인했다면
@@ -986,17 +801,11 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
 				// 반려가 없을 경우
 
-				System.out.println("수정필) 반려가 없을 경우");
-
 				if ("참조".equals(userProcedureType)) {
 					// 유저가 참조자일 경우
 
-					System.out.println("수정필)  유저가 참조자일 경우");
-
 					if ("확인".equals(userStatus)) {
 						// 확인하였을 경우
-
-						System.out.println("수정필) 확인하였을 경우");
 
 						if (dao.hasAllAccept(paramMap) == 0) {
 							// 전원이 승인했다면
@@ -1033,8 +842,6 @@ public class ApprovalService_imple implements ApprovalService {
 
 			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "읽음".equals(avo.getIsReadReturn())) {
 				// 반려가 있으면서 읽음일 경우
-
-				System.out.println("수정필) 반려가 있을 경우");
 
 				if ("읽음".equals(avo.getIsReadReturn())) {
 					// 반려 내용을 읽었을 경우
@@ -1115,13 +922,10 @@ public class ApprovalService_imple implements ApprovalService {
 			if (dao.hasReturn(avo.getFk_approvalId()) != 0) {
 				// 반려가 있을 경우
 
-				System.out.println("수정필) 반려가 있을 경우");
 				avo.setStatus("반려");
 
 			} else {
 				// 반려가 없을 경우
-
-				System.out.println("수정필) 반려가 없을 경우");
 
 				if (dao.hasAllAccept(paramMap) == 0) {
 					// 전원이 승인했다면
@@ -1164,7 +968,6 @@ public class ApprovalService_imple implements ApprovalService {
 	public ApprovalDetailVO getApprovalDocumentView(Map<String, Long> paraMap) {
 
 		ApprovalDetailVO advo = dao.getApprovalDocumentView(paraMap);
-		System.out.println("advo : " + advo.getContent());
 
 		// 절차
 		advo.setApvo(dao.getApprovalDocumentView_Procedure(paraMap.get("approvalId")));
@@ -1200,7 +1003,9 @@ public class ApprovalService_imple implements ApprovalService {
 	public List<ApprovalProcedureVO> getProcedureTypeApproval(Long approvalId) {
 		return dao.getProcedureTypeApproval(approvalId);
 	}
-
+	
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public boolean updateApprovalLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId,
 			Long procedureType) {
@@ -1214,14 +1019,10 @@ public class ApprovalService_imple implements ApprovalService {
 		} else {
 			return false;
 		}
-		// List<ApprovalProcedureVO> orgList = getProcedureTypeApproval(approvalId);
 
 		Map<String, String> paraMap = new HashMap<>();
 
 		boolean check = true;
-
-		System.out.println("orgListSize : " + orgList.size());
-		System.out.println("updateListSize : " + updateList.size());
 
 		paraMap.put("approvalId", String.valueOf(approvalId));
 		paraMap.put("procedureType", String.valueOf(procedureType));
@@ -1229,18 +1030,14 @@ public class ApprovalService_imple implements ApprovalService {
 		if (orgList.size() == updateList.size()) {
 			// 기존 결재자 수와 수정한 결재자 수가 같을 경우
 
-			System.out.println("기존 결재자 수와 수정한 결재자 수가 같을 경우");
-
 			for (int i = 0; i < updateList.size(); i++) {
 				if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
 					// 기존에 있던 결재 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 업데이트해야할 경우)
-					System.out.println("기존에 있던 결재 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 업데이트해야할 경우)");
 
 					paraMap.put("empId", updateList.get(i).getEmpId());
 					paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
 
 					if (dao.updateApprovalLineSetting(paraMap) == 0) {
-						System.out.println(" 1: ");
 						check = false;
 						return check;
 					}
@@ -1248,8 +1045,6 @@ public class ApprovalService_imple implements ApprovalService {
 			}
 		} else if (orgList.size() < updateList.size()) {
 			// 업데이트할 결재자 수가 더 많을 경우 (insert & update)
-
-			System.out.println("업데이트할 결재자 수가 더 많을 경우 (insert & update)");
 
 			// insert 시 sequence 값에 더해져서 사용할 수 있도록 한다.
 			int seqCnt = 0;
@@ -1260,13 +1055,10 @@ public class ApprovalService_imple implements ApprovalService {
 				if (i < orgList.size()) {
 					// 아직 기존 결재자 수보다 적은 상태일 경우 (이땐 update를 해야한다)
 
-					System.out.println("아직 기존 결재자 수보다 적은 상태일 경우 (이땐 update를 해야한다)");
-
 					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
 						paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
 
 						if (dao.updateApprovalLineSetting(paraMap) == 0) {
-							System.out.println(" 2: ");
 							check = false;
 							return check;
 						}
@@ -1275,15 +1067,12 @@ public class ApprovalService_imple implements ApprovalService {
 				} else {
 					// 기존 결재자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)
 
-					System.out.println("기존 결재자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)");
-
 					// 가장 마지막 sequence 값 얻어오기
 					int lastSeq = dao.getApprovalProcedureLastSeq(approvalId);
 
 					paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
 
 					if (dao.insertApprovalLineSetting(paraMap) == 0) {
-						System.out.println(" 3: ");
 						check = false;
 						return check;
 					}
@@ -1294,21 +1083,16 @@ public class ApprovalService_imple implements ApprovalService {
 		} else {
 			// 업데이트할 결재자 수가 더 적을 경우 (delete)
 
-			System.out.println("업데이트할 결재자 수가 더 적을 경우 (delete)");
-
 			for (int i = 0; i < orgList.size(); i++) {
 				paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
 
 				if (i < updateList.size()) {
 					// 아직 업데이트할 결재자보다 적을 경우 (이땐 update를 해야한다)
 
-					System.out.println("아직 업데이트할 결재자보다 적을 경우 (이땐 update를 해야한다)");
-
 					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
 						paraMap.put("empId", updateList.get(i).getEmpId());
 
 						if (dao.updateApprovalLineSetting(paraMap) == 0) {
-							System.out.println(" 4: ");
 							check = false;
 							return check;
 						}
@@ -1317,12 +1101,9 @@ public class ApprovalService_imple implements ApprovalService {
 				} else {
 					// 기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)
 
-					System.out.println("기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)");
-
 					paraMap.put("empId", orgList.get(i).getEmpId());
 
 					if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-						System.out.println(" 5: ");
 						check = false;
 						return check;
 					}
@@ -1388,19 +1169,13 @@ public class ApprovalService_imple implements ApprovalService {
 			return false;
 		}
 	}
-
+	
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public boolean insertOrUpdateApprovalFile(String approvalId, List<ApprovalFileVO> afList) {
 
 		List<ApprovalFileVO> orgAfList = dao.getApprovalDocumentView_File(Long.parseLong(approvalId));
-
-		for(ApprovalFileVO ovo : orgAfList) {
-			System.out.println("ovo : " + ovo.getFileRName());
-		}
-		
-		for(ApprovalFileVO a : afList) {
-			System.out.println("a : " + a.getFileRName());
-		}
 		
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("approvalId", approvalId);
@@ -1409,8 +1184,6 @@ public class ApprovalService_imple implements ApprovalService {
 
 		if (orgAfList.size() == afList.size()) {
 			// 기존 등록된 첨부파일과 새 첨부파일의 수가 같을 경우 (= 업데이트)
-
-			System.out.println("기존 등록된 첨부파일과 새 첨부파일의 수가 같을 경우 (= 업데이트)");
 
 			for (int i = 0; i < afList.size(); i++) {
 				paraMap.put("fileName", afList.get(i).getFileName());
@@ -1422,13 +1195,11 @@ public class ApprovalService_imple implements ApprovalService {
 			}
 		} else if (orgAfList.size() > afList.size()) {
 			// 기존 등록된 첨부파일이 새 첨부파일보다 더 많을 경우
-			System.out.println("기존 등록된 첨부파일이 새 첨부파일보다 더 많을 경우");
 
 			for (int i = 0; i < orgAfList.size(); i++) {
 				paraMap.put("approvalFileId", String.valueOf(orgAfList.get(i).getApprovalFileId()));
 
 				if (i < afList.size()) {
-					System.out.println("i < afList.size()");
 
 					paraMap.put("fileName", afList.get(i).getFileName());
 					paraMap.put("fileSize", String.valueOf(afList.get(i).getFileSize()));
@@ -1439,7 +1210,6 @@ public class ApprovalService_imple implements ApprovalService {
 					}
 				} else {
 					// 더 많은 애들은 지운다
-					System.out.println("// 더 많은 애들은 지운다");
 
 					if (dao.deleteApprovalFile(paraMap) == 0) {
 						isUpdate = false;
@@ -1450,14 +1220,12 @@ public class ApprovalService_imple implements ApprovalService {
 
 		} else {
 			// orgAfList.size() < afList.size()
-			System.out.println("// orgAfList.size() < afList.size()");
 
 			for (int i = 0; i < afList.size(); i++) {
 				paraMap.put("fileName", afList.get(i).getFileName());
 				paraMap.put("fileSize", String.valueOf(afList.get(i).getFileSize()));
 
 				if (i < orgAfList.size()) {
-					System.out.println("i < orgAfList.size()");
 
 					paraMap.put("approvalFileId", String.valueOf(orgAfList.get(i).getApprovalFileId()));
 
@@ -1467,7 +1235,6 @@ public class ApprovalService_imple implements ApprovalService {
 					}
 				} else {
 					// 더 많은 애들은 등록한다
-					System.out.println("더 많은 애들은 등록한다");
 
 					if (dao.insertApprovalFile(paraMap) == 0) {
 						isUpdate = false;
@@ -1543,6 +1310,8 @@ public class ApprovalService_imple implements ApprovalService {
 		}
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public boolean updateActionOfApproval(Map<String, String> paraMap) {
 
@@ -1550,10 +1319,7 @@ public class ApprovalService_imple implements ApprovalService {
 			if ("3".equals(paraMap.get("status"))) {
 				// 반려일 경우
 
-				System.out.println("반려일 경우");
-
 				if (dao.updateApprovalComplete(paraMap) == 1) {
-					System.out.println("complete 날짜 업데이트완료");
 
 					if (paraMap.get("opinion") != null && !"".equals(paraMap.get("opinion"))) {
 						// 의견 내용이 있을 경우
@@ -1573,17 +1339,13 @@ public class ApprovalService_imple implements ApprovalService {
 			} else if ("2".equals(paraMap.get("status"))) {
 				// 승인일 경우
 
-				System.out.println("승인일 경우");
-
 				Map<String, Long> paramMap = new HashMap<>();
 				paramMap.put("fk_approvalId", Long.parseLong(paraMap.get("approvalId")));
 
 				if (dao.hasApplicantAndApproverAllAccept(paramMap) == 0) {
 					// 모두 승인하였을 경우
-					System.out.println("모두 승인하였을 경우");
 
 					if (dao.updateApprovalComplete(paraMap) == 1) {
-						System.out.println("complete 날짜 업데이트완료");
 
 						if ("103".equals(paraMap.get("formId"))) {
 							// 근무체크 수정 요청
@@ -1681,254 +1443,9 @@ public class ApprovalService_imple implements ApprovalService {
 		return dao.getEmpProofDetail(paraMap);
 	}
 
-//	@Override
-//	public boolean updateProcessLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId, Long procedureType) {
-////		// 기존의 결재 절차 정보를 가져온다
-//		List<ApprovalProcedureVO> orgList = getProcedureTypeApproval(approvalId);
-//
-//		Map<String, String> paraMap = new HashMap<>();
-//
-//		boolean check = true;
-//
-//		System.out.println("orgListSize : " + orgList.size());
-//		System.out.println("updateListSize : " + updateList.size());
-//
-//		paraMap.put("approvalId", String.valueOf(approvalId));
-//		paraMap.put("procedureType", String.valueOf(procedureType));
-//
-//		if (orgList.size() == updateList.size()) {
-//			// 기존 결재자 수와 수정한 결재자 수가 같을 경우
-//
-//			System.out.println("기존 결재자 수와 수정한 결재자 수가 같을 경우");
-//
-//			for (int i = 0; i < updateList.size(); i++) {
-//				if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//					// 기존에 있던 결재 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 업데이트해야할 경우)
-//					System.out.println("기존에 있던 결재 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 업데이트해야할 경우)");
-//
-//					paraMap.put("empId", updateList.get(i).getEmpId());
-//					paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//
-//					if (dao.updateApprovalLineSetting(paraMap) == 0) {
-//						System.out.println(" 1: ");
-//						check = false;
-//						return check;
-//					}
-//				}
-//			}
-//		} else if (orgList.size() < updateList.size()) {
-//			// 업데이트할 결재자 수가 더 많을 경우 (insert & update)
-//
-//			System.out.println("업데이트할 결재자 수가 더 많을 경우 (insert & update)");
-//
-//			// 가장 마지막 sequence 값 얻어오기
-//			int lastSeq = dao.getApprovalProcedureLastSeq(approvalId);
-//			// insert 시 sequence 값에 더해져서 사용할 수 있도록 한다.
-//			int seqCnt = 0;
-//
-//			for (int i = 0; i < updateList.size(); i++) {
-//				paraMap.put("empId", updateList.get(i).getEmpId());
-//
-//				if (i < orgList.size()) {
-//					// 아직 기존 결재자 수보다 적은 상태일 경우 (이땐 update를 해야한다)
-//
-//					System.out.println("아직 기존 결재자 수보다 적은 상태일 경우 (이땐 update를 해야한다)");
-//
-//					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//						paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//
-//						if (dao.updateApprovalLineSetting(paraMap) == 0) {
-//							check = false;
-//							return check;
-//						}
-//					}
-//
-//				} else {
-//					// 기존 결재자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)
-//
-//					System.out.println("기존 결재자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)");
-//
-//					paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
-//
-//					if (dao.insertApprovalLineSetting(paraMap) == 0) {
-//						check = false;
-//						return check;
-//					}
-//				}
-//
-//			}
-//
-//		} else {
-//			// 업데이트할 결재자 수가 더 적을 경우 (delete)
-//
-//			System.out.println("업데이트할 결재자 수가 더 적을 경우 (delete)");
-//
-//			for (int i = 0; i < orgList.size(); i++) {
-//				paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//				if (i < updateList.size()) {
-//					// 아직 업데이트할 결재자보다 적을 경우 (이땐 update를 해야한다)
-//
-//					System.out.println("아직 업데이트할 결재자보다 적을 경우 (이땐 update를 해야한다)");
-//
-//					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//						paraMap.put("empId", updateList.get(i).getEmpId());
-//
-//						if (dao.updateApprovalLineSetting(paraMap) == 0) {
-//							System.out.println(" 4: ");
-//							check = false;
-//							return check;
-//						}
-//					}
-//
-//				} else {
-//					// 기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)
-//
-//					System.out.println("기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)");
-//
-//					paraMap.put("empId", orgList.get(i).getEmpId());
-//
-//					if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-//						System.out.println(" 5: ");
-//						check = false;
-//						return check;
-//					}
-//				}
-//
-//			}
-//		}
 
-//		return check;
-//		return false;
-//	}
-
-//	@Override
-//	public boolean updateApplicationLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId) {
-//		// 기존의 신청 절차 정보를 가져온다
-//		List<ApprovalProcedureVO> orgList = dao.getProcedureTypeApplication(approvalId);
-//
-//		Map<String, String> paraMap = new HashMap<>();
-//
-//		boolean check = true;
-//
-//		System.out.println("orgListSize : " + orgList.size());
-//		System.out.println("updateListSize : " + updateList.size());
-//
-//		paraMap.put("approvalId", String.valueOf(approvalId));
-//
-//		if (orgList.size() == updateList.size()) {
-//			// 기존 신청자 수와 수정한 신청자 수가 같을 경우
-//
-//			System.out.println("기존 신청자 수와 수정한 신청자 수가 같을 경우");
-//
-//			for (int i = 0; i < updateList.size(); i++) {
-//				System.out.println("org EmpId : " + orgList.get(i).getEmpId());
-//				System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
-//
-//				if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//					// 기존에 있던 신청 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 업데이트해야할 경우)
-//					System.out.println("기존에 있던 신청 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 업데이트해야할 경우)");
-//
-//					paraMap.put("empId", updateList.get(i).getEmpId());
-//					paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//
-//					if (dao.updateApprovalLineSetting(paraMap) == 0) {
-//						System.out.println(" 1: ");
-//						check = false;
-//						return check;
-//					}
-//				}
-//			}
-//		} else if (orgList.size() < updateList.size()) {
-//			// 업데이트할 신청자 수가 더 많을 경우 (insert & update)
-//
-//			System.out.println("업데이트할 신청자 수가 더 많을 경우 (insert & update)");
-//
-//			// 가장 마지막 sequence 값 얻어오기
-//			int lastSeq = dao.getApprovalProcedureLastSeq(approvalId);
-//			// insert 시 sequence 값에 더해져서 사용할 수 있도록 한다.
-//			int seqCnt = 0;
-//
-//			for (int i = 0; i < updateList.size(); i++) {
-//
-//				System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
-//
-//				paraMap.put("empId", updateList.get(i).getEmpId());
-//
-//				if (i < orgList.size()) {
-//					// 아직 기존 신청자 수보다 적은 상태일 경우 (이땐 update를 해야한다)
-//
-//					System.out.println("아직 기존 결재자 수보다 적은 상태일 경우 (이땐 update를 해야한다)");
-//					System.out.println("org EmpId : " + orgList.get(i).getEmpId());
-//
-//					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//						paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//
-//						if (dao.updateApprovalLineSetting(paraMap) == 0) {
-//							check = false;
-//							return check;
-//						}
-//					}
-//
-//				} else {
-//					// 기존 신청자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)
-//
-//					System.out.println("기존 신청자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)");
-//
-//					paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
-//
-//					if (dao.insertApplicationLineSetting(paraMap) == 0) {
-//						check = false;
-//						return check;
-//					}
-//				}
-//
-//			}
-//
-//		} else {
-//			// 업데이트할 신청자 수가 더 적을 경우 (delete)
-//
-//			System.out.println("업데이트할 신청자 수가 더 적을 경우 (delete)");
-//
-//			for (int i = 0; i < orgList.size(); i++) {
-//				paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//
-//				System.out.println("org EmpId : " + orgList.get(i).getEmpId());
-//
-//				if (i < updateList.size()) {
-//					// 아직 업데이트할 신청자보다 적을 경우 (이땐 update를 해야한다)
-//
-//					System.out.println("아직 업데이트할 신청자보다 적을 경우 (이땐 update를 해야한다)");
-//
-//					System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
-//
-//					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//						paraMap.put("empId", updateList.get(i).getEmpId());
-//
-//						if (dao.updateApprovalLineSetting(paraMap) == 0) {
-//							System.out.println(" 4: ");
-//							check = false;
-//							return check;
-//						}
-//					}
-//
-//				} else {
-//					// 기존 신청자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)
-//
-//					System.out.println("기존 신청자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)");
-//
-//					if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-//						System.out.println(" 5: ");
-//						check = false;
-//						return check;
-//					}
-//				}
-//
-//			}
-//		}
-//
-//		return check;
-//	}
-
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public boolean updateRoundRobinApprovalLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId,
 			Long procedureType) {
@@ -1952,16 +1469,12 @@ public class ApprovalService_imple implements ApprovalService {
 
 		boolean check = true;
 
-		System.out.println("orgListSize : " + orgList.size());
-		System.out.println("updateListSize : " + updateList.size());
-
 		paraMap.put("approvalId", String.valueOf(approvalId));
 		paraMap.put("procedureType", String.valueOf(procedureType));
 
 		if (orgList.size() == updateList.size()) {
 			// 기존 결재자 수와 수정한 결재자 수가 같을 경우
 
-			System.out.println("기존 결재자 수와 수정한 결재자 수가 같을 경우");
 
 			// insert 시 sequence 값에 더해져서 사용할 수 있도록 한다.
 			int seqCnt = 0;
@@ -1969,16 +1482,11 @@ public class ApprovalService_imple implements ApprovalService {
 			for (int i = 0; i < updateList.size(); i++) {
 				if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
 					// 기존에 있던 결재 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 삭제 및 등록해야할 경우)
-					System.out.println("기존에 있던 결재 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 삭제 및 등록해야할 경우)");
-
-					System.out.println("org EmpId : " + orgList.get(i).getEmpId());
-					System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
 
 					paraMap.put("empId", updateList.get(i).getEmpId());
 					paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
 
 					if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-						System.out.println(" 1: ");
 						check = false;
 						return check;
 					} else {
@@ -1999,22 +1507,14 @@ public class ApprovalService_imple implements ApprovalService {
 		} else if (orgList.size() < updateList.size()) {
 			// 업데이트할 결재자 수가 더 많을 경우 (insert & update)
 
-			System.out.println("업데이트할 결재자 수가 더 많을 경우 (insert & update)");
-
 			// insert 시 sequence 값에 더해져서 사용할 수 있도록 한다.
 			int seqCnt = 0;
 
 			for (int i = 0; i < updateList.size(); i++) {
 				paraMap.put("empId", updateList.get(i).getEmpId());
 
-				System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
-
 				if (i < orgList.size()) {
 					// 아직 기존 결재자 수보다 적은 상태일 경우 (이땐 update를 해야한다)
-
-					System.out.println("아직 기존 결재자 수보다 적은 상태일 경우 (이땐 삭제 및 등록을 해야한다)");
-
-					System.out.println("org EmpId : " + orgList.get(i).getEmpId());
 
 					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
 						// 삭제한다
@@ -2022,7 +1522,6 @@ public class ApprovalService_imple implements ApprovalService {
 						paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
 
 						if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-							System.out.println(" 1: ");
 							check = false;
 							return check;
 						} else {
@@ -2042,8 +1541,6 @@ public class ApprovalService_imple implements ApprovalService {
 				} else {
 					// 기존 결재자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)
 
-					System.out.println("기존 결재자수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)");
-
 					// 가장 마지막 sequence 값 얻어오기
 					int lastSeq = dao.getApprovalProcedureLastSeq(approvalId);
 					paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
@@ -2059,25 +1556,18 @@ public class ApprovalService_imple implements ApprovalService {
 		} else {
 			// 업데이트할 결재자 수가 더 적을 경우 (delete)
 
-			System.out.println("업데이트할 결재자 수가 더 적을 경우 (delete)");
 			// insert 시 sequence 값에 더해져서 사용할 수 있도록 한다.
 			int seqCnt = 0;
 
 			for (int i = 0; i < orgList.size(); i++) {
 				paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-				System.out.println("org EmpId : " + orgList.get(i).getEmpId());
 				if (i < updateList.size()) {
 					// 아직 업데이트할 결재자보다 적을 경우 (이땐 update를 해야한다)
-
-					System.out.println("아직 업데이트할 결재자보다 적을 경우 (이땐 update를 해야한다)");
-
-					System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
 
 					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
 						paraMap.put("empId", updateList.get(i).getEmpId());
 
 						if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-							System.out.println(" 1: ");
 							check = false;
 							return check;
 						} else {
@@ -2098,12 +1588,9 @@ public class ApprovalService_imple implements ApprovalService {
 				} else {
 					// 기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)
 
-					System.out.println("기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)");
-
 					paraMap.put("empId", orgList.get(i).getEmpId());
 
 					if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-						System.out.println(" 5: ");
 						check = false;
 						return check;
 					}
@@ -2115,167 +1602,6 @@ public class ApprovalService_imple implements ApprovalService {
 		return check;
 	}
 
-	@Override
-	public boolean updateAgreeLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId) {
-		// 기존의 합의 절차 정보를 가져온다
-//		List<ApprovalProcedureVO> orgList = getProcedureTypeAgree(approvalId);
-//
-//		Map<String, String> paraMap = new HashMap<>();
-//
-//		boolean check = true;
-//
-//		System.out.println("orgListSize : " + orgList.size());
-//		System.out.println("updateListSize : " + updateList.size());
-//
-//		paraMap.put("approvalId", String.valueOf(approvalId));
-//
-//		// 가장 마지막 sequence 값 얻어오기
-//		int lastSeq = dao.getApprovalProcedureLastSeq(approvalId);
-//		// insert 시 sequence 값에 더해져서 사용할 수 있도록 한다.
-//		int seqCnt = 0;
-//
-//		if (orgList.size() == updateList.size()) {
-//			// 기존 합의자 수와 수정한 합의자 수가 같을 경우
-//
-//			System.out.println("기존 합의자 수와 수정한 합의자 수가 같을 경우");
-//
-//			for (int i = 0; i < updateList.size(); i++) {
-//				if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//					// 기존에 있던 합의 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 삭제 및 등록해야할 경우)
-//					System.out.println("기존에 있던 합의 절차의 순서대로 일치하면서 empId는 동일하지 않을 경우 (즉, 삭제 및 등록해야할 경우)");
-//
-//					System.out.println("org EmpId : " + orgList.get(i).getEmpId());
-//					System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
-//
-//					paraMap.put("empId", updateList.get(i).getEmpId());
-//					paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//
-//					if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-//						System.out.println(" 1: ");
-//						check = false;
-//						return check;
-//					} else {
-//						// 정상적으로 삭제 되었을 경우 등록한다
-//
-//						paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
-//
-//						if (dao.insertAgreeLineSetting(paraMap) == 0) {
-//							check = false;
-//							return check;
-//						}
-//					}
-//				}
-//			}
-//		} else if (orgList.size() < updateList.size()) {
-//			// 업데이트할 합의자 수가 더 많을 경우 (insert & update)
-//
-//			System.out.println("업데이트할 결재자 수가 더 많을 경우 (insert & update)");
-//
-//			for (int i = 0; i < updateList.size(); i++) {
-//				paraMap.put("empId", updateList.get(i).getEmpId());
-//
-//				System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
-//
-//				if (i < orgList.size()) {
-//					// 아직 기존 합의자 수보다 적은 상태일 경우 (이땐 update를 해야한다)
-//
-//					System.out.println("아직 기존 결재자 수보다 적은 상태일 경우 (이땐 삭제 및 등록을 해야한다)");
-//
-//					System.out.println("org EmpId : " + orgList.get(i).getEmpId());
-//
-//					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//						// 삭제한다
-//
-//						paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//
-//						if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-//							System.out.println(" 1: ");
-//							check = false;
-//							return check;
-//						} else {
-//							// 정상적으로 삭제 되었을 경우 등록한다
-//
-//							paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
-//
-//							if (dao.insertAgreeLineSetting(paraMap) == 0) {
-//								check = false;
-//								return check;
-//							}
-//						}
-//					}
-//
-//				} else {
-//					// 기존 합의자 수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)
-//
-//					System.out.println("기존 합의자 수보다 더 커진 상태일 경우 (이땐 insert를 해야한다)");
-//
-//					paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
-//
-//					if (dao.insertAgreeLineSetting(paraMap) == 0) {
-//						check = false;
-//						return check;
-//					}
-//				}
-//
-//			}
-//
-//		} else {
-//			// 업데이트할 합의자 수가 더 적을 경우 (delete)
-//
-//			System.out.println("업데이트할 합의자 수가 더 적을 경우 (delete)");
-//
-//			for (int i = 0; i < orgList.size(); i++) {
-//				paraMap.put("procedureId", String.valueOf(orgList.get(i).getProcedureId()));
-//				
-//				System.out.println("org EmpId : " + orgList.get(i).getEmpId());
-//				
-//				if (i < updateList.size()) {
-//					// 아직 업데이트할 합의자보다 적을 경우 (이땐 update를 해야한다)
-//
-//					System.out.println("아직 업데이트할 합의자보다 적을 경우 (이땐 update를 해야한다)");
-//
-//					System.out.println("updateList EmpId : " + updateList.get(i).getEmpId());
-//
-//					if (!updateList.get(i).getEmpId().equals(orgList.get(i).getEmpId())) {
-//						paraMap.put("empId", updateList.get(i).getEmpId());
-//
-//						if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-//							System.out.println(" 1: ");
-//							check = false;
-//							return check;
-//						} else {
-//							// 정상적으로 삭제 되었을 경우 등록한다
-//
-//							paraMap.put("sequence", String.valueOf(lastSeq + (++seqCnt)));
-//
-//							if (dao.insertAgreeLineSetting(paraMap) == 0) {
-//								check = false;
-//								return check;
-//							}
-//						}
-//					}
-//
-//				} else {
-//					// 기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)
-//
-//					System.out.println("기존 결재자 수가 업데이트자 수보다 적은 상태일 경우 (이땐 delete를 해야한다)");
-//
-//					paraMap.put("empId", orgList.get(i).getEmpId());
-//
-//					if (dao.deleteApprovalLineSetting(paraMap) == 0) {
-//						System.out.println(" 5: ");
-//						check = false;
-//						return check;
-//					}
-//				}
-//
-//			}
-//		}
-//
-//		return check;
-
-		return false;
-	}
 
 	@Override
 	public List<ApprovalProcedureVO> getProcedureTypeAgree(Long approvalId) {
@@ -2328,17 +1654,14 @@ public class ApprovalService_imple implements ApprovalService {
 		return dao.getPreservationYear(formId);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public String insertDocumentWrite(Map<String, String[]> paraArrMap, Map<String, String> paraMap) {
 		
 		paraMap.put("isTemporary", "0");
 		
 		if (paraMap.get("approvalId") != null) {
-			// 임시저장한 거라면
-			// 원래 있던 값들 다 지우고 넣어야함
-
-			// 프로시저 삭제
-			// dao.deleteApprovalProcedure(paraMap.get("approvalId"));
 
 			// 프로시저 삭제
 			if (dao.deleteApprovalProcedure(paraMap.get("approvalId")) > 0) {
@@ -2515,8 +1838,6 @@ public class ApprovalService_imple implements ApprovalService {
 							paraMap.put("procedureType", "3");
 
 							for (String empId : paraArrMap.get("approvalArr")) {
-								System.out.println("길이는 어케돼 > : " + paraArrMap.get("approvalArr").length);
-								System.out.println(" 날 힘들게 하지마 : " + empId);
 								paraMap.put("sequence", String.valueOf(++cnt));
 								paraMap.put("empId", empId);
 								if (dao.insertApprovalLineSetting(paraMap) != 1) {
@@ -2797,6 +2118,8 @@ public class ApprovalService_imple implements ApprovalService {
 
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public String insertTempDocumentWrite(Map<String, String[]> paraArrMap, Map<String, String> paraMap) {
 		
@@ -3284,7 +2607,10 @@ public class ApprovalService_imple implements ApprovalService {
 	public int batchRestore(BatchVO bvo) {
 		return dao.batchRestore(bvo);
 	}
-
+	
+	
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public boolean addAppovalAdminManager(Map<String, Long> paraMap) {
 		
@@ -3304,6 +2630,8 @@ public class ApprovalService_imple implements ApprovalService {
 		
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public boolean deleteAppovalAdminManager(Map<String, Long> paraMap) {
 		if(dao.deleteAppovalAdminManager(paraMap) == 1) {
@@ -3345,6 +2673,15 @@ public class ApprovalService_imple implements ApprovalService {
 	public boolean updateForm(Map<String, String> paraMap) {
 		
 		if(dao.updateForm(paraMap) == 1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isReadAble(Map<String, Long> paraMap) {
+		if(dao.isReadAble(paraMap) == 1) {
 			return true;
 		}else {
 			return false;

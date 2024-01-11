@@ -102,6 +102,11 @@ public class AdminDAO_imple implements AdminDAO {
 		return sqlSession.update("admin.updateAdminHistoryByEmpId", empMap);
 	}
 
+	@Override
+	public int addFullAdminManager(Map<String, Long> empMap) {
+		return sqlSession.insert("admin.addFullAdminManager", empMap);
+	}
+
 
 
 }

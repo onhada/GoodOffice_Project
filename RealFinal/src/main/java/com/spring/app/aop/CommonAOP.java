@@ -8,14 +8,23 @@
 */
 package com.spring.app.aop;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.spring.app.approval.service.ApprovalService;
+import com.spring.app.common.domain.EmployeeVO;
 
 /**
  *   @FileName  : ApprovalAOP.java 
@@ -30,6 +39,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Aspect // 공통관심사 클래스(Aspect 클래스)로 등록된다.
 @Component
 public class CommonAOP {
+	
+	@Autowired
+	ApprovalService service;
 
 //	@Pointcut("execution(public * com.spring.app..*Controller.*(..))")
 //	// Controller 클래스에 속한 파마리터가 0개 이상인 모든 메서드
@@ -53,7 +65,7 @@ public class CommonAOP {
 //			req.setAttribute("message", message);
 //			req.setAttribute("loc", loc);
 //
-//			// >>> 로그인 성공후 로그인 하기전 페이지로 돌아가는 작업 만들기 <<< //
+//			// >>> 로그인 성공 후 로그인 하기전 페이지로 돌아가는 작업 만들기 <<< //
 //			String url = MyUtil.getCurrentURL(req);
 //			session.setAttribute("goBackURL", url); // 세션에 url 정보를 저장시켜둔다.
 //			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
@@ -98,8 +110,7 @@ public class CommonAOP {
 //			if (loginUser == null) {
 //				// 로그인하지 않았을 경우
 //
-//				// 로그인 매핑 수정필
-//				loc = req.getContextPath() + "/login.gw";
+//				loc = req.getContextPath() + "/common/login.gw";
 //			} else {
 //				// 관리자가 아닐 경우
 //				loc = "javascript:history.back()";
@@ -153,8 +164,7 @@ public class CommonAOP {
 //				String loc = null;
 //
 //				if (loginUser == null) {
-//					// 로그인 매핑 수정필
-//					loc = req.getContextPath() + "/login.gw";
+//					loc = req.getContextPath() + "/common/login.gw";
 //				} else {
 //					loc = "javascript:history.back()";
 //				}
@@ -176,7 +186,7 @@ public class CommonAOP {
 //	}
 
 	@Pointcut("execution(public * com.spring.app..*Controller.*(..))")
-	// Controller 클래스에 속한 파마리터가 0개 이상인 모든 메서드
+	// Controller 클래스 속 모든 메소드
 	public void headerDynamicManager() {
 	}
 
@@ -195,6 +205,36 @@ public class CommonAOP {
 				thisObject.toString().indexOf("Controller"));
 		
 		mav.addObject("headerManage", headerManage);
+
+	}
+	
+	@Pointcut("execution(public * com.spring.app..*Controller.*_AfterGetListSize(..))")
+	// Controller 클래스에 속해 메소드 명에 AdminSetting이 들어가는 
+	public void approvalListSize() {
+	}
+
+	@After("approvalListSize()")
+	public void approvalListSize(JoinPoint joinPoint) {
+		// 헤더 동적으로 제어할 수 있도록 파라미터 값을 넣어준다
+
+		HttpServletRequest req = (HttpServletRequest) joinPoint.getArgs()[0]; // 주업무 메소드의 첫번째 파라미터를 얻어오는 것이다.
+		ModelAndView mav = (ModelAndView) joinPoint.getArgs()[2];
+
+		HttpSession session = req.getSession();
+		
+		
+		Map<String, String> sizeMap = new HashMap<>();
+		sizeMap.put("searchType", "");
+		sizeMap.put("searchWord", "");
+		sizeMap.put("orderType", "desc");
+		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+
+		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
+		
 
 	}
 

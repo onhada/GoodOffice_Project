@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.spring.app.admin.domain.BatchModifyUserVO;
 import com.spring.app.admin.model.AdminDAO;
 import com.spring.app.approval.model.ApprovalDAO;
-import com.spring.app.common.AES256;
+import com.spring.app.common.Sha256;
 import com.spring.app.common.domain.AdminVO;
 import com.spring.app.common.domain.DepartmentVO;
 import com.spring.app.common.domain.EmployeeVO;
@@ -37,9 +37,6 @@ public class AdminService_imple implements AdminService {
 	@Autowired
 	private ApprovalDAO adao;
 	
-	@Autowired
- 	private AES256 aES256;
-
 	@Override
 	public List<DepartmentVO> getDepList() {
 		return dao.getDepList();
@@ -63,17 +60,12 @@ public class AdminService_imple implements AdminService {
 
 	@Override
 	public boolean insertUser(EmployeeVO evo) {
-		try {
-			String email = evo.getId() + "@project.com";
-			evo.setEmail(email);
-			
-			String pwd = aES256.encrypt(evo.getPwd());
-			evo.setPwd(pwd);
-			
-		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
-			e.printStackTrace();
-		}
+		String email = evo.getId() + "@project.com";
+		evo.setEmail(email);
 		
+		String pwd = Sha256.encrypt(evo.getPwd());
+		evo.setPwd(pwd);
+			
 		if(dao.insertUser(evo) == 1) {
 			// 사용자 등록 되었을 경우
 			return true;
@@ -185,7 +177,7 @@ public class AdminService_imple implements AdminService {
 				empMap.put("adminType", 1L);
 				
 				
-				if(adao.addAppovalAdminManager(empMap) == 1) {
+				if(dao.addFullAdminManager(empMap) == 1) {
 					
 					if(adao.addAdminHistory(empMap) == 1) {
 						continue;

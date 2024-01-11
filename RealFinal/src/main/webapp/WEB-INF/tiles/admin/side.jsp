@@ -7,20 +7,17 @@
 %>
 
 <script>
+	$(document).ready(function() {
 
-$(document).ready(function(){
-	
-	if('${requestScope.type}' != null){
-		$("li.menuDropDownList").each(function(){
-			$(this).attr('id', '');
-		})
-		
-		$("li." + '${requestScope.type}').attr('id', 'currentPagePointer');
-	}
-	
-})
+		if ('${requestScope.type}' != null) {
+			$("li.menuDropDownList").each(function() {
+				$(this).attr('id', '');
+			})
 
+			$("li." + '${requestScope.type}').attr('id', 'currentPagePointer');
+		}
 
+	})
 </script>
 
 
@@ -50,14 +47,14 @@ $(document).ready(function(){
 
 					<div class="depth1">
 						<a href="javascript:void(0)" class="foldtop depth1-fold depth1-anchor selected" id="admin_leftmenu_adminconfig">
-							<img src="./aaaaaaa_files/icon-setting.png" class="menu_icon">
+							<img src="<%= ctxPath %>/resources/image/icon/app.svg" class="menu_icon">
 							<span class="depth1-menu-title fold">환경 설정</span>
 							<span class="arrow_down up fold"></span>
 						</a>
 					</div>
 
 					<ul class="depth2 hide show_cookie" style="display: block">
-						<a target="" href="<%= ctxPath %>/admin/confirmFullAdmin.gw" >
+						<a target="" href="<%=ctxPath%>/admin/managerSet.gw">
 							<li style="display: flex; align-items: center;" class="menuDropDownList managerSet" id="">
 								<span>관리자 설정</span>
 							</li>
@@ -69,7 +66,7 @@ $(document).ready(function(){
 
 					<div class="depth1">
 						<a href="javascript:void(0)" class="foldtop depth1-fold depth1-anchor selected" id="admin_leftmenu_insa_manage">
-							<img src="./aaaaaaa_files/icon-user-manage.png" class="menu_icon">
+							<img src="<%= ctxPath %>/resources/image/icon/user.svg" class="menu_icon">
 							<span class="depth1-menu-title fold">사용자 관리</span>
 							<span class="arrow_down up fold"></span>
 						</a>
@@ -82,7 +79,7 @@ $(document).ready(function(){
 								<span class="external_img"></span>
 							</li>
 						</a>
-						<a target="" href="<%= ctxPath %>/admin/userManage.gw">
+						<a target="" href="<%=ctxPath%>/admin/userManage.gw">
 							<li style="display: flex; align-items: center;" class="menuDropDownList userManage" id="">
 								<span>사용자 관리</span>
 							</li>

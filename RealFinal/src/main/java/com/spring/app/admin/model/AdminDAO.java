@@ -178,6 +178,17 @@ public interface AdminDAO {
 	*/
 	int updateAdminHistoryByEmpId(Map<String, Long> empMap);
 
+	/** 
+	* @Method Name  : addFullAdminManager 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param empMap
+	* @return 
+	*/
+	int addFullAdminManager(Map<String, Long> empMap);
+
 
 
 

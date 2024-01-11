@@ -1213,6 +1213,24 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 
 
 
+	@Override
+	public int isReadAble(Map<String, Long> paraMap) {
+		return sqlSession.selectOne("approval.isReadAble",paraMap);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

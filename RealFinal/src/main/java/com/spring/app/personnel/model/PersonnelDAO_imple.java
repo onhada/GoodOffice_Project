@@ -8,7 +8,12 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.app.approval.domain.AdminHistoryVO;
+import com.spring.app.approval.domain.FormVO;
+import com.spring.app.common.domain.AdminVO;
 import com.spring.app.common.domain.EmployeeVO;
+import com.spring.app.personnel.domain.SalaryDetailVO;
+import com.spring.app.personnel.domain.SalaryVO;
 import com.spring.app.personnel.domain.WorkhistoryVO;
 
  
@@ -252,6 +257,112 @@ public class PersonnelDAO_imple implements PersonnelDAO {
 		return year_hour_str;
 	 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 예진 코드 추가 ----------------------------------------------------------------------------------------
+	@Override
+	public List<FormVO> getFormList() {
+		return sqlsession.selectList("personnel.getFormList");
+	}
+
+	@Override
+	public List<AdminVO> getAdminList() {
+		return sqlsession.selectList("personnel.getAdminList");
+	}
+
+	@Override
+	public List<AdminHistoryVO> getAdminHistoryList() {
+		return sqlsession.selectList("personnel.getAdminHistoryList");
+	}
+
+	@Override
+	public SalaryVO isExistPayrollThisMonth(String month) {
+		return sqlsession.selectOne("personnel.isExistPayrollThisMonth", month);
+	}
+
+	@Override
+	public List<SalaryDetailVO> getSalaryDetail_withSearch(Map<String, String> paraMap) {
+		return sqlsession.selectList("personnel.getSalaryDetail_withSearch", paraMap);
+	}
+
+	@Override
+	public int fixPayroll(Map<String, String> paraMap) {
+		return sqlsession.update("personnel.fixPayroll", paraMap);
+	}
+
+	@Override
+	public int deleteSalaryDetail(Long salaryId) {
+		return sqlsession.delete("personnel.deleteSalaryDetail", salaryId);
+	}
+
+	@Override
+	public int deleteSalary(Long salaryId) {
+		return sqlsession.delete("personnel.deleteSalary", salaryId);
+	}
+
+	@Override
+	public Long getSalarySequence() {
+		return sqlsession.selectOne("personnel.getSalarySequence");
+	}
+
+	@Override
+	public int insertSalary(SalaryVO svo) {
+		return sqlsession.insert("personnel.insertSalary", svo);
+	}
+
+	@Override
+	public int insertSalaryDetail(SalaryDetailVO sdvo) {
+		return sqlsession.insert("personnel.insertSalaryDetail", sdvo);
+	}
+
+	@Override
+	public Long getEmpId(Map<String, String> paraMap) {
+		return sqlsession.selectOne("personnel.getEmpId", paraMap);
+	}
+
+	@Override
+	public SalaryVO getSalary(String salaryId) {
+		return sqlsession.selectOne("personnel.getSalary", salaryId);
+	}
+
+	@Override
+	public List<SalaryVO> getSalaryByYear(Map<String, String> paraMap) {
+		return sqlsession.selectList("personnel.getSalaryByYear", paraMap);
+	}
+
+	@Override
+	public SalaryDetailVO getSalaryDetailBySalaryIdAndEmpId(Map<String, String> paraMap) {
+		return sqlsession.selectOne("personnel.getSalaryDetailBySalaryIdAndEmpId", paraMap);
+	}
+	
+	
+	// 예진 코드 끝 -----------------------------------------------------------------------------------------
 
 	 
 	

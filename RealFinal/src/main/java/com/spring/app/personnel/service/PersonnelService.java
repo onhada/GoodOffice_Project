@@ -3,7 +3,14 @@ package com.spring.app.personnel.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.Model;
+
+import com.spring.app.approval.domain.AdminHistoryVO;
+import com.spring.app.approval.domain.FormVO;
+import com.spring.app.common.domain.AdminVO;
 import com.spring.app.common.domain.EmployeeVO;
+import com.spring.app.personnel.domain.SalaryDetailVO;
+import com.spring.app.personnel.domain.SalaryVO;
 import com.spring.app.personnel.domain.WorkhistoryVO;
 
 public interface PersonnelService {
@@ -233,6 +240,202 @@ public interface PersonnelService {
 	*/
 	String avg_hour(Map<String, String> paraMapYear);
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 예진 코드 시작 -------------------------------------------------------------------------------------
+	
+	
+	/** 
+	* @Method Name  : getFormList 
+	* @작성일   : 2024. 1. 8 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @return 
+	*/
+	List<FormVO> getFormList();
+
+	/** 
+	* @Method Name  : getAdminList 
+	* @작성일   : 2024. 1. 8 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @return 
+	*/
+	List<AdminVO> getAdminList();
+
+	/** 
+	* @Method Name  : getAdminHistoryList 
+	* @작성일   : 2024. 1. 8 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @return 
+	*/
+	List<AdminHistoryVO> getAdminHistoryList();
+
+	/** 
+	* @Method Name  : isExistPayrollThisMonth 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param month
+	* @return 
+	*/
+	SalaryVO isExistPayrollThisMonth(String month);
+
+	/** 
+	* @Method Name  : getSalaryDetail 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	List<SalaryDetailVO> getSalaryDetail_withSearch(Map<String, String> paraMap);
+
+	/** 
+	* @Method Name  : fixPayroll 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	boolean fixPayroll(Map<String, String> paraMap);
+
+	/** 
+	* @Method Name  : deletePayroll 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param salaryId
+	* @return 
+	*/
+	boolean deletePayroll(Long salaryId);
+
+	/** 
+	* @Method Name  : insertPayroll 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraList
+	 * @param svo 
+	* @return 
+	*/
+	boolean insertPayroll(List<SalaryDetailVO> paraList, SalaryVO svo);
+
+	/** 
+	* @Method Name  : getSalarySequence 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @return 
+	*/
+	Long getSalarySequence();
+
+	/** 
+	* @Method Name  : isExistEmployee 
+	* @작성일   : 2024. 1. 9 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param sdvo
+	* @return 
+	*/
+	Long isExistEmployee(SalaryDetailVO sdvo);
+
+	/** 
+	* @Method Name  : payrollToExcel 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param salaryId
+	* @param model 
+	*/
+	void payrollToExcel(String salaryId, Model model);
+
+	/** 
+	* @Method Name  : getSalaryByYear 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	List<SalaryVO> getSalaryByYear(Map<String, String> paraMap);
+
+	/** 
+	* @Method Name  : getSalary 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param salaryId
+	* @return 
+	*/
+	SalaryVO getSalary(String salaryId);
+
+	/** 
+	* @Method Name  : getSalaryDetailBySalaryIdAndEmpId 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param paraMap
+	* @return 
+	*/
+	SalaryDetailVO getSalaryDetailBySalaryIdAndEmpId(Map<String, String> paraMap);
+
+	/** 
+	* @Method Name  : privatePayrollToExcel 
+	* @작성일   : 2024. 1. 10 
+	* @작성자   : syxzi 
+	* @변경이력  : 
+	* @Method 설명 : 
+	* @param salaryId
+	* @param model 
+	*/
+	void privatePayrollToExcel(Map<String, String> paraMap, Model model);
+
+	
+	
+	
+	// 예진 코드 끝    -------------------------------------------------------------------------------------
 	 
 
 }

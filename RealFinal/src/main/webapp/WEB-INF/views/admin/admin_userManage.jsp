@@ -565,7 +565,7 @@
 					"pwd" : $("input.inputPwd").val(),
 					"empType": $("input.inputWorkType").attr('id'),
 					"fk_teamId" : $("span.teamChoice").attr('id'),
-					"fk_positionId" : $("input.inputWorkType").attr('id')
+					"fk_positionId" : $("input.inputPosition").attr('id')
 			},
 			type: "post",
 			async: true,

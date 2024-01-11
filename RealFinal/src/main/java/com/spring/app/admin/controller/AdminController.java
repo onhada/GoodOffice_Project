@@ -375,7 +375,6 @@ public class AdminController {
 		EmployeeVO loginUser = new EmployeeVO();
 		loginUser.setEmpId((long) 101);
 		loginUser.setFk_positionId((long) 6);
-		loginUser.setAdminType("4");
 		session.setAttribute("loginUser", loginUser);
 		
 		/*
