@@ -44,6 +44,12 @@
 <!--  예인 추가 css  -->
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/personnel/hr_insa.css">
 
+
+<!-- Optional JavaScript -->
+<%-- <script type="text/javascript" src="<%= ctxPath%>/resources/jquery/jquery-3.7.1.min.js"></script> --%>
+<script type="text/javascript" src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="<%=ctxPath%>/resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+
 <!-- 예진 추가 -->
 <!-- JavaScript -->
 <script src="<%=ctxPath%>/resources/js/jquery-3.7.1.min.js" type="text/javascript"></script>
@@ -1092,5 +1098,188 @@
 
 	<!-- 인사_급여(개인)_급여명세서 보기 모달 끝-->
 
+
+
+
+
+
+
+
+
+
+
+
+	<div class="v-modal" id="layerApplicationLineSetting" tabindex="0" style="z-index: 2025; display: none;"></div>
+
+	<div data-v-38b211a8="" data-v-5dded26b="" class="el-dialog__wrapper" id="layerApplicationLineSetting" style="z-index: 2038; display: none;">
+		<div role="dialog" aria-modal="true" aria-label="dialog" class="el-dialog sm-title" style="margin-top: 15vh;">
+			<div class="el-dialog__header">
+				<div data-v-38b211a8="" class="modal-title">처리 설정</div>
+				<button type="button" aria-label="Close" class="el-dialog__headerbtn">
+					<i class="el-dialog__close el-icon el-icon-close"></i>
+				</button>
+			</div>
+			<div class="el-dialog__body">
+				<div data-v-38b211a8="" class="main-contents">
+					<div data-v-38b211a8="" class="border-div">
+						<div data-v-38b211a8="" class="d-flex align-items-center justify-content-between">
+							<span data-v-38b211a8="">
+								<div data-v-147fd5e4="" data-v-38b211a8="" class="position-relative" style="width: 180px; margin-left: 5px; margin-top: 5px;">
+									<input data-v-147fd5e4="" placeholder="클릭후 입력하세요" class="hw-input" id="inputApprovalLineSetting">
+									<div data-v-147fd5e4="" class="ac-serach-result-wrap" id="ac-serach-result" style="top: 36px; display: none;">
+
+										<!--  
+									
+										<div data-v-147fd5e4="" index="0" 
+											class="result-box clearfix hover"  >
+											<div data-v-147fd5e4="" class="search-keyword clearfix w-100">은우
+												(하이웍스오피스)</div>
+										</div>
+									 
+-->
+
+
+										<!--  -->
+									</div>
+								</div>
+							</span>
+							<span data-v-38b211a8="" class="mr-6 mt-21 font-size-12 color-d6 none-select"> 인원 : 3명 </span>
+						</div>
+						<div data-v-38b211a8="" class="line-div">
+							<div data-v-38b211a8="" class="vb vb-invisible" style="width: auto; height: 160px; position: relative; overflow: hidden;">
+								<div class="vb-content" style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 8px);">
+									<!---->
+									<div data-v-38b211a8="" id="b-content">
+										<!-- <div data-v-38b211a8="" class="line-box draggableFlag">
+										<span data-v-38b211a8="">김이사</span><i data-v-38b211a8=""
+											class="fal fa-times-circle ml-5"></i>
+									</div>
+									<div data-v-38b211a8="" class="line-box draggableFlag">
+										<span data-v-38b211a8="">관리자</span><i data-v-38b211a8=""
+											class="fal fa-times-circle ml-5"></i>
+									</div>
+									<div data-v-38b211a8="" class="line-box draggableFlag">
+										<span data-v-38b211a8="">차은우</span><i data-v-38b211a8=""
+											class="fal fa-times-circle ml-5"></i>
+									</div> -->
+									</div>
+									<!---->
+								</div>
+								<div class="vb-dragger" style="position: absolute; height: 0px; top: 0px;">
+									<div class="vb-dragger-styler"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div data-v-38b211a8="" class="direction-div">
+						<div data-v-38b211a8="" class="text-top-to-bottom">결재방향</div>
+					</div>
+				</div>
+			</div>
+			<div class="el-dialog__footer">
+				<span data-v-38b211a8="" class="dialog-footer">
+					<button data-v-f8d3258e="" data-v-38b211a8="" type="button" class="hw-button secondary">
+						<!---->
+						<span data-v-f8d3258e="" class="label" onclick="btncancel()">취소</span>
+						<!---->
+					</button>
+					<button data-v-f8d3258e="" data-v-38b211a8="" type="button" class="hw-button primary">
+						<!---->
+						<input type="hidden" id="empidcheck" value="" />
+						<input type="hidden" id="empnamecheck" value="" />
+						<span data-v-f8d3258e="" class="label" onclick="btncheck()">확인</span>
+						<!---->
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<!-- 신청 모달 -->
+	<div class="v-modal" id="layerApplicationLineSettingh" tabindex="0" style="z-index: 2025; display: none;"></div>
+
+	<div data-v-38b211a8="" data-v-5dded26b="" class="el-dialog__wrapper" id="layerApplicationLineSettingh" style="z-index: 2038; display: none;">
+		<div role="dialog" aria-modal="true" aria-label="dialog" class="el-dialog sm-title" style="margin-top: 15vh;">
+			<div class="el-dialog__header">
+				<div data-v-38b211a8="" class="modal-title">처리 설정</div>
+				<button type="button" aria-label="Close" class="el-dialog__headerbtn">
+					<i class="el-dialog__close el-icon el-icon-close"></i>
+				</button>
+			</div>
+			<div class="el-dialog__body">
+				<div data-v-38b211a8="" class="main-contents">
+					<div data-v-38b211a8="" class="border-div">
+						<div data-v-38b211a8="" class="d-flex align-items-center justify-content-between">
+							<span data-v-38b211a8="">
+								<div data-v-147fd5e4="" data-v-38b211a8="" class="position-relative" style="width: 180px; margin-left: 5px; margin-top: 5px;">
+									<input data-v-147fd5e4="" placeholder="클릭후 입력하세요" class="hw-input" id="inputApprovalLineSettingh">
+									<div data-v-147fd5e4="" class="ac-serach-result-wrap" id="ac-serach-resulth" style="top: 36px; display: none;">
+
+										<!--  
+									
+										<div data-v-147fd5e4="" index="0" 
+											class="result-box clearfix hover"  >
+											<div data-v-147fd5e4="" class="search-keyword clearfix w-100">은우
+												(하이웍스오피스)</div>
+										</div>
+									 
+-->
+
+
+										<!--  -->
+									</div>
+								</div>
+							</span>
+							<span data-v-38b211a8="" class="mr-6 mt-21 font-size-12 color-d6 none-select"> 인원 : 3명 </span>
+						</div>
+						<div data-v-38b211a8="" class="line-div">
+							<div data-v-38b211a8="" class="vb vb-invisible" style="width: auto; height: 160px; position: relative; overflow: hidden;">
+								<div class="vb-content" style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 8px);">
+									<!---->
+									<div data-v-38b211a8="" id="b-contenth">
+										<div data-v-38b211a8="" class="line-box draggableFlag">
+											<span data-v-38b211a8="">${sessionScope.loginUser.empName}</span>
+											<i data-v-38b211a8="" class="fal fa-times-circle ml-5"></i>
+										</div>
+										<!-- 
+									<div data-v-38b211a8="" class="line-box draggableFlag">
+										<span data-v-38b211a8="">관리자</span><i data-v-38b211a8=""
+											class="fal fa-times-circle ml-5"></i>
+									</div>
+									<div data-v-38b211a8="" class="line-box draggableFlag">
+										<span data-v-38b211a8="">차은우</span><i data-v-38b211a8=""
+											class="fal fa-times-circle ml-5"></i>
+									</div> -->
+									</div>
+									<!---->
+								</div>
+								<div class="vb-dragger" style="position: absolute; height: 0px; top: 0px;">
+									<div class="vb-dragger-styler"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div data-v-38b211a8="" class="direction-div">
+						<div data-v-38b211a8="" class="text-top-to-bottom">결재방향</div>
+					</div>
+				</div>
+			</div>
+			<div class="el-dialog__footer">
+				<span data-v-38b211a8="" class="dialog-footer">
+					<button data-v-f8d3258e="" data-v-38b211a8="" type="button" class="hw-button secondary">
+						<!---->
+						<span data-v-f8d3258e="" class="label" onclick="btncancelh()">취소</span>
+						<!---->
+					</button>
+					<button data-v-f8d3258e="" data-v-38b211a8="" type="button" class="hw-button primary">
+						<!---->
+						<input type="hidden" id="empidcheckh" value=${sessionScope.loginUser.empId } />
+						<input type="hidden" id="empnamecheckh" value=${sessionScope.loginUser.empName } />
+						<span data-v-f8d3258e="" class="label" onclick="btncheckh()">확인</span>
+						<!---->
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
