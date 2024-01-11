@@ -10,24 +10,22 @@
 
 	<!-- === 로그인 완료 요청하기 === --> 
 	<select id="getLoginMember" resultType="com.spring.app.common.domain.EmployeeVO" parameterType="HashMap"> 
-		select empId, empName, SUBSTR(email, 0,INSTR(email, '@')-1) as id, fk_teamId, teamName, fk_depId, depName, fk_positionId, positionName, fk_jobId, empType
-	         , companyTel, tel, email
-	         , to_char(startWorkDay, 'yyyy-mm-dd') AS startWorkDay
-	         , to_char(birth, 'yyyy-mm-dd') AS birth, address, detailAddress, postCode, status
-	         , to_char(registerDay, 'yyyy-mm-dd') AS registerDay
-	         , to_char(updateDay, 'yyyy-mm-dd') AS updateDay
-	         , isReadAllDocument, adminType, NVL2(isReadAllDocument, '1', '0') as isAdmin
-	    from tbl_employee E
-	    left join tbl_team T
-	    on E.fk_teamId = T.teamId
-        left join tbl_department D
-        on T.fk_depId = D.depId
-	    left join tbl_position P
-	    on E.fk_positionId = P.positionId
-	    left join tbl_admin A
-	    on E.empId = A.fk_empId
-	    where status = 1 and A.isDelete = 0 and email = #{loginId} and pwd = #{loginPasswd}  
-	</select>
+		select empId, empName, SUBSTR(email, 0,INSTR(email, '@')-1) as id, fk_teamId, teamName
+         	 , fk_depId, depName, fk_positionId, positionName, fk_jobId, empType, companyTel, tel, email
+             , to_char(startWorkDay, 'yyyy-mm-dd') AS startWorkDay
+             , to_char(birth, 'yyyy-mm-dd') AS birth, address, detailAddress, postCode, status
+             , to_char(registerDay, 'yyyy-mm-dd') AS registerDay
+             , to_char(updateDay, 'yyyy-mm-dd') AS updateDay
+             , adminType
+             , NVL2(adminType, '1', '0') as isAdmin
+             , NVL2(isReadAllDocument, 1, 0) as isReadAllDocument
+        from tbl_employee E
+        join tbl_team T on E.fk_teamId = T.teamId
+        join tbl_department D on T.fk_depId = D.depId
+        join tbl_position P  on E.fk_positionId = P.positionId
+        left join (select adminType, isReadAllDocument, fk_empID from tbl_admin a join tbl_employee e on a.fk_empId = e.empId where email = #{loginId} and a.isDelete = 0 )  A on E.empId = A.fk_empId
+        where status = 1 and email = #{loginId}
+    </select>
 	
  	
  	

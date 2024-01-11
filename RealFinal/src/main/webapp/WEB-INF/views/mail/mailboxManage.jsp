@@ -155,13 +155,6 @@
 								<a href="javascript:void(0);" class="weakblue" onclick="emptyMailbox('2')">비우기</a>
 							</td>
 						</tr>
-						<tr mbox_no="b2" mbox_name="보낼 편지함">
-							<td>보낼 편지함</td>
-							<td class="ta_r">0 / 1</td>
-							<td>
-								<a href="javascript:void(0);" class="weakblue" onclick="emptyMailbox('3')">비우기</a>
-							</td>
-						</tr>
 						<tr mbox_no="b3" mbox_name="임시 보관함">
 							<td>임시 보관함</td>
 							<td class="ta_r">2 / 3</td>

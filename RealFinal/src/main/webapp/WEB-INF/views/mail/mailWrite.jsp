@@ -326,7 +326,6 @@
 				else{
 					return false;
 				}
-		
 			}
 				
 			
@@ -361,14 +360,10 @@
 		            	dataType:"json",
 		            	async : false,
 		                success:function(json){
-//		                	console.log(json.n);
-		    				if (json.n == 0) {
-		    					// $("textarea[name='referenceMail']").val("");
+		                	if (json.n == 0) {
 		    					reference_result *= json.n;
 		    				}
 		    				else {
-		    					//	console.log(json.empId);
-		    					//	$("input:hidden[name='referenceEmpId']").val(json.empId);
 		    					html += "<input type='text' name='referenceEmpId' value='"+json.empId+"'/>";
 		    					referenceEmp_str += json.empMail + ",";
 		    				}	
@@ -429,13 +424,10 @@
 		            	async : false,
 		                success:function(json){
 		    				if (json.n == 0) {
-		    					// $("textarea[name='hiddenReference']").val("");
 		    					hiddenReference_result *= json.n;
 		    				}
 		    				else {
-		    					// console.log(json.empId);
-		                 	    // $("input:hidden[name='hiddenReferenceEmpId']").val(json.empId);
-		                 	    html += "<input type='text' name='hiddenReferenceEmpId' value='"+json.empId+"'/>";
+		    					html += "<input type='text' name='hiddenReferenceEmpId' value='"+json.empId+"'/>";
 		                 	    hiddenReferenceEmp_str += json.empMail + ",";
 		    				}	
 		                },
@@ -531,29 +523,16 @@
 	            contentType:false,  // 파일 전송시 설정 
 	            dataType:"json",
 	            success:function(json){
-	          	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
-	                // ~~~ 확인용 : {"result":1}
+	          	  
 	                if(json.result == 1) {
 	                	
+	                	$("input:hidden[name='isTemporary']").val(json.isTemporary); // 
 	                	
-	                	$("input:hidden[name='isTemporary']").val(json.isTemporary); // 수정필...이거된거 맞음?
-	                	
-	                	<%-- location.href="<%= ctxPath%>/mail/mailWriteResult.gw"; --%>
-	          	  		/* alert("메일보내기가 ssssss성공s니다."); */
-	          	  		
-	          	  		
-	          	  		/* "incomeEmp_str":$("div#incomeEmp_str").val().trim() */
-	          	  		
-	          	  		
 	          	  		// 폼(form)을 전송(submit)
 	        			const frm = document.mailFrm;
 	        		 	frm.method = "post"; 
 	        		 	frm.action = "<%=ctxPath%>/mail/mailWriteResult.gw";
 	        		 	frm.submit();
-	          	  		
-	          	  		
-	          	  		
-	          	  		
 	          	  		
 	          	  		
 	                }
@@ -565,23 +544,10 @@
 					alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
 			      }
 	        });
-			<%--  
-		  	// 폼(form)을 전송(submit)
-			const frm = document.mailFrm;
-		 	frm.method = "post"; 
-		 	frm.action = "<%=ctxPath%>/mail/mailWriteEnd.gw";
-		 	frm.submit();
-			 --%>
-		/* 	 /WEB-INF/views/mail/mailWriteResult.jsp */
 			 
 		});// end of $("a#sendMail, a#tempMail").click(function(){})--------------
 	
 		
-		
-		
-
-		
-	  
 		
 		
 	});// end of $(document).ready(function(){})-----------------
@@ -593,20 +559,7 @@
 		$("div#hiddenReference").css("display","");
 		$("a#referencePlus").css("display","none");
 	}
-	
-/* 	
-	function fn_addFile(){
-		var fileIndex = 2;
-		//$("#fileIndex").append("<div><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"<button type='button' style='float:right;' id='fileAddBtn'>"+"추가"+"</button></div>");
-		$(".fileAdd_btn").on("click", function(){
-			$("#fileIndex").append("<div><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"</button>"+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div>");
-		});
-		$(document).on("click","#fileDelBtn", function(){
-			$(this).parent().remove();
-			
-		});
-	}
-	 */
+
 </script>
 
 
@@ -634,44 +587,6 @@
 				<span class="detail_select">
 					<a href="javascript:void(0)" id="tempMail">저장하기</a>
 					<input type="hidden" name="isTemporary" />
-				</span>
-				<span class="detail_select">
-					<a href="javascript:void(0)" id="m_write_option">
-						옵션<img src="<%=ctxPath%>/resources/image/icon/btn_drop.gif" alt="옵션 드롭다운 메뉴 열기" class="open_drop">
-					</a>
-					<!-- 옵션드롭다운 시작 -->
-					<div class="dropdown hide" style="z-index: 100; min-width: 300px" id="m_write_option_detail">
-						<dl class="dropdown-box option">
-							<dt style="padding-bottom: 8px">발송 예약</dt>
-							<dd>
-								<input type="checkbox" title="예약 체크" value="Y" name="reserve_mail" id="reserve_mail" >
-								<!--<input type="text" name="send_date" id="send_date" style="width:82px" class="text-box" value='2023-12-06' title="년월일">-->
-								<input type="text" class="w100 cal_date hasDatepicker" id="send_date" name="send_date" value="2023-12-06" readonly="" disabled="disabled">
-								<select name="send_hour" id="send_hour" style="width: 63px;" disabled="disabled">
-									<c:forEach var="hour" begin="0" end="23" step="1">
-										<option value="${hour}">${hour}시</option>
-									</c:forEach>
-									<!-- 수정필 : 공식웹 긁어올 때 이렇게 되어있는데 이게 발송시간 인지 나중에 확인해 <option value="18" selected="">18 시</option> -->
-								</select>
-								<select name="send_minute" id="send_minute" style="width: 63px;" disabled="disabled">
-									<c:forEach var="minute" begin="0" end="59" step="1">
-										<option value="${minute}">${minute}분</option>
-									</c:forEach>
-								</select>
-							</dd>
-							<dd class="blue_color" style="padding: 5px 0 0 18px">GMT+9:00</dd>
-							<dt style="padding-bottom: 8px">서명</dt>
-							<dd>
-								<select style="width: 238px" title="서명" id="selSignList" name="selSignList" onchange="MailWrite.changeSign()">
-									<option value="">서명사용안함</option>
-									<option value="SET">[서명 설정]</option>
-								</select>
-							<dt>
-								<a href="javascript:void(0)" class="blue_color" onclick="MailWrite.writeOptionConfirm();">확인</a>
-							</dt>
-						</dl>
-					</div>
-					<!-- 옵션드롭다운 끝 -->
 				</span>
 				<span id="sTimeMailSaved" style="margin-right: 127px; float: right;"></span>
 			</fieldset>

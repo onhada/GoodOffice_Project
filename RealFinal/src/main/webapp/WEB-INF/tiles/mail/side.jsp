@@ -14,19 +14,9 @@
 
 $(document).ready(function(){
 
-	
-
-	
-	
-	
-	$("a").click(function(e){ // 수정필) 클릭했을 때 주소가 이동되면서 클래스 유지가 안 되는데...
-		$(e.target).addClass("router-link-exact-active");
-	});
-	
-	/* $("a").change(function(){
-		
-		$(e.target).addClass("router-link-exact-active");
-	}); */
+	if('${requestScope.sideType}' != ''){
+		$('a#' + '${requestScope.sideType}').addClass('router-link-exact-active');
+	}
 	
 });// end of $(document).ready(function(){})-------
 
@@ -122,17 +112,6 @@ function toggleShowHide(id){
 							</span>
 							<span class="flex-truncate with-count-badge">보낸 편지함</span>
 							<span class="counting mail-badge" id="spLeftb1"></span>
-						</a>
-					</li>
-
-					<!-- 보낼 편지함 -->
-					<li class="menu-item only">
-						<a href="<%= ctxPath%>/mail/mailList.gw?mailType=3" class="link gt-pl-10" id="mailbox_3">
-							<span class="link-prefix-icon">
-								<i class="gis gi-paperplane-clock"></i>
-							</span>
-							<span class="flex-truncate with-count-badge">보낼 편지함</span>
-							<span class="counting mail-badge" id="spLeftb2"></span>
 						</a>
 					</li>
 					
