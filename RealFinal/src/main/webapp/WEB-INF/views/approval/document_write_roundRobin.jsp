@@ -276,6 +276,11 @@ $(document).ready(function() {
 		   		isCheck = false;
 		   	}
 			
+			if($("input#approval_document_title").val().trim().length > 30){
+				alert("제목 글자수는 최대 30자 이내여야 합니다.")
+		   		isCheck = false;
+			}
+			
 			
 			
 		   	/* 보안등급 체크 여부 */
@@ -283,8 +288,12 @@ $(document).ready(function() {
 				alert("보안등급을 선택하세요.")
 				isCheck = false;
 			}
-				
 			
+		   	/* 결재자 수 확인 */
+		   	if($("input[name='approvalEmpId']").length == 0){
+		   		alert("결재자 수는 최소 한 명 이상이어야 합니다.")
+		   		isCheck = false;
+		   	}
 			
 			
 		    var formData = new FormData($("form[name='writeDocumentFrm']").get(0)); // $("form[name='addFrm']").get(0) 폼 에 작성된 모든 데이터 보내기 
@@ -327,7 +336,6 @@ $(document).ready(function() {
 					success:function(text){
 						if(text.isSuccess) {
 						/* contextPath를 ctxPath로 변경하기 */
-						console.log("통과!")
 						let type = '';
 						if(text.viewType == 'list'){
 							type = 'A';

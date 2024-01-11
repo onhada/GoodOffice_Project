@@ -117,7 +117,7 @@ function myProfileView() {
 			<div data-v-3a88b4b3="" class="header-item header-item__left">
 				<div data-v-87615cf4="" data-v-3a88b4b3="" class="logo hiworks_logo">
 					<h1 data-v-87615cf4="">
-						<a data-v-87615cf4="" href="수정필" class="gt-d-flex">
+						<a data-v-87615cf4="" href="<%= ctxPath%>/index/index.gw" class="gt-d-flex">
 							<svg data-v-87615cf4="" xmlns="http://www.w3.org/2000/svg" width="74.402" height="16" viewBox="0 0 74.402 16">
 									<g data-v-87615cf4="" id="그룹_58223" transform="translate(-90.202 -332.509)" class="" data-name="그룹 58223">
 									<path data-v-87615cf4="" id="패스_5437" d="M90.2,332.509h2.4v7.121a5.781,5.781,0,0,1,.559-.7,3.631,3.631,0,0,1,1.589-.993,3.684,3.684,0,0,1,1.089-.149,3.458,3.458,0,0,1,2.728,1.083,4.228,4.228,0,0,1,.961,2.912v6.613h-2.4V342.5a2.759,2.759,0,0,0-.575-1.875,2.048,2.048,0,0,0-1.629-.658,2.209,2.209,0,0,0-1.678.678,2.639,2.639,0,0,0-.644,1.894v5.851H90.2Z" class="" data-name="패스 5437" transform="translate(0 0)" fill="#0080dd"></path>
@@ -152,6 +152,9 @@ function myProfileView() {
 						</c:if>
 						<c:if test="${requestScope.headerManage eq 'Personnel'}">
 							<span data-v-236a7242="" class="btn-main">인사</span>
+						</c:if>
+						<c:if test="${requestScope.headerManage eq 'Approval'}">
+							<span data-v-236a7242="" class="btn-main">전자결재</span>
 						</c:if>
 						<c:if test="${requestScope.headerManage eq 'Admin'}">
 							<span data-v-236a7242="" class="btn-main">오피스 관리</span>
