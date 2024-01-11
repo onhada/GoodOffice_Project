@@ -684,15 +684,15 @@
 								<div class="position">
 									<%-- == 원메일쓰기 인 경우 == --%>
 									<c:if test='${requestScope.orgMailId eq null}'>
-										<input name="subject" id="subject" type="text" value="" tabindex="4" maxlength="180">
+										<input name="subject" id="subject" type="text" value="" tabindex="4" maxlength="180" autocomplete="off">
 									</c:if>
 									<%-- == 답장메일쓰기 인 경우 == --%>
 									<c:if test='${requestScope.orgMailId ne null && mailType ne 4}'>
-				     					<input name="subject" id="subject" type="text" value="RE: ${requestScope.orgMailInfo_map.subject}" tabindex="4" maxlength="180">
+				     					<input name="subject" id="subject" type="text" value="RE: ${requestScope.orgMailInfo_map.subject}" tabindex="4" maxlength="180" autocomplete="off">
 								    </c:if>
 								    <%-- == 임시저장메일쓰기인 경우 == --%>
 									<c:if test='${requestScope.orgMailId ne null && mailType eq 4}'>
-				     					<input name="subject" id="subject" type="text" value="${requestScope.orgMailInfo_map.subject}" tabindex="4" maxlength="180">
+				     					<input name="subject" id="subject" type="text" value="${requestScope.orgMailInfo_map.subject}" tabindex="4" maxlength="180" autocomplete="off">
 								    </c:if>
 								</div>
 							</div>
