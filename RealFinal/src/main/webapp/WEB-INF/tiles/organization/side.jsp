@@ -9,6 +9,38 @@
 
 
 
+
+<style>
+.router-link-exact-active {
+    background-color: #dae8f8 !important;
+    color: #056ac9 !important;
+    font-weight: 600 !important;
+}
+[data-v-3c987196] .router-link-active:not(.main-button), [data-v-3c987196] .router-link-exact-active:not(.main-button) {
+    background-color: #dae8f8 !important;
+}    
+</style>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+	if('${requestScope.sideType}' != ''){
+		$('a#' + '${requestScope.sideType}').addClass('router-link-exact-active');
+	}
+	
+});// end of $(document).ready(function(){})-------
+
+
+// Function Declaration
+
+
+</script>
+
+
+
+
+
 <div class="split-item left" style="width: 276px;">
 	<div data-v-3c987196="" class="sidebar" style="f616: #f7faff; --3 fa7187a: rgba(41, 133, 219, 0.1); - -be93eab8: #056ac9;">
 
@@ -17,7 +49,7 @@
 			<div class="vb-content" style="display: block; overflow: hidden scroll; height: 100%; width: calc(100% + 8px);">
 				<nav data-v-3c987196="" class="menu-container">
 
-					<a data-v-3c987196="" href="<%= ctxPath%>/organization/empInfoViewPage.gw" class="menu-item mt-8">
+					<a data-v-3c987196="" href="<%= ctxPath%>/organization/empInfoViewPage.gw" class="menu-item mt-8" id="empInfo">
 						<i data-v-3c987196="" class="gis gi-chart-hr link-prefix-icon"></i>
 						<span data-v-3c987196="" class="collapse-title">임직원정보</span>
 					</a>
@@ -37,11 +69,11 @@
 							</div>
 							<div role="tabpanel" aria-labelledby="el-collapse-head-8720" id="el-collapse-content-8720" class="el-collapse-item__wrap">
 								<div class="el-collapse-item__content">
-									<a data-v-318760de="" href="<%= ctxPath%>/organization/organizationManage.gw" class="menu-item sub">
+									<a data-v-318760de="" href="<%= ctxPath%>/organization/organizationManage.gw" class="menu-item sub" id="organizationManage">
 										<i data-v-318760de="" class="gis  gi-user-group link-prefix-icon"></i>
 										<span data-v-318760de="">조직관리</span>
 									</a>
-									<a data-v-318760de="" href="<%= ctxPath%>/organization/positionManage.gw" class="menu-item sub">
+									<a data-v-318760de="" href="<%= ctxPath%>/organization/positionManage.gw" class="menu-item sub" id="positionManage">
 										<i data-v-318760de="" class="gis gi-hr-menu link-prefix-icon"></i>
 										<span data-v-318760de="">직위/직무설정</span>
 									</a>

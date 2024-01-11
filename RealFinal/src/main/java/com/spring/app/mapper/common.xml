@@ -24,7 +24,7 @@
 	    on E.fk_positionId = P.positionId
 	    left join tbl_admin A
 	    on E.empId = A.fk_empId
-	    where status = 1 and email = #{loginId} and pwd = #{loginPasswd}  
+	    where status = 1 and A.isDelete = 0 and email = #{loginId} and pwd = #{loginPasswd}  
 	</select>
 	
  	

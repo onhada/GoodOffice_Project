@@ -2,11 +2,8 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 
 
 
@@ -14,10 +11,7 @@
 
 $(document).ready(function() {
 	
-	
-	
 })// end of $(document).ready(function(){})-------------------------
-
 
 
 // Function Declaration
@@ -44,9 +38,7 @@ function delRsvAdmin(adminId){
 	});	
 }
 
-
 </script>
-
 
 
 
@@ -59,10 +51,10 @@ function delRsvAdmin(adminId){
 	<div class="content_inbox">
 		<!-- Contents -->
 		<div class="setting_field">
-			<a href="javascript:void(0)" onclick="rsvAdminAddModalOpen();" class="weakblue">
+			<!-- <a href="javascript:void(0)" onclick="rsvAdminAddModalOpen();" class="weakblue">
 				<span class="sms_plus"></span>
 				관리자 추가
-			</a>
+			</a> -->
 			<div class="pdt_20">
 				<table class="tableType01 rs-table">
 					<colgroup>
@@ -90,9 +82,9 @@ function delRsvAdmin(adminId){
 								<td>[${rsvAdmin.depName}] ${rsvAdmin.teamName}</td>
 								<td>${rsvAdmin.registerDay}</td>
 								<td>
-									<c:if test="${rsvAdmin.email != 'admin'}">
+									<%-- <c:if test="${rsvAdmin.email != 'admin'}">
 										<button type="button" name="button" class="weakblue" onclick="delRsvAdmin(${rsvAdmin.adminId});">삭제</button>
-									</c:if>
+									</c:if> --%>
 								</td>
 							</tr>
 						</c:forEach>

@@ -28,16 +28,13 @@
 <%-- Optional JavaScript --%>
 <script type="text/javascript" src="<%=ctxPath%>/resources/jquery/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
-<%-- <script type="text/javascript" src="<%= ctxPath%>/resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>  --%>
 
 <%-- 스피너 및 datepicker 를 사용하기 위해 jQueryUI CSS 및 JS --%>
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
 <script type="text/javascript" src="<%=ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
 
 
-
 <!-- official css -->
-<%-- <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/css/common/header_search.css"> --%>
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/common/inHTML.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/reservation/style.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/reservation/style_new.css">
@@ -45,7 +42,6 @@
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/reservation/style_resources.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/reservation/booking_common.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/reservation/new_lnb.css">
-
 
 
 <style type="text/css">
@@ -107,88 +103,19 @@ $(document).ready(function() {
 		return datepicker.regional.ko;
 
 	}));
-	// ----- datepicker 한글 버젼 변경, 날짜 dateformat 변경 끝 ----- //
-
-	// === jQuery UI 의 datepicker === //
-	/* 	$(".datepicker").datepicker({		
-	            format: 'yy-mm-dd'  //Input Display Format 변경
-	           ,showOtherMonths: true   //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-	           ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
-	           ,changeYear: true        //콤보박스에서 년 선택 가능
-	           ,changeMonth: true       //콤보박스에서 월 선택 가능                
-	       //  ,showOn: "both"          //button:버튼을 표시하고,버튼을 눌러야만 달력 표시됨. both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시됨.  
-	       //  ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-	       //  ,buttonImageOnly: true   //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
-	       //  ,buttonText: "선택"       //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
-	           ,yearSuffix: "년"         //달력의 년도 부분 뒤에 붙는 텍스트
-	           ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
-	           ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
-	           ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
-	           ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-	       //  ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-	       //  ,maxDate: "+1M" //최대 선택일자(+1D:하루후, +1M:한달후, +1Y:일년후)                
-	    }); 
-	 */
-	/* 
-		$(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-	 */
+	
 	// 초기값을 오늘 날짜로 설정
 	$("input.datepicker").datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, +1M:한달후, +1Y:일년후) 
 
-	/* 	 
-	 // === 전체 datepicker 옵션 일괄 설정하기 ===  
-	 //     한번의 설정으로 $("input#fromDate"), $('input#toDate')의 옵션을 모두 설정할 수 있다.
-	 $(function() {
-	 //모든 datepicker에 대한 공통 옵션 설정
-	 $.datepicker.setDefaults({
-	 dateFormat: 'yy-mm-dd' //Input Display Format 변경
-	 ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-	 ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
-	 ,changeYear: true //콤보박스에서 년 선택 가능
-	 ,changeMonth: true //콤보박스에서 월 선택 가능                
-	 // ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시됨. both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시됨.  
-	 // ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-	 // ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
-	 // ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
-	 ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
-	 ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
-	 ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
-	 ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
-	 ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-	 // ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-	 // ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                    
-	 });
-	 */
-	/*          // input을 datepicker로 선언
-	 $("input#fromDate").datepicker();                    
-	 $("input#toDate").datepicker();
 	
-	 // From의 초기값을 오늘 날짜로 설정
-	 $('input#fromDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, +1M:한달후, +1Y:일년후)
-	
-	 // To의 초기값을 3일후로 설정
-	 $('input#toDate').datepicker('setDate', '+3D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, +1M:한달후, +1Y:일년후) 
-	
-	 });
-	 */
-	///////////////////////////////////////////////////////////////////////
-	/*  
-	 $('input.datePicker').bind("change", (e) => {
-		 if( $(e.target).val() != "" ) {
-			 $(e.target).next().hide();
-		 }
-	 });// 생년월일에 마우스로 달력에 있는 날짜를 선택한 경우 이벤트 처리 한것 
-	 */
-	 
-	 
 	 // 수정필) 이거누른 게 잘 작동하는 지 확인해봐야할듯 
 	 // ---------- 컨트롤러로 자원예약id 값 넘겨주기 ---------- //
 	/*  $("button.del_reservation_btn").attr("id", $(".rsv_detail_view").attr("rsvResourceId")); // 삭제하기 위한 자원예약id 넣기 (from 나의예 : 상세보기 ) */
 	/*  $("button.del_reservation_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 삭제하기 위한 자원예약id 넣기 (from 승인관리) */
 /* 	 $("button.reservation_return_btn").attr("id", $(".rsv_detail_view").attr("rsvResourceId")); // 반납하기 위한 자원예약id 넣기 (from 나의예약)
 	 $("button.reservation_return_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 반납하기 위한 자원예약id 넣기 (from 반납관리) */
-	 $("button.reservation_approve_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 승인하기 위한 자원예약id 넣기 (from 승인관리)
-	 $("button.reservation_reject_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 반려하기 위한 자원예약id 넣기 (from 승인관리)
+	 /* $("button.reservation_approve_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 승인하기 위한 자원예약id 넣기 (from 승인관리)
+	 $("button.reservation_reject_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); */ // 반려하기 위한 자원예약id 넣기 (from 승인관리)
 
 	
 	 
@@ -514,15 +441,17 @@ function returnRsource(rsvId){
 
 
 <%-- 예약 승인 모달 열기 --%>
-function rsvApproveModalOpen(){
+function rsvApproveModalOpen(rsvId){
 	$("div#reservation_approve_layer").removeClass("hide");	
+	$("button.reservation_approve_btn").attr("id", rsvId);
 }
 
 
 <%-- 예약 승인하기 --%>
 function rsvApprove(rsvId){		
+	console.log(rsvId);
 	$.ajax({
-    	url : "<%=ctxPath%>/reservation/rsvApprove.gw",
+  //  	url : "<%=ctxPath%>/reservation/rsvApprove.gw",
 		type : "get",
 		data : {"rsvResourceId":rsvId},	
 		dataType : "json",
@@ -544,8 +473,9 @@ function rsvApprove(rsvId){
 
 
 <%-- 예약 반려 모달 열기 --%>
-function rsvRejectModalOpen(){
+function rsvRejectModalOpen(rsvId){
 	$("div#reservation_reject_layer").removeClass("hide");	
+	$("button.reservation_reject_btn").attr("id", rsvId);
 }
 
 
@@ -699,7 +629,7 @@ function moveDate(type){
 
 
 
-<title>하이웍스 오피스</title>
+<title>Good Office</title>
 <meta name="viewport" content="width=1024">
 
 
@@ -1113,7 +1043,7 @@ function moveDate(type){
 
 		<%-- ========== 관리자추가 모달 시작 ========== --%>
 		<!-- <div class="layer_box large address hide" id -->
-		<div id="rsvAdmin_add_layer" class="large address hide" style="margin-left: -411px; margin-top: -310px; display: block; width: 820px;">
+		<%-- <div id="rsvAdmin_add_layer" class="large address hide" style="margin-left: -411px; margin-top: -310px; display: block; width: 820px;">
 			<div class="title_layer text_variables">관리자 추가</div>
 			<div class="search-address">
 				<div class="hidden">
@@ -1162,7 +1092,7 @@ function moveDate(type){
 							<ul>
 								<li id="addressTreeNode_57182" class="last">
 									<div class="container">
-										<img onclick="addressbook.ToggleTree(this);" src="https://booking.office.hiworks.com/assets/images/common/tree_images/tree_m.gif" class="plus"><strong onclick="addressbook.selectNode(this);" class="selectedNode">하이웍스산업 <span style="font-weight: normal; color: silver; font-size: 8pt">(11)</span>
+										<img onclick="addressbook.ToggleTree(this);" src="https://booking.office.hiworks.com/assets/images/common/tree_images/tree_m.gif" class="plus"><strong onclick="addressbook.selectNode(this);" class="selectedNode">Good Office <span style="font-weight: normal; color: silver; font-size: 8pt">(11)</span>
 										</strong>
 									</div>
 									<ul style="">
@@ -1251,9 +1181,13 @@ function moveDate(type){
 					</div>
 					<div class="list">
 						<select multiple="" id="rightList" style="">
+							<c:forEach var="adminVo" items="${requestScope.fullAdminList}">
+								<option class="adminId" value="${adminVo.adminId}">${adminVo.empName}(${adminVo.id}) - ${adminVo.team}</option>
+							</c:forEach>
+							
 							<option value="86920" title="과장 강과장 <영업2팀>">과장 강과장 &lt;영업2팀&gt;</option>
 							<option value="86917" title="이사 김이사 <생산1팀>">이사 김이사 &lt;생산1팀&gt;</option>
-							<option value="86914" title="대표이사 대표이사 <하이웍스산업>">대표이사 대표이사 &lt;하이웍스산업&gt;</option>
+							<option value="86914" title="대표이사 대표이사 <굿오피스산업>">대표이사 대표이사 &lt;하이웍스산업&gt;</option>
 							<option value="86916" title="상무 박상무 <구매총무팀>">상무 박상무 &lt;구매총무팀&gt;</option>
 							<option value="86922" title="주임 안주임 <품질관리팀>">주임 안주임 &lt;품질관리팀&gt;</option>
 							<option value="86921" title="대리 양대리 <재무회계팀>">대리 양대리 &lt;재무회계팀&gt;</option>
@@ -1289,7 +1223,7 @@ function moveDate(type){
 					<div class="fr updown-wrap first" id="approval_swap"></div>
 					<div class="to clear" style="height: 294px;">
 						<select multiple="" id="select_admin_user_list" ondblclick="" style="height: 296px">
-							<option value="86914" disabled="">대표이사 대표이사&lt;하이웍스산업&gt;</option>
+							<option value="86914" disabled="">대표이사 대표이사&lt;굿오피스산업&gt;</option>
 							<option value="86915" disabled="">사장 최사장&lt;인사팀&gt;</option>
 						</select>
 						<div class="del-btn" id="approval_delete">
@@ -1306,7 +1240,7 @@ function moveDate(type){
 			<a href="javascript:void(0)" class="icon btn_closelayer" title="레이어 닫기" onclick="layerClose('rsvAdmin_add');">
 				<span class="blind">레이어 닫기</span>
 			</a>
-		</div>
+		</div> --%>
 		<%-- ========== 관리자추가 모달 끝 ========== --%>
 
 
@@ -1314,245 +1248,12 @@ function moveDate(type){
 		<!-- /////////////////////// 모달 끝 /////////////////////// -->
 
 	</div>
-	<!-- [참고] 해당 /div id='wrap'임  -->
 
-	<div id="main_layer_div"></div>
 
-	<div class="layer_box small alarm hide popup1 " style="" id="HWA_MAIN">
-		<p class="text" id="HWA_MSG"></p>
-		<div class="layer_button">
-			<button class="btn_variables" type="button" onclick="hidePopup();" id="HWA_MAIN_OK">확인</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer" onclick="hidePopup();" title="레이어 닫기">
-			<span class="blind">레이어 닫기</span>
-		</a>
-	</div>
-
-	<div class="layer_box large hide dns_intro_layer" style="width: 550px;">
-		<div class="title_layer text_variables">메일 서비스 이용 안내</div>
-		<p class="bold body_bold">메일 서비스를 이용하시려면 하이웍스용 DNS 정보 설정이 필요합니다.</p>
-		<p class="mgt_15">
-			<span style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			가비아 등록 도메인은 자동 설정을 지원합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables" onclick="location:href=window.open('https://domain.gabia.com/api/hiworksdns/domainsetting')">가비아 도메인 자동 설정하기</button>
-		</div>
-		<p class="pdt_20">
-			<span style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			타사 등록 도메인은 DNS 정보를 직접 설정해야 합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables" onclick="location:href=window.open('https://customer.gabia.com/manuals_pop/manual_set.php?service=webmail_hosting&amp;fact=mailzine&amp;seq_no=2221')">설정 방법 보기</button>
-		</div>
-		<p class="bold body_bold mgt_50">
-			※ 하이웍스용 DNS 정보 설정을 완료하셨다면 메일 용량을 할당한 후 메일 서비스를<br> 이용할 수 있습니다. ‘오피스 관리’에서 계정별 메일 용량을 설정해주세요.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables" onclick="location:href=window.open('/gabia.biz/admin/Orgmain')">오피스관리 페이지 가기</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer" onclick="hidePopup();" title="레이어 닫기">
-			<span class="blind">레이어 닫기</span>
-		</a>
-	</div>
+	
 
 
 
-
-
-
-
-
-	<!-- # ui-datepicker-div (이것도 모달이라고 불러...?) 시작  -->
-	<!-- 
-<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="position: fixed; top: 314.5px; left: 354px; z-index: 1006; display: none;">
-	<div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
-		<a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="이전달">
-			<span class="ui-icon ui-icon-circle-triangle-w">이전달</span>
-		</a>
-		<a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="다음달">
-			<span class="ui-icon ui-icon-circle-triangle-e">다음달</span>
-		</a>
-		<div class="ui-datepicker-title">
-			<select class="ui-datepicker-year" data-handler="selectYear" data-event="change">
-				<option value="2022">2022</option>
-				<option value="2023" selected="selected">2023</option>
-				<option value="2024">2024</option>
-				<option value="2025">2025</option>
-				<option value="2026">2026</option>
-			</select>
-			년
-			<select class="ui-datepicker-month" data-handler="selectMonth" data-event="change">
-				<option value="0">1월</option>
-				<option value="1">2월</option>
-				<option value="2">3월</option>
-				<option value="3">4월</option>
-				<option value="4">5월</option>
-				<option value="5">6월</option>
-				<option value="6">7월</option>
-				<option value="7">8월</option>
-				<option value="8">9월</option>
-				<option value="9">10월</option>
-				<option value="10">11월</option>
-				<option value="11" selected="selected">12월</option>
-			</select>
-		</div>
-	</div>
-	<table class="ui-datepicker-calendar">
-		<thead>
-			<tr>
-				<th scope="col" class="ui-datepicker-week-end"><span title="일">일</span></th>
-				<th scope="col"><span title="월">월</span></th>
-				<th scope="col"><span title="화">화</span></th>
-				<th scope="col"><span title="수">수</span></th>
-				<th scope="col"><span title="목">목</span></th>
-				<th scope="col"><span title="금">금</span></th>
-				<th scope="col" class="ui-datepicker-week-end"><span title="토">토</span></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td class=" ui-datepicker-week-end ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023">
-					<a class="ui-state-default ui-priority-secondary" href="#">26</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023">
-					<a class="ui-state-default ui-priority-secondary" href="#">27</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023">
-					<a class="ui-state-default ui-priority-secondary" href="#">28</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023">
-					<a class="ui-state-default ui-priority-secondary" href="#">29</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023">
-					<a class="ui-state-default ui-priority-secondary" href="#">30</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">1</a>
-				</td>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">2</a>
-				</td>
-			</tr>
-			<tr>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">3</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">4</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">5</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">6</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">7</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">8</a>
-				</td>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">9</a>
-				</td>
-			</tr>
-			<tr>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">10</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">11</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">12</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">13</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">14</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">15</a>
-				</td>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">16</a>
-				</td>
-			</tr>
-			<tr>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">17</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">18</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">19</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">20</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">21</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">22</a>
-				</td>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">23</a>
-				</td>
-			</tr>
-			<tr>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">24</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">25</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">26</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">27</a>
-				</td>
-				<td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">28</a>
-				</td>
-				<td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">29</a>
-				</td>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">30</a>
-				</td>
-			</tr>
-			<tr>
-				<td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023">
-					<a class="ui-state-default" href="#">31</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024">
-					<a class="ui-state-default ui-priority-secondary" href="#">1</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024">
-					<a class="ui-state-default ui-priority-secondary" href="#">2</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024">
-					<a class="ui-state-default ui-priority-secondary" href="#">3</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024">
-					<a class="ui-state-default ui-priority-secondary" href="#">4</a>
-				</td>
-				<td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024">
-					<a class="ui-state-default ui-priority-secondary" href="#">5</a>
-				</td>
-				<td class=" ui-datepicker-week-end ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024">
-					<a class="ui-state-default ui-priority-secondary" href="#">6</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div> -->
-	<!-- # ui-datepicker-div (이것도 모달이라고 불러...?) 끝  -->
 
 
 	<deepl-input-controller></deepl-input-controller>

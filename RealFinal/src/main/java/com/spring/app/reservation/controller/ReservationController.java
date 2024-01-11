@@ -108,6 +108,7 @@ session.setAttribute("loginUser", loginUser);
 		mav.addObject("waitingForApprovalList", reservationList);
 		// ----- 대기 자원 목록 가져오기 끝 ----- // 
 		
+		mav.addObject("sideType", "myReservationList");
 		
 		mav.setViewName("myReservationList.reservation");
 		
@@ -155,9 +156,9 @@ session.setAttribute("loginUser", loginUser);
 		
 		
 		String resourceCategoryId = request.getParameter("resourceCategoryId");
-		
 		paraMap.put("resourceCategoryId", resourceCategoryId);
-	
+
+		mav.addObject("sideType", resourceCategoryId);
 		
 		// ----- 자원카테고리 정보 가져오기 시작 ----- //
 		Map<String, Object> resourceCategoryInfo_map = new HashMap<>();
@@ -210,6 +211,7 @@ session.setAttribute("loginUser", loginUser);
 		request.setAttribute("reservationMarkList", reservationMarkList);
 		// ----- 예약된 시간을 표시하기 위한 자원 목록 가져오기 끝 ----- // 	
 //		
+
 		
 		mav.setViewName("resourceList.reservation");
 		
@@ -659,7 +661,8 @@ session.setAttribute("loginUser", loginUser);
 		mav.addObject("reservationList", reservationList); 	// 목록 가져오기 
 		mav.addObject("totalCount", totalCount);			// 총 예약 건수 가져오기
 		// ----- 승인대기 목록 가져오기 끝 ----- // 
-				
+		
+		mav.addObject("sideType", "manageApproval");	
 		
 		mav.setViewName("manageApproval.reservation");
 		
@@ -809,6 +812,7 @@ session.setAttribute("loginUser", loginUser);
 		mav.addObject("totalCount", totalCount);			// 총 예약 건수 가져오기
 		// ----- 반납대기/빈납완료 목록 가져오기 시작 ----- // 
 				
+		mav.addObject("sideType", "manageReturn");
 		
 		mav.setViewName("manageReturn.reservation");
 		
@@ -872,7 +876,7 @@ session.setAttribute("loginUser", loginUser);
 		// ----- 카테고리관리_자원카테고리 목록 가져오기 끝 ----- //	
 		
 		
-		
+		mav.addObject("sideType", "manageCategory");
 		
 		mav.setViewName("manageCategory.reservation");
 		
@@ -1094,14 +1098,6 @@ session.setAttribute("loginUser", loginUser);
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/** 
 	* @Method Name  : resourceManageAdmin 
 	* @작성일   : Jan 3, 2024 
@@ -1173,11 +1169,7 @@ session.setAttribute("loginUser", loginUser);
 		
 		
 		
-		
-		
-		
-		
-		
+		mav.addObject("sideType", "manageResource");
 		
 		mav.setViewName("manageCategory.reservation");
 		
@@ -1275,12 +1267,6 @@ session.setAttribute("loginUser", loginUser);
 		
 		return mav;
 	}	
-	
-	
-	
-	
-	
-	
 	
 	
 	@PostMapping("resourceManageAddEndAdmin.gw")
@@ -1388,8 +1374,6 @@ session.setAttribute("loginUser", loginUser);
 	}
 	
 	
-	
-	
 	/** 
 	* @Method Name  : resourceDel 
 	* @작성일   : Jan 5, 2024 
@@ -1422,9 +1406,6 @@ session.setAttribute("loginUser", loginUser);
 	}
 	
 	
-	
-	
-
 	/** 
 	* @Method Name  : rsvAdminManageAdmin 
 	* @작성일   : Jan 5, 2024 
@@ -1475,6 +1456,8 @@ session.setAttribute("loginUser", loginUser);
 		mav.addObject("rsvAdmintotalCount", rsvAdmintotalCount);
 		// ----- 예약관리자 총 인원수 가져오기 끝 ----- //
 		
+		
+		mav.addObject("sideType", "manageRsvAdmin");
 		
 		mav.setViewName("manageRsvAdmin.reservation");
 		

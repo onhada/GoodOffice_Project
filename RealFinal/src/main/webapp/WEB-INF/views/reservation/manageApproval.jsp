@@ -2,11 +2,8 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 
 
 
@@ -24,40 +21,7 @@ $(document).ready(function() {
 	var type = <%= request.getAttribute("type")%>;
 	$(`li#${type}`).addClass("on");
  
-	
-	
-	<%--
-	// 수정필) 일단 예약 체크박스 html 주석해둠 나중에 해 
-	// 체크박스 선택할 경우
-	$('input[id="rsvResourceId_check"], input#chkAll').change(function(){
-
-		if( $('input:checkbox[id="rsvResourceId_check"]:checked').length > 0 || $("input[id='chkAll']").is(':checked') ){ // 체크박스 하나 이상 선택되었을 경우 
-		console.log("gsg");	
-			/* 
-			$("a#m_list_view_option").css("display", "none"); 
-	    	$("span#m_list_checked_action, div#m_list_checked_menu").css("display", "inline"); 
-	    	$("label#m_list_checked_cnt").text( $('input:checkbox[name="mailId"]:checked').length );
-	    	
-	    	if( $('input:checkbox[name="mailId"]:checked').length == $('input:checkbox[name="mailId"]').length ){
-	    		$("input[id='chkAll']").prop('checked',true);
-	    	}
-	    	else{
-	    		$("input[id='chkAll']").prop('checked',false);
-	    	}
-	    	 */
-		}
-		else{ // 메일이 하나도 선택되지 않았을 경우
-			/* 
-			$("a#m_list_view_option").css("display", "inline"); 
-	    	$("span#m_list_checked_action, div#m_list_checked_menu").css("display", "none");
-	    	 */
-		}
-		
-	}); 
-	--%>
-	
 })// end of $(document).ready(function(){})-------------------------
-
 
 
 // Function Declaration
@@ -151,7 +115,7 @@ $(document).ready(function() {
 								</c:if>
 								<td>
 									<c:if test='${requestScope.type == "approvalWait"}'>
-									<button type="button" name="button" class="weakblue booking_acknowledge_btn" onclick="rsvApproveModalOpen()">승인</button>
+									<button type="button" name="button" class="weakblue booking_acknowledge_btn" onclick="rsvApproveModalOpen(${reservationvo.rsvResourceId})">승인</button>
 									<span class="grey_bar">|</span>
 									<button type="button" name="button" class="weakblue booking_reject_btn" onclick="rsvRejectModalOpen(${reservationvo.rsvResourceId})">반려</button>
 									<span class="grey_bar">|</span>

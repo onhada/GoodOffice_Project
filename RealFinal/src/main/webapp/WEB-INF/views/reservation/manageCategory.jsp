@@ -2,7 +2,6 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -16,13 +15,6 @@ $(document).ready(function() {
 	if(<%= request.getParameter("resourceCategoryId")%> == null){
 		$("#category_list option:eq(0)").attr("selected", "selected");
 	}
-	
-
-
-	/* // 수정필.... 셀렉트 고정이 안 되냐 ....
-	
-	 */
-	 <%-- $("option").attr("val", <%= request.getParameter("resourceCategoryId")%>) --%>
 	
 })// end of $(document).ready(function(){})-------------------------
 
@@ -95,19 +87,16 @@ function resourceEdit(resourceId){
 				<table class="tableType01 rs-table">
 					<colgroup>
 						<col width="">
-						<%-- <col width=""> --%>
 						<col width="">
 					</colgroup>
 					<thead>
 						<tr>
 							<c:if test="${'category'.equals(requestScope.type)}">
 								<th scope="col">카테고리 이름</th>
-								<!-- <th scope="col">자원수</th> -->
 								<th scope="col">관리</th>
 							</c:if>
 							<c:if test="${'resource'.equals(requestScope.type)}">
 								<th scope="col">자원 이름</th>
-								<!-- <th scope="col">자원수</th> -->
 								<th scope="col">관리</th>
 							</c:if>
 						</tr>
@@ -122,7 +111,6 @@ function resourceEdit(resourceId){
 								<td>
 									<a id="${resourceCategory.resourceCategoryId}">${resourceCategory.resourceCategoryName}</a>
 								</td>
-								<!-- <td>자원수넣어야함수정필</td> -->
 								<td>
 									<button type="button" name="button" class="weakblue mod_category_btn" onclick="categoryEdit(${resourceCategory.resourceCategoryId})">수정</button>
 									<span class="grey_bar">|</span>
@@ -156,8 +144,6 @@ function resourceEdit(resourceId){
 								<tr>
 							</c:if>
 						</c:if>
-						
-						
 						
 					</tbody>
 				</table>

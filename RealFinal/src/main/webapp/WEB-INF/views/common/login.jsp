@@ -14,7 +14,7 @@
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0,user-scaleable=no">
-<title>하이웍스 오피스</title>
+<title>GoodOffice</title>
 <meta property="og:title" content="">
 <meta property="og:image" content="">
 <meta property="og:site_name" content="">

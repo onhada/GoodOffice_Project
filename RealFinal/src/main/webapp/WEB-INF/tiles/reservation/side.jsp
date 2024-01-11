@@ -2,11 +2,8 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 
 
 
@@ -14,13 +11,15 @@
 
 $(document).ready(function(){
 
+	if('${requestScope.sideType}' != ''){
+		$('a#' + '${requestScope.sideType}').addClass('router-link-exact-active');
+	}
 	
 });// end of $(document).ready(function(){})-------
 
 
 // Function Declaration
 function toggleShowHide(id){
-	
 	if($('div#'+id).find('#toggleIcon').hasClass('fa-chevron-up')){
 		$('div#'+id).find('#toggleIcon').removeClass('fa-chevron-up');
 		$('div#'+id).find('#toggleIcon').addClass('fa-chevron-down');
@@ -31,10 +30,12 @@ function toggleShowHide(id){
 		$('div#'+id).find('#toggleIcon').addClass('fa-chevron-up');
 		$('div#'+id).parent().find('#'+id+'Toggle').css("display", "none");
 	}
-	
 }
 
 </script>
+
+
+
 
 
 <div id="leftmenu" style="width: 276px;">
@@ -48,7 +49,7 @@ function toggleShowHide(id){
 			<nav class="menu-wrap">
 				<ul class="menu-list">
 					<li class="menu-item only">
-						<a href="<%= ctxPath%>/reservation/myReservationList.gw" class="link gt-pl-10 bold router-link-exact-active" title="나의 예약 목록">
+						<a href="<%= ctxPath%>/reservation/myReservationList.gw" class="link gt-pl-10 bold" id="myReservationList" title="나의 예약 목록">
 							<span class="link-prefix-icon">
 								<i class="gis gi-tasks"></i>
 							</span>
@@ -60,7 +61,7 @@ function toggleShowHide(id){
 					<c:if test="${not empty requestScope.resourceCategoryList || fn:length(requestScope.resourceCategoryList) > 0}">
 					<c:forEach var="resourceCategory" items="${requestScope.resourceCategoryList}">
 						<li class="menu-item only">
-							<a class="link gt-pl-10" href="<%= ctxPath%>/reservation/reservationResource.gw?resourceCategoryId=${resourceCategory.resourceCategoryId}" title="${resourceCategory.resourceCategoryName}">
+							<a class="link gt-pl-10" id="${resourceCategory.resourceCategoryId}" href="<%= ctxPath%>/reservation/reservationResource.gw?resourceCategoryId=${resourceCategory.resourceCategoryId}" title="${resourceCategory.resourceCategoryName}">
 								<span class="link-prefix-icon">
 									<i class="gis gi-category"></i>
 								</span>
@@ -70,7 +71,7 @@ function toggleShowHide(id){
 					</c:forEach>
 					</c:if>
 					
-					<!--  관리자 카테고리 : 예약 관리자인 경우에만 보여주기 -->
+					<%--  관리자 카테고리 : 예약 관리자인 경우에만 보여주기 --%>
 					<c:if test="${sessionScope.loginUser.empId == requestScope.rsvAdminEmpId}">
 						<li class="el-collapse gt-mt-8">
 							<div class="el-collapse-item is-active">
@@ -86,7 +87,7 @@ function toggleShowHide(id){
 									<ul class="depth2 show">
 										<!-- <ul class="depth2 hide show"> 였는데 안 보여서 hide 지움  -->
 										<li class="menu-item">
-											<a href="<%= ctxPath%>/reservation/approvalManageAdmin.gw" title="승인 관리" class="link" >
+											<a href="<%= ctxPath%>/reservation/approvalManageAdmin.gw" title="승인 관리" class="link" id="manageApproval">
 												<span class="link-prefix-icon">
 													<i class="gis gi-signature"></i>
 												</span>
@@ -94,7 +95,7 @@ function toggleShowHide(id){
 											</a>
 										</li>
 										<li class="menu-item">
-											<a href="<%= ctxPath%>/reservation/returnManageAdmin.gw" title="반납 관리" class="link">
+											<a href="<%= ctxPath%>/reservation/returnManageAdmin.gw" title="반납 관리" class="link" id="manageReturn">
 												<span class="link-prefix-icon">
 													<i class="gis gi-return"></i>
 												</span>
@@ -102,7 +103,7 @@ function toggleShowHide(id){
 											</a>
 										</li>
 										<li class="menu-item">
-											<a href="<%= ctxPath%>/reservation/categoryManageAdmin.gw" title="카테고리 관리" class="link">
+											<a href="<%= ctxPath%>/reservation/categoryManageAdmin.gw" title="카테고리 관리" class="link" id="manageCategory">
 												<span class="link-prefix-icon">
 													<i class="gis gi-category-setting"></i>
 												</span>
@@ -110,7 +111,7 @@ function toggleShowHide(id){
 											</a>
 										</li>
 										<li class="menu-item">
-											<a href="<%= ctxPath%>/reservation/resourceManageAdmin.gw" title="자원 관리" class="link">
+											<a href="<%= ctxPath%>/reservation/resourceManageAdmin.gw" title="자원 관리" class="link" id="manageResource">
 												<span class="link-prefix-icon">
 													<i class="gis gi-wrench"></i>
 												</span>
@@ -118,7 +119,7 @@ function toggleShowHide(id){
 											</a>
 										</li>
 										<li class="menu-item">
-											<a href="<%= ctxPath%>/reservation/rsvAdminManageAdmin.gw" title="예약 관리자" class="link">
+											<a href="<%= ctxPath%>/reservation/rsvAdminManageAdmin.gw" title="예약 관리자" class="link" id="manageRsvAdmin">
 												<span class="link-prefix-icon">
 													<i class="gis gi-user-cog"></i>
 												</span>

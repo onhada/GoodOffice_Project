@@ -132,7 +132,7 @@ function editMyinfo(){
 								</th>
 								<th>입사일</th>
 								<td>
-									<p class="fl">${loginEmp.startworkday}</p>
+									<p class="fl">${loginEmp.startWorkDay}</p>
 								</td>
 							</tr>
 							<tr>
@@ -161,7 +161,7 @@ function editMyinfo(){
 								<td class="address">
 									<label>
 										우편번호
-										<input type="text" autocomplete='off' style="width: 70px" name="postcode" title="우편번호" value="${loginEmp.postcode}">
+										<input type="text" autocomplete='off' style="width: 70px" name="postCode" title="우편번호" value="${loginEmp.postCode}">
 									</label>
 									<p>
 										<label>

@@ -2,11 +2,8 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 
 
 
@@ -24,10 +21,7 @@ $(document).ready(function() {
 	var type = <%= request.getAttribute("type")%>;
 	$(`li#${type}`).addClass("on");
  
-	
-	
 })// end of $(document).ready(function(){})-------------------------
-
 
 
 // Function Declaration
@@ -120,6 +114,7 @@ $(document).ready(function() {
 									<td colspan="6" class="center">반납 대기 리스트가 없습니다.</td>
 								</tr>
 							</c:if>
+							
 						</tbody>
 					</table>
 				</div>

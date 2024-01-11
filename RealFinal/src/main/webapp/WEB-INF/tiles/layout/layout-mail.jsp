@@ -446,7 +446,7 @@
 
 
 
-<title>하이웍스 오피스</title>
+<title>Good Office</title>
 <meta name="viewport" content="width=1024">
 
 
@@ -569,62 +569,7 @@
 
 	<div id="main_layer_div"></div>
 
-	<div class="layer_box small alarm hide popup1 " style="" id="HWA_MAIN">
-		<p class="text" id="HWA_MSG"
-			style="padding-top: 10px; padding-left: 30px; padding-right: 30px;"></p>
-		<div class="layer_button">
-			<button class="btn_variables" type="button" onclick="hidePopup();"
-				id="HWA_MAIN_OK">확인</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
-	</div>
-
-	<div class="layer_box large hide dns_intro_layer" style="width: 550px;">
-		<div class="title_layer text_variables">메일 서비스 이용 안내</div>
-		<p class="bold body_bold">메일 서비스를 이용하시려면 하이웍스용 DNS 정보 설정이 필요합니다.</p>
-		<p class="mgt_15">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			가비아 등록 도메인은 자동 설정을 지원합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open(&#39;https://domain.gabia.com/api/hiworksdns/domainsetting?domain=gabia.biz&#39;)">가비아
-				도메인 자동 설정하기</button>
-		</div>
-		<p class="pdt_20">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			타사 등록 도메인은 DNS 정보를 직접 설정해야 합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open(&#39;https://customer.gabia.com/manuals_pop/manual_set.php?service=webmail_hosting&amp;fact=mailzine&amp;seq_no=2221&#39;)">설정
-				방법 보기</button>
-		</div>
-		<p class="bold body_bold mgt_50">
-			※ 하이웍스용 DNS 정보 설정을 완료하셨다면 메일 용량을 할당한 후 메일 서비스를<br> 이용할 수 있습니다.
-			‘오피스 관리’에서 계정별 메일 용량을 설정해주세요.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open(&#39;/gabia.biz/admin/Orgmain&#39;)">오피스관리
-				페이지 가기</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
-	</div>
-
-
-
-	<!-- dhlhljljlk -->
-	<!-- 
-<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="position: absolute; top: 167px; left: 499px; z-index: 101; display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="이전달"><span class="ui-icon ui-icon-circle-triangle-w">이전달</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="다음달"><span class="ui-icon ui-icon-circle-triangle-e">다음달</span></a><div class="ui-datepicker-title"><select class="ui-datepicker-year" data-handler="selectYear" data-event="change"><option value="2023" selected="selected">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select>년<select class="ui-datepicker-month" data-handler="selectMonth" data-event="change"><option value="0">1월</option><option value="1">2월</option><option value="2">3월</option><option value="3">4월</option><option value="4">5월</option><option value="5">6월</option><option value="6">7월</option><option value="7">8월</option><option value="8">9월</option><option value="9">10월</option><option value="10">11월</option><option value="11" selected="selected">12월</option></select></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col" class="ui-datepicker-week-end"><span title="일">일</span></th><th scope="col"><span title="월">월</span></th><th scope="col"><span title="화">화</span></th><th scope="col"><span title="수">수</span></th><th scope="col"><span title="목">목</span></th><th scope="col"><span title="금">금</span></th><th scope="col" class="ui-datepicker-week-end"><span title="토">토</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023"><a class="ui-state-default ui-priority-secondary" href="#">26</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023"><a class="ui-state-default ui-priority-secondary" href="#">27</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023"><a class="ui-state-default ui-priority-secondary" href="#">28</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023"><a class="ui-state-default ui-priority-secondary" href="#">29</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="10" data-year="2023"><a class="ui-state-default ui-priority-secondary" href="#">30</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">1</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">2</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">7</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">8</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">9</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">14</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">15</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">16</a></td></tr><tr><td class=" ui-datepicker-week-end ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">19</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">21</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">22</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">23</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">28</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">29</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">30</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="11" data-year="2023"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024"><a class="ui-state-default ui-priority-secondary" href="#">1</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024"><a class="ui-state-default ui-priority-secondary" href="#">2</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024"><a class="ui-state-default ui-priority-secondary" href="#">3</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024"><a class="ui-state-default ui-priority-secondary" href="#">4</a></td><td class=" ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024"><a class="ui-state-default ui-priority-secondary" href="#">5</a></td><td class=" ui-datepicker-week-end ui-datepicker-other-month " data-handler="selectDay" data-event="click" data-month="0" data-year="2024"><a class="ui-state-default ui-priority-secondary" href="#">6</a></td></tr></tbody></table></div>
-	-->
-	<!-- jhlkjjljkl -->
+	
 
 
 	<%-- 받는사람, 참조, 숨은참조 자동완성 시작 --%>

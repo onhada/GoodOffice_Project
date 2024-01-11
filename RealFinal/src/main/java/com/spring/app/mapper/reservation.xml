@@ -408,7 +408,7 @@
  	<select id="getRsvAdminTotalCount" resultType="int">
  		select count(*)
 		from tbl_admin 
-		where adminType = 4 or adminType = 1
+		where (adminType = 4 or adminType = 1) and isDelete = 0
  	</select>
  	
  	
@@ -430,7 +430,7 @@
 	    from tbl_reservationResource R
 	    join tbl_employee E
 	    on R.fk_empId = E.empId
-	    where approvalStatus != 3
+	    where ( approvalStatus != 3 or rsvStatus != 3 )
 	    		<if test="searchDay != null">
 	    			and substr(rsvStartDayTime, 0,INSTR(rsvStartDayTime, ' ')-1) = #{searchDay}
 	    		</if>

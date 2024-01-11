@@ -3,11 +3,8 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
 
 
 
@@ -110,25 +107,7 @@
 					</tbody>
 				</table>
 			</div>
-			
-			<!-- <p class="pdt_20">* 대기 목록은 7일 후 자동 삭제됩니다.</p> -->
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

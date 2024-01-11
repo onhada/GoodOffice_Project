@@ -279,8 +279,8 @@
  	<!-- === 로그인한 사원 정보 가져오기 === -->
  	<select id="getLoginEmpInfo" parameterType="HashMap" resultType="com.spring.app.common.domain.EmployeeVO">
 		select empId, empName, depName, teamName, empType, fk_positionId, positionName, fk_jobId, jobName, email
-		      ,companyTel, tel, to_char(startworkday, 'yyyy-mm-dd') as startworkday, to_char(birth, 'yyyy-mm-dd') as birth
-		      , address, detailAddress, postcode
+		      ,companyTel, tel, to_char(startWorkDay, 'yyyy-mm-dd') as startWorkDay, to_char(birth, 'yyyy-mm-dd') as birth
+		      , address, detailAddress, postCode
 		from tbl_employee E
 		left join tbl_team T
 		on E.fk_teamId = T.teamId

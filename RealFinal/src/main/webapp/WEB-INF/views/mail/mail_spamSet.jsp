@@ -120,54 +120,8 @@
 	</div>
 	<div id="main_layer_div"></div>
 
-	<div class="layer_box small alarm hide popup1 " style="" id="HWA_MAIN">
-		<p class="text" id="HWA_MSG"
-			style="padding-top: 10px; padding-left: 30px; padding-right: 30px;"></p>
-		<div class="layer_button">
-			<button class="btn_variables" type="button" onclick="hidePopup();"
-				id="HWA_MAIN_OK">확인</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
-	</div>
 
-	<div class="layer_box large hide dns_intro_layer" style="width: 550px;">
-		<div class="title_layer text_variables">메일 서비스 이용 안내</div>
-		<p class="bold body_bold">메일 서비스를 이용하시려면 하이웍스용 DNS 정보 설정이 필요합니다.</p>
-		<p class="mgt_15">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			가비아 등록 도메인은 자동 설정을 지원합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open('https://domain.gabia.com/api/hiworksdns/domainsetting?domain=gabia.biz')">가비아
-				도메인 자동 설정하기</button>
-		</div>
-		<p class="pdt_20">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			타사 등록 도메인은 DNS 정보를 직접 설정해야 합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open('https://customer.gabia.com/manuals_pop/manual_set.php?service=webmail_hosting&amp;fact=mailzine&amp;seq_no=2221')">설정
-				방법 보기</button>
-		</div>
-		<p class="bold body_bold mgt_50">
-			※ 하이웍스용 DNS 정보 설정을 완료하셨다면 메일 용량을 할당한 후 메일 서비스를<br> 이용할 수 있습니다.
-			‘오피스 관리’에서 계정별 메일 용량을 설정해주세요.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open('/gabia.biz/admin/Orgmain')">오피스관리
-				페이지 가기</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
-	</div>
+	
 
 
 

@@ -33,11 +33,11 @@ import com.spring.app.organization.service.OrganizationService;
 @RequestMapping(value = "/organization/*")
 public class OrganizationController {
 	
+	
 	@Autowired
 	private OrganizationService service;
 
 		
-	
 	/** 
 	* @Method Name  : organizationManage 
 	* @작성일   : Jan 9, 2024 
@@ -52,28 +52,15 @@ public class OrganizationController {
 	@GetMapping("organizationManage.gw")
 	public ModelAndView organizationManage(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-		
-//		Map<String, Object> paraMap = new HashMap<>();
-		
-
 		List<Map<String, String>> depList = null;
 		depList = service.getDepList(); // 부서 목록 가져오기
 		mav.addObject("depList", depList);	
 
-//		paraMap.put("type", "dep");
 		String[] depId_arr = new String[depList.size()];
 		for(int i=0; i<depList.size(); i++) {
 			depId_arr[i] = depList.get(i).get("depId"); // 부서별 id 가져오기
 		}
-//		paraMap.put("depId_arr", depId_arr);
-		
-		
-		
-		
-		
-		
-		
-		
+
 		List<Map<String, String>> teamList = null;
 		teamList = service.getTeamList(); // 팀 목록 가져오기
 		mav.addObject("teamList", teamList);
@@ -85,24 +72,7 @@ public class OrganizationController {
 		List<Map<String, String>> totalEmpCount = service.getEmpCount(paraMap); // 총 사원 수 가져오기
 		mav.addObject("totalEmpCount", totalEmpCount);
 		
-
-
-//		
-//		List<Map<String, String>> depEmpCount = service.getEmpCount(paraMap); // 부서별 사원 수 가져오기
-//		mav.addObject("depEmpCount", depEmpCount);
-//		
-		
-//		paraMap.put("type", "team");
-//		String[] teamId_arr = new String[teamList.size()];
-//		for(int i=0; i<teamList.size(); i++) {
-//			teamId_arr[i] = teamList.get(i).get("teamId"); // 부서별 id 가져오기
-//		}
-//		paraMap.put("teamId_arr", teamId_arr);
-//		
-//		int teamEmpCount = service.getEmpCount(paraMap); // 팀별 사원 수 가져오기
-//		mav.addObject("teamEmpCount", teamEmpCount);
-		
-		
+		mav.addObject("sideType", "organizationManage");
 		
 		mav.setViewName("organizationManage.organization");
 		
@@ -138,6 +108,7 @@ public class OrganizationController {
 		empInfoList = service.getEmpInfoList(); // 임직원 정보 목록 가져오기
 		mav.addObject("empInfoList", empInfoList);	
 
+		mav.addObject("sideType", "empInfo");
 		
 		mav.setViewName("empInfo.organization");
 		
@@ -146,18 +117,23 @@ public class OrganizationController {
 	}	
 	
 	
-	
+	/** 
+	* @Method Name  : myinfoViewPage 
+	* @작성일   : Jan 9, 2024 
+	* @작성자   : hada 
+	* @변경이력  : 
+	* @Method 설명 : 내정보보기 페이지 보여주기
+	* @param request
+	* @param response
+	* @param mav
+	* @return 
+	*/
 	@GetMapping("myInfoViewPage.gw")
 	public ModelAndView myinfoViewPage(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-/* 로그인 확인을 위한 테스트코드 시작 */
-HttpSession session = request.getSession();
-EmployeeVO loginUser = new EmployeeVO();
-loginUser.setEmpId((long) 9999); 
-session.setAttribute("loginUser", loginUser);
-/* 로그인 확인을 위한 테스트코드 끝 */		
-		
 
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
 		
 		Map<String, Object> paraMap = new HashMap<>();
@@ -179,6 +155,8 @@ session.setAttribute("loginUser", loginUser);
 		jobList = service.getJobList(); // 직무 목록 가져오기
 		mav.addObject("jobList", jobList);
 		
+		mav.addObject("sideType", "empInfo");
+		
 		mav.setViewName("empInfo_myInfo.organization");
 		
 		return mav;
@@ -186,25 +164,33 @@ session.setAttribute("loginUser", loginUser);
 	}	
 	
 	
+	/** 
+	* @Method Name  : selectEmpInfo 
+	* @작성일   : Jan 11, 2024 
+	* @작성자   : hada 
+	* @변경이력  : 
+	* @Method 설명 : 임직원 정보 목록 가져오기
+	* @param request
+	* @param response
+	* @param mav
+	* @return 
+	*/
 	@ResponseBody
 	@GetMapping("selectEmpInfo.gw")
 	public String selectEmpInfo(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String depId = request.getParameter("depId");
 		String teamId = request.getParameter("teamId");
-System.out.println("dd"+depId);		
+
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("depId", depId);
 		paraMap.put("teamId", teamId);
 		
-System.out.println(paraMap.get("teamId"));			
 		List<EmployeeVO> empInfoList = null;
 		empInfoList = service.getSpecificEmpInfoList(paraMap); // 특정 부서 or 팀에 소속된 임직원 정보 목록 가져오기
 		mav.addObject("empInfoList", empInfoList);	
+
 		
-	System.out.println(empInfoList.size());	
-		
-			
 		JSONArray jsonArr = new JSONArray(); // [] 
 		
 		if(empInfoList != null) {
@@ -226,9 +212,7 @@ System.out.println(paraMap.get("teamId"));
 		
 		return jsonArr.toString();
 	}
-	
-	
-	
+
 	
 	/** 
 	* @Method Name  : empManage 
@@ -254,14 +238,13 @@ System.out.println(paraMap.get("teamId"));
 		jobList = service.getJobList(); 
 		mav.addObject("jobList", jobList);	
 		
+		mav.addObject("sideType", "positionManage");
 		
 		mav.setViewName("positionManage.organization");
 		
 		return mav;
 		
 	}	
-	
-	
 	
 	
 	/** 
@@ -555,7 +538,6 @@ System.out.println(paraMap.get("teamId"));
 	}
 	
 	
-	
 	/** 
 	* @Method Name  : delTeam 
 	* @작성일   : Jan 11, 2024 
@@ -631,15 +613,18 @@ System.out.println(paraMap.get("teamId"));
 		
 		int result = 0;
 		result = service.editMyinfo(paraMap); // 내 정보 수정하기
-	System.out.println(result+"dd");	
+		
 		if(result == 1) {
 			mav.setViewName("redirect:/organization/myInfoViewPage.gw"); 
 		}
 		else {
-			//mav.setViewName("board/error/add_error.tiles1"); // 이거 살려야하나? 걍 버ㅕㄹ=ㅕ도 되는 거 아ㅕㄴ?
 			
 		}
 	
 		return mav;
 	}
+	
+	
+	
+	
 }
