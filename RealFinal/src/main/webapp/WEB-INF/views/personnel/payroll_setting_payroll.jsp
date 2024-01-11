@@ -554,19 +554,19 @@ function addComma(value){
 								<!-- 확정 후 -->
 								<c:if test="${requestScope.salary.isFix eq 1}">
 									<div data-v-1f6af9b4="" data-v-df99e578="" class="status confirm">
-										<span data-v-1f6af9b4=""> 급여확정 ${requestScope.registerDay}</span>
+										<span data-v-1f6af9b4=""> 급여확정 ${requestScope.salary.registerDay}</span>
 									</div>
 								</c:if>
 
 							</c:if>
 						</div>
-						<div data-v-df99e578="" class="header-right">
+						<!-- <div data-v-df99e578="" class="header-right">
 							<button data-v-f8d3258e="" data-v-df99e578="" type="button" class="hw-button text no-space">
-								<!---->
+								
 								<span data-v-f8d3258e="" class="label">전자결재 품의연동 </span>
-								<!---->
+								
 							</button>
-						</div>
+						</div> -->
 					</div>
 
 

@@ -2113,7 +2113,7 @@ function deleteThis(id) {
 								<span class="cont_file" style="float: left;">
 									<%-- <img src="${approvalFileVo.fileName}" style="width:20px"> --%>
 									<a href="<%= ctxPath%>/approval/fileDownload.gw?fileId=${approvalFileVo.approvalFileId}">${approvalFileVo.fileRName}</a>
-									(<fmt:formatNumber value="${approvalFileVo.fileSize}" pattern="0.000" />MB)
+									(<fmt:formatNumber value="${approvalFileVo.fileSize}" pattern="0.000"/>MB)
 									<button type = "button" class="icon file_delete" onclick="deleteSavedFile(${approvalFileVo.approvalFileId})">
 										<span class="blind"></span>
 									</button>

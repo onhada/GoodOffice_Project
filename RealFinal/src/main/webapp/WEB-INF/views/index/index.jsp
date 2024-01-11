@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
- --%>
 <%
 	String ctxPath = request.getContextPath();
 %>
@@ -14,7 +13,7 @@
 	  loopshowNowTime();
 	  
 	
-	$('button#work_status').on('click', (e) => {  //출근, 퇴큰 버튼
+	$('button#work_status').on('click', (e) => {  //출근,퇴근 버튼
 		  console.log(e.target.value);
 		  const type=e.target.parentElement.value;
 		  //alert(type);
@@ -386,21 +385,46 @@ function workstatus_insert(type){
 					<p data-v-0f8ed5fd="" class="title">전자결재</p>
 					<div data-v-0f8ed5fd="" class="contents">
 						<div data-v-0f8ed5fd="" class="status-wrap">
-							<a data-v-0f8ed5fd="" class="status">
+							
+							
+							<a data-v-0f8ed5fd="" href="<%= ctxPath %>/approval/document/list/W.gw" class="status">
 								<span data-v-0f8ed5fd="">대기</span>
-								<span data-v-0f8ed5fd="" class="count blue" style="">6</span>
+								<c:if test="${requestScope.wSize eq 0}">
+									<span data-v-0f8ed5fd="" class="count blue" style="display:none;">${requestScope.wSize}</span>
+								</c:if>
+								<c:if test="${requestScope.wSize ne 0}">
+									<span data-v-0f8ed5fd="" class="count blue" style="">${requestScope.wSize}</span>
+								</c:if>
 							</a>
-							<a data-v-0f8ed5fd="" class="status">
+							
+							<a data-v-0f8ed5fd="" href="<%= ctxPath %>/approval/document/list/V.gw" class="status">
 								<span data-v-0f8ed5fd="">확인</span>
-								<span data-v-0f8ed5fd="" class="count blue" style="">1</span>
+								<c:if test="${requestScope.vSize eq 0}">
+									<span data-v-0f8ed5fd="" class="count blue" style="display:none;">${requestScope.vSize}</span>
+								</c:if>
+								<c:if test="${requestScope.vSize ne 0}">
+									<span data-v-0f8ed5fd="" class="count blue" style="">${requestScope.vSize}</span>
+								</c:if>
 							</a>
-							<a data-v-0f8ed5fd="" class="status">
+							
+							<a data-v-0f8ed5fd="" href="<%= ctxPath %>/approval/document/list/E.gw" class="status">
 								<span data-v-0f8ed5fd="">예정</span>
-								<span data-v-0f8ed5fd="" class="count" style="display: none;">0</span>
+								<c:if test="${requestScope.eSize eq 0}">
+									<span data-v-0f8ed5fd="" class="count" style="display: none;">${requestScope.eSize}</span>
+								</c:if>
+								<c:if test="${requestScope.eSize ne 0}">
+									<span data-v-0f8ed5fd="" class="count">${requestScope.eSize}</span>
+								</c:if>
 							</a>
-							<a data-v-0f8ed5fd="" class="status">
+							
+							<a data-v-0f8ed5fd="" href="<%= ctxPath %>/approval/document/list/P.gw" class="status">
 								<span data-v-0f8ed5fd="">진행</span>
-								<span data-v-0f8ed5fd="" class="count">11</span>
+								<c:if test="${requestScope.pSize eq 0}">
+									<span data-v-0f8ed5fd="" class="count" style="display:none;">${requestScope.pSize}</span>
+								</c:if>
+								<c:if test="${requestScope.pSize ne 0}">
+									<span data-v-0f8ed5fd="" class="count">${requestScope.pSize}</span>
+								</c:if>
 							</a>
 						</div>
 					</div>

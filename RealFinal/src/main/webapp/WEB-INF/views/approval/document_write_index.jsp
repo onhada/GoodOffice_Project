@@ -86,18 +86,6 @@ $(document).ready(function() {
 								</select>
 
 
-								<!-- <span class="fl hide" id="set_security_level_n">등급</span> -->
-								<a href="수정필" class="icon question tipsIcon" style="position: relative; top: 4px; margin-left: 10px">
-									<span class="blind">세부 설명</span>
-								</a>
-								<div class="tooltip hide" style="right: 150px; top: 0;">
-									<div class="tooltip-box" style="width: 450px;">
-										<p>ㆍS등급: 기안 상에 설정된 관련자들만 문서를 볼 수 있으며, 결재자와 합의자만 참조자를 추가할 수 있음.</p>
-										<p>ㆍA등급: 기안 상에 설정된 관련자들과 관리자가 설정한 5등급(부장)등급 이상인 사람이 문서를 볼 수 있음. 결재자와 합의자는 참조자를 추가할 수 있음.</p>
-										<p>ㆍB등급: 기안 상에 설정된 관련자들과 관리자가 설정한 7등급(과장)등급 이상인 사람이 문서를 볼 수 있음. 결재자, 합의자, 참조자 모두 참조자를 추가할 수 있음.</p>
-										<p>ㆍC등급: 모든 임직원이 문서를 열람할 수 있지만, 기안 상에 설정된 관련자들만 참조자를 추가할 수 있음.</p>
-									</div>
-								</div>
 							</td>
 						</tr>
 					</tbody>

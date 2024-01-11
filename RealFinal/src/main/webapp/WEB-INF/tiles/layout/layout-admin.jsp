@@ -11,7 +11,7 @@
 <!-- saved from url=(0054)https://office.hiworks.com/gabia.biz/h_admin/adminmain -->
 <html lang="ko">
 <head>
-
+<title>GoodOffice</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">

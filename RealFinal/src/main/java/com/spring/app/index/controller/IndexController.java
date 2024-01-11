@@ -1,12 +1,20 @@
 package com.spring.app.index.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.spring.app.approval.service.ApprovalService;
+import com.spring.app.common.domain.EmployeeVO;
 
 
 /** 
@@ -24,6 +32,8 @@ public class IndexController {
 //	@Autowired
 //	private IndexService service;
 	
+	@Autowired
+	ApprovalService service;
 	
 	/** 
 	* @Method Name  : myReservationList 
@@ -38,7 +48,24 @@ public class IndexController {
 	*/
 	@GetMapping("index.gw")
 	public ModelAndView myReservationList(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+		// 예진 코드 시작 -----------------------------------------------------------
+		
+		HttpSession session = request.getSession();
+		
+		
+		Map<String, String> sizeMap = new HashMap<>();
+		sizeMap.put("searchType", "");
+		sizeMap.put("searchWord", "");
+		sizeMap.put("orderType", "desc");
+		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
 
+		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
+		
+		// 예진 코드 끝    -----------------------------------------------------------
+		
 		mav.setViewName("index.index");
 		
 		return mav;

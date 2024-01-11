@@ -14,8 +14,7 @@
 <!-- saved from url=(0069)https://hr-work.office.hiworks.com/personal/statistics?tab=Statistics -->
 <html lang="ko">
 <head>
-
-
+<title>GoodOffice</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">

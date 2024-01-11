@@ -194,9 +194,9 @@ $("button.impt").click(function(){
 				</c:choose>
 
 				<img src="<%=ctxPath%>/resources/image/icon/btn_drop.gif" alt="DROPDOWN" class="open_drop vm js-approval-check-before">
-				<ul class="dropdown-menu block hide" style="max-height: 550px; overflow-y: auto; padding-right: 8px; top: 20px; left: 0;" id="menuApprovalTypeMode">
+				<ul class="dropdown-menu block hide" style="max-height: 550px; overflow-y: auto; /* padding-right: 8px; */ top: 20px; left: 0;" id="menuApprovalTypeMode">
 					<li>
-						<a href="<%=ctxPath%>/approval/document/box/all.gw" class="js-approval-li-types">모든 문서</a>
+						<a href="<%=ctxPath%>/approval/document/box/temp.gw" class="js-approval-li-types">모든 문서</a>
 					</li>
 					<li>
 						<a id="importantDoc" class="js-approval-li-types">중요 문서</a>
