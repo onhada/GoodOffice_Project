@@ -2,14 +2,12 @@
 <%
 	String ctxPath = request.getContextPath();
 %>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 
 <!DOCTYPE html>
-<!-- saved from url=(0037)https://office.hiworks.com/gabia.biz/ -->
 <html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,27 +23,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="msapplication-config" content="none">
 
-<!-- 
-<link rel="shortcut icon" type="image/x-icon" href="https://office.hiworks.com/static/images/favicon/favicon.ico">
-<link rel="apple-touch-icon" href="https://office.hiworks.com/static/images/favicon/home_57.png" sizes="57x57">
-<link rel="apple-touch-icon" href="https://office.hiworks.com/static/images/favicon/home_72.png" sizes="72x72">
-<link rel="apple-touch-icon" href="https://office.hiworks.com/static/images/favicon/home_76.png" sizes="76x76">
-<link rel="apple-touch-icon" href="https://office.hiworks.com/static/images/favicon/home_114.png" sizes="114x114">
-<link rel="apple-touch-icon" href="https://office.hiworks.com/static/images/favicon/home_120.png" sizes="120x120">
-<link rel="apple-touch-icon" href="https://office.hiworks.com/static/images/favicon/home_144.png" sizes="144x144">
-<link rel="apple-touch-icon" href="https://office.hiworks.com/static/images/favicon/home_152.png" sizes="152x152"> 
--->
-<!-- 
-<link rel="stylesheet" type="text/css"
-	href="./하이웍스 오피스_files/common.css">
-<link rel="stylesheet" type="text/css"
-	href="./하이웍스 오피스_files/style_new.css">
-<link rel="stylesheet" type="text/css"
-	href="./하이웍스 오피스_files/style.css">
-<link rel="stylesheet" type="text/css"
-	href="./하이웍스 오피스_files/jquery-ui.css">
-
- -->
 
 
 <%-- Bootstrap CSS --%>
@@ -71,13 +48,13 @@
 </style>
 
 
+
 <script type="text/javascript">
 
 $(document).ready(function() {
 	
 	
 })// end of $(document).ready(function(){})-------------------------
-
 
 
 // Function Declaration
@@ -112,30 +89,28 @@ function login() {
 </script>
 
 
+
+
+
 </head>
 <body class="vsc-initialized">
-
 	<div id="wrap">
-		<!-- skip navigation -->
-		<div class="skip_navigation" data-ui="skipNavigation">
-			<a href="https://office.hiworks.com/gabia.biz/#contents">본문 영역으로 바로가기</a>
-		</div>
 		<form name ="loginFrm" id="beta_form">
 			<input type="hidden" name="ssl_login" id="ssl_login" value="Y">
 			<input type="hidden" name="link_url" id="link_url" value="">
 			<input type="hidden" name="ip_security" id="ip_security" value="">
 			<div class="loginWrap-ofc" id="contents">
-				<!-- loginBox-ofc -->
 				<div class="loginBox-ofc">
 					<h1 class="head-ofc">
-						<img src="<%=ctxPath%>/resources/image/login/loginLog.svg" style="width: 280px; height: 61px;" alt="hiworks">
+						<img src="<%=ctxPath%>/resources/image/login/loginLog.svg" style="width: 280px; height: 61px;" alt="GoodOffice">
 					</h1>
 					<div class="body-ofc">
 						<ul class="save-ofc">
 						</ul>
 						<section>
-							<input type="text" class="type-J" title="아이디" name="loginId" value="" placeholder="아이디">
-							<input type="password" class="type-J" title="비밀번호" name="loginPasswd" value="" placeholder="비밀번호" onkeydown="if(event.keyCode==13) login();">
+							<input type="text" style="display: none;">
+							<input type="text" class="type-J" title="아이디" name="loginId" value="" placeholder="아이디" autocomplete='off'>
+							<input type="password" class="type-J" title="비밀번호" name="loginPasswd" value="" placeholder="비밀번호" onkeydown="if(event.keyCode==13) login();" autocomplete='off'>
 							<p class="err">
 								<span class="wr-txt" id="login_error_msg"></span>
 							</p>
