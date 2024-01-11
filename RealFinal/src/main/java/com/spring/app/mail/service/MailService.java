@@ -124,7 +124,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : getIsImportant 
 	* @작성일   : Dec 24, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 중요메일 여부 가져오기
 	* @param paraMap
@@ -135,7 +135,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : getMailFileList 
 	* @작성일   : Dec 22, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 첨부파일 관련 정보(첨부파일제목, 첨부파일크기) 가져오기
 	* @param paraMap
@@ -179,7 +179,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : selectMemo 
 	* @작성일   : Dec 23, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 메일메모 조회하기
 	* @param paraMap
@@ -190,7 +190,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : insertMemo 
 	* @작성일   : Dec 21, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 메일메모 추가하기
 	* @param paraMap
@@ -201,7 +201,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : updateMemo 
 	* @작성일   : Dec 23, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 메일메모 수정하기
 	* @param paraMap
@@ -212,7 +212,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : getOrgMailInfo 
 	* @작성일   : Dec 24, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 답장메일을 쓰기 위해 필요한 원메일 정보 가져오기
 	* @param paraMap
@@ -223,7 +223,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : getOrgMailTypeOfPersonalMailbox 
 	* @작성일   : Dec 24, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 개인메일함에 있는 메일의 기존메일함 타입 가져오기
 	* @param paraMap
@@ -234,7 +234,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : getTempMailInfo 
 	* @작성일   : Dec 26, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 임시저장 메일 가져오기
 	* @param paraMap
@@ -245,7 +245,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : makePersonalMailbox 
 	* @작성일   : Dec 26, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 개인편지함 만들기
 	* @param paraMap
@@ -256,7 +256,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : deletePersonalMailbox 
 	* @작성일   : Dec 27, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 개인편지함 삭제하기 
 	* @param paraMap
@@ -267,7 +267,7 @@ public interface MailService {
 	/** 
 	* @Method Name  : emptyMailbox 
 	* @작성일   : Dec 27, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 편지함 비우기
 	* @param paraMap

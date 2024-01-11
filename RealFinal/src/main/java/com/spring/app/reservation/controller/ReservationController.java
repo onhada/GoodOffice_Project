@@ -39,7 +39,7 @@ import com.spring.app.reservation.service.ReservationService;
 * @FileName  : ReservationController.java 
 * @Project   : TempFinal 
 * @Date      : Dec 28, 2023 
-* @작성자      : hada 
+* @작성자      : 김민경 
 * @변경이력    : 
 * @프로그램설명    : 예약 컨트롤러입니다.
 */
@@ -59,7 +59,7 @@ public class ReservationController {
 	/** 
 	* @Method Name  : myReservationList 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 나의 예약 목록 페이지 보여주기 
 	* @param request
@@ -119,7 +119,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : resourceList 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원카테고리별 예약 페이지 보여주기 
 	* @param request
@@ -195,7 +195,6 @@ session.setAttribute("loginUser", loginUser);
 		for(int i=0; i<resourceList.size(); i++) {
 			resourceId_arr[i] = resourceList.get(i).get("resourceId");
 		}
-//System.out.println(resourceIdList.getClass().getName());
 
 		paraMap.put("resourceId_arr", resourceId_arr);
 		
@@ -223,7 +222,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : getReservationMarkList 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약된 시간대에 색칠해서 표시하기 
 	* @param request
@@ -299,7 +298,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : getResourceInfo 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 정보 가져오기
 	* @param request
@@ -332,7 +331,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : getResourceList 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 :모든 자원목록 정보 가져오기
 	* @param request
@@ -373,7 +372,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : addReservation 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 예약하기
 	* @param request
@@ -434,7 +433,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : getReservationInfoDetail 
 	* @작성일   : Dec 31, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원예약 한 건에 대한 정보 가져오기
 	* @param request
@@ -512,7 +511,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : getEmpInfo 
 	* @작성일   : Dec 31, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 사원 정보 가져오기
 	* @param request
@@ -539,7 +538,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : delRservation 
 	* @작성일   : Dec 31, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 삭제하기
 	* @param request
@@ -570,7 +569,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : returnRsource 
 	* @작성일   : Jan 1, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 자원 반납하기 rsvApprove.gw
 	* @param request
@@ -601,7 +600,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : manageApproval 
 	* @작성일   : Jan 1, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 승인 관리 페이지 보여주기
 	* @param request
@@ -671,7 +670,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : rsvApprove
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 승인하기
 	* @param request
@@ -713,7 +712,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : rsvReject 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 반려하기
 	* @param request
@@ -758,7 +757,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : returnManageAdmin 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 반납 관리 페이지 보여주기
 	* @param request
@@ -820,7 +819,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : categoryManageAdmin 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 카테고리 관리 페이지 보여주기
 	* @param request
@@ -884,7 +883,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : categoryDel 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 카테고리 삭제하기
 	* @param request
@@ -916,7 +915,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : categoryORresourceAdd 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 카테고리 추가/수정 페이지 보여주기
 	* @param request
@@ -997,7 +996,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : categoryManageAddEndAdmin 
 	* @작성일   : Jan 3, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 카테고리 추가/수정 완료 요청
 	* @param mrequest
@@ -1106,7 +1105,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : resourceManageAdmin 
 	* @작성일   : Jan 3, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 관리 페이지 보여주기
 	* @param request
@@ -1192,7 +1191,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : resourceManageAddAdmin 
 	* @작성일   : Jan 4, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 추가/수정 페이지 보여주기
 	* @param request
@@ -1288,7 +1287,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : resourceManageAddEndAdmin 
 	* @작성일   : Jan 4, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 추가/수정 완료 요청
 	* @param mrequest
@@ -1394,7 +1393,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : resourceDel 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 삭제하기
 	* @param request
@@ -1429,7 +1428,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : rsvAdminManageAdmin 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약관리자 페이지 보여주기
 	* @param request
@@ -1487,7 +1486,7 @@ session.setAttribute("loginUser", loginUser);
 	/** 
 	* @Method Name  : delRsvAdmin 
 	* @작성일   : Jan 7, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약관리자 삭제하기 
 	* @param request

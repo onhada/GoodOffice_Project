@@ -7,9 +7,305 @@
 <!-- ==== #29. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
 <mapper namespace="organization">
 
-
+	<!-- === 부서 목록 가져오기 === -->
+	<resultMap type="HashMap" id="getDepList_map">
+	    <result property="depId"	column="depId" 		javaType="String" />
+	    <result property="depName" 	column="depName" 	javaType="String" />
+	</resultMap>
+	<select id="getDepList" resultMap="getDepList_map">
+		select depId, depName
+		from tbl_department
+		order by depName
+	</select>
+	
+	
+	<!-- === 팀 목록 가져오기 === -->
+	<resultMap type="HashMap" id="getTeamList_map">
+	    <result property="teamId"		column="teamId" 		javaType="String" />
+	    <result property="fk_depId"		column="fk_depId" 		javaType="String" />
+	    <result property="teamName" 	column="teamName" 		javaType="String" />
+	</resultMap>
+	<select id="getTeamList" resultMap="getTeamList_map">
+		select teamId, fk_depId, teamName
+		from tbl_team
+		order by teamName
+	</select>
+	
+	
+	<!-- 임직원 정보 목록 가져오기 -->
+ 	<select id="getEmpInfoList" resultType="com.spring.app.common.domain.EmployeeVO">
+	 	select empId, empName, positionName, fk_depId, depName, fk_teamId, teamName
+		from tbl_employee E
+		left join tbl_team T
+		on E.fk_teamId = T.teamId
+		left join tbl_department D
+		on T.fk_depId = D.depId
+		left join tbl_position P
+		on E.fk_positionId = P.positionId
+		where status = 1
+		order by fk_teamId asc
+ 	</select>
+ 	
+ 	
+ 	<!-- === 특정 부서 or 팀에 소속된 임직원 정보 목록 가져오기 ===  -->
+ 	<select id="getSpecificEmpInfoList" parameterType="HashMap" resultType="com.spring.app.common.domain.EmployeeVO">
+	 	select empId, empName, positionName, fk_depId, depName, fk_teamId, teamName
+		from tbl_employee E
+		left join tbl_team T
+		on E.fk_teamId = T.teamId
+		left join tbl_department D
+		on T.fk_depId = D.depId
+		left join tbl_position P
+		on E.fk_positionId = P.positionId
+		where status = 1
+		<choose>
+			<when test="depId != ''">
+			and depId = #{depId}
+			</when>
+			<when test="teamId != ''">
+			and teamId = ${teamId}
+			</when>
+		</choose>
+		order by fk_teamId asc
+ 	</select>
+ 	
+ 	
+ 	<!-- === 총/부서별/팀별 사원 수 가져오기 === -->	<!-- 수정필  -->
+	<resultMap type="HashMap" id="getEmpCount_map">
+	    <result property="type"		column="type" 		javaType="String" />
+	    <result property="count"	column="count" 		javaType="String" />
+	</resultMap>
+ 	<select id="getEmpCount" parameterType="HashMap" resultMap="getEmpCount_map">
+ 		select 'total' as type, count(*) as count
+		from tbl_employee E
+		left join tbl_team T
+		on E.fk_teamId = T.teamId
+		left join tbl_department D
+		on T.fk_depId = D.depId
+		left join tbl_position P
+		on E.fk_positionId = P.positionId
+		where status = 1
+ 	</select>
+ 	
+ 	
+ 	<!-- === 직위 조회하기 === -->
+ 	<resultMap type="HashMap" id="getPositionList_map">
+	    <result property="positionId"		column="positionId" 		javaType="String" />
+	    <result property="positionName"		column="positionName" 	javaType="String" />
+	</resultMap>
+	<select id="getPositionList" resultMap="getPositionList_map">
+		select positionId, positionName
+		from tbl_position
+		order by positionId
+	</select>
+ 	
+ 	
+ 	<!-- === 직무 조회하기 === -->
+ 	<resultMap type="HashMap" id="getJobList_map">
+	    <result property="jobId"		column="jobId" 		javaType="String" />
+	    <result property="jobName"		column="jobName" 	javaType="String" />
+	</resultMap>
+	<select id="getJobList" resultMap="getJobList_map">
+		select jobId, jobName
+		from tbl_job
+		order by jobName
+	</select>
+ 	
+ 	
+ 	<!-- === 기존직무 중 같은 이름의 직무가 있는지 조회하기 === -->
+ 	<select id="selectExistJob" parameterType="HashMap" resultType="String">
+ 		select jobName
+ 		from tbl_job
+ 		where jobName = #{jobName}
+ 	</select>
+ 	
+ 	
+ 	<!-- === 새 직무 추가하기 === -->
+ 	<insert id="insertNewJob" parameterType="HashMap">
+ 		insert into tbl_job(jobId, jobName)
+ 		values(jobSeq.nextval, #{jobName})
+ 	</insert>
+ 	
+ 	
+ 	<!-- === 삭제하려는 직무의 사원이 있는지 조회한다 === -->
+ 	<resultMap type="HashMap" id="selectJobIdFromEmp_map">
+	    <result property="empName"		column="empName" 		javaType="String" />
+	</resultMap>
+ 	<select id="selectJobIdFromEmp" parameterType="HashMap" resultMap="selectJobIdFromEmp_map">
+ 		select empName
+ 		from tbl_employee
+ 		where fk_jobId = #{jobId}
+ 	</select>
+ 	
+ 	
+ 	<!-- === 직무 삭제하기 === -->
+ 	<delete id="delJob" parameterType="HashMap">
+ 		delete from tbl_job
+ 		where jobId = #{jobId}
+ 	</delete>
+ 	
+ 	
+ 	<!-- === 기존직무 중 같은 등급의 직위가 있는지 조회하기 === -->
+ 	<select id="selectExistPositionId" parameterType="HashMap" resultType="String">
+ 		select positionId
+ 		from tbl_position
+ 		where positionId = #{positionId}
+ 	</select>
+ 	
+ 	
+ 	<!-- === 기존직무 중 같은 이름의 직위가 있는지 조회하기 === -->
+ 	<select id="selectExistPosition" parameterType="HashMap" resultType="String">
+ 		select positionName
+ 		from tbl_position
+ 		where positionName = #{positionName}
+ 	</select>
+ 	
+ 	
+ 	<!-- === 새 직위 추가하기 === -->
+ 	<insert id="insertNewPosition" parameterType="HashMap">
+ 		insert into tbl_position(positionId, positionName)
+ 		values(#{positionId}, #{positionName})
+ 	</insert>
+ 	
+ 	
+ 	<!-- === 삭제하려는 직위의 사원이 있는지 조회한다 === -->
+ 	<resultMap type="HashMap" id="selectPositionIdFromEmp_map">
+	    <result property="empName"		column="empName" 		javaType="String" />
+	</resultMap>
+ 	<select id="selectPositionIdFromEmp" parameterType="HashMap" resultMap="selectPositionIdFromEmp_map">
+ 		select empName
+ 		from tbl_employee
+ 		where fk_positionId = #{positionId}
+ 	</select>
 	
  	
+ 	<!-- === 직위 삭제하기 === -->
+ 	<delete id="delPosition" parameterType="HashMap">
+ 		delete from tbl_position
+ 		where positionId = #{positionId}
+ 	</delete>
  	
+
+ 	<!-- === 삭제하려는 직위보다 낮은 직위의 사원 가져오기 === -->
+ 	<resultMap type="HashMap" id="getLowPositionEmp_map">
+	    <result property="empId"		column="empId" 		javaType="String" />
+	</resultMap>
+ 	<select id="getLowPositionEmp" parameterType="HashMap" resultMap="getLowPositionEmp_map">
+ 		<![CDATA[
+ 		select empId
+ 		from tbl_employee
+ 		where fk_positionId > #{positionId}
+ 		]]> 
+ 	</select>
+ 	
+ 	
+ 	<!-- === 전자결재 보안등급 설정된 직위 조회하기 === -->
+ 	<resultMap type="HashMap" id="selectSecurityPositionId_map">
+	    <result property="fk_positionId"		column="fk_positionId" 		javaType="String" />
+	</resultMap>
+ 	<select id="selectSecurityPositionId" parameterType="HashMap" resultMap="selectSecurityPositionId_map">
+ 		select fk_positionId
+ 		from tbl_security
+ 		where fk_positionId = #{positionId}
+ 	</select>
+ 	
+ 	
+ 	<!-- === 기존부서 중 동일한 부서명이 있는지 조회하기 === -->
+	<select id="selectExistDep" parameterType="HashMap" resultType="String">
+ 		select depName
+ 		from tbl_department
+ 		where depName = #{depName}
+ 	</select>
+ 	
+
+	<!-- === 부서 추가하기 === -->
+ 	<insert id="insertNewDep" parameterType="HashMap">
+ 		insert into tbl_department(depId, depName)
+ 		values(depSeq.nextval, #{depName})
+ 	</insert>
+ 	
+	
+ 	<!-- === 부서 내 팀이 존재하는지 조회하기 === -->
+ 	<resultMap type="HashMap" id="selectExistTeamOfDep_map">
+	    <result property="teamId"		column="teamId" 		javaType="String" />
+	</resultMap>
+ 	<select id="selectExistTeamOfDep" parameterType="HashMap" resultMap="selectExistTeamOfDep_map">
+ 		select teamId
+ 		from tbl_team
+ 		where fk_depId = #{depId} 
+ 	</select>
+ 	
+ 	
+ 	<!-- === 부서 삭제하기 === -->
+ 	<delete id="deleteDep" parameterType="HashMap">
+ 		delete from tbl_department
+ 		where depId = #{depId}
+ 	</delete>
+ 	
+ 	
+ 	<!-- === 기존팀 중 동일한 팀명이 있는지 조회하기 === -->
+ 	<select id="selectExistTeam" parameterType="HashMap" resultType="String">
+ 		select teamName
+ 		from tbl_team
+ 		where teamName = #{teamName} 
+ 	</select>
+
+
+	<!-- === 팀 추가하기 === -->
+ 	<insert id="insertNewTeam" parameterType="HashMap">
+ 		insert into tbl_team(teamId, fk_depId, teamName)
+ 		values(teamSeq.nextval, #{depId}, #{teamName})
+ 	</insert>
+ 	
+ 	
+ 	<!-- === 팀내 사원이 존재하는지 조회하기 === -->
+ 	<resultMap type="HashMap" id="selectExistEmpOfTeam_map">
+	    <result property="empId"		column="empId" 		javaType="String" />
+	</resultMap>
+ 	<select id="selectExistEmpOfTeam" parameterType="HashMap" resultMap="selectExistEmpOfTeam_map">
+ 		select empId
+ 		from tbl_employee
+ 		where fk_teamId = #{teamId} 
+ 	</select>
+ 	
+ 	
+ 	<!-- === 부서 삭제하기 === -->
+ 	<delete id="deleteTeam" parameterType="HashMap">
+ 		delete from tbl_team
+ 		where teamId = #{teamId}
+ 	</delete>
+ 	
+ 	
+ 	<!-- === 로그인한 사원 정보 가져오기 === -->
+ 	<select id="getLoginEmpInfo" parameterType="HashMap" resultType="com.spring.app.common.domain.EmployeeVO">
+		select empId, empName, depName, teamName, empType, fk_positionId, positionName, fk_jobId, jobName, email
+		      ,companyTel, tel, to_char(startworkday, 'yyyy-mm-dd') as startworkday, to_char(birth, 'yyyy-mm-dd') as birth
+		      , address, detailAddress, postcode
+		from tbl_employee E
+		left join tbl_team T
+		on E.fk_teamId = T.teamId
+		left join tbl_department D
+		on T.fk_depId = D.depId
+		left join tbl_position P
+		on E.fk_positionId = P.positionId
+		left join tbl_job J
+		on E.fk_jobId = J.jobId
+		where status = 1 and empId = #{loginEmpId}			
+ 	</select>
+ 	
+ 	
+ 	<!-- === 내 정보 수정하기 === -->
+ 	<update id="editMyinfo" parameterType="HashMap">
+ 		update tbl_employee 
+ 		set fk_jobId = #{jobId}, companyTel = #{companyTel}, tel = #{tel}, birth = #{birth},
+ 		  	postcode = #{postcode}, address = #{address}, detailAddress = #{detailAddress}
+ 		where empId = #{empId}
+ 	</update>
+	
+	
+	
+
+	
+	
  	
 </mapper>	

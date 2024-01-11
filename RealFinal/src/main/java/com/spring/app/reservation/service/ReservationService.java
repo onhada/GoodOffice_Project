@@ -10,7 +10,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getResourceCategory 
 	* @작성일   : Dec 29, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원카테고리 목록 가져오기
 	* @return 
@@ -20,7 +20,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getAdminResourceCategoryList 
 	* @작성일   : Jan 6, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 카테고리관리_자원카테고리 목록 가져오기
 	* @return 
@@ -32,7 +32,7 @@ public interface ReservationService {
 	 * @param paraMap 
 	* @Method Name  : getResourceList 
 	* @작성일   : Dec 29, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 목록 가져오기
 	* @return 
@@ -42,7 +42,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getAdminResourceList 
 	* @작성일   : Jan 6, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 관리자_자원 목록 가져오기
 	* @param paraMap
@@ -53,7 +53,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getResourceCategoryInfo_map 
 	* @작성일   : Dec 29, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원카테고리 정보 가져오기
 	* @param paraMap
@@ -65,7 +65,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getAdminResourceCategoryInfo 
 	* @작성일   : Jan 6, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 관리자_자원카테고리 정보 가져오기
 	* @param paraMap
@@ -77,7 +77,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getResourceInfo 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 정보 가져오기
 	* @param paraMap
@@ -88,7 +88,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getAdminResourceInfo 
 	* @작성일   : Jan 6, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 관리자_자원 정보 가져오기
 	* @param paraMap
@@ -99,7 +99,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getAllResourceList 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 모든 자원 목록 가져오기
 	* @return 
@@ -109,7 +109,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getResourceOption 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 승인여부, 반납필수여부 알아오기
 	* @param resourceId
@@ -120,7 +120,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : selectReservation 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 등록된 예약이 있는지 조회
 	* @param paraMap
@@ -131,7 +131,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : addReservation 
 	* @작성일   : Dec 30, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약하기 (자원예약 table에 insert)
 	* @param paraMap 
@@ -141,7 +141,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getReservationList 
 	* @작성일   : Dec 31, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 목록 가져오기
 	* @return 
@@ -151,7 +151,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getReservationInfoDetail 
 	* @작성일   : Dec 31, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원예약 한 건에 대한 정보 가져오기
 	* @param paraMap
@@ -162,7 +162,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getEmpInfo 
 	* @작성일   : Dec 31, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 사원 정보 가져오기
 	* @param paraMap
@@ -173,7 +173,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : delRservation 
 	* @작성일   : Dec 31, 2023 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 삭제하기
 	* @param paraMap
@@ -184,7 +184,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : returnRsource 
 	* @작성일   : Jan 1, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 자원 반납하기
 	* @param paraMap
@@ -195,7 +195,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : isAdmin 
 	* @작성일   : Jan 1, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 로그인 사원이 인사관리자인지 확인
 	* @param paraMap
@@ -206,7 +206,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getTotalCount 
 	* @작성일   : Jan 1, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 총 예약 건수 가져오기
 	* @param paraMap
@@ -217,7 +217,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : rsvApprove 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 승인하기
 	* @param paraMap
@@ -228,7 +228,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : rsvApprove 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 반려하기
 	* @param paraMap
@@ -239,7 +239,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : categoryDel 
 	* @작성일   : Jan 2, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 카테고리 삭제하기
 	* @param paraMap
@@ -250,7 +250,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : categoryAdd 
 	* @작성일   : Jan 3, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 카테고리 추가하기
 	* @param paraMap
@@ -261,7 +261,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : categoryEdit 
 	* @작성일   : Jan 3, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 카테고리 수정하기
 	* @param paraMap
@@ -272,7 +272,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : resourceAdd 
 	* @작성일   : Jan 4, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 추가하기	
 	* @param paraMap
@@ -283,7 +283,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : resourceEdit 
 	* @작성일   : Jan 4, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 수정하기	
 	* @param paraMap
@@ -294,7 +294,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getFirstCategoryId 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 존재하는 첫번째 카테고리id 가져오기
 	* @return 
@@ -304,7 +304,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : resourceDel 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 자원 삭제하기
 	* @param paraMap
@@ -315,7 +315,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getRsvAdminList 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약관리자 목록 가져오기
 	* @return 
@@ -325,7 +325,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getRsvAdminTotalCount 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 
 	* @return 
@@ -335,7 +335,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : getReservationMarkList 
 	* @작성일   : Jan 5, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약된 시간을 표시하기 위한 자원 목록 가져오기
 	* @param paraMap
@@ -346,7 +346,7 @@ public interface ReservationService {
 	/** 
 	* @Method Name  : delRsvAdmin 
 	* @작성일   : Jan 7, 2024 
-	* @작성자   : hada 
+	* @작성자   : 김민경 
 	* @변경이력  : 
 	* @Method 설명 : 예약 관리자 삭제하기
 	* @param paraMap

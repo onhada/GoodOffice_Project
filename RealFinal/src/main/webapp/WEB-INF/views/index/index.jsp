@@ -242,7 +242,7 @@ function workstatus_insert(type){
 								</a>
 							</div>
 							<div data-v-9d7b8978="" class="circle-wrap">
-								<a data-v-9d7b8978="" href="수정필" target="_self" class="menu office">
+								<a data-v-9d7b8978="" href="<%=ctxPath %>/organization/empInfoViewPage.gw" target="_self" class="menu office">
 									<span data-v-9d7b8978="" class="circle">
 										<span data-v-9d7b8978="" class="alarm-cnt" style="display: none;">0</span>
 										<span data-v-9d7b8978="" class="icon">
