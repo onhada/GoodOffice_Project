@@ -654,8 +654,9 @@ success : function(json) {
 											<th data-v-5dded26b="" scope="row">문서 종류</th>
 											<td data-v-5dded26b="" class="basic-setting-td">휴가 신청서</td>
 											<th data-v-5dded26b="" scope="row">작성자</th>
-											<td data-v-5dded26b=""><span data-v-5dded26b="">하이웍스산업</span><span
-												data-v-5dded26b="" class="ml-5">대표이사</span></td>
+											<td data-v-5dded26b=""><span data-v-5dded26b="">${sessionScope.loginUser.empName}</span>
+											<%-- <span
+												data-v-5dded26b="" class="ml-5">${sessionScope.loginUser.empName}</span> --%></td>
 										</tr>
 										<tr data-v-5dded26b="">
 											<th data-v-5dded26b="" scope="row">보존 연한</th>

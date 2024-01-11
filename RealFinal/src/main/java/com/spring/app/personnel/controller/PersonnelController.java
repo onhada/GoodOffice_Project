@@ -72,20 +72,7 @@ public class PersonnelController {
 	
 	
 	 
-	/*
-	 * @GetMapping("/index.gw") public String index(HttpServletRequest request ) {
-	 * 
-	 * // 테스트 코드 시작 EmployeeVO loginUser = new EmployeeVO();
-	 * loginUser.setEmpId((long) 200); loginUser.setEmpName("정호석"); HttpSession
-	 * session = request.getSession(); session.setAttribute("loginUser", loginUser);
-	 * 
-	 * long empid = loginUser.getEmpId(); request.setAttribute("empid", empid);
-	 * //테스트 코드 끝
-	 * 
-	 * return "index.index";
-	 * 
-	 * }
-	 */
+	 
 	/** 
 	* @Method Name  : work_modify 
 	* @작성일   : 2024. 1. 7 
@@ -97,7 +84,7 @@ public class PersonnelController {
 	* @return 
 	*/
 	@GetMapping("/personnel/work_modify.gw")
-	public String work_modify(HttpServletRequest request, HttpServletResponse response) {
+	public String work_modify(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
@@ -121,7 +108,7 @@ public class PersonnelController {
 	*/
 	@ResponseBody
 	@PostMapping("/personnel/workstatus_day_select.gw")
-	public String workstatus_day_select(HttpServletRequest request, HttpServletResponse response, String date) {
+	public String workstatus_day_select(HttpServletRequest request, HttpServletResponse response, ModelAndView mav ,String date) {
 
 		 
 		 
@@ -201,21 +188,24 @@ public class PersonnelController {
 	 * @param response @return 
 	 */
 	@GetMapping("/personnel/personal_index.gw")
-	public String personal_index(HttpServletRequest request, HttpServletResponse response) {
+	public String  personal_index(HttpServletRequest request, HttpServletResponse response , ModelAndView mav ) {
 
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 
 		String sysdate = service.sysdate_get(); // 현재날짜 가져오기
 		request.setAttribute("sysdate", sysdate);
-
+		
+		 
+		mav.addObject("type", "workside");
+		 
 		String empid = String.valueOf(loginUser.getEmpId()); // 로그인한 사원 아이디
 
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("empid", empid);
 		paraMap.put("sysdate", sysdate);
 
-		String day_hour = service.day_hour(paraMap); // 테스트 하루 근무시간
+		 
 		request.setAttribute("empid", empid);
 
 		String year = sysdate.substring(0, 4); // 현재 연도
@@ -277,7 +267,7 @@ public class PersonnelController {
 	 */
 	@ResponseBody
 	@PostMapping("/personnel/workstatus_insert.gw")
-	public String workstatus_insert(HttpServletRequest request, HttpServletResponse response, String worktype) {
+	public String workstatus_insert(HttpServletRequest request, HttpServletResponse response,  ModelAndView mav,String worktype) {
 
 		 
 		JSONObject jsonObj = new JSONObject();
@@ -316,7 +306,7 @@ public class PersonnelController {
 	 */
 	@ResponseBody
 	@PostMapping("/personnel/workstatus_print.gw")
-	public String workstatus_print(HttpServletRequest request, HttpServletResponse response, String worktype) {
+	public String workstatus_print(HttpServletRequest request, HttpServletResponse response, ModelAndView mav,String worktype) {
 
 	 
 		HttpSession session = request.getSession();
@@ -399,7 +389,7 @@ public class PersonnelController {
 	* @return 
 	*/
 	@GetMapping("/personnel/personal_vaction_application.gw")
-	public String personal_vaction_application(HttpServletRequest request, HttpServletResponse response) {
+	public String personal_vaction_application(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
@@ -436,19 +426,19 @@ public class PersonnelController {
 	*/
 	@ResponseBody
 	@PostMapping("/personnel/vaction_insert.gw")
-	public String personal_vaction_insert(HttpServletRequest request, HttpServletResponse response, String datepi,
+	public String personal_vaction_insert(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, String datepi,
 			String empidList, String empnameList, String reason, String vtype, String empidListh, String empnameListh,
 			String empidListRef, String empnameListRef) {
  
 
-		System.out.println("dlis : "+empnameListh);
+		 
 		
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 
 		String empid = String.valueOf(loginUser.getEmpId()); // 로그인한 사원 아이디
 
-		//int va_approval_insert = service.va_approval_insert(empid);
+		int va_approval_insert = service.va_approval_insert(empid);
 
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("empid", empid);
@@ -456,7 +446,7 @@ public class PersonnelController {
 		paraMap.put("reason", reason);
 		paraMap.put("vtype", vtype);
 
-		//int va_dayoff_insert = service.va_dayoff_insert(paraMap);
+		int va_dayoff_insert = service.va_dayoff_insert(paraMap);
 		 
 
 		int sts = 1; // 기안 처리 순서
@@ -476,7 +466,7 @@ public class PersonnelController {
 				paraMaps.put("ptype", "2");
 				paraMaps.put("status", "2");
 				paraMaps.put("seq", Integer.toString(sts));
-				//int n = service.procedure_insert(paraMaps);
+				int n = service.procedure_insert(paraMaps);
 				sts++;
 			} else {
 				Map<String, String> paraMaps = new HashMap<>();
@@ -484,7 +474,7 @@ public class PersonnelController {
 				paraMaps.put("ptype", "2");
 				paraMaps.put("status", "1");
 				paraMaps.put("seq", Integer.toString(sts));
-				//int n = service.procedure_insert(paraMaps);
+				int n = service.procedure_insert(paraMaps);
 				sts++;
 			}
 
@@ -503,7 +493,7 @@ public class PersonnelController {
 				paraMaps.put("ptype", "4");
 				paraMaps.put("status", "1");
 				paraMaps.put("seq", Integer.toString(sts));
-				//int n = service.procedure_insert(paraMaps);
+				int n = service.procedure_insert(paraMaps);
 				sts++;
 			}
 
@@ -523,7 +513,7 @@ public class PersonnelController {
 				paraMaps.put("ptype", "5");
 				paraMaps.put("status", "5");
 				paraMaps.put("seq", Integer.toString(sts));
-				//n = service.procedure_insert(paraMaps);
+				n = service.procedure_insert(paraMaps);
 				sts++;
 			}
 
@@ -544,7 +534,7 @@ public class PersonnelController {
 	
 	@ResponseBody
 	@PostMapping("/personnel/workmodi_insert.gw")
-	public String personal_workmodi_insert(HttpServletRequest request, HttpServletResponse response, String datepi,
+	public String personal_workmodi_insert(HttpServletRequest request, HttpServletResponse response, ModelAndView mav,String datepi,
 			String empidList, String empnameList, String reason , String empidListh, String empnameListh,
 			String empidListRef, String empnameListRef, String deleteidval, String addtypeval,
 			String addhourval, String addminval, String idval, String editvalhourval, String editvalminval) {
@@ -794,7 +784,7 @@ public class PersonnelController {
 	 */
 	@ResponseBody
 	@PostMapping("/personnel/search_name.gw")
-	public String personnel_search_name(HttpServletRequest request, HttpServletResponse response, String empName) {
+	public String personnel_search_name(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, String empName) {
 
 		List<EmployeeVO> empList = service.personnel_search_name(empName);
 
@@ -827,7 +817,7 @@ public class PersonnelController {
 	*/
 	@ResponseBody
 	@PostMapping("/personnel/selct_empid.gw")
-	public String personnel_selct_empid(HttpServletRequest request, HttpServletResponse response, String empid) {
+	public String personnel_selct_empid(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, String empid) {
 
 		String empname = service.personnel_selct_empid(empid);
 

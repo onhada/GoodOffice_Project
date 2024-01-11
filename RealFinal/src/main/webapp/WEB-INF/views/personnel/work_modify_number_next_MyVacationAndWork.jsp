@@ -922,8 +922,10 @@ $('input#datepicker').datepicker({
 										<td data-v-5dded26b="" class="basic-setting-td">근무체크 수정
 											요청서</td>
 										<th data-v-5dded26b="" scope="row">작성자</th>
-										<td data-v-5dded26b=""><span data-v-5dded26b="">하이웍스산업</span><span
-											data-v-5dded26b="" class="ml-5">대표이사</span></td>
+										<td data-v-5dded26b=""><span data-v-5dded26b="">${sessionScope.loginUser.empName}</span>
+										<!-- <span
+											data-v-5dded26b="" class="ml-5">대표이사</span> -->
+											</td>
 									</tr>
 									<tr data-v-5dded26b="">
 										<th data-v-5dded26b="" scope="row">보존 연한</th>
@@ -1528,7 +1530,7 @@ $('input#datepicker').datepicker({
 								style="width: 100%; height: 70px; overflow-y: hidden;"></textarea>
 						</div>
 					</section>
-					<section data-v-de07ea7a="" class="attachment-wrapper">
+					<!-- <section data-v-de07ea7a="" class="attachment-wrapper">
 						<div data-v-58de2198="" data-v-de07ea7a="" class="input-files">
 							<div data-v-58de2198="" class="top">
 								<div data-v-58de2198="" class="left upload-title">
@@ -1540,15 +1542,15 @@ $('input#datepicker').datepicker({
 									<input data-v-58de2198="" type="file" multiple="multiple"
 										style="display: none;">
 								</div>
-								<!---->
+								
 							</div>
 							<div data-v-58de2198="" class="center">여기로 파일을 끌어놓으세요.</div>
 							<div data-v-58de2198="" class="files">
-								<!---->
+								
 							</div>
-							<!---->
+							
 						</div>
-					</section>
+					</section> -->
 				</div>
 			</div>
 		</div>

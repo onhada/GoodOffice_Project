@@ -319,10 +319,12 @@ function workstatus_insert(type){
 				<div class="time-check-component">
 					<p class="title">근태관리</p>
 					<div class="contents">
-						<div class="today-info" style="margin: 5% 0 0 30%">
-							<div class="today-status">
+						<div class="today-info" style="margin: 5% 0 0 22%;  ">
+						<span  id="clock" class="current-time"></span>
+						
+						<!-- 	<div class="today-status"  >
 								<span  id="clock" class="current-time"></span>
-							</div>
+							</div> -->
 						</div>
 						<div class="today-detail">
 							<ul class="division-list">
@@ -404,7 +406,7 @@ function workstatus_insert(type){
 					</div>
 				</div>
 			</div>
-			<div class="mail" style="padding: 10px 0 0 0;">
+			<div class="mail" style="padding: 27px 0 0 0;">
 				<div data-v-0f8ed5fd="">
 					<p data-v-0f8ed5fd="" class="title">사내메일</p>
 					<div data-v-0f8ed5fd="" class="contents">
