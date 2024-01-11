@@ -20,9 +20,22 @@
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>하이웍스 오피스</title>
+
+
+
+
+<%-- Bootstrap CSS --%>
+<link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+
+<%-- Optional JavaScript --%>
+<script type="text/javascript" src="<%=ctxPath%>/resources/jquery/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
+<%-- <script type="text/javascript" src="<%= ctxPath%>/resources/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>  --%>
+
+<!-- official css -->
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/common/inHTML.css">
 <meta name="viewport" content="width=1024">
-<link rel="shortcut icon" type="image/x-icon"	href="https://hr.office.hiworks.com/static/images/favicon/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="https://hr.office.hiworks.com/static/images/favicon/favicon.ico">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/personnel/app.ff1d5947.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/style.css">
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/organization/style_new.css">
@@ -37,14 +50,14 @@
 <!-- 예인추가 끝-->
 
 
- 
-
- 
-		
-		
 
 
- 
+
+
+
+
+
+
 </head>
 
 <body cz-shortcut-listen="true">
@@ -55,29 +68,27 @@
 				<!---->
 				<!---->
 				<!-- 	헤더시작 -->
-					<tiles:insertAttribute name="header" />
+				<tiles:insertAttribute name="header" />
 				<!-- 	헤더끝 -->
 			</div>
 			<!---->
 		</div>
 
-		<script type="text/javascript" src="./하이웍스 오피스4_files/main(1).js.다운로드"></script>
 		<!-- Top End-->
 		<div id="container">
 
 			<div id="drag_wrap">
-				<div id="drag" class="ui-draggable ui-draggable-handle"
-					style="left: 0px;"></div>
+				<div id="drag" class="ui-draggable ui-draggable-handle" style="left: 0px;"></div>
 			</div>
 
 			<!-- 사이드바 시작 -->
-				<tiles:insertAttribute name="side" />
+			<tiles:insertAttribute name="side" />
 			<!-- 사이드바 끝-->
 
 			<!-- 컨텐츠 시작 -->
-				<tiles:insertAttribute name="content" />
+			<tiles:insertAttribute name="content" />
 			<!-- 컨텐츠 끝 -->
-			
+
 		</div>
 		<div id="dimmed"></div>
 		<div id="dimmed2"></div>
@@ -101,71 +112,20 @@
 	z-index: 2010;
 }
 </style>
-		<iframe id="alphaDiv"
-			style="height: 100%; width: 100%; display: none; opacity: 0.6;"
-			src="./하이웍스 오피스4_files/saved_resource.html"></iframe>
-		<div id="progressDiv"
-			style="left: 506.5px; top: 456.5px; display: none;">
-			<img src="./하이웍스 오피스4_files/progress_big.gif" alt="progress.."
-				title="progress..">
-		</div>
+		
+		<!-- <div id="progressDiv" style="left: 506.5px; top: 456.5px; display: block;">
+			<img src="./하이웍스 오피스4_files/progress_big.gif" alt="progress.." title="progress..">
+		</div> -->
 	</div>
 	<div id="main_layer_div"></div>
 
-	<div class="layer_box small alarm hide popup1 " style="" id="HWA_MAIN">
-		<p class="text" id="HWA_MSG"></p>
-		<div class="layer_button">
-			<button class="btn_variables" type="button" onclick="hidePopup();"
-				id="HWA_MAIN_OK">확인</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
-	</div>
+	
 
-	<div class="layer_box large hide dns_intro_layer" style="width: 550px;">
-		<div class="title_layer text_variables">메일 서비스 이용 안내</div>
-		<p class="bold body_bold">메일 서비스를 이용하시려면 하이웍스용 DNS 정보 설정이 필요합니다.</p>
-		<p class="mgt_15">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			가비아 등록 도메인은 자동 설정을 지원합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open(&#39;https://domain.gabia.com/api/hiworksdns/domainsetting&#39;)">가비아
-				도메인 자동 설정하기</button>
-		</div>
-		<p class="pdt_20">
-			<span
-				style="display: inline-block; width: 3px; height: 3px; vertical-align: middle; background: #676767;"></span>
-			타사 등록 도메인은 DNS 정보를 직접 설정해야 합니다.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open(&#39;https://customer.gabia.com/manuals_pop/manual_set.php?service=webmail_hosting&amp;fact=mailzine&amp;seq_no=2221&#39;)">설정
-				방법 보기</button>
-		</div>
-		<p class="bold body_bold mgt_50">
-			※ 하이웍스용 DNS 정보 설정을 완료하셨다면 메일 용량을 할당한 후 메일 서비스를<br> 이용할 수 있습니다.
-			‘오피스 관리’에서 계정별 메일 용량을 설정해주세요.
-		</p>
-		<div class="layer_button mgt_10 ta_l">
-			<button type="button" class="btn_variables"
-				onclick="location:href=window.open(&#39;/gabia.biz/admin/Orgmain&#39;)">오피스관리
-				페이지 가기</button>
-		</div>
-		<a href="javascript:void(0)" class="icon btn_closelayer"
-			onclick="hidePopup();" title="레이어 닫기"><span class="blind">레이어
-				닫기</span></a>
-	</div>
+	
 
- 
 
-	<ul
-		class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content"
-		id="ui-id-1" tabindex="0" style="display: none;"></ul>
-	<span role="status" aria-live="assertive" aria-relevant="additions"
-		class="ui-helper-hidden-accessible"></span>
+
+	<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul>
+	<span role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></span>
 </body>
 </html>

@@ -106,19 +106,19 @@
 	<!-- ==== 인사 tiles 설정 끝  ==== -->
 	
 	
-	<!-- 예인 추가 시작 -->
-	<!-- ==== 인사 조직 관리 tiles 설정 시작  ==== -->
-	<definition name="layout-personnel_insa"  template="/WEB-INF/tiles/layout/layout-personnel_insa.jsp"> 
+	
+	<!-- ==== 조직관리 tiles 설정 시작 ==== -->
+	<definition name="layout-organization"  template="/WEB-INF/tiles/layout/layout-organization.jsp"> 
 		<put-attribute name="header"  value="/WEB-INF/tiles/header_noSearch.jsp" />
-		<put-attribute name="side"  value="/WEB-INF/tiles/personnel_insa/side.jsp" />
+		<put-attribute name="side"  value="/WEB-INF/tiles/organization/side.jsp" />
 		<put-attribute name="content" value="" />
 	</definition>
 	
-	<definition name="*.personnel_insa" extends="layout-personnel_insa">
-		<put-attribute name="content" value="/WEB-INF/views/personnel_insa/{1}.jsp"/>
+	<definition name="*.organization" extends="layout-organization">
+		<put-attribute name="content" value="/WEB-INF/views/organization/{1}.jsp"/>
 	</definition>
-	<!-- ==== 인사 조직 관리  설정 끝  ==== -->
-	<!-- 예인 추가 끝 -->
+	<!-- ==== 조직관리 tiles 설정 끝 ==== -->
+	
 	
 	
 	<!-- ==== 전자결재 tiles 설정 시작  ==== -->

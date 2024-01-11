@@ -92,15 +92,15 @@ $(document).ready(function() {
 			dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
 			weekHeader : "주",
 			dateFormat : "yy-mm-dd", 
-	        changeYear: true,        //콤보박스에서 년 선택 가능
-	        changeMonth: true,       //콤보박스에서 월 선택 가능  
+	        changeYear: true,        // 콤보박스에서 년 선택 가능
+	        changeMonth: true,       // 콤보박스에서 월 선택 가능  
 			firstDay : 0,
 			isRTL : false,
-	        showOtherMonths: true,   //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-			showMonthAfterYear : true,	//년도 먼저 나오고, 뒤에 월 표시
+	        showOtherMonths: true,   // 빈 공간에 현재월의 앞뒤월의 날짜를 표시
+			showMonthAfterYear : true,	// 년도 먼저 나오고, 뒤에 월 표시
 			yearSuffix : "년",
-			minDate: "0D", //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-			maxDate: "+3M" //최대 선택일자(+1D:하루후, +1M:한달후, +1Y:일년후)    
+			minDate: "0D", // 최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+			maxDate: "+3M" // 최대 선택일자(+1D:하루후, +1M:한달후, +1Y:일년후)    
 		};
 		datepicker.setDefaults(datepicker.regional.ko);
 

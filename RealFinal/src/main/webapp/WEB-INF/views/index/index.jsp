@@ -222,7 +222,7 @@ function workstatus_insert(type){
 								</a>
 							</div>
 							<div data-v-9d7b8978="" class="circle-wrap">
-								<a data-v-9d7b8978="" href="수정필" target="_self" class="menu office">
+								<a data-v-9d7b8978="" href="<%=ctxPath %>/personnel/payAnnualList.gw" target="_self" class="menu office">
 									<span data-v-9d7b8978="" class="circle">
 										<span data-v-9d7b8978="" class="alarm-cnt" style="display: none;">0</span>
 										<span data-v-9d7b8978="" class="icon">
@@ -282,7 +282,7 @@ function workstatus_insert(type){
 								</a>
 							</div>
 							<div data-v-9d7b8978="" class="circle-wrap">
-								<a data-v-9d7b8978="" href="https://office.hiworks.com/gabia.biz/h_admin/adminhome" target="_self" class="menu office">
+								<a data-v-9d7b8978="" href="<%= ctxPath%>/admin/managerSet.gw" target="_self" class="menu office">
 									<span data-v-9d7b8978="" class="circle">
 										<span data-v-9d7b8978="" class="alarm-cnt" style="display: none;">0</span>
 										<span data-v-9d7b8978="" class="icon">
@@ -409,7 +409,7 @@ function workstatus_insert(type){
 					<p data-v-0f8ed5fd="" class="title">사내메일</p>
 					<div data-v-0f8ed5fd="" class="contents">
 						<div data-v-0f8ed5fd="" class="status-wrap">
-							<a data-v-0f8ed5fd="" class="status" style="background: #2985db; color: #fff !important;" href="<%= ctxPath%>/mail/mailWrite.gw">
+							<a data-v-0f8ed5fd="" class="status" href="<%= ctxPath%>/mail/mailWrite.gw" style="background: #2985db; color: #fff !important;">
 								<span data-v-0f8ed5fd="">메일쓰기</span>
 							</a>
 							<a data-v-0f8ed5fd="" class="status" href="<%= ctxPath%>/mail/mailList.gw?mailType=1">
