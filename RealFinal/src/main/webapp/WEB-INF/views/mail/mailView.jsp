@@ -180,14 +180,14 @@
 					</c:if>		
 							
 						<span class="title">${requestScope.mailInfo.subject}</span>
-						<a href="javascript:void(0)" id="spMemoDisplay" onclick="showMemo('${requestScope.mailId}');" class="memo">
+						<%-- <a href="javascript:void(0)" id="spMemoDisplay" onclick="showMemo('${requestScope.mailId}');" class="memo">
 							<c:if test="${empty fn:trim(requestScope.mailInfo.memoContent)}">
 							메모 추가
 							</c:if>
 							<c:if test="${not empty fn:trim(requestScope.mailInfo.memoContent)}">
 							메모 수정 
 							</c:if>
-						</a>	
+						</a>	 --%>
 						<!-- <a href="javascript:void(0)" id="spMemoDisplay" onclick="Memo.showMemo(217);" class="memo">메모 수정</a> -->
 					</h3>
 					<p class="date">${requestScope.mailInfo.sendDay}</p>
@@ -231,9 +231,9 @@
 										</span>
 									</c:forEach>
 							</div>
-							<a class="icon submit" id="btn_zip_all" href="javascript:Common.Download('/tempfinal.onhiworks.com/officemail/main/m_download_attached_zip/216',$('btn_zip_all'))" title="첨부파일 모두 저장" style="display: block;">
+							<!-- <a class="icon submit" id="btn_zip_all" href="javascript:Common.Download('/tempfinal.onhiworks.com/officemail/main/m_download_attached_zip/216',$('btn_zip_all'))" title="첨부파일 모두 저장" style="display: block;">
 								<span class="blind">첨부 파일 다운로드</span>
-							</a>
+							</a> -->
 						</div>
 					</c:if>
 					<!-- tnef start -->

@@ -139,39 +139,33 @@
 					<caption>편지함 목록으로 편지함, 편지수로 구성되어 있습니다.</caption>
 					<colgroup>
 						<col width="13%">
-						<col width="13%">
 						<col width="45%">
 					</colgroup>
 					<thead>
 						<tr>
 							<th scope="row">&nbsp;편지함</th>
-							<th scope="row" class="ta_r">편지 수</th>
 							<th scope="row"></th>
 						</tr>
 						<tr mbox_no="b0" mbox_name="받은 편지함">
 							<td>받은 편지함</td>
-							<td class="ta_r">0 / 1</td>
 							<td>
 								<a href="javascript:void(0);" class="weakblue" onclick="emptyMailbox('1')">비우기</a>
 							</td>
 						</tr>
 						<tr mbox_no="b1" mbox_name="보낸 편지함">
 							<td>보낸 편지함</td>
-							<td class="ta_r">0 / 3</td>
 							<td>
 								<a href="javascript:void(0);" class="weakblue" onclick="emptyMailbox('2')">비우기</a>
 							</td>
 						</tr>
 						<tr mbox_no="b3" mbox_name="임시 보관함">
 							<td>임시 보관함</td>
-							<td class="ta_r">2 / 3</td>
 							<td>
 								<a href="javascript:void(0);" class="weakblue" onclick="emptyMailbox('4')">비우기</a>
 							</td>
 						</tr>
 						<tr mbox_no="b5" mbox_name="휴지통">
 							<td style="border-bottom: 1px solid rgb(204, 204, 204);">휴지통</td>
-							<td class="ta_r" style="border-bottom: 1px solid rgb(204, 204, 204);">0 / 1</td>
 							<td style="border-bottom: 1px solid rgb(204, 204, 204);">
 								<a href="javascript:void(0);" class="weakblue" onclick="emptyMailbox('5')">비우기</a>
 							</td>
@@ -182,7 +176,6 @@
 							<c:forEach var="personalMailbox" items="${requestScope.personalMailboxList}">
 								<tr id="personalMailboxId" personalMailboxId="${personalMailbox.personalMailboxTypeId}" mbox_name="${personalMailbox.personalMailboxTypeName}">
 									<td>${personalMailbox.personalMailboxTypeName}</td>
-									<td class="ta_r">0 / 1</td>
 									<td>
 										<a href="javascript:void(0);" class="weakblue" onclick="emptyMailbox('6', '${personalMailbox.personalMailboxTypeId}')">비우기</a>
 										<span class="grey_bar">|</span>
