@@ -16,7 +16,7 @@
              , to_char(birth, 'yyyy-mm-dd') AS birth, address, detailAddress, postCode, status
              , to_char(registerDay, 'yyyy-mm-dd') AS registerDay
              , to_char(updateDay, 'yyyy-mm-dd') AS updateDay
-             , adminType
+             , nvl(adminType, '0') as adminType
              , NVL2(adminType, '1', '0') as isAdmin
              , NVL2(isReadAllDocument, 1, 0) as isReadAllDocument
         from tbl_employee E
