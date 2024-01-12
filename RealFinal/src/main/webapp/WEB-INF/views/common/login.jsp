@@ -102,7 +102,7 @@ function login() {
 			<div class="loginWrap-ofc" id="contents">
 				<div class="loginBox-ofc">
 					<h1 class="head-ofc">
-						<img src="<%=ctxPath%>/resources/image/login/loginLog.svg" style="width: 280px; height: 61px;" alt="GoodOffice">
+						<img src="<%=ctxPath%>/resources/image/officeLogo.png" style="width: 280px; height: 61px;" alt="GoodOffice">
 					</h1>
 					<div class="body-ofc">
 						<ul class="save-ofc">

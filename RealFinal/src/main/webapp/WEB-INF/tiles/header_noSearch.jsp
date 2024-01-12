@@ -49,7 +49,7 @@ function myProfileView() {
 				<div data-v-87615cf4="" data-v-3a88b4b3="" class="logo hiworks_logo">
 					<h1 data-v-87615cf4="">
 						<a data-v-87615cf4="" href="<%= ctxPath%>/index/index.gw" class="gt-d-flex">
-							<svg data-v-87615cf4="" xmlns="http://www.w3.org/2000/svg" width="74.402" height="16" viewBox="0 0 74.402 16">
+							<!-- <svg data-v-87615cf4="" xmlns="http://www.w3.org/2000/svg" width="74.402" height="16" viewBox="0 0 74.402 16">
 								<g data-v-87615cf4="" id="그룹_58223" data-name="그룹 58223" transform="translate(-90.202 -332.509)">
 								<path data-v-87615cf4="" id="패스_5437" data-name="패스 5437" d="M90.2,332.509h2.4v7.121a5.781,5.781,0,0,1,.559-.7,3.631,3.631,0,0,1,1.589-.993,3.684,3.684,0,0,1,1.089-.149,3.458,3.458,0,0,1,2.728,1.083,4.228,4.228,0,0,1,.961,2.912v6.613h-2.4V342.5a2.759,2.759,0,0,0-.575-1.875,2.048,2.048,0,0,0-1.629-.658,2.209,2.209,0,0,0-1.678.678,2.639,2.639,0,0,0-.644,1.894v5.851H90.2Z" transform="translate(0 0)" fill="#0080dd"></path>
 								<path data-v-87615cf4="" id="패스_5438" data-name="패스 5438" d="M109.657,341.166h2.4v10.391h-2.4Z" transform="translate(-7.116 -3.166)" fill="#0080dd"></path>
@@ -62,6 +62,8 @@ function myProfileView() {
 								<path data-v-87615cf4="" id="패스_5442" data-name="패스 5442" d="M148.234,343.133a2.992,2.992,0,1,1-2.992,2.992,3,3,0,0,1,2.992-2.992m0-2.4a5.392,5.392,0,1,0,5.392,5.392,5.392,5.392,0,0,0-5.392-5.392Z" transform="translate(-19.254 -3.008)" fill="#0080dd"></path>
 								<path data-v-87615cf4="" id="패스_5443" data-name="패스 5443" d="M168.975,343.668a2.048,2.048,0,0,0-1.629-.658,2.21,2.21,0,0,0-1.678.678,2.64,2.64,0,0,0-.644,1.894v5.851h-2.4V341.045h2.4v1.627a5.783,5.783,0,0,1,.559-.7,3.662,3.662,0,0,1,.706-.586,3.623,3.623,0,0,1,.883-.407,3.687,3.687,0,0,1,1.089-.149,3.456,3.456,0,0,1,2.728,1.083l-1.855,1.965Z" transform="translate(-26.489 -3.042)" fill="#0080dd"></path>
 								<path data-v-87615cf4="" id="패스_5444" data-name="패스 5444" d="M109,334.13a1.618,1.618,0,1,1,1.617,1.62A1.618,1.618,0,0,1,109,334.13Z" transform="translate(-6.876 0)" fill="#0080dd" fill-rule="evenodd"></path></g></svg>
+						 -->
+						 	<img src="<%=ctxPath%>/resources/image/officeLogo.png"/>
 						</a>
 					</h1>
 				</div>
