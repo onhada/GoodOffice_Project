@@ -73,7 +73,7 @@
 					</div>
 
 					<ul class="depth2 hide show_cookie" style="display: block">
-						<a target="blank" href="수정필" onclick="수정필">
+						<a target="blank" href="<%=ctxPath%>/organization/organizationManage.gw">
 							<li style="display: flex; align-items: center;" class="menuDropDownList external" id="">
 								<span>조직 관리</span>
 								<span class="external_img"></span>
@@ -84,7 +84,7 @@
 								<span>사용자 관리</span>
 							</li>
 						</a>
-						<a target="blank" href="https://office.hiworks.com/gabia.biz/insa/manage/position" onclick="수정필">
+						<a target="blank" href="<%=ctxPath%>/organization/positionManage.gw">
 							<li style="display: flex; align-items: center;" class="menuDropDownList external" id="">
 								<span>직위/직무 관리</span>
 								<span class="external_img"></span>

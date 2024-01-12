@@ -188,7 +188,7 @@ public class PersonnelController {
 	 * @param response @return 
 	 */
 	@GetMapping("/personnel/personal_index.gw")
-	public String personal_index(HttpServletRequest request, HttpServletResponse response , ModelAndView mav ) {
+	public ModelAndView personal_index(HttpServletRequest request, HttpServletResponse response , ModelAndView mav ) {
 
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
@@ -246,9 +246,9 @@ public class PersonnelController {
 		String vaction_cnt = service.vaction_cnt(empid); //잔여 휴가
 		request.setAttribute("vaction_cnt", vaction_cnt);
 		
-		
+		mav.setViewName("personal_index.personnel");
 
-		return "personal_index.personnel";
+		return mav;
 
 		 
 		

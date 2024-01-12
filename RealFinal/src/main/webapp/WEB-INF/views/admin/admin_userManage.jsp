@@ -639,12 +639,12 @@
 					<div data-v-1f83c670="" class="right">
 
 						<!-- 수정필 민경 언니 -->
-						<a data-v-1f83c670="" href="수정필">
+						<a data-v-1f83c670="" href="<%=ctxPath%>/organization/organizationManage.gw">
 							<object data-v-1f83c670="" type="image/svg+xml" data="/svg/blue/chart-hr(s).svg" alt="icon"></object>
 							<span data-v-1f83c670=""> 조직관리 </span>
 						</a>
 						<div data-v-1f83c670="" class="divider"></div>
-						<a data-v-1f83c670="" href="수정필">
+						<a data-v-1f83c670="" href="<%=ctxPath%>/organization/positionManage.gw">
 							<object data-v-1f83c670="" type="image/svg+xml" data="/svg/blue/hr-card(s).svg" alt="icon"></object>
 							<span data-v-1f83c670=""> 직위/직무관리 </span>
 						</a>
@@ -888,7 +888,7 @@
 													<!---->
 													<span class="el-input__suffix">
 														<span class="el-input__suffix-inner">
-															<i class="el-select__caret el-input__icon el-icon-arrow-up is-reverse-icon"></i>
+															<i style="display:none" class="el-select__caret el-input__icon el-icon-arrow-up is-reverse-icon"></i>
 															<!---->
 															<!---->
 															<!---->
@@ -909,7 +909,7 @@
 												<p data-v-0bda246c="" class="select-box-content">
 													<span data-v-0bda246c="" class="teamChoice none-select"> 조직 선택 </span>
 													<span data-v-0bda246c="">
-														<i data-v-0bda246c="" class="el-select__caret el-input__icon el-icon-arrow-up is-reverse-icon"></i>
+														<i data-v-0bda246c="" style="display:none"  class="el-select__caret el-input__icon el-icon-arrow-up is-reverse-icon"></i>
 													</span>
 												</p>
 											</div>
@@ -926,7 +926,7 @@
 													<!---->
 													<span class="el-input__suffix">
 														<span class="el-input__suffix-inner">
-															<i class="el-select__caret el-input__icon el-icon-arrow-up is-reverse-icon"></i>
+															<i style="display:none" class="el-select__caret el-input__icon el-icon-arrow-up is-reverse-icon"></i>
 															<!---->
 															<!---->
 															<!---->
