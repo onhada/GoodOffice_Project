@@ -367,6 +367,7 @@
  	<select id="getFirstCategoryId" resultType="String">
  		select min(resourceCategoryId)
 		from tbl_resourceCategory
+		where isDelete = 0
 		order by resourceCategoryId asc
  	</select>
  	
