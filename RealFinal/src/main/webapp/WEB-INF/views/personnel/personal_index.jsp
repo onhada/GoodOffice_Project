@@ -34,7 +34,12 @@
 		  console.log(e.target.value);
 		  const type=e.target.parentElement.value;
 		  //alert(type);
-		  
+		  if(type==6){
+			  alert("출근이 등록되었습니다.");
+		  }
+		  else{
+			  alert("퇴근이 등록되었습니다.");
+		  }
 		  workstatus_insert(type);
 		  
 		  

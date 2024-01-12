@@ -1138,7 +1138,7 @@
 									</div>
 								</div>
 							</span>
-							<span data-v-38b211a8="" class="mr-6 mt-21 font-size-12 color-d6 none-select"> </span>
+							<span data-v-38b211a8="" class="mr-6 mt-21 font-size-12 color-d6 none-select">   </span>
 						</div>
 						<div data-v-38b211a8="" class="line-div">
 							<div data-v-38b211a8="" class="vb vb-invisible" style="width: auto; height: 160px; position: relative; overflow: hidden;">
@@ -1224,7 +1224,7 @@
 									</div>
 								</div>
 							</span>
-							<span data-v-38b211a8="" class="mr-6 mt-21 font-size-12 color-d6 none-select"> 인원 : 3명 </span>
+							<span data-v-38b211a8="" class="mr-6 mt-21 font-size-12 color-d6 none-select">  </span>
 						</div>
 						<div data-v-38b211a8="" class="line-div">
 							<div data-v-38b211a8="" class="vb vb-invisible" style="width: auto; height: 160px; position: relative; overflow: hidden;">
