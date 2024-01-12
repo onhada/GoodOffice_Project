@@ -160,9 +160,9 @@
    <!-- 오피스관리_사용자관리_사용자 등록 -->
    <insert id="insertUser" parameterType="com.spring.app.common.domain.EmployeeVO">
    
-		insert into tbl_employee (empId, fk_teamId, fk_positionId, fk_jobId, empType, email, pwd, status, registerDay, empName)
+		insert into tbl_employee (empId, fk_teamId, fk_positionId, fk_jobId, empType, email, pwd, status, registerDay, empName, startWorkDay)
 		values
-		(EMPLOYEESEQ.nextVal, #{fk_teamId}, #{fk_positionId}, 1, #{empType}, #{email}, #{pwd}, 1, sysdate, #{empName})
+		(EMPLOYEESEQ.nextVal, #{fk_teamId}, #{fk_positionId}, 1, #{empType}, #{email}, #{pwd}, 1, sysdate, #{empName}, sysdate)
    </insert>
    
    

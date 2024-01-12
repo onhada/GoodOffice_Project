@@ -884,7 +884,7 @@
 												<!---->
 												<div class="el-input el-input--suffix">
 													<!---->
-													<input type="text" readonly="readonly" autocomplete="off" placeholder="근로형태 선택" value="일반직" class="el-input__inner inputWorkType">
+													<input type="text" readonly="readonly" autocomplete="off" placeholder="근로형태 선택" id="1" value="일반직" class="el-input__inner inputWorkType">
 													<!---->
 													<span class="el-input__suffix">
 														<span class="el-input__suffix-inner">
