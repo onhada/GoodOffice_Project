@@ -22,22 +22,28 @@
 	
 	// ===== 개인편지함 만들기 ===== //
 	function makePersonalMailbox(){
-		$.ajax({
-        	url : "<%=ctxPath%>/mail/makePersonalMailbox.gw",
-			type : "post",
-			data : { "personalMailboxTypeName" : $("input[id='newPersonalMailboxName']").val() },
-			dataType : "json",
-			async : false,
-			success : function(json) {
-			 	if(json.n == 1) {
-					alert("개인편지함을 추가했습니다.");
-					window.location.reload();
+		if($("input[id='newPersonalMailboxName']").val().trim()==""){
+			alert("추가할 개인편지함 이름을 입력하세요.");
+			window.location.reload();	
+		}
+		else{
+			$.ajax({
+	        	url : "<%=ctxPath%>/mail/makePersonalMailbox.gw",
+				type : "post",
+				data : { "personalMailboxTypeName" : $("input[id='newPersonalMailboxName']").val() },
+				dataType : "json",
+				async : false,
+				success : function(json) {
+				 	if(json.n == 1) {
+						alert("개인편지함을 추가했습니다.");
+						window.location.reload();
+					}
+				},
+				error : function(request, status, error) {
+					alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
 				}
-			},
-			error : function(request, status, error) {
-				alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
-			}
-		});
+			});
+		}	
 	}// end of function makePersonalMailbox()------------
 
 	
@@ -52,9 +58,10 @@
 				async : false,
 				success : function(json) {
 					if (json.n != 0) {
-						alert("개인편지함을 삭제했습니다.");
 						window.location.reload();
+						alert("개인편지함을 삭제했습니다.");
 					}
+					window.location.reload();
 				},
 				error : function(request, status, error) {
 					alert("code: " + request.status + "\n" + "message: "
