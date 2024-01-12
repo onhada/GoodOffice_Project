@@ -776,6 +776,16 @@ function addComma(value){
 															<div class="cell">
 																<span data-v-3a733414="">이름</span>
 																<i data-v-3a733414="" class="sort-icon gis gi-short-arrow-up"></i>
+																
+																<%-- <button type="button" class="js-approval-order updown" value="document_regdate">
+																	<span data-v-3a733414="">이름</span>
+																	<c:if test="${empty requestScope.orderType || requestScope.orderType eq 'desc'}">
+																		<i data-v-3a733414="" class="sort-icon gis gi-short-arrow-ㅇ"></i>
+																	</c:if>
+																	<c:if test="${not empty requestScope.orderType && requestScope.orderType eq 'asc'}">
+																		<i data-v-3a733414="" class="sort-icon gis gi-short-arrow-up"></i>
+																	</c:if>
+																</button> --%>
 															</div>
 														</th>
 														<th colspan="1" rowspan="1" class="el-table_3_column_36  is-center table-col table-id  is-hidden is-leaf table-header el-table__cell">
@@ -958,7 +968,7 @@ function addComma(value){
 															<th colspan="1" rowspan="1" class="el-table_3_column_35  is-center table-col table-name  is-leaf table-header el-table__cell">
 																<div class="cell">
 																	<span data-v-3a733414="">이름</span>
-																	<i data-v-3a733414="" class="sort-icon gis gi-short-arrow-up"></i>
+																	<!-- <i data-v-3a733414="" class="sort-icon gis gi-short-arrow-up"></i> -->
 																</div>
 															</th>
 															<th colspan="1" rowspan="1" class="el-table_3_column_36  is-center table-col table-id  is-leaf table-header el-table__cell">
@@ -1075,7 +1085,7 @@ function addComma(value){
 															<th colspan="1" rowspan="1" class="el-table_3_column_35  is-center table-col table-name  is-hidden is-leaf table-header el-table__cell">
 																<div class="cell">
 																	<span data-v-3a733414="">이름</span>
-																	<i data-v-3a733414="" class="sort-icon gis gi-short-arrow-up"></i>
+																	<!-- <i data-v-3a733414="" class="sort-icon gis gi-short-arrow-up"></i> -->
 																</div>
 															</th>
 															<th colspan="1" rowspan="1" class="el-table_3_column_36  is-center table-col table-id  is-hidden is-leaf table-header el-table__cell">
