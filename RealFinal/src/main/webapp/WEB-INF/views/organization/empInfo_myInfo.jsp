@@ -24,6 +24,13 @@ $(document).ready(function() {
 // Function Declaration
 function editMyinfo(){
 
+	
+  /* if( $("input[name='birthYear']").val().trim()=="" || $("input[name='birthMonth']").val().trim()!="" || $("input[name='birthDay']").val().trim()!=""
+		 || $("input[name='companyTel']").val().trim()=="" || $("input[name='tel']").val().trim()=="" 
+		 || $("input[name='postCode']").val().trim()=="" || $("input[name='address']").val().trim()=="" || $("input[name='detailAddress']").val().trim()=="" ){
+		alert("모든 항목을 입력하세요.");
+		return;
+	} */
 	if(! ($("input[name='birthYear']").val().trim()!="" && $("input[name='birthMonth']").val().trim()!="" && $("input[name='birthDay']").val().trim()!="") ){
 		alert("생년월일을 모두 입력하세요.");
 		return;

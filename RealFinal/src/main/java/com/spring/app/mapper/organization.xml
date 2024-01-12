@@ -297,9 +297,26 @@
  	<!-- === 내 정보 수정하기 === -->
  	<update id="editMyinfo" parameterType="HashMap">
  		update tbl_employee 
- 		set fk_jobId = #{jobId}, companyTel = #{companyTel}, tel = #{tel}, birth = #{birth},
- 		  	postcode = #{postcode}, address = #{address}, detailAddress = #{detailAddress}
- 		where empId = #{empId}
+ 		set fk_jobId = #{jobId}
+ 			<if test="companyTel != null">
+    			, companyTel = #{companyTel}
+    		</if>
+    		<if test="tel != null">
+    			, tel = #{tel}
+    		</if>
+    		<if test="birth != null">
+    			, birth = #{birth}
+    		</if>
+    		<if test="postCode != null">
+    			, postCode = #{postCode}
+    		</if>
+    		<if test="address != null">
+    			, address = #{address}
+    		</if>
+    		<if test="detailAddress != null">
+    			, detailAddress = #{detailAddress}
+    		</if>
+ 			where empId = #{empId}
  	</update>
 	
 	

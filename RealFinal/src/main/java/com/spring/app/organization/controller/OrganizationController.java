@@ -590,7 +590,7 @@ public class OrganizationController {
 	*/
 	@PostMapping("editMyinfo.gw")
 	public ModelAndView editMyinfo(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
-	
+		
 		String empId = request.getParameter("empId");
 		String jobId = request.getParameter("jobId");
 		String companyTel = request.getParameter("companyTel");
@@ -598,7 +598,7 @@ public class OrganizationController {
 		String birthYear = request.getParameter("birthYear");
 		String birthMonth = request.getParameter("birthMonth");
 		String birthDay = request.getParameter("birthDay");
-		String postcode = request.getParameter("postcode");
+		String postcode = request.getParameter("postCode");
 		String address = request.getParameter("address");
 		String detailAddress = request.getParameter("detailAddress");
 		 
