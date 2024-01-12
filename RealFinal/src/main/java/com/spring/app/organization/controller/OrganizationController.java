@@ -143,13 +143,15 @@ public class OrganizationController {
 		mav.addObject("loginEmp", loginEmp);
 		
 		request.setAttribute("jobId", loginEmp.getFk_jobId());
-
-		String birthYear = loginEmp.getBirth().substring(0, 4);
-		String birthMonth = loginEmp.getBirth().substring(5, 7);
-		String birthDay = loginEmp.getBirth().substring(8, 10);
-		mav.addObject("birthYear", birthYear);
-		mav.addObject("birthMonth", birthMonth);
-		mav.addObject("birthDay", birthDay);
+	
+		if(loginEmp.getBirth()!=null) {
+			String birthYear = loginEmp.getBirth().substring(0, 4);
+			String birthMonth = loginEmp.getBirth().substring(5, 7);
+			String birthDay = loginEmp.getBirth().substring(8, 10);
+			mav.addObject("birthYear", birthYear);
+			mav.addObject("birthMonth", birthMonth);
+			mav.addObject("birthDay", birthDay);
+		}
 		
 		List<EmployeeVO> jobList = null;
 		jobList = service.getJobList(); // 직무 목록 가져오기
