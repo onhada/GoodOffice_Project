@@ -1,20 +1,12 @@
-/** 
-* @FileName  : TeamGroupVO.java 
-* @Project   : TempFinal 
-* @Date      : 2024. 1. 7 
-* @작성자      : syxzi 
-* @변경이력	 : 
-* @프로그램설명	 : 
-*/
 package com.spring.app.common.domain;
 
 import java.util.List;
 
 /** 
-* @FileName  : TeamGroupVO.java 
+* @FileName  : DepartmentVO.java 
 * @Project   : TempFinal 
 * @Date      : 2024. 1. 7 
-* @작성자      : syxzi 
+* @작성자      : 신예진 (yejjinny) 
 * @변경이력	 : 
 * @프로그램설명	 : 
 */

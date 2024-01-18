@@ -33,7 +33,6 @@ import com.spring.app.approval.domain.WorkApplicationVO;
 import com.spring.app.common.domain.AdminVO;
 import com.spring.app.common.domain.EmployeeVO;
 
-
 /**
  *   @FileName  : ApprovalDAO_imple.java 
  * 
@@ -55,19 +54,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectList("approval.getApprovalAllIngList_withSearchAndPaging", paraMap);
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Override
 	public int hasReturn(Long fk_approvalId) {
 		// 전자결재절차 테이블에서 해당 전자결재id 반려 존재여부
@@ -134,30 +120,16 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectOne("approval.hasUpperRankerWait", paramMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public List<ApprovalVO> getApprovalAllBox_withViewAllAndSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함 
+		// 문서함
 		return sqlSession.selectList("approval.getApprovalAllBox_withViewAllAndSearchAndPaging", paraMap);
 	}
-	
+
 	@Override
 	public List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap) {
 		return sqlSession.selectList("approval.getApprovalAllBox_withSearchAndPaging", paraMap);
 	}
-
 
 	@Override
 	public int hasAllAccept(Map<String, Long> paramMap) {
@@ -165,25 +137,11 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectOne("approval.hasAllAccept", paramMap);
 	}
 
-
 	@Override
 	public List<ApprovalVO> getApprovalTempBox_withSearchAndPaging(Map<String, String> paraMap) {
 		// 임시저장함
 		return sqlSession.selectList("approval.getApprovalTempBox_withSearchAndPaging", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public List<SecurityVO> getSecurityLevelDetailList() {
@@ -197,19 +155,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectList("approval.getSecurityLevelList");
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int setSecurityLevelA(String level) {
 		// 전자결재_관리자 설정_기본 설정_보안 등급 설정 A등급
@@ -222,9 +167,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.insert("approval.setSecurityLevelB", level);
 	}
 
-
-
-//////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<FormVO> getFormList(Map<String, String> paraMap) {
 		// 전자결재_관리자 설정_양식함 관리_메인화면
@@ -237,22 +179,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectOne("approval.getTotalCountApprovalFormList", searchWord);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 	@Override
 	public List<ApprovalVO> getDocumentAllList_withSearchAndPaging(Map<String, String> paraMap) {
 		return sqlSession.selectList("approval.getDocumentAllList_withSearchAndPaging", paraMap);
@@ -262,19 +188,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	public int getTotalCountDocumentAllList(Map<String, String> paraMap) {
 		return sqlSession.selectOne("approval.getTotalCountDocumentAllList", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int getTotalCountDocumentDeleteList(Map<String, String> paraMap) {
@@ -286,198 +199,56 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectList("approval.getDocumentDeleteList_withSearchAndPaging", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public List<AdminVO> getAdminList() {
 		return sqlSession.selectList("approval.getAdminList");
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public ApprovalDetailVO getApprovalDocumentView(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.getApprovalDocumentView", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public List<ApprovalProcedureVO> getApprovalDocumentView_Procedure(Long approvalId) {
 		return sqlSession.selectList("approval.getApprovalDocumentView_Procedure", approvalId);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public List<ApprovalFileVO> getApprovalDocumentView_File(Long approvalId) {
 		return sqlSession.selectList("approval.getApprovalDocumentView_File", approvalId);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public List<ApprovalOpinionVO> getApprovalOpinionList(Long approvalId) {
 		return sqlSession.selectList("approval.getApprovalOpinionList", approvalId);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int isDraftEmp(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.isDraftEmp", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int updateApprovalSecurity(Map<String, Long> paraMap) {
 		return sqlSession.update("approval.updateApprovalSecurity", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public List<EmployeeVO> searchEmpName(String empName) {
 		return sqlSession.selectList("approval.searchEmpName", empName);
 	}
 
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public List<ApprovalProcedureVO> getProcedureTypeApproval(Long approvalId) {
 		return sqlSession.selectList("approval.getProcedureTypeApproval", approvalId);
 	}
 
-
 	@Override
 	public int updateApprovalLineSetting(Map<String, String> paraMap) {
-		
+
 		return sqlSession.update("approval.updateApprovalLineSetting", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int insertApprovalLineSetting(Map<String, String> paraMap) {
@@ -489,96 +260,30 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectOne("approval.getApprovalProcedureLastSeq", approvalId);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int deleteApprovalLineSetting(Map<String, String> paraMap) {
 		return sqlSession.delete("approval.deleteApprovalLineSetting", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int addRef(Map<String, String> paraMap) {
 		return sqlSession.insert("approval.addRef", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public Integer getUserProcedureType(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.getUserProcedureType", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int delRef(Map<String, String> paraMap) {
 		return sqlSession.delete("approval.delRef", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int updateApprovalFile(Map<String, String> paraMap) {
 		return sqlSession.update("approval.updateApprovalFile", paraMap);
 	}
-
 
 	@Override
 	public int deleteApprovalFile(Map<String, String> paraMap) {
@@ -590,36 +295,10 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.insert("approval.insertApprovalFile", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public ApprovalFileVO getApprovalDocumentFile(Long fileId) {
 		return sqlSession.selectOne("approval.getApprovalDocumentFile", fileId);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int insertOpinion(Map<String, String> paraMap) {
@@ -631,19 +310,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.delete("approval.deleteOpinion", opinionId);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int deleteImportant(Map<String, Long> paraMap) {
 		return sqlSession.delete("approval.deleteImportant", paraMap);
@@ -653,19 +319,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	public int insertImportant(Map<String, Long> paraMap) {
 		return sqlSession.insert("approval.insertImportant", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int updateActionOfApproval(Map<String, String> paraMap) {
@@ -677,174 +330,65 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.update("approval.updateRefRead", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int updateApprovalComplete(Map<String, String> paraMap) {
 		return sqlSession.update("approval.updateApprovalComplete", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public EmpProofDetailVO getEmpProofDetail(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.getEmpProofDetail", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //	@Override
 //	public int insertProcessLineSetting(Map<String, String> paraMap) {
 //		return sqlSession.insert("approval.insertProcessLineSetting", paraMap);
 //	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public List<ApprovalProcedureVO> getProcedureTypeApplication(Long approvalId) {
 		return sqlSession.selectList("approval.getProcedureTypeApplication", approvalId);
 	}
 
-
 //	@Override
 //	public int insertApplicationLineSetting(Map<String, String> paraMap) {
 //		return sqlSession.insert("approval.insertApplicationLineSetting", paraMap);
 //	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public List<ApprovalProcedureVO> getProcedureTypeAgree(Long approvalId) {
 		return sqlSession.selectList("approval.getProcedureTypeAgree", approvalId);
 	}
 
-
 	@Override
 	public List<ApprovalProcedureVO> getProcedureTypeFiAgree(Long approvalId) {
 		return sqlSession.selectList("approval.getProcedureTypeFiAgree", approvalId);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public WorkApplicationVO getWorkApplicationDetail(Long approvalId) {
 		return sqlSession.selectOne("approval.getWorkApplicationDetail", approvalId);
 	}
 
-
-
 	@Override
 	public List<FormVO> getFormNameList() {
 		return sqlSession.selectList("approval.getFormNameList");
 	}
 
-
 	@Override
 	public DayOffVO getDayOffDetail(Long approvalId) {
 		return sqlSession.selectOne("approval.getDayOffDetail", approvalId);
 	}
-	
+
 	@Override
 	public DayOffVO getDayOffSimple(Long approvalId) {
 		return sqlSession.selectOne("approval.getDayOffSimple", approvalId);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public ModifyWorkRequestVO getModifyWorkRequest(Long approvalId) {
 		return sqlSession.selectOne("approval.getModifyWorkRequest", approvalId);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int updateWorkHistoryByRequest(ModifyDetailVO mdvo) {
@@ -861,58 +405,26 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.update("approval.deleteWorkHistoryByRequest", mdvo);
 	}
 
-
-
-
-
-
-
-
 	@Override
 	public int updateReadReturn(Map<String, Long> paraMap) {
 		return sqlSession.update("approval.updateReadReturn", paraMap);
 	}
-
-
-
-
-
 
 	@Override
 	public int cancleApproval(Map<String, Long> paraMap) {
 		return sqlSession.update("approval.cancleApproval", paraMap);
 	}
 
-
-
-
-
-
-
-
 	@Override
 	public int getPreservationYear(Long formId) {
 		return sqlSession.selectOne("approval.getPreservationYear", formId);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int insertApprovalDocument(Map<String, String> paraMap) {
 		return sqlSession.insert("approval.insertApprovalDocument", paraMap);
 	}
-	
+
 	@Override
 	public int insertApprovalDocument_circular(Map<String, String> paraMap) {
 		return sqlSession.insert("approval.insertApprovalDocument_circular", paraMap);
@@ -924,44 +436,17 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.insert("approval.insertTempApprovalDocument", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public String getApprovalSequence() {
 		// insert에 사용하기 위해 시퀀스값 얻기
 		return sqlSession.selectOne("approval.getApprovalSequence");
 	}
 
-
-
-
 	@Override
 	public int insertApplicant(Map<String, String> paraMap) {
 		// 기안자 insert
 		return sqlSession.insert("approval.insertApplicant", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int insertBusinessContact(Map<String, String> paraMap) {
@@ -972,7 +457,7 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	public int insertCircular(Map<String, String> paraMap) {
 		return sqlSession.insert("approval.insertCircular", paraMap);
 	}
-	
+
 	@Override
 	public int insertEmpProof(Map<String, String> paraMap) {
 		return sqlSession.insert("approval.insertEmpProof", paraMap);
@@ -983,77 +468,25 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.insert("approval.insertRoundRobin", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public Long getFormId(Long approvalId) {
 		return sqlSession.selectOne("approval.getFormId", approvalId);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int deleteApprovalProcedure(String approvalId) {
 		return sqlSession.delete("approval.deleteApprovalProcedure", approvalId);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int updateApprovalDocument(Map<String, String> paraMap) {
 		return sqlSession.update("approval.updateApprovalDocument", paraMap);
 	}
-	
+
 	@Override
 	public int updateApprovalDocument_circular(Map<String, String> paraMap) {
 		return sqlSession.update("approval.updateApprovalDocument_circular", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int updateBusinessContact(Map<String, String> paraMap) {
@@ -1069,24 +502,11 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	public int updateRoundRobin(Map<String, String> paraMap) {
 		return sqlSession.update("approval.updateRoundRobin", paraMap);
 	}
-	
+
 	@Override
 	public int updateCircular(Map<String, String> paraMap) {
 		return sqlSession.update("approval.updateCircular", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int batchApproval(BatchVO bvo) {
@@ -1097,7 +517,7 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	public int batchCheck(BatchVO bvo) {
 		return sqlSession.update("approval.batchCheck", bvo);
 	}
-	
+
 	@Override
 	public int batchDelete(BatchVO bvo) {
 		return sqlSession.update("approval.batchDelete", bvo);
@@ -1107,19 +527,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	public int batchRestore(BatchVO bvo) {
 		return sqlSession.update("approval.batchRestore", bvo);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int addAppovalAdminManager(Map<String, Long> paraMap) {
@@ -1136,19 +543,6 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.insert("approval.addAdminHistory", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int deleteAppovalAdminManager(Map<String, Long> paraMap) {
 		return sqlSession.update("approval.deleteAppovalAdminManager", paraMap);
@@ -1159,30 +553,15 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.update("approval.updateAdminHistory", paraMap);
 	}
 
-
 	@Override
 	public int grantAdminRead(Map<String, Long> paraMap) {
 		return sqlSession.update("approval.grantAdminRead", paraMap);
 	}
 
-
 	@Override
 	public List<AdminHistoryVO> getAdminHistoryList() {
 		return sqlSession.selectList("approval.getAdminHistoryList");
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public FormVO getFormDetail(Long formId) {
@@ -1194,146 +573,24 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectList("approval.getFormNameListByWrite");
 	}
 
-
 	@Override
 	public int updateForm(Map<String, String> paraMap) {
 		return sqlSession.update("approval.updateForm", paraMap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int isReadAble(Map<String, Long> paraMap) {
-		return sqlSession.selectOne("approval.isReadAble",paraMap);
+		return sqlSession.selectOne("approval.isReadAble", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@Override
 	public int isAlreadyAdmin(Long empId) {
 		return sqlSession.selectOne("approval.isAlredayAdmin", empId);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	@Override
 	public int isExistApproval(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.isExistApproval", paraMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
 
 }

@@ -274,9 +274,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getFormList 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 양식 목록 취득
 	* @return 
 	*/
 	List<FormVO> getFormList();
@@ -284,9 +284,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getAdminList 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 인사관리자 목록 취득
 	* @return 
 	*/
 	List<AdminVO> getAdminList();
@@ -294,9 +294,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getAdminHistory 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 인사관리자 설정 이력 취득
 	* @return 
 	*/
 	List<AdminHistoryVO> getAdminHistoryList();
@@ -304,9 +304,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : isExistPayrollThisMonth 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 해당 달의 급여 대장 존재하는지 확인 존재한다면 그 값을 취득
 	* @param month
 	* @return 
 	*/
@@ -315,9 +315,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getSalaryDetail 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 속 급여 내용 취득
 	* @param salaryId
 	* @return 
 	*/
@@ -326,9 +326,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : fixPayroll 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 확정
 	* @param paraMap
 	* @return 
 	*/
@@ -337,9 +337,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : deleteSalaryDetail 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 속 급여 내용 삭제
 	* @param salaryId
 	* @return 
 	*/
@@ -348,9 +348,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : deleteSalary 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 삭제
 	* @param salaryId
 	* @return 
 	*/
@@ -360,9 +360,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getSalarySequence 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 등록시 필요한 시퀀스 값 취득
 	* @return 
 	*/
 	Long getSalarySequence();
@@ -370,9 +370,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : insertSalary 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 등록
 	* @param svo
 	* @return 
 	*/
@@ -381,9 +381,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : insertSalaryDetail 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 속 내용 등록
 	* @param sdvo
 	* @return 
 	*/
@@ -392,10 +392,10 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getEmpId 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
-	* @param S
+	* @Method 설명 : 사원id를 취득한다
+	* @param paraMap
 	* @return 
 	*/
 	Long getEmpId(Map<String, String> paraMap);
@@ -403,9 +403,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getSalary 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 취득
 	* @param salaryId
 	* @return 
 	*/
@@ -414,9 +414,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getSalaryByYear 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 연도에 맞춰 급여 대장을 취득한다
 	* @param paraMap
 	* @return 
 	*/
@@ -425,9 +425,9 @@ public interface PersonnelDAO {
 	/** 
 	* @Method Name  : getSalaryDetailBySalaryIdAndEmpId 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여id와 사원id로 검색해 급여 상세내용을 취득한다
 	* @param paraMap
 	* @return 
 	*/
@@ -435,5 +435,4 @@ public interface PersonnelDAO {
 	
 	
 	// 예진 코드 끝 ----------------------------------------------------------------------------------------------
-
 }

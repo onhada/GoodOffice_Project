@@ -1,11 +1,3 @@
-/** 
-* @FileName  : SalaryDetailVO.java 
-* @Project   : TempFinal 
-* @Date      : 2024. 1. 9 
-* @작성자      : syxzi 
-* @변경이력	 : 
-* @프로그램설명	 : 
-*/
 package com.spring.app.personnel.domain;
 
 /**
@@ -13,7 +5,7 @@ package com.spring.app.personnel.domain;
  * 
  * @Project   : TempFinal 
  * @Date      : 2024. 1. 9 
- * @작성자      : syxzi 
+ * @작성자      : 신예진 (yejjinny) 
  * @변경이력 : 
  * @프로그램설명 : 
  */

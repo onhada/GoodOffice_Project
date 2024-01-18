@@ -12,7 +12,7 @@ $(document).ready(function() {
 	
 	//////////////////////////////////////////////////////////////////////////
 	// 기안 취소
-	$("a#cancelApproval").click(function(){
+	$("button##cancelApproval").click(function(){
 		
 		if(confirm("기안한 문서를 취소하시겠습니까? 문서는 삭제처리되며, 복구되지 않습니다.")){
 			// yes일 경우

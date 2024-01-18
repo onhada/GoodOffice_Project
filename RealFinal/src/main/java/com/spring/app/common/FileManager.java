@@ -26,15 +26,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.app.mail.domain.MailVO;
 
-// === #154. FileManager 클래스 생성하기 ===
 @Component
 public class FileManager {
 
-	// == 파일 업로드 하기 첫번째 방법 ==
-    // byte[] bytes : 파일의 내용물
-	// String originalFileName : 첨부된 파일의 원래이름
-	// String path : 업로드 할 파일의 저장경로
-	// 리턴값 : 서버에 저장된 새로운 파일명(예: 2023112409291535243254235235234.png) 
 	public String doFileUpload(byte[] bytes, String originalFileName, String path) throws Exception {
 		
 		String newFileName = null;
@@ -48,10 +42,6 @@ public class FileManager {
 			return null;
 		}
 		
-		// 확장자(예:  강아지   또는   강아지.  또는   강아지.png   또는   강.아.지.png)
-		// 강아지.      ==>  originalFileName.lastIndexOf(".")  ==> 3
-		// 강아지.png   ==>  originalFileName.lastIndexOf(".")  ==> 3
-		// 강.아.지.png ==>  originalFileName.lastIndexOf(".")  ==> 5 
 		String fileExt = originalFileName.substring(originalFileName.lastIndexOf("."));
 		if(fileExt == null || "".equals(fileExt) || ".".equals(fileExt)) {
 			return null;
@@ -77,12 +67,6 @@ public class FileManager {
 		}
 		
 		String pathname = path + File.separator + newFileName; 
-		/* File.separator 는 운영체제에서 사용하는 폴더와 파일의 구분자이다.
-		      운영체제가 Windows 이라면 File.separator 는  "\" 이고,
-		      운영체제가 UNIX, Linux, 매킨토시(맥) 이라면  File.separator 는 "/" 이다. 
-		*/
-		// 해당경로에 \ 를 더하고 파일명을 더한 경로까지 나타내어준 파일명(문자열)을 만든다.
-		// pathname 은 예를 들면, C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\resources\files\2023112409291535243254235235234.png 이다.      
 		
 		FileOutputStream fos = new FileOutputStream(pathname); 
 		// FileOutputStream 는 해당 경로 파일명(pathname)에 실제로 데이터 내용(byte[] bytes)을 기록해주는 클래스 이다.
@@ -98,7 +82,7 @@ public class FileManager {
 		// 파일을 업로드 한 이후에 
 		// 업로드 되어진 파일명(현재의 년월일시분초에다가 현재 나노세컨즈nanoseconds 값을 결합하여 확장자를 붙여서 만든것)을 알아온다.
 		
-	}// end of public String doFileUpload(byte[] bytes, String originalFileName, String path)-------
+	}
 
 	
 	

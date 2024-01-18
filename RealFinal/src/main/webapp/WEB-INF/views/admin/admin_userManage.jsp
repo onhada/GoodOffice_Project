@@ -477,21 +477,25 @@
 				url: "<%=ctxPath%>/approval/isExistId.gw",
 				data: { "id": $("input.inputId").val().trim()},
 				type: "post",
-				async: true,
+				async: false,
 				dataType: "json",
 				success: function(text) {
 					if(text.isExist){
 						// 존재할 경우
-						isCheck = false;
 						alert("이미 존재하는 아이디입니다. 재입력해주세요.")
 						$("input.inputId").val('')
-						return isCheck;
+						isCheck = false;
 					}
 				},
 				error: function(request, status, error) {
 					alert("문제가 발생하였습니다. 다시 시도하여 주세요.")
+					isCheck = false;
 				}
 			});
+			
+			if(!isCheck){
+				return isCheck;
+			}
 			
 		}
 		
@@ -503,7 +507,7 @@
         let reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
         if (pw.length < 8 || pw.length > 20) {
-            alert("8자리 ~ 20자리 이내로 입력해주세요.");
+            alert("비밀번호는 8자리 ~ 20자리 이내로 입력해주세요.");
             $("input.inputPwd").val('')
             isCheck = false;
             return isCheck;

@@ -315,7 +315,7 @@ function myProfileView() {
 								</span>
 							</button>
 						</c:if>
-						<c:if test="${not empty requestScope.searchWord}">
+						<c:if test="${empty requestScope.noSearch && not empty requestScope.searchWord}">
 							<button type="button" class="search-revoke" style="">
 								<span>
 									<i class="fal fa-undo search-revoke__icon"></i>검색 취소

@@ -112,7 +112,17 @@ $(document).ready(function() {
 	
 	$("input.js-checkbox-document-list").each(function(){
 		$(this).change(function(){
-						
+			
+			var total = $("input[name='checkApproval']").length;
+			var checked = $("input[name='checkApproval']:checked").length;
+
+			if(total != checked){
+				$("input.js-approval-all-checkbox").prop("checked", false);
+				
+			}else {
+				$("input.js-approval-all-checkbox").prop("checked", true); 
+			}
+			
 			// 체크된 갯수
 			
 			if($("input:checkbox[name='checkApproval']:checked").length > 0){
@@ -130,8 +140,6 @@ $(document).ready(function() {
 		
 		
 	})
-	
-	
 	
 	
 	
@@ -251,21 +259,6 @@ function batchDelete(){
 								<input type="checkbox" class="js-approval-all-checkbox">
 							</label>
 							<a class="js-approval-btn-state js-approval-check-before" id="anchorApprovalState">선택</a>
-							<!-- <img src="<%= ctxPath %>/resources/image/icon/btn_drop.gif" class="open_drop vm js-approval-check-before">
-							<ul class="dropdown-menu hide" id="menuApprovalState">
-								<li>
-									<a href="수정필" class="js-approval-li-state" value="all_except_delete">모든 문서</a>
-								</li>
-								<li>
-									<a href="수정필" class="js-approval-li-state" value="progress">결재 중</a>
-								</li>
-								<li>
-									<a href="수정필" class="js-approval-li-state" value="complete">결재 완료</a>
-								</li>
-								<li>
-									<a href="수정필" class="js-approval-li-state" value="return">반려</a>
-								</li>
-							</ul> -->
 							<span class="mgl_10 check-number js-approval-check-after hide" id="countCheckApprovalDocumentList" style="display: none;"></span>
 							<span class="mgl_10 js-approval-check-after hide" style="display: none;">
 								<button type="button" onclick="batchDelete()">삭제</button>
@@ -277,35 +270,25 @@ function batchDelete(){
 				<fieldset>
 					<table class="tableType01 mgt_10" id="tableApprovalDocumentList" style="width: 1604px;">
 						<caption>전체 문서 목록</caption>
-						<!-- <colgroup>
-						<col style="width:38px">
-						<col style="width:200px">
-						<col style="width:28%">
-						<col style="width:33px;">
-						<col style="width: 150px">
-						<col style="width:100px;">
-						<col style="width:120px;">
-						<col style="width:100px;">
-					</colgroup> -->
 						<thead>
 							<tr>
 								<th style="width: 5px; white-space: nowrap;" class="resizable-false"></th>
 								<th style="width: 200px; white-space: nowrap;" class="resizable-pdr-0">
 									<div class="column-resizer ui-resizable" style="width: 200px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_code">문서 번호</a>
+										<a class="js-approval-order updown" value="document_code">문서 번호</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
 								<th style="width: 6px; white-space: nowrap;" class="resizable-false resizable-pdl-0 resizable-pdr-0"></th>
 								<th class="resizable-pdr-0" style="white-space: nowrap; width: 768px;">
 									<div class="column-resizer ui-resizable" style="width: 768px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_title">제목</a>
+										<a class="js-approval-order updown" value="document_title">제목</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
 								<th style="width: 150px; white-space: nowrap;">
 									<div class="column-resizer ui-resizable" style="width: 150px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_register">기안자</a>
+										<a class="js-approval-order updown" value="document_register">기안자</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
@@ -323,7 +306,7 @@ function batchDelete(){
 
 								</th>
 								<th style="width: 120px; white-space: nowrap;" class="resizable-false">
-									<a href="수정필" class="js-approval-order updown" value="document_completedate">완료일</a>
+									<a class="js-approval-order updown" value="document_completedate">완료일</a>
 								</th>
 								<th style="width: 100px; white-space: nowrap;" class="resizable-false">결재 상태</th>
 							</tr>
@@ -335,7 +318,6 @@ function batchDelete(){
 
 
 							<c:if test="${not empty requestScope.documentList}">
-								<!-- c:for -->
 								<form name="checkFrm">
 									<c:forEach var="approvalVo" items="${requestScope.documentList}">
 										<tr>
@@ -371,7 +353,11 @@ function batchDelete(){
 									</c:forEach>
 								</form>
 							</c:if>
-
+							<c:if test="${empty requestScope.documentList}">
+								<tr>
+									<td colspan="8" class="approval-no-data">문서가 존재하지 않습니다.</td>
+								</tr>
+							</c:if>
 
 
 						</thead>

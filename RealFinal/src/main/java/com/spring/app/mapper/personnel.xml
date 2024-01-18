@@ -518,7 +518,7 @@ on b.day >=0
 		tbl_adminHistory ah
 		join tbl_admin a on ah.fk_adminId = a.adminId
 		join tbl_employee e1 on a.fk_empId = e1.empId
-		join tbl_employee e2 on ah.fk_resEmpId = e2.empId
+		join tbl_employee e2 on ah.fk_regEmpId = e2.empId
 		where adminType = 1 or adminType = 2
 		)
 

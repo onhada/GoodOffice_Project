@@ -112,6 +112,16 @@ $(document).ready(function() {
 	
 	$("input.js-checkbox-document-list").each(function(){
 		$(this).change(function(){
+			
+			var total = $("input[name='checkApproval']").length;
+			var checked = $("input[name='checkApproval']:checked").length;
+
+			if(total != checked){
+				$("input.js-approval-all-checkbox").prop("checked", false);
+				
+			}else {
+				$("input.js-approval-all-checkbox").prop("checked", true); 
+			}
 						
 			// 체크된 갯수
 			
@@ -131,6 +141,9 @@ $(document).ready(function() {
 		
 	})
 	
+	
+		
+		
 	
 	
 	
@@ -235,7 +248,7 @@ function batchRestore(){
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -340,7 +353,7 @@ function batchRestore(){
 												<span class="icon h_new span-new-link" style="display: none; margin-top: 0px;" data-link-url="수정필"></span>
 											</td>
 											<td class="title new-window tableData" id="${approvalVo.fk_formId}">
-												<div title="${approvalVo.title}">${approvalVo.fk_approvalId}</div>
+												<div title="${approvalVo.title}">${approvalVo.title}</div>
 											</td>
 											<td class="docu-register tableData" data-href="수정필">
 												<div title="${approvalVo.empName}">${approvalVo.empName}</div>

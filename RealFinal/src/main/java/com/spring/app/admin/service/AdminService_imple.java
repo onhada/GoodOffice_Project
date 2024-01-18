@@ -8,6 +8,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.app.admin.domain.BatchModifyUserVO;
 import com.spring.app.admin.model.AdminDAO;
@@ -110,6 +113,8 @@ public class AdminService_imple implements AdminService {
 		return dao.getNoneFullAdminEmployeeList(searchWord);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = {
+			Throwable.class })
 	@Override
 	public boolean confirmFullAdmin(Map<String, String[]> paraMap, Long userEmpId) {
 		
@@ -150,13 +155,9 @@ public class AdminService_imple implements AdminService {
 				
 				if(dao.isAlreadyAdmin(empMap) > 0) {
 					// 이미 다른 기능의 관리자로 되어있을 경우
-					System.out.println("// 이미 다른 기능의 관리자로 되어있을 경우");
-					
 					
 					if(dao.deleteAdminByEmpId(empMap) > 0) {
 						// 다른 기능의 관리자를 해제한다
-						
-						System.out.println("// 다른 기능의 관리자를 해제한다");
 						
 						if(dao.updateAdminHistoryByEmpId(empMap) > 0) {
 							// 해제 기록을 남긴다

@@ -1,18 +1,10 @@
-/** 
-* @FileName  : WorkApplicationVO.java 
-* @Project   : TempFinal 
-* @Date      : 2023. 12. 27 
-* @작성자      : syxzi 
-* @변경이력	 : 
-* @프로그램설명	 : 
-*/
 package com.spring.app.approval.domain;
 
 /** 
 * @FileName  : WorkApplicationVO.java 
 * @Project   : TempFinal 
 * @Date      : 2023. 12. 27 
-* @작성자      : syxzi 
+* @작성자      : 신예진 (yejjinny)
 * @변경이력	 : 
 * @프로그램설명	 : 
 */

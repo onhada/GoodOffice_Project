@@ -488,7 +488,7 @@ function closeModal(id) {
 					<section data-v-983ec938="" class="modal-content__body">
 						<div data-v-983ec938="" class="selectRadio">
 							<label data-v-4edc6b75="" data-v-983ec938="" class="hu-radio-wrapper">
-								<div data-v-4edc6b75="" class="hu-radio selected">
+								<div data-v-4edc6b75="" class="hu-radio">
 									<span data-v-4edc6b75="" class="radio-input"></span>
 									<input data-v-4edc6b75="" type="radio" name="modifyStatus" value="1" class="radio-original">
 									<span data-v-4edc6b75="" class="title">정상</span>

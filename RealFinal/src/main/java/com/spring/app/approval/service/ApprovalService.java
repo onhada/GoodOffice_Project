@@ -1,14 +1,6 @@
-/** 
-* @FileName  : ApprovalService.java 
-* @Project   : TempFinal 
-* @Date      : 2023. 12. 5 
-* @작성자      : syxzi 
-* @변경이력	 : 
-* @프로그램설명	 : 
-*/
+
 package com.spring.app.approval.service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +24,7 @@ import com.spring.app.common.domain.EmployeeVO;
 * @FileName  : ApprovalService.java 
 * @Project   : TempFinal 
 * @Date      : 2023. 12. 5 
-* @작성자      : 신예진
+* @작성자      : 신예진 (yejjinny)
 * @변경이력	 : 
 * @프로그램설명	 : 
 */
@@ -41,9 +33,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalAllIngList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 진행 중인 문서_전체 취득
 	* @return 
 	*/
 	public List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap);
@@ -51,9 +43,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalWaitingList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 진행 중인 문서_대기 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -62,9 +54,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalCheckList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 진행 중인 문서_확인 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -73,9 +65,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalScheduleList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 진행 중인 문서_예정 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -84,9 +76,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalProgressList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 진행 중인 문서_진행 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -95,9 +87,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalAllBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함_전체 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -106,9 +98,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalWriterBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함_기안 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -117,9 +109,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalApprovalBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함_결재 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -128,9 +120,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalReferBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함_참조 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -139,9 +131,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalReadBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함_수신/수신참조 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -150,9 +142,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalReturnBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함_반려 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -161,9 +153,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalTempBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함_임시저장 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -172,7 +164,7 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getSecurityLevelList 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_관리자 설정_기본 설정_보안 등급별 열람 설정을 하기 위해 기존 보안 등급별 열람 정보를 가져온다
 	* @return 
@@ -182,7 +174,7 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getSecurityLevelList 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_관리자 설정_기본 설정_보안 등급별 열람 설정을 하기 위해 보안등급 정보를 가져온다
 	* @return 
@@ -192,7 +184,7 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : setSecurityLevel 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_관리자 설정_기본 설정_보안 등급 수정
 	* @param paraMap
@@ -204,9 +196,9 @@ public interface ApprovalService {
 	 * @param searchWord 
 	* @Method Name  : getFormList 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_양식함 관리 메인 화면
 	* @return 
 	*/
 	public List<FormVO> getFormList(Map<String, String> paraMap);
@@ -214,9 +206,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getTotalCountApprovalFormList 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_양식함 관리_양식 갯수 취득
 	* @return 
 	*/
 	public int getTotalCountApprovalFormList(String searchWord);
@@ -224,9 +216,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getDocumentAllList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_전체 문서 목록
 	* @param paraMap
 	* @return 
 	*/
@@ -235,9 +227,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getTotalCountDocumentAllList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_전체 문서 목록 갯수 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -246,9 +238,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getTotalCountDocumentDeleteList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_삭제 문서 목록 갯수 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -257,9 +249,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getDocumentDeleteList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_삭제 문서 목록 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -268,9 +260,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getAdminList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_전자결재 관리자 목록 취득
 	* @return 
 	*/
 	public List<AdminVO> getAdminList();
@@ -278,9 +270,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalDocumentView 
 	* @작성일   : 2023. 12. 16 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기
 	* @param paraMap
 	* @return 
 	*/
@@ -289,7 +281,7 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalOpinion 
 	* @작성일   : 2023. 12. 18 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
 	* @Method 설명 : 전자결재 상세의 의견
 	* @param approvalId
@@ -302,7 +294,7 @@ public interface ApprovalService {
 	 * @param approvalId 
 	* @Method Name  : isDraftEmp 
 	* @작성일   : 2023. 12. 18 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
 	* @Method 설명 : 기안 혹은 신청자인지 확인
 	* @return 
@@ -312,9 +304,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : updateApprovalSecurity 
 	* @작성일   : 2023. 12. 18 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_보안 등급 수정
 	* @param paraMap
 	* @return 
 	*/
@@ -323,9 +315,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : searchEmpName 
 	* @작성일   : 2023. 12. 19 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_사원명 검색
 	* @param empName
 	* @return 
 	*/
@@ -334,23 +326,32 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : updateApprovalLineSetting 
 	* @작성일   : 2023. 12. 19 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_결재선 수정
 	* @param updateList
 	 * @param approvalId 
 	* @return 
 	*/
 	public boolean updateApprovalLineSetting(List<ApprovalProcedureVO> updateList, Long approvalId, Long procedureType);
 	
+	/** 
+	* @Method Name  : getProcedureTypeApproval 
+	* @작성일   : 2023. 12. 19 
+	* @작성자   : 신예진 (yejjinny)
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서_상세보기_절차 취득
+	* @param approvalId
+	* @return 
+	*/
 	public List<ApprovalProcedureVO> getProcedureTypeApproval(Long approvalId);
 
 	/** 
 	* @Method Name  : addRef 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_참조, 수신참조, 수신 추가
 	* @param refType
 	* @param empId
 	 * @param approvalId 
@@ -361,9 +362,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : userProcedureType 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 유저 결재절차 타입
+	* @Method 설명 : 전자결재_문서_상세보기_유저의 절차 타입 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -372,9 +373,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : delRef 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_참조, 수신참조, 수신 삭제
 	* @param refType
 	* @param empId
 	* @param approvalId
@@ -385,9 +386,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : insertOrUpdateApprovalFile 
 	* @작성일   : 2023. 12. 21 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_파일 추가 혹은 업데이트
 	* @param parameter
 	* @param afList
 	* @return 
@@ -397,9 +398,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : deleteSavedFile 
 	* @작성일   : 2023. 12. 22 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_저장한 파일 삭제
 	* @param fileId
 	* @return 
 	*/
@@ -408,20 +409,20 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getApprovalDocumentFile 
 	* @작성일   : 2023. 12. 22 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
-	* @param parseLong
+	* @Method 설명 : 전자결재_문서_상세보기_파일 상세
+	* @param fileId
 	* @return 
 	*/
-	public ApprovalFileVO getApprovalDocumentFile(Long parseLong);
+	public ApprovalFileVO getApprovalDocumentFile(Long fileId);
 
 	/** 
 	* @Method Name  : insertOpinion 
 	* @작성일   : 2023. 12. 22 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_의견 등록
 	* @param approvalId
 	* @param opinion
 	* @return 
@@ -431,9 +432,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : deleteOpinion 
 	* @작성일   : 2023. 12. 22 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_의견 삭제
 	* @param opinionId
 	* @return 
 	*/
@@ -442,9 +443,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : isReturn 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 반려 여부 확인
 	* @param paraMap
 	* @return 
 	*/
@@ -453,9 +454,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : deleteImportant 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서함_중요 삭제
 	* @param paraMap
 	* @return 
 	*/
@@ -464,9 +465,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : insertImportant 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서함_중요 등록
 	* @param paraMap
 	* @return 
 	*/
@@ -475,9 +476,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : updateActionOfApproval 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_결재하기
 	* @param paraMap
 	* @return 
 	*/
@@ -486,9 +487,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : updateRefRead 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_읽음처리하기
 	* @param paraMap
 	* @return 
 	*/
@@ -497,9 +498,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getEmpProofDetail 
 	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_재직증명서 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -509,9 +510,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : updateRoundRobinApprovalLineSetting 
 	* @작성일   : 2023. 12. 26 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_품의서 결재선 수정
 	* @param updateList
 	 * @param procedureType 
 	* @param long1
@@ -523,9 +524,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getProcedureTypeAgree 
 	* @작성일   : 2023. 12. 26 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_합의 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트
 	* @param paraMap
 	* @return 
 	*/
@@ -534,9 +535,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getWorkApplicationDetail 
 	* @작성일   : 2023. 12. 27 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_연장근무 혹은 휴일근무 신청
 	* @param approvalId
 	* @return 
 	*/
@@ -545,9 +546,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getFormNameList 
 	* @작성일   : 2023. 12. 27 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_목록화면에서 문서 드롭다운 리스트에 보여줄 문서 종류 리스트
 	* @return 
 	*/
 	public List<FormVO> getFormNameList();
@@ -555,9 +556,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getDayOffDetail 
 	* @작성일   : 2023. 12. 27 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_휴가 신청
 	* @param approvalId
 	* @return 
 	*/
@@ -566,9 +567,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getModifyWorkRequest 
 	* @작성일   : 2023. 12. 28 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_근무체크 수정 정보
 	* @param approvalId
 	* @return 
 	*/
@@ -577,9 +578,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : updateReadReturn 
 	* @작성일   : 2023. 12. 29 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_반려 읽었을 경우 읽음처리
 	* @param paraMap
 	* @return 
 	*/
@@ -588,9 +589,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : cancleApproval 
 	* @작성일   : 2023. 12. 29 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_기안 취소
 	* @param paraMap
 	* @return 
 	*/
@@ -599,9 +600,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getPreservationYear 
 	* @작성일   : 2023. 12. 29 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_작성하기 _문서종류에 따른 보존연한 취득
 	* @param formId
 	* @return 
 	*/
@@ -610,9 +611,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : insertDocumentWrite 
 	* @작성일   : 2023. 12. 30 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_작성하기
 	* @param paraArrMap
 	* @param paraMap
 	* @return 
@@ -622,9 +623,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : insertTempDocumentWrite 
 	* @작성일   : 2023. 12. 30 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_임시저장하기
 	* @param paraArrMap
 	* @param paraMap
 	* @return 
@@ -634,9 +635,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getFormId 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_작성하기 _formId 취득
 	* @param approvalId
 	* @return 
 	*/
@@ -645,9 +646,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : batchApproval 
 	* @작성일   : 2024. 1. 5 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 결재
 	* @param bvo
 	* @return 
 	*/
@@ -656,9 +657,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : batchCheck 
 	* @작성일   : 2024. 1. 5 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 확인
 	* @param bvo
 	* @return 
 	*/
@@ -667,9 +668,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : batchDelete 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 삭제
 	* @param bvo
 	* @return 
 	*/
@@ -678,9 +679,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : batchRestore 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 복원
 	* @param bvo
 	* @return 
 	*/
@@ -689,9 +690,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : addAppovalAdminManager 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 추가
 	* @param paraMap
 	* @return 
 	*/
@@ -700,9 +701,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : deleteAppovalAdminManager 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 삭제
 	* @param paraMap
 	* @return 
 	*/
@@ -711,9 +712,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : grantAdminRead 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 전체문서 열람 허용 비허용 설정 
 	* @param paraMap
 	* @return 
 	*/
@@ -722,9 +723,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getAdminHistoryList 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 설정 이력
 	* @return 
 	*/
 	public List<AdminHistoryVO> getAdminHistoryList();
@@ -732,9 +733,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getFormDetail 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_양식함 관리_양식 상세
 	* @param formId
 	* @return 
 	*/
@@ -743,9 +744,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : getFormNameListByWrite 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서 작성시 드롭다운 리스트에 보여줄 문서 종류 리스트
 	* @return 
 	*/
 	public List<FormVO> getFormNameListByWrite();
@@ -753,9 +754,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : updateForm 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_양식함 관리_양식 상세_수정
 	* @param paraMap
 	* @return 
 	*/
@@ -765,9 +766,9 @@ public interface ApprovalService {
 	 * @param paraMap 
 	* @Method Name  : isReadAble 
 	* @작성일   : 2024. 1. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서 상세보기_열람 허용 여부
 	* @return 
 	*/
 	public boolean isReadAble(Map<String, Long> paraMap);
@@ -775,9 +776,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : isAlreadyAdmin 
 	* @작성일   : 2024. 1. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_관리자 추가 전 다른 기능 관리자인지 체크
 	* @param empId
 	* @return 
 	*/
@@ -786,9 +787,9 @@ public interface ApprovalService {
 	/** 
 	* @Method Name  : isExistApproval 
 	* @작성일   : 2024. 1. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_존재하는 전자결재 문서인지 확인
 	* @param paraMap
 	* @return 
 	*/

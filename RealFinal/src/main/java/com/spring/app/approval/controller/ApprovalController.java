@@ -1,11 +1,3 @@
-/** 
-* @FileName  : ApprovalController.java 
-* @Project   : TempFinal 
-* @Date      : 2023. 12. 5 
-* @작성자      : syxzi 
-* @변경이력	 : 
-* @프로그램설명	 : 
-*/
 package com.spring.app.approval.controller;
 
 import java.io.File;
@@ -51,7 +43,7 @@ import com.spring.app.common.domain.EmployeeVO;
  * 
  * @Project   : TempFinal 
  * @Date      : 2023. 12. 5 
- * @작성자      : 신예진
+ * @작성자      : 신예진 (yejjinny) 
  * @변경이력 : 
  * @프로그램설명 : 
  */
@@ -60,9 +52,7 @@ public class ApprovalController {
 	@Autowired
 	private ApprovalService service;
 
-	// === #155. 파일업로드 및 파일다운로드를 해주는 FileManager 클래스 의존객체 주입하기(DI : Dependency
-	// Injection) ===
-	@Autowired // Type에 따라 알아서 Bean 을 주입해준다.
+	@Autowired 
 	private FileManager fileManager;
 
 	/**
@@ -70,7 +60,8 @@ public class ApprovalController {
 	 * 
 	 * @Method Name  : approvalListAll_ing 
 	 * @작성일   : 2023. 12. 5 
-	 * @작성자   : 신예진 @변경이력  : 
+	 * @작성자   : 신예진 (yejjinny)  
+	 * @변경이력  : 
 	 * @Method 설명 : 전자결재 메뉴 선택 및 진행 중인 문서_전체 클릭시
 	 * @param req @return 
 	 */
@@ -131,21 +122,7 @@ public class ApprovalController {
 			ingList = service.getApprovalProgressList_withSearchAndPaging(paraMap);
 		}
 
-//		if (!"".equals(searchType) && !"".equals(searchWord)) {
-//			paraMap.put("searchType", "");
-//			paraMap.put("searchWord", "");
-//
-
-//		}
-//
-//		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
-
 		int totalCount = 0; // 총 게시물 건수
-		// 수정필
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
@@ -176,24 +153,8 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
-		/*
-		 * currentShowPageNo startRno endRno
-		 * -------------------------------------------- 1 page ===> 1 10 2 page ===> 11
-		 * 20 3 page ===> 21 30 4 page ===> 31 40 ...... ... ...
-		 */
 		int startRno = ((currentShowPageNo - 1) * sizePerPage); // 시작 행번호
 		int endRno = startRno + sizePerPage; // 끝 행번호
-		/*
-		 * int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 int
-		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
-		 */
-
-
-		/*
-		 * paraMap.put("startRno", String.valueOf(startRno)); paraMap.put("endRno",
-		 * String.valueOf(endRno));
-		 */
 
 		if (totalCount == 0) {
 			mav.addObject("ingList", ingList);
@@ -202,25 +163,19 @@ public class ApprovalController {
 			if(ingList.size() < sizePerPage) {
 				mav.addObject("ingList", ingList);
 			}else {
-				mav.addObject("ingList", ingList.subList(startRno, endRno));
+				if(ingList.size() < endRno) {
+					mav.addObject("ingList", ingList.subList(startRno, ingList.size()));
+				}else {
+					mav.addObject("ingList", ingList.subList(startRno, endRno));
+				}
+				
 			}
 		}
 
-//		mav.addObject("allIngList", allIngList.subList(startRno-1, endRno +1));
 
-//		if ("subject".equals(searchType) || "content".equals(searchType) || "subject_content".equals(searchType)
-//				|| "name".equals(searchType)) {
-//			mav.addObject("paraMap", paraMap);
-//		}
-
-		// === #121. 페이지바 만들기 === //
-		// 수정필
+		// === 페이지바 만들기 === //
 		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
-		 * 20 [다음][마지막] -- 1개블럭 [맨처음][이전] 21 22 23
-		 */
 
 		int loop = 1;
 		/*
@@ -228,24 +183,6 @@ public class ApprovalController {
 		 */
 
 		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// *** !! 공식이다. !! *** //
-
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 -- 첫번째 블럭의 페이지번호 시작값(pageNo)은 1 이다. 11 12 13 14 15 16 17
-		 * 18 19 20 -- 두번째 블럭의 페이지번호 시작값(pageNo)은 11 이다. 21 22 23 24 25 26 27 28 29 30
-		 * -- 세번째 블럭의 페이지번호 시작값(pageNo)은 21 이다.
-		 * 
-		 * currentShowPageNo pageNo ---------------------------------- 1 1 = ((1 -
-		 * 1)/10) * 10 + 1 2 1 = ((2 - 1)/10) * 10 + 1 3 1 = ((3 - 1)/10) * 10 + 1 4 1 5
-		 * 1 6 1 7 1 8 1 9 1 10 1 = ((10 - 1)/10) * 10 + 1
-		 * 
-		 * 11 11 = ((11 - 1)/10) * 10 + 1 12 11 = ((12 - 1)/10) * 10 + 1 13 11 = ((13 -
-		 * 1)/10) * 10 + 1 14 11 15 11 16 11 17 11 18 11 19 11 20 11 = ((20 - 1)/10) *
-		 * 10 + 1
-		 * 
-		 * 21 21 = ((21 - 1)/10) * 10 + 1 22 21 = ((22 - 1)/10) * 10 + 1 23 21 = ((23 -
-		 * 1)/10) * 10 + 1 .. .. 29 21 30 21 = ((30 - 1)/10) * 10 + 1
-		 */
 
 		String pageBar = "<ul style='list-style:none;'>";
 		String url = "";
@@ -288,13 +225,6 @@ public class ApprovalController {
 		pageBar += "</ul>";
 
 		mav.addObject("pageBar", pageBar);
-
-		// === #123. 페이징 처리되어진 후 특정 글제목을 클릭하여 상세내용을 본 이후
-		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
-		// 현재 페이지 주소를 뷰단으로 넘겨준다.
-		String goBackURL = MyUtil.getCurrentURL(req);
-
-		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("orderType", orderType);
 		mav.addObject("searchType", searchType);
@@ -310,8 +240,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : approvalDocumentBox_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 5 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서함
 	* @param req
@@ -401,21 +331,8 @@ public class ApprovalController {
 			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
 		}
 
-//		if (!"".equals(searchType) && !"".equals(searchWord)) {
-//			paraMap.put("searchType", "");
-//			paraMap.put("searchWord", "");
-//
-//			mav.addObject("searchType", searchType);
-//			mav.addObject("searchWord", searchWord);
-//		}
-//		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(paraMap).size());
-//		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(paraMap).size());
 
 		int totalCount = 0; // 총 게시물 건수
-		// 수정필
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
@@ -448,24 +365,8 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
-		/*
-		 * currentShowPageNo startRno endRno
-		 * -------------------------------------------- 1 page ===> 1 10 2 page ===> 11
-		 * 20 3 page ===> 21 30 4 page ===> 31 40 ...... ... ...
-		 */
 		int startRno = ((currentShowPageNo - 1) * sizePerPage); // 시작 행번호
 		int endRno = startRno + sizePerPage; // 끝 행번호
-		/*
-		 * int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 int
-		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
-		 */
-
-
-		/*
-		 * paraMap.put("startRno", String.valueOf(startRno)); paraMap.put("endRno",
-		 * String.valueOf(endRno));
-		 */
 
 		if (totalCount == 0) {
 			mav.addObject("boxList", boxList);
@@ -473,25 +374,20 @@ public class ApprovalController {
 			if(boxList.size() < sizePerPage) {
 				mav.addObject("boxList", boxList);
 			}else {
-				mav.addObject("boxList", boxList.subList(startRno, endRno));
+				if(boxList.size() < endRno) {
+					mav.addObject("boxList", boxList.subList(startRno, boxList.size()));
+				}else {
+					mav.addObject("boxList", boxList.subList(startRno, endRno));
+				}
+				
 			}
 		}
+		
 
-//		mav.addObject("allIngList", allIngList.subList(startRno-1, endRno +1));
 
-//		if ("subject".equals(searchType) || "content".equals(searchType) || "subject_content".equals(searchType)
-//				|| "name".equals(searchType)) {
-//			mav.addObject("paraMap", paraMap);
-//		}
-
-		// === #121. 페이지바 만들기 === //
-		// 수정필
+		// === 페이지바 만들기 === //
 		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
-		 * 20 [다음][마지막] -- 1개블럭 [맨처음][이전] 21 22 23
-		 */
 
 		int loop = 1;
 		/*
@@ -499,24 +395,6 @@ public class ApprovalController {
 		 */
 
 		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// *** !! 공식이다. !! *** //
-
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 -- 첫번째 블럭의 페이지번호 시작값(pageNo)은 1 이다. 11 12 13 14 15 16 17
-		 * 18 19 20 -- 두번째 블럭의 페이지번호 시작값(pageNo)은 11 이다. 21 22 23 24 25 26 27 28 29 30
-		 * -- 세번째 블럭의 페이지번호 시작값(pageNo)은 21 이다.
-		 * 
-		 * currentShowPageNo pageNo ---------------------------------- 1 1 = ((1 -
-		 * 1)/10) * 10 + 1 2 1 = ((2 - 1)/10) * 10 + 1 3 1 = ((3 - 1)/10) * 10 + 1 4 1 5
-		 * 1 6 1 7 1 8 1 9 1 10 1 = ((10 - 1)/10) * 10 + 1
-		 * 
-		 * 11 11 = ((11 - 1)/10) * 10 + 1 12 11 = ((12 - 1)/10) * 10 + 1 13 11 = ((13 -
-		 * 1)/10) * 10 + 1 14 11 15 11 16 11 17 11 18 11 19 11 20 11 = ((20 - 1)/10) *
-		 * 10 + 1
-		 * 
-		 * 21 21 = ((21 - 1)/10) * 10 + 1 22 21 = ((22 - 1)/10) * 10 + 1 23 21 = ((23 -
-		 * 1)/10) * 10 + 1 .. .. 29 21 30 21 = ((30 - 1)/10) * 10 + 1
-		 */
 
 		String pageBar = "<ul style='list-style:none;'>";
 		String url = "";
@@ -559,14 +437,7 @@ public class ApprovalController {
 		pageBar += "</ul>";
 
 		mav.addObject("pageBar", pageBar);
-
-		// === #123. 페이징 처리되어진 후 특정 글제목을 클릭하여 상세내용을 본 이후
-		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
-		// 현재 페이지 주소를 뷰단으로 넘겨준다.
-		String goBackURL = MyUtil.getCurrentURL(req);
-
 		mav.addObject("totalCount", totalCount);
-		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("orderType", orderType);
 		mav.addObject("searchType", searchType);
 		mav.addObject("searchWord", searchWord);
@@ -581,8 +452,8 @@ public class ApprovalController {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	/** 
 	* @Method Name  : approvalAdminSettingBasicShow_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 5 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 관리자 설정_기본 설정
 	* @param req
@@ -606,9 +477,9 @@ public class ApprovalController {
 	}
 
 	/** 
-	* @Method Name  : approvalAdminSettingBasic 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @Method Name  : approvalAdminSettingBasic_AfterGetListSize 
+	* @작성일   : 2023. 12. 5 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_전자결재관리자_기본 설정 설정하기
 	* @param req
@@ -645,8 +516,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalAdminSettingForm_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 5 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_양식함 관리 메인 화면
 	* @param req
@@ -669,7 +540,6 @@ public class ApprovalController {
 		}
 
 		int totalCount = 0; // 총 게시물 건수
-		// 수정필
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
@@ -701,18 +571,8 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
-		/*
-		 * currentShowPageNo startRno endRno
-		 * -------------------------------------------- 1 page ===> 1 10 2 page ===> 11
-		 * 20 3 page ===> 21 30 4 page ===> 31 40 ...... ... ...
-		 */
 		int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호
 		int endRno = startRno + sizePerPage - 1; // 끝 행번호
-		/*
-		 * int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 int
-		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
-		 */
 
 		Map<String, String> paraMap = new HashMap<>();
 		paraMap.put("startRno", String.valueOf(startRno));
@@ -723,21 +583,9 @@ public class ApprovalController {
 		mav.addObject("formList", service.getFormList(paraMap));
 		mav.addObject("type", "settings_forms");
 
-//		mav.addObject("allIngList", allIngList.subList(startRno-1, endRno +1));
-
-//		if ("subject".equals(searchType) || "content".equals(searchType) || "subject_content".equals(searchType)
-//				|| "name".equals(searchType)) {
-//			mav.addObject("paraMap", paraMap);
-//		}
-
-		// === #121. 페이지바 만들기 === //
-		// 수정필
+		// === 페이지바 만들기 === //
 		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
-		 * 20 [다음][마지막] -- 1개블럭 [맨처음][이전] 21 22 23
-		 */
 
 		int loop = 1;
 		/*
@@ -745,24 +593,6 @@ public class ApprovalController {
 		 */
 
 		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// *** !! 공식이다. !! *** //
-
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 -- 첫번째 블럭의 페이지번호 시작값(pageNo)은 1 이다. 11 12 13 14 15 16 17
-		 * 18 19 20 -- 두번째 블럭의 페이지번호 시작값(pageNo)은 11 이다. 21 22 23 24 25 26 27 28 29 30
-		 * -- 세번째 블럭의 페이지번호 시작값(pageNo)은 21 이다.
-		 * 
-		 * currentShowPageNo pageNo ---------------------------------- 1 1 = ((1 -
-		 * 1)/10) * 10 + 1 2 1 = ((2 - 1)/10) * 10 + 1 3 1 = ((3 - 1)/10) * 10 + 1 4 1 5
-		 * 1 6 1 7 1 8 1 9 1 10 1 = ((10 - 1)/10) * 10 + 1
-		 * 
-		 * 11 11 = ((11 - 1)/10) * 10 + 1 12 11 = ((12 - 1)/10) * 10 + 1 13 11 = ((13 -
-		 * 1)/10) * 10 + 1 14 11 15 11 16 11 17 11 18 11 19 11 20 11 = ((20 - 1)/10) *
-		 * 10 + 1
-		 * 
-		 * 21 21 = ((21 - 1)/10) * 10 + 1 22 21 = ((22 - 1)/10) * 10 + 1 23 21 = ((23 -
-		 * 1)/10) * 10 + 1 .. .. 29 21 30 21 = ((30 - 1)/10) * 10 + 1
-		 */
 
 		String pageBar = "<ul style='list-style:none;'>";
 		String url = "";
@@ -800,16 +630,9 @@ public class ApprovalController {
 		pageBar += "</ul>";
 
 		mav.addObject("pageBar", pageBar);
-
-		// === #123. 페이징 처리되어진 후 특정 글제목을 클릭하여 상세내용을 본 이후
-		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
-		// 현재 페이지 주소를 뷰단으로 넘겨준다.
-		String goBackURL = MyUtil.getCurrentURL(req);
-
 		mav.setViewName("settings_forms.approval");
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("searchWord", searchWord);
-		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("noSearch", true);
 
 		return mav;
@@ -820,8 +643,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalAdminSettingsDocument_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 6
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_전체문서목록
 	* @param req
@@ -871,7 +694,6 @@ public class ApprovalController {
 		paraMap.put("orderType", orderType);
 
 		int totalCount = 0; // 총 게시물 건수
-		// 수정필
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
@@ -903,18 +725,8 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
-		/*
-		 * currentShowPageNo startRno endRno
-		 * -------------------------------------------- 1 page ===> 1 10 2 page ===> 11
-		 * 20 3 page ===> 21 30 4 page ===> 31 40 ...... ... ...
-		 */
 		int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호
 		int endRno = startRno + sizePerPage - 1; // 끝 행번호
-		/*
-		 * int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 int
-		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
-		 */
 
 		paraMap.put("startRno", String.valueOf(startRno));
 		paraMap.put("endRno", String.valueOf(endRno));
@@ -922,14 +734,9 @@ public class ApprovalController {
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		mav.addObject("documentList", service.getDocumentAllList_withSearchAndPaging(paraMap));
 
-		// === #121. 페이지바 만들기 === //
-		// 수정필
+		// === 페이지바 만들기 === //
 		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
-		 * 20 [다음][마지막] -- 1개블럭 [맨처음][이전] 21 22 23
-		 */
 
 		int loop = 1;
 		/*
@@ -937,24 +744,6 @@ public class ApprovalController {
 		 */
 
 		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// *** !! 공식이다. !! *** //
-
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 -- 첫번째 블럭의 페이지번호 시작값(pageNo)은 1 이다. 11 12 13 14 15 16 17
-		 * 18 19 20 -- 두번째 블럭의 페이지번호 시작값(pageNo)은 11 이다. 21 22 23 24 25 26 27 28 29 30
-		 * -- 세번째 블럭의 페이지번호 시작값(pageNo)은 21 이다.
-		 * 
-		 * currentShowPageNo pageNo ---------------------------------- 1 1 = ((1 -
-		 * 1)/10) * 10 + 1 2 1 = ((2 - 1)/10) * 10 + 1 3 1 = ((3 - 1)/10) * 10 + 1 4 1 5
-		 * 1 6 1 7 1 8 1 9 1 10 1 = ((10 - 1)/10) * 10 + 1
-		 * 
-		 * 11 11 = ((11 - 1)/10) * 10 + 1 12 11 = ((12 - 1)/10) * 10 + 1 13 11 = ((13 -
-		 * 1)/10) * 10 + 1 14 11 15 11 16 11 17 11 18 11 19 11 20 11 = ((20 - 1)/10) *
-		 * 10 + 1
-		 * 
-		 * 21 21 = ((21 - 1)/10) * 10 + 1 22 21 = ((22 - 1)/10) * 10 + 1 23 21 = ((23 -
-		 * 1)/10) * 10 + 1 .. .. 29 21 30 21 = ((30 - 1)/10) * 10 + 1
-		 */
 
 		String pageBar = "<ul style='list-style:none;'>";
 		String url = "";
@@ -997,14 +786,6 @@ public class ApprovalController {
 		pageBar += "</ul>";
 
 		mav.addObject("pageBar", pageBar);
-
-		// === #123. 페이징 처리되어진 후 특정 글제목을 클릭하여 상세내용을 본 이후
-		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
-		// 현재 페이지 주소를 뷰단으로 넘겨준다.
-		String goBackURL = MyUtil.getCurrentURL(req);
-		
-
-		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("orderType", orderType);
 		mav.addObject("searchType", searchType);
@@ -1018,8 +799,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalAdminSettingsDeleteDocument_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 6
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 삭제 문서 목록
 	* @param req
@@ -1069,7 +850,6 @@ public class ApprovalController {
 		paraMap.put("orderType", orderType);
 
 		int totalCount = 0; // 총 게시물 건수
-		// 수정필
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
@@ -1102,18 +882,8 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
-		/*
-		 * currentShowPageNo startRno endRno
-		 * -------------------------------------------- 1 page ===> 1 10 2 page ===> 11
-		 * 20 3 page ===> 21 30 4 page ===> 31 40 ...... ... ...
-		 */
 		int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호
 		int endRno = startRno + sizePerPage - 1; // 끝 행번호
-		/*
-		 * int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 int
-		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
-		 */
 
 		paraMap.put("startRno", String.valueOf(startRno));
 		paraMap.put("endRno", String.valueOf(endRno));
@@ -1121,14 +891,9 @@ public class ApprovalController {
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		mav.addObject("documentList", service.getDocumentDeleteList_withSearchAndPaging(paraMap));
 
-		// === #121. 페이지바 만들기 === //
-		// 수정필
+		// === 페이지바 만들기 === //
 		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
-		 * 20 [다음][마지막] -- 1개블럭 [맨처음][이전] 21 22 23
-		 */
 
 		int loop = 1;
 		/*
@@ -1136,24 +901,6 @@ public class ApprovalController {
 		 */
 
 		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// *** !! 공식이다. !! *** //
-
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 -- 첫번째 블럭의 페이지번호 시작값(pageNo)은 1 이다. 11 12 13 14 15 16 17
-		 * 18 19 20 -- 두번째 블럭의 페이지번호 시작값(pageNo)은 11 이다. 21 22 23 24 25 26 27 28 29 30
-		 * -- 세번째 블럭의 페이지번호 시작값(pageNo)은 21 이다.
-		 * 
-		 * currentShowPageNo pageNo ---------------------------------- 1 1 = ((1 -
-		 * 1)/10) * 10 + 1 2 1 = ((2 - 1)/10) * 10 + 1 3 1 = ((3 - 1)/10) * 10 + 1 4 1 5
-		 * 1 6 1 7 1 8 1 9 1 10 1 = ((10 - 1)/10) * 10 + 1
-		 * 
-		 * 11 11 = ((11 - 1)/10) * 10 + 1 12 11 = ((12 - 1)/10) * 10 + 1 13 11 = ((13 -
-		 * 1)/10) * 10 + 1 14 11 15 11 16 11 17 11 18 11 19 11 20 11 = ((20 - 1)/10) *
-		 * 10 + 1
-		 * 
-		 * 21 21 = ((21 - 1)/10) * 10 + 1 22 21 = ((22 - 1)/10) * 10 + 1 23 21 = ((23 -
-		 * 1)/10) * 10 + 1 .. .. 29 21 30 21 = ((30 - 1)/10) * 10 + 1
-		 */
 
 		String pageBar = "<ul style='list-style:none;'>";
 		String url = "";
@@ -1196,13 +943,6 @@ public class ApprovalController {
 		pageBar += "</ul>";
 
 		mav.addObject("pageBar", pageBar);
-
-		// === #123. 페이징 처리되어진 후 특정 글제목을 클릭하여 상세내용을 본 이후
-		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
-		// 현재 페이지 주소를 뷰단으로 넘겨준다.
-		String goBackURL = MyUtil.getCurrentURL(req);
-		
-		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("orderType", orderType);
 		mav.addObject("searchType", searchType);
@@ -1216,8 +956,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalAdminSettingsAdminList_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 7
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_전자결재 관리자
 	* @param req
@@ -1239,8 +979,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalDocumentView_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 7
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기
 	* @param req
@@ -1268,13 +1008,6 @@ public class ApprovalController {
 		
 		// formId, approvalId 가 존재하는지 확인한다
 		if(service.isExistApproval(paraMap)) {
-			/*
-			 * 존재할 경우
-			 * 읽으려고 하는 자의 권한을 확인한다
-			 * 프로시저 안에 있는 사람일 경우
-			 * 전자결재 관리자, 전체 관리자 일경우
-			 * 
-			 * */
 			// 전자결재 절차에 유저가 존재하는지 확인한다
 			int userProcedureType = service.getUserProcedureType(paraMap);
 			
@@ -1301,7 +1034,6 @@ public class ApprovalController {
 			
 			
 
-			// 수정필 !!!!!!!!!!!!!!!!! 폼id에 따라 더 추가될 내용이 있음 그거 추가해서 넣기
 			if (formId == 109) {
 				// 재직증명서
 				mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
@@ -1402,17 +1134,12 @@ public class ApprovalController {
 			return mav;
 		}
 		
-		
-		
-		
-
-
 	}
 
 	/** 
 	* @Method Name  : approvalUpdateSecurity 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 7
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_보안등급 변경
 	* @param req
@@ -1444,8 +1171,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalSearchEmpName 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 8
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 사원명 검색
 	* @param req
@@ -1458,7 +1185,6 @@ public class ApprovalController {
 	@PostMapping(value = "/approval/searchEmpName.gw", produces = "text/plain;charset=UTF-8")
 	public String approvalSearchEmpName(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			String empName) {
-		// 결재 + 버튼 _ 사원명 검색
 
 		List<EmployeeVO> evoList = service.searchEmpName(empName);
 
@@ -1480,8 +1206,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : updateApprovalLineSetting 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 8
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_결재자 수정
 	* @param req
@@ -1494,8 +1220,6 @@ public class ApprovalController {
 	@PostMapping("/approval/updateApprovalLineSetting.gw")
 	public String updateApprovalLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			@RequestBody List<Map<String, Object>> approvalList) {
-		// 결재 + 버튼 _ 확인 버튼
-
 		List<ApprovalProcedureVO> updateList = new ArrayList<>();
 
 		for (int i = 0; i < approvalList.size(); i++) {
@@ -1516,8 +1240,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : addRef 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 8
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_참조, 수신참조, 수신 추가
 	* @param req
@@ -1532,7 +1256,6 @@ public class ApprovalController {
 	@PostMapping("/approval/add/{refType}.gw")
 	public String addRef(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			@PathVariable String refType, Long empId, Long approvalId) {
-		// 참조 or 수신참조 or 수신 + 버튼 _ 참조에 추가할 유저 선택시
 
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("isAdd", service.addRef(refType, empId, approvalId));
@@ -1542,8 +1265,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : delRef 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 9
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_참조, 수신참조, 수신 삭제
 	* @param req
@@ -1568,8 +1291,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : updateApprovalFile 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 9
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_파일 첨부
 	* @param req
@@ -1621,19 +1344,9 @@ public class ApprovalController {
 				MultipartFile mtFile = fileList.get(i); // 파일 하나하나 확인
 
 				try {
-					/*
-					 * File 클래스는 java.io 패키지에 포함되며, 입출력에 필요한 파일이나 디렉터리를 제어하는 데 사용된다. 파일과 디렉터리의 접근
-					 * 권한, 생성된 시간, 경로 등의 정보를 얻을 수 있는 메소드가 있으며, 새로운 파일 및 디렉터리 생성, 삭제 등 다양한 조작 메서드를
-					 * 가지고 있다.
-					 */
 					// === MultipartFile 을 File 로 변환하여 탐색기 저장폴더에 저장하기 시작 ===
 					File attachFile = new File(path + File.separator + mtFile.getOriginalFilename());
 					mtFile.transferTo(attachFile); // 여기서 저장, 이미 있으면 삭제하고 저장
-					/*
-					 * form 태그로 부터 전송받은 MultipartFile mtfile 파일을 지정된 대상 파일(attachFile)로 전송한다. 만약에 대상
-					 * 파일(attachFile)이 이미 존재하는 경우 먼저 삭제된다.
-					 */
-					// 탐색기에 가보면 첨부한 파일이 생성되어져 있음을 확인할 수 있다.
 					// === MultipartFile 을 File 로 변환하여 탐색기 저장폴더에 저장하기 끝 ===
 
 					afvo.setFileName(
@@ -1642,15 +1355,13 @@ public class ApprovalController {
 																														// 기록한다.
 					afvo.setFileSize(((double) mtFile.getSize()) / 1024 / 1024); // 첨부파일명들을 기록한다.
 
-					// 수정필 _ 반올림 소수 셋쨰자리
 
 					afList.add(afvo);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
-			} // end of
-				// for--------------------------------------------------------------------------
+			} 
 		}
 
 		JSONObject jsonObj = new JSONObject();
@@ -1661,8 +1372,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : deleteSavedFile 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 9
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_파일 첨부 삭제
 	* @param req
@@ -1685,8 +1396,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalFileDownload 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 9 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_파일 다운로드
 	* @param req
@@ -1697,11 +1408,9 @@ public class ApprovalController {
 	public void approvalFileDownload(HttpServletRequest req, HttpServletResponse res, ModelAndView mav) {
 
 		// *** 웹브라우저에 출력하기 시작 *** //
-		// HttpServletResponse response 객체는 전송되어져온 데이터를 조작해서 결과물을 나타내고자 할때 쓰인다.
 		res.setContentType("text/html; charset=UTF-8");
 
 		PrintWriter out = null;
-		// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
 
 		Long fileId = Long.parseLong(req.getParameter("fileId"));
 
@@ -1710,10 +1419,9 @@ public class ApprovalController {
 
 			if (afvo == null || (afvo != null && afvo.getFileName() == null)) {
 				out = res.getWriter();
-				// out 은 웹브라우저에 기술하는 대상체라고 생각하자.
 
 				out.println(
-						"<script type='text/javascript'>alert('존재하지 않는 글번호 이거나 첨부파일이 없으므로 파일다운로드가 불가합니다.'); history.back();</script>");
+						"<script type='text/javascript'>alert('존재하지 않는 문서번호이거나 첨부파일이 없으므로 파일다운로드가 불가합니다.'); history.back();</script>");
 				return;
 			}
 
@@ -1721,31 +1429,14 @@ public class ApprovalController {
 				// 정상적으로 다운로드를 할 경우
 
 				String fileName = afvo.getFileRName();
-				// 20231124124825759362098213700.pdf 이것이 바로 WAS(톰캣) 디스크에 저장된 파일명이다.
 
 				String orgFilename = afvo.getFileRName();
-				// LG_싸이킹청소기_사용설명서.pdf 다운로드시 보여줄 파일명
 
-				// 첨부파일이 저장되어 있는 WAS(톰캣) 디스크 경로명을 알아와야만 다운로드를 해줄 수 있다.
-				// 이 경로는 우리가 파일첨부를 위해서 /addEnd.action 에서 설정해두었던 경로와 똑같아야 한다.
-				// WAS 의 webapp 의 절대경로를 알아와야 한다.
 				HttpSession session = req.getSession();
 				String root = session.getServletContext().getRealPath("/");
 
-				// ~~~ 확인용 webapp 의 절대경로 =>
-				// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\
-
 				String path = root + "resources" + File.separator + "image" + File.separator + "approval"
 						+ File.separator + "uploadFile";
-				/*
-				 * File.separator 는 운영체제에서 사용하는 폴더와 파일의 구분자이다. 운영체제가 Windows 이라면 File.separator
-				 * 는 "\" 이고, 운영체제가 UNIX, Linux, 매킨토시(맥) 이라면 File.separator 는 "/" 이다.
-				 */
-
-				// path 가 첨부파일이 저장될 WAS(톰캣)의 폴더가 된다.
-				// System.out.println("~~~ 확인용 path => " + path);
-				// ~~~ 확인용 path =>
-				// C:\NCS\workspace_spring_framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\board\resources\files
 
 				// ***** file 다운로드 하기 ***** //
 				boolean flag = false; // file 다운로드 성공, 실패인지 여부를 알려주는 용도
@@ -1777,8 +1468,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : insertOpinion 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 10 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_의견 작성
 	* @param req
@@ -1808,8 +1499,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : deleteOpinion 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 10
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_의견 삭제
 	* @param req
@@ -1830,8 +1521,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : deleteImportant 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 10
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서함_중요문서 삭제
 	* @param req
@@ -1859,8 +1550,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : insertImportant 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 10
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서함_중요문서 추가
 	* @param req
@@ -1888,8 +1579,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : updateActionOfApproval 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 11
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_결재 처리하기
 	* @param req
@@ -1919,8 +1610,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : updateRefRead 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 11
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_읽음 처리하기
 	* @param req
@@ -1947,58 +1638,11 @@ public class ApprovalController {
 
 	}
 
-//	@ResponseBody
-//	@PostMapping("/approval/updateProcessLineSetting.gw")
-//	public String updateProcessLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-//			@RequestBody List<Map<String, Object>> approvalList) {
-//		// 결재 + 버튼 _ 확인 버튼
-//
-//		List<ApprovalProcedureVO> updateList = new ArrayList<>();
-//		
-//		for (int i = 0; i < approvalList.size(); i++) {
-//			ApprovalProcedureVO apvo = new ApprovalProcedureVO();
-//			apvo.setEmpId(approvalList.get(i).get("empId").toString());
-//			apvo.setSequence((int) approvalList.get(i).get("sequence"));
-//			updateList.add(apvo);
-//		}
-//
-//		JSONObject jsonObj = new JSONObject();
-//
-//		jsonObj.put("isSuccess",
-//				service.updateProcessLineSetting(updateList, new Long((int) approvalList.get(0).get("approvalId")), new Long((int) approvalList.get(0).get("procedureType"))));
-//
-//		return jsonObj.toString();
-//	}
-
-//	@ResponseBody
-//	@PostMapping("/approval/updateApplicationLineSetting.gw")
-//	public String updateApplicationLineSetting(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-//			@RequestBody List<Map<String, Object>> approvalList) {
-//		// 신청 + 버튼 _ 확인 버튼
-//
-//		List<ApprovalProcedureVO> updateList = new ArrayList<>();
-//
-//		for (int i = 0; i < approvalList.size(); i++) {
-//			ApprovalProcedureVO apvo = new ApprovalProcedureVO();
-//			
-//			System.out.println("empID : " + approvalList.get(i).get("empId").toString());
-//			apvo.setEmpId(approvalList.get(i).get("empId").toString());
-//			apvo.setSequence((int) approvalList.get(i).get("sequence"));
-//			updateList.add(apvo);
-//		}
-//
-//		JSONObject jsonObj = new JSONObject();
-//
-//		jsonObj.put("isSuccess",
-//				service.updateApplicationLineSetting(updateList, new Long((int) approvalList.get(0).get("approvalId"))));
-//
-//		return jsonObj.toString();
-//	}
 
 	/** 
 	* @Method Name  : updateRoundRobinApprovalLineSetting 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 11
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_품의서 상세보기_결재자 수정시
 	* @param req
@@ -2035,8 +1679,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : cancleApproval 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 11
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서 상세보기_기안 취소
 	* @param req
@@ -2065,8 +1709,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalDocumentWrite 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 12
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_작성하기 및 임시저장에서 불러오기
 	* @param req
@@ -2087,6 +1731,7 @@ public class ApprovalController {
 		mav.addObject("formList", service.getFormNameListByWrite());
 		mav.addObject("securityLevelList", service.getSecurityLevelList());
 		mav.addObject("noSearch", true);
+		
 		if ("index".equals(writeType)) {
 			// 작성하기 눌렀을 경우
 			mav.setViewName("document_write_index.approval");
@@ -2102,17 +1747,14 @@ public class ApprovalController {
 			// 보존 연한 정보
 			mav.addObject("preservationYear", service.getPreservationYear(formId));
 
-			// 수정필 !!!!!!!!!!!!!!!!! 폼id에 따라 더 추가될 내용이 있음 그거 추가해서 넣기
 			if (formId == 109) {
 				// 재직증명서
 				mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
 				mav.setViewName("document_write_empProof.approval");
-
 			} else if (formId == 108) {
 				// 품의서 합의 부분
 				mav.addObject("agreeList", service.getProcedureTypeAgree(approvalId));
 				mav.setViewName("document_write_roundRobin.approval");
-
 			} else if (formId == 106) {
 				// 회람
 				mav.setViewName("document_write_circulation.approval");
@@ -2125,15 +1767,20 @@ public class ApprovalController {
 			mav.addObject("approvalDetail", approvalDetail);
 
 		} else {
-			// 에러 수정필
+			// 에러 처리
+			mav.addObject("message", "잘못된 경로입니다.");
+			// 이전 페이지로 이동
+			mav.addObject("loc", req.getHeader("referer"));
+			mav.setViewName("/common/msg");
+			return mav;
 		}
 		return mav;
 	}
 
 	/** 
 	* @Method Name  : approvalDocumentWriteForm 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 12
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_작성하기 및 임시저장에서 불러오기
 	* @param req
@@ -2177,7 +1824,12 @@ public class ApprovalController {
 			}
 
 		} else {
-			// 에러 수정필
+			// 에러 처리
+			mav.addObject("message", "문제가 발생하였습니다. 다시 시도하여 주세요.");
+			// 이전 페이지로 이동
+			mav.addObject("loc", req.getHeader("referer"));
+			mav.setViewName("/common/msg");
+			return mav;
 		}
 
 		return mav;
@@ -2185,8 +1837,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : insertDocumentWrite 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 13
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_기안하기
 	* @param req
@@ -2257,7 +1909,6 @@ public class ApprovalController {
 								+ mtFile.getOriginalFilename()); // 첨부파일명들을 기록한다.
 						afvo.setFileSize(((double) mtFile.getSize()) / 1024 / 1024); // 첨부파일명들을 기록한다.
 
-						// 수정필 _ 반올림 소수 셋쨰자리
 
 						afList.add(afvo);
 					} catch (Exception e) {
@@ -2388,14 +2039,12 @@ public class ApprovalController {
 		approvalId = service.insertDocumentWrite(paraArrMap, paraMap);
 
 		if (!service.insertOrUpdateApprovalFile(approvalId, afList)) {
-			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기 수정필
-
-			//System.out.println("에러랍니다");
+			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기
+			
+			jsonObj.put("isSuccess", false);
 		}
 
 		if ("".equals(approvalId)) {
-			// 업데이트가 제대로 안된거임
-			// 에러처리 수정필
 			jsonObj.put("isSuccess", false);
 		} else {
 			jsonObj.put("isSuccess", true);
@@ -2407,8 +2056,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : insertTempDocumentWrite 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 13
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_작성하기_임시저장하기
 	* @param req
@@ -2478,8 +2127,6 @@ public class ApprovalController {
 								+ "approval" + File.separator + "uploadFile" + File.separator
 								+ mtFile.getOriginalFilename()); // 첨부파일명들을 기록한다.
 						afvo.setFileSize(((double) mtFile.getSize()) / 1024 / 1024); // 첨부파일명들을 기록한다.
-
-						// 수정필 _ 반올림 소수 셋쨰자리
 
 						afList.add(afvo);
 					} catch (Exception e) {
@@ -2591,14 +2238,11 @@ public class ApprovalController {
 		approvalId = service.insertTempDocumentWrite(paraArrMap, paraMap);
 
 		if (!service.insertOrUpdateApprovalFile(approvalId, afList)) {
-			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기 수정필
-
-			//System.out.println("에러랍니다");
+			// 임시저장한 문서 파일 업데이트 겸 인서트 에러 처리하기
+			jsonObj.put("isSuccess", false);
 		}
 
 		if ("".equals(approvalId)) {
-			// 업데이트가 제대로 안된거임
-			// 에러처리 수정필
 			jsonObj.put("isSuccess", false);
 		} else {
 			jsonObj.put("isSuccess", true);
@@ -2609,8 +2253,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalBatch 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 14 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_진행중인 문서_일괄 처리
 	* @param req
@@ -2634,39 +2278,54 @@ public class ApprovalController {
 			// 일괄 결재
 
 			if (service.batchApproval(bvo) > 0) {
-				// 잘 끝
 
 				mav.setViewName("redirect:/approval/document/list/W.gw");
 			} else {
-				//System.out.println("에러");
+				// 에러 처리
+				mav.addObject("message", "문제가 발생하였습니다. 다시 시도하여 주세요.");
+				// 이전 페이지로 이동
+				mav.addObject("loc", req.getHeader("referer"));
+				mav.setViewName("/common/msg");
+				return mav;
 			}
 
 		} else if ("check".equals(type)) {
 			if (service.batchCheck(bvo) > 0) {
-				// 잘 끝
 
 				mav.setViewName("redirect:/approval/document/list/V.gw");
 			} else {
-				//System.out.println("에러");
+				// 에러 처리
+				mav.addObject("message", "문제가 발생하였습니다. 다시 시도하여 주세요.");
+				// 이전 페이지로 이동
+				mav.addObject("loc", req.getHeader("referer"));
+				mav.setViewName("/common/msg");
+				return mav;
 			}
 		} else if ("delete".equals(type)) {
 			
 			if (service.batchDelete(bvo) > 0) {
-				// 잘 끝
 
 				mav.setViewName("redirect:/approval/settings/document.gw");
 			} else {
-				//System.out.println("에러");
+				// 에러 처리
+				mav.addObject("message", "문제가 발생하였습니다. 다시 시도하여 주세요.");
+				// 이전 페이지로 이동
+				mav.addObject("loc", req.getHeader("referer"));
+				mav.setViewName("/common/msg");
+				return mav;
 			}
 		} else if("restore".equals(type)) {
-			// 잘 끝
 
 			if (service.batchRestore(bvo) > 0) {
-				// 잘 끝
 
 				mav.setViewName("redirect:/approval/settings/deleted_document.gw");
 			} else {
-				//System.out.println("에러");
+				// 에러 처리
+				mav.addObject("message", "문제가 발생하였습니다. 다시 시도하여 주세요.");
+				// 이전 페이지로 이동
+				mav.addObject("loc", req.getHeader("referer"));
+				mav.setViewName("/common/msg");
+				return mav;
 			}
 		}
 		
@@ -2677,8 +2336,8 @@ public class ApprovalController {
 
 	/** 
 	* @Method Name  : approvalViewImportantDoc 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 14
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_문서함_중요문서 보기
 	* @param req
@@ -2769,7 +2428,6 @@ public class ApprovalController {
 		}
 
 		int totalCount = 0; // 총 게시물 건수
-		// 수정필
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
@@ -2801,23 +2459,8 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		// **** 가져올 게시글의 범위를 구한다.(공식임!!!) ****
-		/*
-		 * currentShowPageNo startRno endRno
-		 * -------------------------------------------- 1 page ===> 1 10 2 page ===> 11
-		 * 20 3 page ===> 21 30 4 page ===> 31 40 ...... ... ...
-		 */
 		int startRno = ((currentShowPageNo - 1) * sizePerPage); // 시작 행번호
 		int endRno = startRno + sizePerPage; // 끝 행번호
-		/*
-		 * int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 int
-		 * endRno = startRno + sizePerPage - 1; // 끝 행번호
-		 */
-
-		/*
-		 * paraMap.put("startRno", String.valueOf(startRno)); paraMap.put("endRno",
-		 * String.valueOf(endRno));
-		 */
 
 		if (totalCount == 0) {
 			mav.addObject("boxList", boxList);
@@ -2825,21 +2468,10 @@ public class ApprovalController {
 			mav.addObject("boxList", boxList.subList(startRno, endRno));
 		}
 
-//		mav.addObject("allIngList", allIngList.subList(startRno-1, endRno +1));
 
-//		if ("subject".equals(searchType) || "content".equals(searchType) || "subject_content".equals(searchType)
-//				|| "name".equals(searchType)) {
-//			mav.addObject("paraMap", paraMap);
-//		}
-
-		// === #121. 페이지바 만들기 === //
-		// 수정필
+		// === 페이지바 만들기 === //
 		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 [다음][마지막] -- 1개블럭 [맨처음][이전] 11 12 13 14 15 16 17 18 19
-		 * 20 [다음][마지막] -- 1개블럭 [맨처음][이전] 21 22 23
-		 */
 
 		int loop = 1;
 		/*
@@ -2847,24 +2479,6 @@ public class ApprovalController {
 		 */
 
 		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-		// *** !! 공식이다. !! *** //
-
-		/*
-		 * 1 2 3 4 5 6 7 8 9 10 -- 첫번째 블럭의 페이지번호 시작값(pageNo)은 1 이다. 11 12 13 14 15 16 17
-		 * 18 19 20 -- 두번째 블럭의 페이지번호 시작값(pageNo)은 11 이다. 21 22 23 24 25 26 27 28 29 30
-		 * -- 세번째 블럭의 페이지번호 시작값(pageNo)은 21 이다.
-		 * 
-		 * currentShowPageNo pageNo ---------------------------------- 1 1 = ((1 -
-		 * 1)/10) * 10 + 1 2 1 = ((2 - 1)/10) * 10 + 1 3 1 = ((3 - 1)/10) * 10 + 1 4 1 5
-		 * 1 6 1 7 1 8 1 9 1 10 1 = ((10 - 1)/10) * 10 + 1
-		 * 
-		 * 11 11 = ((11 - 1)/10) * 10 + 1 12 11 = ((12 - 1)/10) * 10 + 1 13 11 = ((13 -
-		 * 1)/10) * 10 + 1 14 11 15 11 16 11 17 11 18 11 19 11 20 11 = ((20 - 1)/10) *
-		 * 10 + 1
-		 * 
-		 * 21 21 = ((21 - 1)/10) * 10 + 1 22 21 = ((22 - 1)/10) * 10 + 1 23 21 = ((23 -
-		 * 1)/10) * 10 + 1 .. .. 29 21 30 21 = ((30 - 1)/10) * 10 + 1
-		 */
 
 		String pageBar = "<ul style='list-style:none;'>";
 		String url = "";
@@ -2907,14 +2521,7 @@ public class ApprovalController {
 		pageBar += "</ul>";
 
 		mav.addObject("pageBar", pageBar);
-
-		// === #123. 페이징 처리되어진 후 특정 글제목을 클릭하여 상세내용을 본 이후
-		// 사용자가 "검색된결과목록보기" 버튼을 클릭했을때 돌아갈 페이지를 알려주기 위해
-		// 현재 페이지 주소를 뷰단으로 넘겨준다.
-		String goBackURL = MyUtil.getCurrentURL(req);
-
 		mav.addObject("totalCount", totalCount);
-		mav.addObject("goBackURL", goBackURL);
 		mav.addObject("orderType", orderType);
 
 		mav.setViewName("document_box_" + type + ".approval");
@@ -2932,8 +2539,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : addAppovalAdminSettingManager 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 15 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_전자결재 관리자_추가
 	* @param req
@@ -2963,8 +2570,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : deleteApprovalAdminSettingManager 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 15 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_전자결재 관리자_삭제
 	* @param req
@@ -2993,8 +2600,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : grantAdminSettingRead 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 15 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_전자결재 관리자_전체 문서 허용
 	* @param req
@@ -3021,8 +2628,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : getAdminSettingHistory 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 15
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_전자결재 관리자_관리자 설정 이력
 	* @param req
@@ -3061,8 +2668,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : approvalAdminSettingFormDetail_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 16 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_양식함관리_양식함 상세보기
 	* @param req
@@ -3083,8 +2690,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : approvalAdminSettingModifyForm_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 16
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_양식함관리_양식함 상세보기_수정
 	* @param req
@@ -3105,8 +2712,8 @@ public class ApprovalController {
 	
 	/** 
 	* @Method Name  : approvalAdminSettingUpdateForm_AfterGetListSize 
-	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성일   : 2023. 12. 16 
+	* @작성자   : 신예진 (yejjinny)  
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_양식함관리_양식함 상세보기_등록
 	* @param req
@@ -3138,6 +2745,18 @@ public class ApprovalController {
 	
 	
 	
+	/** 
+	* @Method Name  : getAdminSettingIsAlreadyAdmin 
+	* @작성일   : 2023. 12. 17
+	* @작성자   : 신예진 (yejjinny) 
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_전자결재 관리자_이미 관리자인지 확인
+	* @param req
+	* @param res
+	* @param mav
+	* @param empId
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping(value = "/approval/isAlreadyAdmin.gw", produces = "text/plain;charset=UTF-8")
 	public String getAdminSettingIsAlreadyAdmin(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,

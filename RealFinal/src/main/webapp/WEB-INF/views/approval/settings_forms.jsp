@@ -62,7 +62,7 @@ function resetSearchForm(){
 					<div class="fr">
 
 						<c:if test="${not empty requestScope.searchWord}">
-							<a href="수정필" class="search_bt fl point_color" style="margin: 6px 10px 0 0;" id="resetSearchForms" onclick="resetSearchForm()">
+							<a class="search_bt fl point_color" style="margin: 6px 10px 0 0;" id="resetSearchForms" onclick="resetSearchForm()">
 								<span class="sp_menu searchCancel"></span>
 								검색 취소
 							</a>
@@ -70,7 +70,7 @@ function resetSearchForm(){
 						</c:if>
 
 						<c:if test="${empty requestScope.searchWord}">
-							<a href="수정필" class="search_bt fl point_color hide" style="margin: 6px 10px 0 0;" id="resetSearchForms" onclick="resetSearchForm()">
+							<a class="search_bt fl point_color hide" style="margin: 6px 10px 0 0;" id="resetSearchForms" onclick="resetSearchForm()">
 								<span class="sp_menu searchCancel"></span>
 								검색 취소
 							</a>
@@ -109,25 +109,25 @@ function resetSearchForm(){
 							<th style="width: 14px; white-space: nowrap;" class="resizable-false"></th>
 							<th style="width: 96px; white-space: nowrap;">
 								<div class="column-resizer ui-resizable" style="width: 96px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="form_id">양식 ID</a>
+									<a href="javascript:void(0);" class="js-approval-order updown" value="form_id">양식 ID</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
 							<th style="width: 330px; white-space: nowrap;">
 								<div class="column-resizer ui-resizable" style="width: 330px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="title">양식명</a>
+									<a href="javascript:void(0);" class="js-approval-order updown" value="title">양식명</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
 							<th style="width: 359px; white-space: nowrap;">
 								<div class="column-resizer ui-resizable" style="width: 359px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="comment">설명</a>
+									<a href="javascript:void(0);" class="js-approval-order updown" value="comment">설명</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
 							<th style="width: 128px; white-space: nowrap;">
 								<div class="column-resizer ui-resizable" style="width: 128px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="use_flag">상태</a>
+									<a href="javascript:void(0);" class="js-approval-order updown" value="use_flag">상태</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
@@ -141,17 +141,14 @@ function resetSearchForm(){
 							<c:forEach var="formVo" items="${requestScope.formList}">
 								<tr>
 									<td>
-										<%-- <label>
-											<input title="양식 선택" type="checkbox" class="js-checkbox-approval-form" form_no="${formVo.formId}" disabled="disabled">
-										</label> --%>
 									</td>
-									<td class="tableData docu-num" data-href="수정필">${formVo.formId}</td>
-									<td class="sidespace tableData" data-href="수정필">
+									<td class="tableData docu-num">${formVo.formId}</td>
+									<td class="sidespace tableData">
 										<div title="${formVo.formName}">${formVo.formName}</div>
 									</td>
-									<td class="tableData" data-href="수정필">${formVo.description}</td>
+									<td class="tableData">${formVo.description}</td>
 
-									<td class="tableData" data-href="수정필">
+									<td class="tableData">
 										<c:if test="${formVo.isUse eq 1}">
 											사용
 										</c:if>

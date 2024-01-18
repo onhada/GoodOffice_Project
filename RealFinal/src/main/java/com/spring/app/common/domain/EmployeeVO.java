@@ -5,7 +5,7 @@ package com.spring.app.common.domain;
  * 
  * @Project   : TempFinal 
  * @Date      : 2023. 12. 6 
- * @작성자      : 신예진
+ * @작성자      : 신예진 (yejjinny)
  * @변경이력 : 
  * @프로그램설명 : 
  */

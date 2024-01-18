@@ -1,11 +1,3 @@
-/** 
-* @FileName  : ApprovalDAO.java 
-* @Project   : TempFinal 
-* @Date      : 2023. 12. 5 
-* @작성자      : syxzi 
-* @변경이력	 : 
-* @프로그램설명	 : 
-*/
 package com.spring.app.approval.model;
 
 import java.util.List;
@@ -41,28 +33,19 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : getApprovalAllIngList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 진행 중인 문서 취득
 	* @param paraMap
 	* @return 
 	*/
 	List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap);
 
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/** 
 	* @Method Name  : hasReturn 
 	* @작성일   : 2023. 12. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 전자결재절차 테이블에서 해당 전자결재id 반려 존재여부
 	* @param fk_approvalId
@@ -74,7 +57,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasLowerApplicantAllAccept 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 유저보다 하위 신청 or 기안자들이 전원 승인하였는지 확인용 (0 : 전원 승인)
 	* @param paramMap
@@ -86,9 +69,9 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasLowerApplicantWait 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 대기 중인 유저가 있는지 확인
 	* @param paramMap
 	* @return 
 	*/
@@ -97,7 +80,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasUpperApplicantAndApproverWait 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우
 	* @param paramMap
@@ -108,7 +91,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasLowerApplicantAndApproverAllAccept 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0: 전원 승인)
 	* @param paramMap
@@ -119,7 +102,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasLowerApplicantAndApproverWait 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
 	* @param paramMap
@@ -130,7 +113,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasUpperApproverWait 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
 	* @param paramMap
@@ -141,7 +124,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasApplicantAndApproverAllAccept 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 결재자와 신청자가 모두 승인했는지 확인한다 (0일 경우 모두 승인, 그 외의 경우 모두 승인하기 전)
 	* @param paramMap
@@ -152,7 +135,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasUnderRankerAllAccept 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 하위 순서가 모두 승인하였는지 확인 (0: 전원 승인)
 	* @param paramMap
@@ -163,7 +146,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasUnderRankerWait 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 하위 순서 중에 대기가 있을 경우
 	* @param paraMap
@@ -174,7 +157,7 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : hasUpperRankerWait 
 	* @작성일   : 2023. 12. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 상위 순서 중에 대기가 있을 경우
 	* @param paramMap
@@ -184,39 +167,22 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
-	* @Method Name  : getApprovalAllBox_withSearchAndPaging 
+	* @Method Name  : getApprovalAllBox_withViewAllAndSearchAndPaging 
 	* @작성일   : 2023. 12. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 문서함 전체보기 문서 취득
 	* @param paraMap
 	* @return 
 	*/
 	List<ApprovalVO> getApprovalAllBox_withViewAllAndSearchAndPaging(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : hasAllAccept 
 	* @작성일   : 2023. 12. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 전원 승인했는지 확인 (0: 전원 승인)
 	* @param paramMap
@@ -227,38 +193,22 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalTempBox_withPaging 
 	* @작성일   : 2023. 12. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 임시저장 문서 취득
 	* @param paraMap
 	* @return 
 	*/
 	List<ApprovalVO> getApprovalTempBox_withSearchAndPaging(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getSecurityLevelList 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_관리자 설정_기본 설정_보안 등급별 열람 설정을 하기 위해 기존 보안 등급별 열람 정보를 가져온다
 	* @return 
@@ -267,18 +217,10 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getSecurityLevelList 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_관리자 설정_기본 설정_보안 등급별 열람 설정을 하기 위해 보안등급 정보를 가져온다
 	* @return 
@@ -288,28 +230,13 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : setSecurityLevelA 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
-	* @param string
+	* @Method 설명 : 보안등급 A의 값 수정
+	* @param level
 	* @return 
 	*/
 	int setSecurityLevelA(String level);
@@ -317,37 +244,21 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : setSecurityLevelB 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 보안등급 B의 값 수정
 	* @param string 
 	*/
 	int setSecurityLevelB(String level);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getFormList 
 	* @작성일   : 2023. 12. 12 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_관리자 설정_양식함 관리 메인 화면
 	* @return 
@@ -355,41 +266,21 @@ public interface ApprovalDAO {
 	List<FormVO> getFormList(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getTotalCountApprovalFormList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_양식함 관리_양식 갯수 취득
 	* @param searchWord
 	* @return 
 	*/
 	int getTotalCountApprovalFormList(String searchWord);
 
-
-
-
-
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////
 	/** 
 	* @Method Name  : getApprovalDocumentAllList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
 	* @Method 설명 : 전자결재_관리자 설정_전체 문서 목록
 	* @return 
@@ -397,21 +288,12 @@ public interface ApprovalDAO {
 	List<ApprovalVO> getDocumentAllList_withSearchAndPaging(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getTotalCountDocumentAllList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_전체 문서 목록 갯수 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -419,20 +301,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getTotalCountDocumentDeleteList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_삭제 문서 목록 갯수 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -440,20 +314,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getDocumentDeleteList_withSearchAndPaging 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_삭제 문서 목록 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -461,103 +327,58 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getAdminList 
 	* @작성일   : 2023. 12. 13 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_전자결재 관리자 목록 취득
 	* @return 
 	*/
 	List<AdminVO> getAdminList();
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalAllBox_withSearchAndPaging 
 	* @작성일   : 2023. 12. 16 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서함 문서 취득
 	* @param paraMap
 	* @return 
 	*/
 	List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap);
 
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalDocumentView 
 	* @작성일   : 2023. 12. 16 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기
 	* @param paraMap
 	* @return 
 	*/
 	ApprovalDetailVO getApprovalDocumentView(Map<String, Long> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalDocumentView_Procedure 
 	* @작성일   : 2023. 12. 16 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_절차 취득
 	* @param approvalId
 	* @return 
 	*/
 	List<ApprovalProcedureVO> getApprovalDocumentView_Procedure(Long approvalId);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalDocumentView_File 
 	* @작성일   : 2023. 12. 16 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_파일 목록 취득
 	* @param approvalId
 	* @return 
 	*/
@@ -565,30 +386,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalOpinion 
 	* @작성일   : 2023. 12. 18 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_의견 목록 취득
 	* @param approvalId
 	* @return 
 	*/
@@ -596,42 +399,24 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : isDraftEmp 
 	* @작성일   : 2023. 12. 18 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_기안한 사원인지 여부 취득
 	* @param approvalId
 	* @param empId
 	* @return 
 	*/
 	int isDraftEmp(Map<String, Long> paraMap);
 
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateApprovalSecurity 
 	* @작성일   : 2023. 12. 18 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_보안 등급 수정
 	* @param paraMap
 	* @return 
 	*/
@@ -639,20 +424,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : searchEmpName 
 	* @작성일   : 2023. 12. 19 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_사원명 검색
 	* @param empName
 	* @return 
 	*/
@@ -660,41 +437,24 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateApprovalLineSetting 
 	* @작성일   : 2023. 12. 19 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_결재선 수정
 	* @param updateList
 	* @return 
 	*/
 	int updateApprovalLineSetting(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getProcedureTypeApproval 
 	* @작성일   : 2023. 12. 19 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_절차 취득
 	* @param approvalId
 	* @return 
 	*/
@@ -702,102 +462,59 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertApprovalLineSetting 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_결재선 추가
 	* @param paraMap 
 	*/
 	int insertApprovalLineSetting(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalProcedureLastSeq 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_가장 마지막 절차 순서 취득
 	* @param approvalId
 	* @return 
 	*/
 	int getApprovalProcedureLastSeq(Long approvalId);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : deleteApprovalLineSetting 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_결재선 삭제
 	* @param paraMap 
 	*/
 	int deleteApprovalLineSetting(Map<String, String> paraMap);
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : addRef 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_참조, 수신참조, 수신 추가
 	* @param paraMap
 	* @return 
 	*/
 	int addRef(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getUserProcedureType 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_유저의 절차 타입 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -805,41 +522,24 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : delRef 
 	* @작성일   : 2023. 12. 20 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_참조, 수신참조, 수신 삭제
 	* @param paraMap
 	* @return 
 	*/
 	int delRef(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateApprovalFile 
 	* @작성일   : 2023. 12. 21 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_파일 수정
 	* @param paraMap
 	* @return 
 	*/
@@ -848,9 +548,9 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : deleteApprovalFile 
 	* @작성일   : 2023. 12. 21 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_파일 삭제
 	* @param paraMap
 	* @return 
 	*/
@@ -859,9 +559,9 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : insertApprovalFile 
 	* @작성일   : 2023. 12. 21 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_파일 추가
 	* @param paraMap
 	* @return 
 	*/
@@ -869,41 +569,24 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalDocumentFile 
 	* @작성일   : 2023. 12. 22 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_파일 상세
 	* @param fileId
 	* @return 
 	*/
 	ApprovalFileVO getApprovalDocumentFile(Long fileId);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertOpinion 
 	* @작성일   : 2023. 12. 22 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_의견 등록
 	* @param paraMap
 	* @return 
 	*/
@@ -911,20 +594,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : deleteOpinion 
 	* @작성일   : 2023. 12. 22 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_의견 삭제
 	* @param opinionId
 	* @return 
 	*/
@@ -932,20 +607,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : deleteImportant 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서함_중요 삭제
 	* @param paraMap
 	* @return 
 	*/
@@ -953,20 +620,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertImportant 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서함_중요 등록
 	* @param paraMap
 	* @return 
 	*/
@@ -985,51 +644,32 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : insertActionOfApproval 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_결재하기
 	* @param paraMap
 	* @return 
 	*/
 	int updateActionOfApproval(Map<String, String> paraMap);
 
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateRefRead 
 	* @작성일   : 2023. 12. 23 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_읽음처리하기
 	* @param paraMap
 	* @return 
 	*/
 	int updateRefRead(Map<String, Long> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateApprovalComplete 
 	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_결재 완료 처리하기
 	* @param paraMap
 	* @return 
 	*/
@@ -1037,94 +677,37 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getEmpProofDetail 
 	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서_상세보기_재직증명서 취득
 	* @param paraMap
 	* @return 
 	*/
 	EmpProofDetailVO getEmpProofDetail(Map<String, Long> paraMap);
 
 
-
-
-
-
-
-
-
-
-
-	/** 
-	* @Method Name  : insertProcessLineSetting 
-	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
-	* @변경이력  : 
-	* @Method 설명 : 
-	* @param paraMap
-	* @return 
-	*/
-	//int insertProcessLineSetting(Map<String, String> paraMap);
-
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getProcedureTypeApplication 
 	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_신청 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트
 	* @param approvalId
 	* @return 
 	*/
 	List<ApprovalProcedureVO> getProcedureTypeApplication(Long approvalId);
-
-	/** 
-	* @Method Name  : insertApplicationLineSetting 
-	* @작성일   : 2023. 12. 24 
-	* @작성자   : syxzi 
-	* @변경이력  : 
-	* @Method 설명 : 
-	* @param paraMap
-	* @return 
-	*/
-	//int insertApplicationLineSetting(Map<String, String> paraMap);
-
-
-
-
-
-
-
-
 
 
 
 	/** 
 	* @Method Name  : getProcedureTypeAgree 
 	* @작성일   : 2023. 12. 26 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_합의 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트
 	* @param approvalId
 	* @return 
 	*/
@@ -1133,71 +716,43 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : getProcedureTypeFiAgree 
 	* @작성일   : 2023. 12. 26 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_재무 합의 +버튼_확인 눌렀을 경우_기존에 있던 거인지, 추가한거인지 확인하기 위한 기존 값 리스트
 	* @param approvalId
 	* @return 
 	*/
 	List<ApprovalProcedureVO> getProcedureTypeFiAgree(Long approvalId);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getWorkApplicationDetail 
 	* @작성일   : 2023. 12. 27 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_연장근무 혹은 휴일근무 신청
 	* @param approvalId
 	* @return 
 	*/
 	WorkApplicationVO getWorkApplicationDetail(Long approvalId);
 
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getFormNameList 
 	* @작성일   : 2023. 12. 27 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_목록화면에서 문서 드롭다운 리스트에 보여줄 문서 종류 리스트
 	* @return 
 	*/
 	List<FormVO> getFormNameList();
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getDayOffDetail 
 	* @작성일   : 2023. 12. 27 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_휴가 신청
 	* @param approvalId
 	* @return 
 	*/
@@ -1206,28 +761,20 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : getDayOffSimple 
 	* @작성일   : 2023. 12. 29 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_휴가 신청 _ sql문에 사용하기 위해 간단한 정보 취득
 	* @param approvalId
 	* @return 
 	*/
 	DayOffVO getDayOffSimple(Long approvalId);
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getModifyWorkRequest 
 	* @작성일   : 2023. 12. 28 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_근무체크 수정 정보
 	* @param approvalId
 	* @return 
 	*/
@@ -1235,271 +782,153 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateWorkHistoryByRequest 
 	* @작성일   : 2023. 12. 28 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_근무체크 수정
 	* @param mdvo
 	* @return 
 	*/
 	int updateWorkHistoryByRequest(ModifyDetailVO mdvo);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertWorkHistoryByRequest 
 	* @작성일   : 2023. 12. 28 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_근무체크 추가
 	* @param mdvo
 	* @return 
 	*/
 	int insertWorkHistoryByRequest(ModifyDetailVO mdvo);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : deleteWorkHistoryByRequest 
 	* @작성일   : 2023. 12. 28 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_근무체크 삭제
 	* @param mdvo
 	* @return 
 	*/
 	int deleteWorkHistoryByRequest(ModifyDetailVO mdvo);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateReadReturn 
 	* @작성일   : 2023. 12. 29 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_반려 읽었을 경우 읽음처리
 	* @param paraMap
 	* @return 
 	*/
 	int updateReadReturn(Map<String, Long> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : cancleApproval 
 	* @작성일   : 2023. 12. 29 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_기안 취소
 	* @param paraMap
 	* @return 
 	*/
 	int cancleApproval(Map<String, Long> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getPreservationYear 
 	* @작성일   : 2023. 12. 29 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_작성하기 _문서종류에 따른 보존연한 취득
 	* @param formId
 	* @return 
 	*/
 	int getPreservationYear(Long formId);
 
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertApprovalDocument 
 	* @작성일   : 2023. 12. 30 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_기안하기
 	* @param paraMap
 	* @return 
 	*/
 	int insertApprovalDocument(Map<String, String> paraMap);
 
-
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getApprovalSequence 
 	* @작성일   : 2023. 12. 30 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_작성하기 _시퀀스값 취득
 	* @return 
 	*/
 	String getApprovalSequence();
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertApplicant 
 	* @작성일   : 2023. 12. 30 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_기안자 넣기
 	* @param paraMap
 	* @return 
 	*/
 	int insertApplicant(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertBusinessContact 
 	* @작성일   : 2023. 12. 30 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_본문 정보_업무연락 
 	* @param paraMap
 	* @return 
 	*/
 	int insertBusinessContact(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertTempApprovalDocument 
 	* @작성일   : 2023. 12. 30 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_임시저장
 	* @param paraMap
 	* @return 
 	*/
 	int insertTempApprovalDocument(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertCircular 
 	* @작성일   : 2024. 1. 3 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_본문 정보_업무연락 
 	* @param paraMap
 	* @return 
 	*/
 	int insertCircular(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : insertApprovalDocument_circular 
 	* @작성일   : 2024. 1. 3 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_기안하기 (회람)
 	* @param paraMap
 	* @return 
 	*/
@@ -1518,9 +947,9 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : insertEmpProof 
 	* @작성일   : 2024. 1. 3 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_본문 정보_재직증명서
 	* @param paraMap
 	* @return 
 	*/
@@ -1539,9 +968,9 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : insertRoundRobin 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_기안하기_본문 정보_품의서
 	* @param paraMap
 	* @return 
 	*/
@@ -1549,20 +978,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getFormId 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_작성하기 _formId 취득
 	* @param approvalId
 	* @return 
 	*/
@@ -1570,41 +991,24 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : deleteApprovalProcedure 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
-	* @param string
+	* @Method 설명 : 전자결재_임시저장 되어있던 절차 내용_삭제
+	* @param approvalId
 	* @return 
 	*/
-	int deleteApprovalProcedure(String string);
-
-
-
-
-
-
-
-
-
+	int deleteApprovalProcedure(String approvalId);
 
 
 	/** 
 	* @Method Name  : updateApprovalDocument 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_임시저장 되어있던 내용_수정
 	* @param paraMap
 	* @return 
 	*/
@@ -1612,20 +1016,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateApprovalDocument_circular 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_임시저장 되어있던 내용(회람)_수정
 	* @param paraMap
 	* @return 
 	*/
@@ -1633,41 +1029,24 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateBusinessContact 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_임시저장_임시저장_본문 정보_업무연락
 	* @param paraMap
 	* @return 
 	*/
 	int updateBusinessContact(Map<String, String> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateEmpProof 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_임시저장_임시저장_본문 정보_재직증명서
 	* @param paraMap
 	* @return 
 	*/
@@ -1676,19 +1055,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateRoundRobin 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_임시저장_임시저장_본문 정보_품의서
 	* @param paraMap
 	* @return 
 	*/
@@ -1697,19 +1069,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateCircular 
 	* @작성일   : 2024. 1. 4 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_임시저장_임시저장_본문 정보_회람
 	* @param paraMap
 	* @return 
 	*/
@@ -1717,20 +1082,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : batchApproval 
 	* @작성일   : 2024. 1. 5 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 결재
 	* @param bvo
 	* @return 
 	*/
@@ -1738,20 +1095,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : batchCheck 
 	* @작성일   : 2024. 1. 5 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 확인
 	* @param bvo
 	* @return 
 	*/
@@ -1759,20 +1108,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : batchDelete 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 삭제
 	* @param bvo
 	* @return 
 	*/
@@ -1780,20 +1121,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : batchRestore 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_일괄 복원
 	* @param bvo
 	* @return 
 	*/
@@ -1801,61 +1134,35 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : addAppovalAdminManager 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 추가
 	* @param paraMap
 	* @return 
 	*/
 	int addAppovalAdminManager(Map<String, Long> paraMap);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getAdminSequence 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 추가_시퀀스값 취득
 	* @return 
 	*/
 	Long getAdminSequence();
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : addAdminHistory 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 추가 이력 넣기
 	* @param paraMap
 	* @return 
 	*/
@@ -1866,9 +1173,9 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : deleteAppovalAdminManager 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 삭제
 	* @param paraMap
 	* @return 
 	*/
@@ -1878,9 +1185,9 @@ public interface ApprovalDAO {
 	/** 
 	* @Method Name  : updateAdminHistory 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 삭제 이력 넣기
 	* @param paraMap
 	* @return 
 	*/
@@ -1888,20 +1195,12 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : grantAdminRead 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 전체문서 열람 허용 비허용 설정 
 	* @param paraMap
 	* @return 
 	*/
@@ -1909,40 +1208,23 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getAdminHistoryList 
 	* @작성일   : 2024. 1. 6 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자설정 _관리자 설정 이력
 	* @return 
 	*/
 	List<AdminHistoryVO> getAdminHistoryList();
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getFormDetail 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_양식함 관리_양식 상세
 	* @param formId
 	* @return 
 	*/
@@ -1950,61 +1232,36 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : getFormNameListByWrite 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서 작성시 드롭다운 리스트에 보여줄 문서 종류 리스트
 	* @return 
 	*/
 	List<FormVO> getFormNameListByWrite();
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : updateForm 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_양식함 관리_양식 상세_수정
 	* @param paraMap
 	* @return 
 	*/
 	int updateForm(Map<String, String> paraMap);
 
-
-
-
-
-
-
-
-
-
-
+	
 	/** 
 	* @Method Name  : isReadAble 
 	* @작성일   : 2024. 1. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_문서 상세보기_열람 허용 여부
 	* @param paraMap
 	* @return 
 	*/
@@ -2012,73 +1269,28 @@ public interface ApprovalDAO {
 
 
 
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : isAlreadyAdmin 
 	* @작성일   : 2024. 1. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_관리자 설정_관리자 추가 전 다른 기능 관리자인지 체크
 	* @param empId
 	* @return 
 	*/
 	int isAlreadyAdmin(Long empId);
 
 
-
-
-
-
-
-
-
-
-
 	/** 
 	* @Method Name  : isExistApproval 
 	* @작성일   : 2024. 1. 11 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny)
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자결재_상세보기_존재하는 전자결재 문서인지 확인
 	* @param paraMap
 	* @return 
 	*/
 	int isExistApproval(Map<String, Long> paraMap);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 }

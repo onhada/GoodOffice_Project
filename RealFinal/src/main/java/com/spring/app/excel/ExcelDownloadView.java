@@ -12,6 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.web.servlet.view.AbstractView;
 
+/** 
+* @FileName  : ExcelDownloadView.java 
+* @Project   : TempFinal 
+* @Date      : 2024. 1. 1 
+* @작성자      : 신예진 (yejjinny) 
+* @변경이력	 : 
+* @프로그램설명	 : 
+*/
+
 /* 
   AbstractView 를 이용하여 파일다운로드를 구현한다.
    즉, AbstractView 를 상속받아 파일다운로드를 처리해주는 뷰로 사용될 클래스를 만들어 준다. 
@@ -66,8 +75,6 @@ public class ExcelDownloadView extends AbstractView {
         
         response.setContentType("application/download;charset=utf-8");
         // 임의의 파일 다운로드 형식은 utf-8 문자코드로 사용한다.
-        // 참고로 브라우저한테 '우리는 utf-8 문자코드로 사용할거야. utf-8로 사용해줘'라는 메세지를 전달해야 하는데 
-        // 이런 메세지를 전달하는 것이 바로 response.setContentType("text/html; charset=utf-8"); 이다.
         
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\";");
         // 파일 다운로드시 다운로드 되어질 파일명은 첨부된 파일명으로 지정하는 헤더 속성이다.
@@ -77,21 +84,13 @@ public class ExcelDownloadView extends AbstractView {
         
         OutputStream ost = null;
         SXSSFWorkbook workbook = null;
-        // 엑셀 Workbook의 종류로는 엑셀 97~2003버전인 HSSFWorkbook, 
-        // 엑셀 2007이상의 XSSFWorkbook, 
-        // 가장 최근에 나온 성능개선버전인 SXSSFWorkbook 이 있다.
        
         try {
             workbook = (SXSSFWorkbook) model.get("workbook");
             ost = response.getOutputStream();
-            // HttpServletResponse response 는 클라이언트로 돌려보내는 역할을 하는 객체이다. 
-            // 브라우저는 이 response 의 정보를 분석해서 화면에 출력해준다. 
-            // 일반적으로 HttpServletResponse response 객체의 출력 스트림(OutputStream 이나 Writer)을 사용하여 HTML(아니면 다른 타입의 컨텐츠)을 작성합니다. 
-            // 두 가지 출력 방식 : 문자와 바이트
-            // 바이트(bytes)를 출력하기 위해서는 ServletOutputStream 을 사용하고
-            // 문자(character data)를 출력하기 위한 PrintWriter 를 사용한다.
             
-            workbook.write(ost); // !!! 엑셀파일생성 !!!
+            // 엑셀파일생성 
+            workbook.write(ost); 
        } catch (Exception e) {
            e.printStackTrace();
        } finally {
@@ -114,6 +113,5 @@ public class ExcelDownloadView extends AbstractView {
            }
        }
         
-	}// end of protected void renderMergedOutputModel(	Map<String, Object> model,	HttpServletRequest request,	HttpServletResponse response) throws Exception------------------
-
+	}
 }

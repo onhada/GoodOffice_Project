@@ -18,7 +18,7 @@
              , to_char(updateDay, 'yyyy-mm-dd') AS updateDay
              , nvl(adminType, '0') as adminType
              , NVL2(adminType, '1', '0') as isAdmin
-             , NVL2(isReadAllDocument, 1, 0) as isReadAllDocument
+             , isReadAllDocument
         from tbl_employee E
         join tbl_team T on E.fk_teamId = T.teamId
         join tbl_department D on T.fk_depId = D.depId

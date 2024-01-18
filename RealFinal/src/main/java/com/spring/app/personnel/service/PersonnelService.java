@@ -267,15 +267,16 @@ public interface PersonnelService {
 	
 	
 	
+
 	// 예진 코드 시작 -------------------------------------------------------------------------------------
 	
 	
 	/** 
 	* @Method Name  : getFormList 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 양식 목록 취득
 	* @return 
 	*/
 	List<FormVO> getFormList();
@@ -283,9 +284,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : getAdminList 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 인사관리자 목록 취득
 	* @return 
 	*/
 	List<AdminVO> getAdminList();
@@ -293,9 +294,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : getAdminHistoryList 
 	* @작성일   : 2024. 1. 8 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 인사관리자 설정 이력 취득
 	* @return 
 	*/
 	List<AdminHistoryVO> getAdminHistoryList();
@@ -303,9 +304,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : isExistPayrollThisMonth 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 해당 달의 급여 대장 존재하는지 확인 존재한다면 그 값을 취득
 	* @param month
 	* @return 
 	*/
@@ -314,9 +315,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : getSalaryDetail 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 속 급여 내용 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -325,9 +326,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : fixPayroll 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 확정
 	* @param paraMap
 	* @return 
 	*/
@@ -336,9 +337,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : deletePayroll 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 삭제
 	* @param salaryId
 	* @return 
 	*/
@@ -347,9 +348,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : insertPayroll 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 등록
 	* @param paraList
 	 * @param svo 
 	* @return 
@@ -359,9 +360,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : getSalarySequence 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여 대장 등록시 필요한 시퀀스 값 취득
 	* @return 
 	*/
 	Long getSalarySequence();
@@ -369,9 +370,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : isExistEmployee 
 	* @작성일   : 2024. 1. 9 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 이미 존재하는 사원인지 확인
 	* @param sdvo
 	* @return 
 	*/
@@ -380,9 +381,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : payrollToExcel 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여대장을 엑셀로 생성
 	* @param salaryId
 	* @param model 
 	*/
@@ -391,9 +392,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : getSalaryByYear 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여대장을 연도에 맞춰 취득
 	* @param paraMap
 	* @return 
 	*/
@@ -402,9 +403,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : getSalary 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여대장 취득
 	* @param salaryId
 	* @return 
 	*/
@@ -413,9 +414,9 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : getSalaryDetailBySalaryIdAndEmpId 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 급여id와 사원id로 검색해 급여 상세내용을 취득한다
 	* @param paraMap
 	* @return 
 	*/
@@ -424,16 +425,14 @@ public interface PersonnelService {
 	/** 
 	* @Method Name  : privatePayrollToExcel 
 	* @작성일   : 2024. 1. 10 
-	* @작성자   : syxzi 
+	* @작성자   : 신예진 (yejjinny) 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 개인 급여명세를 엑셀로 생성
 	* @param salaryId
 	* @param model 
 	*/
 	void privatePayrollToExcel(Map<String, String> paraMap, Model model);
 
-	
-	
 	
 	// 예진 코드 끝    -------------------------------------------------------------------------------------
 	 
