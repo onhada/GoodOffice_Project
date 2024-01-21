@@ -78,49 +78,6 @@ $(document).ready(function() {
 
 <div id="contents">
 	<div class="content_title">
-		<%-- <span class="detail_select js-approval-lists-first-type">
-			<button type="button" class="js-approval-btn-form-mode" id="anchorApprovalForm">보기: 모든 문서</button>
-			<img src="<%=ctxPath%>/resources/image/icon/btn_drop.gif" alt="DROPDOWN" class="open_drop vm">
-			<ul class="dropdown-menu hide js-approval-lists-first-type-layer" id="menuApprovalFormMode" style="max-height: 550px; overflow-y: auto; padding-right: 8px;">
-				<!-- 양식에서 가져오던가하기 -->
-				<li>
-					<a class="js-approval-li-forms" value="0">모든 문서</a>
-				</li>
-				<c:forEach var="formVo" items="${requestScope.formList}">
-					<li>
-						<a class="js-approval-li-forms" value="${formVo.formId}">${formVo.formName}</a>
-					</li>
-				</c:forEach>
-				
-				<!-- <li>
-					<a href="수정필" class="js-approval-li-forms" value="4613">근무체크 수정 요청서</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4608">급여 지급 품의서</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4604">업무연락</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4611">연장근무 신청서</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4605">재직증명서</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4600">품의서</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4598">회람</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4616">휴가 신청서</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-forms" value="4612">휴일근무 신청서</a>
-				</li> -->
-			</ul>
-		</span> --%>
 		<span class="detail_select js-approval-lists-second-type hide" id="countCheckApprovalLists"></span>
 		<span class="detail_select js-approval-lists-second-type hide"> </span>
 	</div>
@@ -150,12 +107,12 @@ $(document).ready(function() {
 						</c:when>
 					</c:choose>
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -187,12 +144,12 @@ $(document).ready(function() {
 
 
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -200,32 +157,24 @@ $(document).ready(function() {
 			<div class="approval-wrap pdt_0">
 				<table class="tableType01" id="tableApprovalDocument" style="width: 1604px;">
 					<caption>예정, 진행 문서 리스트</caption>
-					<!-- <colgroup>
-					<col width="200">
-					<col>
-					<col width="33">
-					<col width="200">
-					<col width="120">
-					<col width="100">
-				</colgroup> -->
 					<thead>
 						<tr>
 							<th style="width: 200px; white-space: nowrap;" class="resizable-pdr-0">
 								<div class="column-resizer ui-resizable" style="width: 200px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="document_code">문서 번호</a>
+									<a href="javascript:void(0)" class="js-approval-order updown" value="document_code">문서 번호</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
 							<th style="width: 6px; white-space: nowrap;" class="resizable-false resizable-pdl-0 resizable-pdr-0"></th>
 							<th class="resizable-pdr-0" style="white-space: nowrap; width: 873px;">
 								<div class="column-resizer ui-resizable" style="width: 873px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="document_title">제목</a>
+									<a href="javascript:void(0)" class="js-approval-order updown" value="document_title">제목</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
 							<th style="width: 200px; white-space: nowrap;">
 								<div class="column-resizer ui-resizable" style="width: 200px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="document_register">기안자</a>
+									<a href="javascript:void(0)" class="js-approval-order updown" value="document_register">기안자</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
@@ -250,10 +199,10 @@ $(document).ready(function() {
 
 
 								<tr class="tableData">
-									<td class="docu-num" data-href="수정필">
+									<td class="docu-num">
 										<div title="${approvalVo.fk_approvalId}">${approvalVo.fk_approvalId}</div>
 									</td>
-									<td class="new-open-window resizable-pdl-0 resizable-pdr-0" data-href="수정필">
+									<td class="new-open-window resizable-pdl-0 resizable-pdr-0">
 										<span class="icon h_new span-new-link" style="display: none; margin-top: 0px;" data-link-url="javascript:ApprovalDocument.getView('28080', '', 'blank')"></span>
 									</td>
 									<td class="title new-window" id="${approvalVo.fk_formId}">
@@ -262,11 +211,11 @@ $(document).ready(function() {
 											<span class="blind">첨부 파일 표시</span>
 										</c:if>
 									</td>
-									<td class="docu-register" data-href="수정필">
+									<td class="docu-register">
 										<div title="${approvalVo.empName}">${approvalVo.empName}</div>
 									</td>
-									<td title="${approvalVo.draftDay}" data-href="수정필">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
-									<td class="docu-type" data-href="수정필">
+									<td title="${approvalVo.draftDay}">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
+									<td class="docu-type">
 										<div title="${approvalVo.procedureType}">${approvalVo.procedureType}</div>
 									</td>
 								</tr>
@@ -288,274 +237,14 @@ $(document).ready(function() {
 						문서 수 :
 						<span>${requestScope.totalCount}</span>
 					</p>
-					<!-- 수정필  -->
 					<div class="documentListPagination">
 						<nav>
 							<ul class="pagination">${requestScope.pageBar}
 							</ul>
 						</nav>
 					</div>
-					<!-- <div class="paginate">
-						<strong>1</strong>
-					</div>
-					<div class="page_select">
-						<label class="blind" for="pageCurrent">SELECT CURRENT PAGE</label>
-						<select onchange="ApprovalDocument.getDocumentListByPage($j(this).val());">
-							<option value="1" selected="">1</option>
-						</select>
-						/ 1
-					</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<!-- <script type="text/javascript">
-		ApprovalDocument._listStatus = 'E';
-		var approvalDocumentTable = new approvalTableClass(
-				{
-					table : "tableApprovalDocument",
-					row : [
-							[ "document_code", "docu-num" ],
-							[ "new_window",
-									"new-open-window resizable-pdl-0 resizable-pdr-0" ],
-							[ "title", "title new-window" ],
-							[ "register", "docu-register" ],
-							[ "document_regdate", "" ], [ "type", "docu-type" ] ]
-				});
-
-		$j(document)
-				.ready(
-						function() {
-							$j("#searchApprovalDocument").show();
-							$j("#searchApprovalState").menu().hide();
-
-							var url_value = Approval.getUrlValue();
-							if (url_value.order_key && url_value.order_value) {
-								if ($j('.js-approval-order[value="'
-										+ url_value.order_key + '"]').length > 0) {
-									$j(
-											'.js-approval-order[value="'
-													+ url_value.order_key
-													+ '"]')
-											.append(
-													url_value.order_value === "DESC" ? '<span class="down"></span>'
-															: '<span class="up"></span>');
-								}
-							} else {
-								$j(
-										'.js-approval-order[value="document_regdate"]')
-										.append('<span class="down"></span>');
-							}
-
-							$j('#tableApprovalDocument th')
-									.resizableTableColumns(
-											{
-												handles : 'e',
-												whiteSpace : 'nowrap',
-												store : true,
-												alsoResizeWithTable : '#pageApprovalDocument'
-											});
-						});
-
-		$j(document).on('mouseover', '.new-window', function(e) {
-			$j(this).prev().find('span.span-new-link').show();
-		});
-		$j(document).on('mouseout', '.new-window', function(e) {
-			$j(this).prev().find('span.span-new-link:visible').hide();
-		});
-		$j(document).on('mouseover', 'td.new-open-window', function(e) {
-			$j(this).find('span.span-new-link').show();
-		});
-		$j(document).on('mouseout', 'td.new-open-window', function(e) {
-			$j(this).find('span.span-new-link').hide();
-		});
-
-		$j(function() {
-			var History = window.History;
-			var pageUrl = window.location.search.substring(0);
-
-			if (History.enabled) {
-				ApprovalDocument.getDocumentList();
-			} else {
-				return false;
-			}
-
-			if (Common.getIEVersion() !== false && Common.getIEVersion() < 10) {
-				History.Adapter.bind(window, 'hashchange', function() {
-					ApprovalDocument.getDocumentList();
-				});
-			} else {
-				History.Adapter.bind(window, 'statechange', function() {
-					ApprovalDocument.getDocumentList();
-				});
-			}
-		});
-
-		$j(document).on(
-				"click",
-				"*[data-href]",
-				function(e) {
-					e.stopPropagation();
-
-					if ($j(this).hasClass('new-open-window')) {
-						window.document.location = $j(this).find(
-								'.span-new-link').data('link-url');
-					} else {
-						window.document.location = $j(this).data('href');
-					}
-					return false;
-				});
-
-		$j(document).on(
-				"change",
-				".js-approval-all-checkbox",
-				function() {
-					$j('.js-checkbox-approval-lists').prop("checked",
-							$j(this).prop("checked") ? true : false);
-					$j("#countCheckApprovalLists").html(
-							$j('.js-checkbox-approval-lists').length);
-					if ($j(this).prop("checked")) {
-						$j(".js-approval-lists-first-type").hide();
-						$j(".js-approval-lists-second-type").show();
-					} else {
-						$j(".js-approval-lists-first-type").show();
-						$j(".js-approval-lists-second-type").hide();
-					}
-				});
-
-		$j(document).on("change", '.js-checkbox-approval-lists', function() {
-			var checked = false;
-			var checked_count = 0;
-			$j('.js-checkbox-approval-lists').each(function(index, value) {
-				if ($j(value).prop("checked")) {
-					checked = true;
-					checked_count++;
-				}
-			});
-
-			if (checked) {
-				$j(".js-approval-lists-first-type").hide();
-				$j(".js-approval-lists-second-type").show();
-				$j("#countCheckApprovalLists").html(checked_count);
-			} else {
-				$j(".js-approval-lists-first-type").show();
-				$j(".js-approval-lists-second-type").hide();
-			}
-		});
-
-		$j(document).on("mousedown", '.js-approval-li-forms', function(event) {
-			event.preventDefault();
-			$j('.js-approval-li-forms').removeClass("active");
-			$j(this).addClass("active");
-			$j('#anchorApprovalForm').html("보기: " + $j(this).text());
-			$j(".js-approval-forms-first-type-layer").toggleClass("show");
-			$j("#menuApprovalFormMode").toggleClass("show");
-			Approval.pushState({
-				"form_no" : $j(this).attr("value"),
-				'page' : '1'
-			});
-		});
-
-		$j(document).on(
-				"mousedown",
-				'.js-approval-li-liststatus',
-				function(event) {
-					event.preventDefault();
-					$j('.js-approval-li-liststatus').removeClass("active");
-					$j(this).addClass("active");
-					$j('#anchorApprovalListStatus').html(
-							"보기: " + $j(this).text());
-					$j(".js-approval-forms-first-type-layer").toggleClass(
-							"show");
-					$j("#menuApprovalListStatusMode").toggleClass("show");
-					Approval.pushState({
-						"document_list_status" : $j(this).attr("value"),
-						'page' : '1'
-					});
-				});
-
-		$j(document)
-				.on(
-						"click",
-						'.js-approval-btn-form-mode, .js-approval-btn-list-status-mode',
-						function() {
-							if ($j(this).parent().children("ul").hasClass(
-									"dropdown-menu")) {
-								$j(this).parent().children("ul").toggleClass(
-										"show");
-							}
-						});
-
-		$j(document).on("blur", '.js-approval-lists-first-type', function() {
-			if ($j('#menuApprovalFormMode').hasClass("show")) {
-				$j('#menuApprovalFormMode').toggleClass("show");
-			}
-			if ($j('#menuApprovalListStatusMode').hasClass("show")) {
-				$j('#menuApprovalListStatusMode').toggleClass("show");
-			}
-		});
-
-		$j(document).on("click", '.js-approval-order', function() {
-			var up_template = '<span class="up"></span>';
-			var down_template = '<span class="down"></span>';
-			var append_template = up_template;
-			var order_value = "ASC";
-
-			if ($j(this).children("span").hasClass("up")) {
-				append_template = down_template;
-				order_value = "DESC";
-			}
-
-			$j('.js-approval-order span').remove();
-
-			$j(this).append(append_template);
-
-			Approval.pushState({
-				"order_key" : $j(this).attr("value"),
-				"order_value" : order_value
-			});
-		});
-
-		$j(document).on(
-				"change",
-				"#textDateRange",
-				function() {
-					var textRange = $j(this).val();
-					var nDate = new Date();
-					var endDate = nDate.getFullYear() + '-'
-							+ ('0' + (nDate.getMonth() + 1)).slice(-2) + '-'
-							+ ('0' + (nDate.getDate())).slice(-2);
-
-					if (textRange === "10D") {
-						nDate.setDate(nDate.getDate() - 10);
-					} else if (textRange === "1M") {
-						nDate.setMonth(nDate.getMonth() - 1);
-					} else if (textRange === "6M") {
-						nDate.setMonth(nDate.getMonth() - 6);
-					} else if (textRange === "1Y") {
-						nDate.setFullYear(nDate.getFullYear() - 1);
-					} else if (textRange === "A") {
-						$j("#textStartDate").val('');
-						$j("#textEndDate").val('');
-						$j("#textStartDate").attr("disabled", true);
-						$j("#textEndDate").attr("disabled", true);
-						return;
-					}
-
-					$j("#textStartDate").attr("disabled", false);
-					$j("#textEndDate").attr("disabled", false);
-
-					// 직접 입력 선택 시 값 변경 없음
-					if (textRange === "DI")
-						return;
-
-					var startDate = nDate.getFullYear() + '-'
-							+ ('0' + (nDate.getMonth() + 1)).slice(-2) + '-'
-							+ ('0' + (nDate.getDate())).slice(-2);
-
-					$j("#textStartDate").val(startDate);
-					$j("#textEndDate").val(endDate);
-				});
-	</script> -->
 </div>

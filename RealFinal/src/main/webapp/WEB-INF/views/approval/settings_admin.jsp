@@ -25,7 +25,6 @@ $(document).ready(function() {
 		if($("input#inputApprovalManager").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalManager").val())
 			
 			$.ajax({
 				url: "<%= ctxPath%>/approval/searchEmpName.gw",
@@ -34,7 +33,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -79,7 +77,6 @@ $(document).ready(function() {
 		if($("input#inputApprovalManager").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalManager").val())
 			
 			$.ajax({
 				url: "<%= ctxPath%>/approval/searchEmpName.gw",
@@ -88,7 +85,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -142,7 +138,6 @@ $(document).ready(function() {
 		
 		<c:forEach var="adminVo" items="${requestScope.adminList}">
 			if(${adminVo.empId} == empId){
-				console.log("hi", ${adminVo.empId});
 				isExist = true;
 				
 			}
@@ -175,7 +170,6 @@ $(document).ready(function() {
 					async: false,
 					dataType: "json",
 					success: function(text) {
-						console.log(JSON.stringify(text));
 						if(text.isExist){
 							alert("다른 기능의 관리자 입니다. 삭제 후 시도하여 주세요.")
 							isAlreadyAdmin = true;
@@ -199,7 +193,6 @@ $(document).ready(function() {
 						async: false,
 						dataType: "json",
 						success: function(text) {
-							console.log(JSON.stringify(text));
 							if(text.isAdd){
 								$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
 							}else{
@@ -222,7 +215,6 @@ $(document).ready(function() {
 	
 	$("input[name='checkRead']").change(function(){
 		if($(this).is(':checked')){
-			console.log("체크했쪄요")
 			
 			// 체크 하였을 경우
 			if(confirm("열람 권한을 부여하시겠습니까?")){
@@ -236,7 +228,6 @@ $(document).ready(function() {
 					async: true,
 					dataType: "json",
 					success: function(text) {
-						console.log(JSON.stringify(text));
 						if(text.isUpdate){
 							$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
 							alert("열람권한이 부여되었습니다.")
@@ -251,7 +242,6 @@ $(document).ready(function() {
 				});
 			}
 		}else{
-			console.log("체크해제")
 			
 			// 체크해제 하였을 경우
 			if(confirm("열람 권한을 해제하시겠습니까?")){
@@ -265,7 +255,6 @@ $(document).ready(function() {
 					async: true,
 					dataType: "json",
 					success: function(text) {
-						console.log(JSON.stringify(text));
 						if(text.isUpdate){
 							$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
 							alert("열람권한이 해제되었습니다.")
@@ -308,7 +297,6 @@ function deleteAdmin(adminId){
 			async: true,
 			dataType: "json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isDelete){
 					$(location).attr('href', `<%= ctxPath %>/approval/settings/admin.gw`);
 				}else{
@@ -336,7 +324,6 @@ function showSettingHistory(){
 		async: true,
 		dataType: "json",
 		success: function(text) {
-			console.log(JSON.stringify(text));
 			
 			let html = '';
 			for(let i = 0 ; i < text.length ; i++){

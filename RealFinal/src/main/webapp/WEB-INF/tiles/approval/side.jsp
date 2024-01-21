@@ -65,14 +65,6 @@ $(document).ready(function() {
 	<!-- left -->
 	<div class="new-split-item left">
 		<div class="new-sidebar">
-			<!-- <div class="fixed-area">
-				<button type="button" class="hw-button plain" style="display: flex; height: 40px; align-items: center; justify-content: center;">
-					<i class="gi gi-info gt-mr-8" style="font-size: 16px;"></i>
-					<a href="https://www.hiworks.com/hiworks_beta/" target="_blank">
-						<span class="gt-pb-2">전자결재 매뉴얼</span>
-					</a>
-				</button>
-			</div> -->
 			<a href="<%=ctxPath%>/approval/document/write/index.gw">
 				<button type="button" class="main-btn">
 					<i class="gi gi-plus"></i>
@@ -239,14 +231,6 @@ $(document).ready(function() {
 						</a>
 					</li>
 
-					<%-- <li class="menu-item only">
-						<a href="<%= ctxPath %>/approval/person/settings" class="link gt-pl-10 ">
-							<span class="link-prefix-icon">
-								<i class="gis gi-cog"></i>
-							</span>
-							<span class="flex-truncate">설정</span>
-						</a>
-					</li> --%>
 
 					<hr>
 					
@@ -298,16 +282,6 @@ $(document).ready(function() {
 												</a>
 											</li>
 										</c:if>
-										<%-- <li class="menu-item">
-											<a href="<%= ctxPath %>/approval/settings/backup.gw" class="link ">
-												<span class="link-prefix-icon">
-													<i class="gis gi-approval-backup"></i>
-												</span>
-												<span class="flex-truncate">문서 백업</span>
-												<!-- 안 읽은 메일 갯수 표기 -->
-												<span class="several counting"></span>
-											</a>
-										</li> --%>
 										<li class="menu-item">
 											<a href="<%= ctxPath %>/approval/settings/admin.gw" id="settings_admin" class="link ">
 												<span class="link-prefix-icon">
@@ -321,39 +295,12 @@ $(document).ready(function() {
 							</div>
 						</li>
 					</c:if>
-					<!-- <li class="menu-item only">
-						<a href="/gabia.biz/accounting/basic/criteria" class="link gt-pl-10">
-							<span class="link-prefix-icon">
-								<i class="gis gi-history"></i>
-							</span>
-							<span class="flex-truncate">회계지원</span>
-						</a>
-					</li> -->
 				</ul>
 				
 			</nav>
 		</div>
 
 	</div>
-
-
-
-	<!-- <script>
-		var new_sidebar = {
-			toggleParent : function(menuID) {
-				var _this = $j("#" + menuID);
-				_this.closest('.el-collapse-item').toggleClass('is-active');
-				_this.siblings('.el-collapse-item__wrap').slideToggle(50);
-				(getCookie(menuID) === "1" || getCookie(menuID) === "") ? setCookie(
-						menuID, "0", 365)
-						: setCookie(menuID, "1", 365);
-			},
-		}
-
-		$j(document).ready(function() {
-			Approval.getApprvalCount();
-		});
-	</script> -->
 
 
 	<!-- left End -->

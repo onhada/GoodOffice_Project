@@ -6,7 +6,25 @@
 	String ctxPath = request.getContextPath();
 %>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	 
+ 	
+	$("button#settingBasicActionSubmitBtn").click(function(){
+		
+		if(Number($("select[name=security_level_a]").val()) >= Number($("select[name=security_level_b]").val())){
+			alert("A등급의 직위가 B등급의 직위보다 낮거나 같을 수 없습니다.")
+		}else{
+			const frm = document.settingBasicFrm;
+			frm.action = `<%= ctxPath %>/approval/settings/basic.gw`;
+			frm.method = "post";
+			frm.submit();
+		}
+		
+	})
+})
 
+</script>
 
 <div id="contents">
 	<div class="setting_title">
@@ -20,15 +38,6 @@
 					<!-- 보안 등급별 열람 설정 -->
 					<div class="cont-tit first after">
 						<strong class="fl">보안 등급별 열람 설정</strong>
-						<!-- <a href="수정필" class="icon question tipsIcon vm" style="margin-left: 5px">
-							<span class="blind">세부 설명</span>
-						</a>
-						<div class="tooltip hide" style="left: 0; top: 0; color: #676767;">
-							<div class="tooltip-box" style="left: 0; width: 460px;">
-								<p>A등급과 B등급 문서가 결재 완료된 후 기본 열람할 수 있는 직위 등급을 설정합니다.</p>
-								<p>직위 등급은 인사관리에서 설정합니다.</p>
-							</div>
-						</div> -->
 					</div>
 					<table class="tableType02">
 						<caption>보안 등급별 열람 설정</caption>
@@ -100,30 +109,6 @@
 
 	
 	
-<script type="text/javascript">
-$(document).ready(function() {
-	 
- 	console.log("hi");
- 	
-	$("button#settingBasicActionSubmitBtn").click(function(){
-		
-		if(Number($("select[name=security_level_a]").val()) >= Number($("select[name=security_level_b]").val())){
-			alert("A등급의 직위가 B등급의 직위보다 낮거나 같을 수 없습니다.")
-		}else{
-			const pathname = "/" + window.location.pathname.split("/")[1];
-			const origin = window.location.origin;
-			const contextPath = origin + pathname;
 
-			const frm = document.settingBasicFrm;
-			frm.action = contextPath + `/approval/settings/basic.gw`;
-			frm.method = "post";
-			frm.submit();
-		}
-		
-	})
-})
-
-</script>
 	
-<%-- <script src="<%=ctxPath%>/resources/js/approval/settings_basic.js" type="text/javascript"></script> --%>
 </div>

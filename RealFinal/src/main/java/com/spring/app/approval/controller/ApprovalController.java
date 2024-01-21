@@ -69,15 +69,17 @@ public class ApprovalController {
 	public ModelAndView approvalListAll_ing_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			SearchApprovalVO savo, @PathVariable String type) {
 
-		mav.addObject("type", type);
-
 		HttpSession session = req.getSession();
 
 		String searchType = savo.getSearchType();
 		String searchWord = savo.getSearchWord();
 		String orderType = savo.getOrderType();
 		String str_currentShowPageNo = savo.getCurrentShowPageNo();
-
+		
+		if(type == null || type.isEmpty()) {
+			type = "all";
+		}
+		
 		if (searchType == null) {
 			searchType = "";
 		}
@@ -110,26 +112,29 @@ public class ApprovalController {
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		List<ApprovalVO> ingList = new ArrayList<>();
 
+		int totalCount = 0; // 총 게시물 건수
+		
 		if ("A".equals(type)) {
-			ingList = service.getApprovalAllIngList_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalAllIngList(paraMap);
 		} else if ("W".equals(type)) {
-			ingList = service.getApprovalWaitingList_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalWaitingList(paraMap);
 		} else if ("V".equals(type)) {
-			ingList = service.getApprovalCheckList_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalCheckList(paraMap);
 		} else if ("E".equals(type)) {
-			ingList = service.getApprovalScheduleList_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalScheduleList(paraMap);
 		} else if ("P".equals(type)) {
-			ingList = service.getApprovalProgressList_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalProgressList(paraMap);
+		} else {
+			type = "A";
+			totalCount = service.getTotalCountApprovalAllIngList(paraMap);
 		}
 
-		int totalCount = 0; // 총 게시물 건수
+		
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
 
 		// 총 게시물 건수(totalCount)
-		totalCount = ingList.size();
-
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -153,23 +158,25 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		int startRno = ((currentShowPageNo - 1) * sizePerPage); // 시작 행번호
-		int endRno = startRno + sizePerPage; // 끝 행번호
-
-		if (totalCount == 0) {
-			mav.addObject("ingList", ingList);
+		int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호
+		int endRno = startRno + sizePerPage - 1; // 끝 행번호
+		
+		paraMap.put("startRno", String.valueOf(startRno));
+		paraMap.put("endRno", String.valueOf(endRno));
+		
+		
+		if ("A".equals(type)) {
+			ingList = service.getApprovalAllIngList_withSearchAndPaging(paraMap);
+		} else if ("W".equals(type)) {
+			ingList = service.getApprovalWaitingList_withSearchAndPaging(paraMap);
+		} else if ("V".equals(type)) {
+			ingList = service.getApprovalCheckList_withSearchAndPaging(paraMap);
+		} else if ("E".equals(type)) {
+			ingList = service.getApprovalScheduleList_withSearchAndPaging(paraMap);
+		} else if ("P".equals(type)) {
+			ingList = service.getApprovalProgressList_withSearchAndPaging(paraMap);
 		} else {
-			
-			if(ingList.size() < sizePerPage) {
-				mav.addObject("ingList", ingList);
-			}else {
-				if(ingList.size() < endRno) {
-					mav.addObject("ingList", ingList.subList(startRno, ingList.size()));
-				}else {
-					mav.addObject("ingList", ingList.subList(startRno, endRno));
-				}
-				
-			}
+			ingList = service.getApprovalAllIngList_withSearchAndPaging(paraMap);
 		}
 
 
@@ -224,6 +231,8 @@ public class ApprovalController {
 
 		pageBar += "</ul>";
 
+		mav.addObject("ingList", ingList);
+		mav.addObject("type", type);
 		mav.addObject("pageBar", pageBar);
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("orderType", orderType);
@@ -254,9 +263,7 @@ public class ApprovalController {
 	@GetMapping("/approval/document/box/{type}.gw")
 	public ModelAndView approvalDocumentBox_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
 			SearchApprovalVO savo, @PathVariable String type) {
-
-		mav.addObject("type", type);
-
+		
 		HttpSession session = req.getSession();
 
 		String searchType = savo.getSearchType();
@@ -266,6 +273,10 @@ public class ApprovalController {
 		String isViewAll = savo.getIsViewAll();
 		String str_currentShowPageNo = savo.getCurrentShowPageNo();
 
+		if(type == null || type.isEmpty()) {
+			type = "all";
+		}
+		
 		if (searchType == null) {
 			searchType = "";
 		}
@@ -309,37 +320,42 @@ public class ApprovalController {
 
 		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
 		List<ApprovalVO> boxList = new ArrayList<>();
-
+		
+		int totalCount = 0; // 총 게시물 건수
+		
 		if ("all".equals(type)) {
 			paraMap.put("isViewAll", savo.getIsViewAll());
-			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalAllBox(paraMap);
 			mav.addObject("isViewAll", savo.getIsViewAll());
+			
 		} else if ("writer".equals(type)) {
-			boxList = service.getApprovalWriterBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalWriterBox(paraMap);
+			
 		} else if ("approval".equals(type)) {
-			boxList = service.getApprovalApprovalBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalApprovalBox(paraMap);
+			
 		} else if ("refer".equals(type)) {
-			boxList = service.getApprovalReferBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalReferBox(paraMap);
+			
 		} else if ("read".equals(type)) {
-			boxList = service.getApprovalReadBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalReadBox(paraMap);
+			
 		} else if ("return".equals(type)) {
-			boxList = service.getApprovalReturnBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalReturnBox(paraMap);
+			
 		} else if ("temp".equals(type)) {
-			boxList = service.getApprovalTempBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalTempBox(paraMap);
+			
 		} else {
 			type = "all";
-			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
+			totalCount = service.getTotalCountApprovalAllBox(paraMap);
 		}
 
 
-		int totalCount = 0; // 총 게시물 건수
+		
 		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
 		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
 		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
-
-		// 총 게시물 건수(totalCount)
-		totalCount = boxList.size();
-
 
 		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
 
@@ -365,26 +381,37 @@ public class ApprovalController {
 
 		mav.addObject("currentShowPageNo", currentShowPageNo);
 
-		int startRno = ((currentShowPageNo - 1) * sizePerPage); // 시작 행번호
-		int endRno = startRno + sizePerPage; // 끝 행번호
+		int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호
+		int endRno = startRno + sizePerPage - 1; // 끝 행번호
 
-		if (totalCount == 0) {
-			mav.addObject("boxList", boxList);
+		paraMap.put("startRno", String.valueOf(startRno));
+		paraMap.put("endRno", String.valueOf(endRno));
+		
+		if ("all".equals(type)) {
+			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
+			
+		} else if ("writer".equals(type)) {
+			boxList = service.getApprovalWriterBox_withSearchAndPaging(paraMap);
+			
+		} else if ("approval".equals(type)) {
+			boxList = service.getApprovalApprovalBox_withSearchAndPaging(paraMap);
+			
+		} else if ("refer".equals(type)) {
+			boxList = service.getApprovalReferBox_withSearchAndPaging(paraMap);
+			
+		} else if ("read".equals(type)) {
+			boxList = service.getApprovalReadBox_withSearchAndPaging(paraMap);
+			
+		} else if ("return".equals(type)) {
+			boxList = service.getApprovalReturnBox_withSearchAndPaging(paraMap);
+			
+		} else if ("temp".equals(type)) {
+			boxList = service.getApprovalTempBox_withSearchAndPaging(paraMap);
+			
 		} else {
-			if(boxList.size() < sizePerPage) {
-				mav.addObject("boxList", boxList);
-			}else {
-				if(boxList.size() < endRno) {
-					mav.addObject("boxList", boxList.subList(startRno, boxList.size()));
-				}else {
-					mav.addObject("boxList", boxList.subList(startRno, endRno));
-				}
-				
-			}
+			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
 		}
 		
-
-
 		// === 페이지바 만들기 === //
 		int blockSize = 10;
 		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
@@ -403,6 +430,7 @@ public class ApprovalController {
 		if (pageNo != 1) {
 			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
 					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
+					+ "&isViewAll=" + isViewAll
 					+ "&currentShowPageNo=1&listType=" + listType + "'>[맨처음]</a></li>";
 			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
 					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
@@ -416,7 +444,7 @@ public class ApprovalController {
 						+ pageNo + "</li>";
 			} else {
 				pageBar += "<li style='display:inline-block; width:30px; font-size:12pt;'><a href='" + url
-						+ "?searchType=" + searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
+						+ "?searchType=" + searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&isViewAll=" + isViewAll
 						+ "&currentShowPageNo=" + pageNo + "&listType=" + listType + "'>" + pageNo + "</a></li>";
 			}
 
@@ -427,15 +455,17 @@ public class ApprovalController {
 		// === [다음][마지막] 만들기 === //
 		if (pageNo <= totalPage) {
 			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
-					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
+					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&isViewAll=" + isViewAll + "&currentShowPageNo="
 					+ pageNo + "&listType=" + listType + "'>[다음]</a></li>";
 			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
-					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
+					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&isViewAll=" + isViewAll + "&currentShowPageNo="
 					+ totalPage + "&listType=" + listType + "'>[마지막]</a></li>";
 		}
 
 		pageBar += "</ul>";
 
+		mav.addObject("boxList", boxList);
+		mav.addObject("type", type);
 		mav.addObject("pageBar", pageBar);
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("orderType", orderType);
@@ -1030,10 +1060,6 @@ public class ApprovalController {
 				}
 			}
 			
-			
-			
-			
-
 			if (formId == 109) {
 				// 재직증명서
 				mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
@@ -1725,9 +1751,6 @@ public class ApprovalController {
 			@PathVariable String writeType, Long approvalId) {
 		// 작성하기 및 수정
 
-		HttpSession session = req.getSession();
-		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
-
 		mav.addObject("formList", service.getFormNameListByWrite());
 		mav.addObject("securityLevelList", service.getSecurityLevelList());
 		mav.addObject("noSearch", true);
@@ -1735,36 +1758,6 @@ public class ApprovalController {
 		if ("index".equals(writeType)) {
 			// 작성하기 눌렀을 경우
 			mav.setViewName("document_write_index.approval");
-
-		} else if ("temp".equals(writeType)) {
-			// 임시저장에서 불러온 경우
-
-			Map<String, Long> paraMap = new HashMap<>();
-			paraMap.put("approvalId", approvalId);
-			paraMap.put("empId", loginUser.getEmpId());
-			Long formId = service.getFormId(approvalId);
-			paraMap.put("formId", formId);
-			// 보존 연한 정보
-			mav.addObject("preservationYear", service.getPreservationYear(formId));
-
-			if (formId == 109) {
-				// 재직증명서
-				mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
-				mav.setViewName("document_write_empProof.approval");
-			} else if (formId == 108) {
-				// 품의서 합의 부분
-				mav.addObject("agreeList", service.getProcedureTypeAgree(approvalId));
-				mav.setViewName("document_write_roundRobin.approval");
-			} else if (formId == 106) {
-				// 회람
-				mav.setViewName("document_write_circulation.approval");
-			} else if (formId == 107) {
-				// 업무연락
-				mav.setViewName("document_write_businessContact.approval");
-			}
-			ApprovalDetailVO approvalDetail = service.getApprovalDocumentView(paraMap);
-
-			mav.addObject("approvalDetail", approvalDetail);
 
 		} else {
 			// 에러 처리
@@ -1792,9 +1785,12 @@ public class ApprovalController {
 	*/
 	@PostMapping("/approval/document/write/{writeType}.gw")
 	public ModelAndView approvalDocumentWriteForm_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			@PathVariable String writeType, Long formId) {
+			@PathVariable String writeType, Long formId, Long approvalId) {
 		// 작성하기 및 수정
-
+		
+		HttpSession session = req.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+		
 		mav.addObject("formList", service.getFormNameListByWrite());
 		mav.addObject("securityLevelList", service.getSecurityLevelList());
 		mav.addObject("noSearch", true);
@@ -1822,6 +1818,35 @@ public class ApprovalController {
 
 				mav.setViewName("document_write_roundRobin.approval");
 			}
+			
+		} else if ("temp".equals(writeType)){
+			// 임시저장에서 불러온 경우
+			
+			Map<String, Long> paraMap = new HashMap<>();
+			paraMap.put("approvalId", approvalId);
+			paraMap.put("empId", loginUser.getEmpId());
+			paraMap.put("formId", formId);
+			// 보존 연한 정보
+			mav.addObject("preservationYear", service.getPreservationYear(formId));
+
+			if (formId == 109) {
+				// 재직증명서
+				mav.addObject("empProofDetail", service.getEmpProofDetail(paraMap));
+				mav.setViewName("document_write_empProof.approval");
+			} else if (formId == 108) {
+				// 품의서 합의 부분
+				mav.addObject("agreeList", service.getProcedureTypeAgree(approvalId));
+				mav.setViewName("document_write_roundRobin.approval");
+			} else if (formId == 106) {
+				// 회람
+				mav.setViewName("document_write_circulation.approval");
+			} else if (formId == 107) {
+				// 업무연락
+				mav.setViewName("document_write_businessContact.approval");
+			}
+			ApprovalDetailVO approvalDetail = service.getApprovalDocumentView(paraMap);
+
+			mav.addObject("approvalDetail", approvalDetail);
 
 		} else {
 			// 에러 처리
@@ -2196,8 +2221,8 @@ public class ApprovalController {
 			paraMap.put("reason", reason);
 
 			String submit = "";
-			if (req.getParameter("submit") != null) {
-				submit = req.getParameter("submit");
+			if (req.getParameter("toSubmit") != null) {
+				submit = req.getParameter("toSubmit");
 
 			}
 			paraMap.put("submit", submit);
@@ -2334,207 +2359,6 @@ public class ApprovalController {
 		return mav;
 	}
 
-	/** 
-	* @Method Name  : approvalViewImportantDoc 
-	* @작성일   : 2023. 12. 14
-	* @작성자   : 신예진 (yejjinny)  
-	* @변경이력  : 
-	* @Method 설명 : 전자결재_문서함_중요문서 보기
-	* @param req
-	* @param res
-	* @param mav
-	* @param type
-	* @param savo
-	* @return 
-	*/
-	@GetMapping("/approval/importantDoc/{viewType}.gw")
-	public ModelAndView approvalViewImportantDoc_AfterGetListSize(HttpServletRequest req, HttpServletResponse res, ModelAndView mav,
-			@PathVariable String type, SearchApprovalVO savo) {
-		mav.addObject("type", type);
-
-		HttpSession session = req.getSession();
-
-		String searchType = savo.getSearchType();
-		String searchWord = savo.getSearchWord();
-		String orderType = savo.getOrderType();
-		String isViewAll = savo.getIsViewAll();
-		String str_currentShowPageNo = savo.getCurrentShowPageNo();
-
-		if (searchType == null) {
-			searchType = "";
-		}
-
-		if (searchWord == null) {
-			searchWord = "";
-		}
-		
-		if (isViewAll == null) {
-			isViewAll = "0";
-		}
-
-		if ("approvalId".equals(searchType) && searchWord != "") {
-			searchType = "apd.fk_" + searchType;
-		}
-
-		if (orderType == null) {
-			orderType = "desc";
-		}
-
-		if (searchWord != null) {
-			searchWord = searchWord.trim();
-		}
-
-
-		Map<String, String> paraMap = new HashMap<>();
-		paraMap.put("searchType", searchType);
-		paraMap.put("searchWord", searchWord);
-		paraMap.put("orderType", orderType);
-		paraMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
-		paraMap.put("positionId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getFk_positionId()));
-
-		// 문서 종류 가져오기
-		mav.addObject("formList", service.getFormNameList());
-
-		// 페이징 처리한 글목록 가져오기(검색이 있든지, 검색이 없든지 모두 다 포함 한 것)
-		List<ApprovalVO> boxList = new ArrayList<>();
-
-		if ("all".equals(type)) {
-			paraMap.put("isViewAll", savo.getIsViewAll());
-			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
-			mav.addObject("isViewAll", savo.getIsViewAll());
-		} else if ("writer".equals(type)) {
-			boxList = service.getApprovalWriterBox_withSearchAndPaging(paraMap);
-		} else if ("approval".equals(type)) {
-			boxList = service.getApprovalApprovalBox_withSearchAndPaging(paraMap);
-		} else if ("refer".equals(type)) {
-			boxList = service.getApprovalReferBox_withSearchAndPaging(paraMap);
-		} else if ("read".equals(type)) {
-			boxList = service.getApprovalReadBox_withSearchAndPaging(paraMap);
-		} else if ("return".equals(type)) {
-			boxList = service.getApprovalReturnBox_withSearchAndPaging(paraMap);
-		} else if ("temp".equals(type)) {
-			boxList = service.getApprovalTempBox_withSearchAndPaging(paraMap);
-		} else {
-			type = "all";
-			boxList = service.getApprovalAllBox_withSearchAndPaging(paraMap);
-		}
-
-		if (!"".equals(searchType) && !"".equals(searchWord)) {
-			paraMap.put("searchType", "");
-			paraMap.put("searchWord", "");
-
-			mav.addObject("searchType", searchType);
-			mav.addObject("searchWord", searchWord);
-		}
-
-		int totalCount = 0; // 총 게시물 건수
-		int sizePerPage = 10; // 한 페이지당 보여줄 게시물 건수
-		int currentShowPageNo = 0; // 현재 보여주는 페이지 번호로서, 초기치로는 1페이지로 설정함.
-		int totalPage = 0; // 총 페이지수(웹브라우저상에서 보여줄 총 페이지 개수, 페이지바)
-
-		// 총 게시물 건수(totalCount)
-		totalCount = boxList.size();
-
-		totalPage = (int) Math.ceil((double) totalCount / sizePerPage);
-
-		if (str_currentShowPageNo == null) {
-			// 게시판에 보여지는 초기화면
-
-			currentShowPageNo = 1;
-		}
-
-		else {
-
-			try {
-				currentShowPageNo = Integer.parseInt(str_currentShowPageNo);
-
-				if (currentShowPageNo < 1 || currentShowPageNo > totalPage) {
-					currentShowPageNo = 1;
-				}
-
-			} catch (NumberFormatException e) {
-				currentShowPageNo = 1;
-			}
-		}
-
-		mav.addObject("currentShowPageNo", currentShowPageNo);
-
-		int startRno = ((currentShowPageNo - 1) * sizePerPage); // 시작 행번호
-		int endRno = startRno + sizePerPage; // 끝 행번호
-
-		if (totalCount == 0) {
-			mav.addObject("boxList", boxList);
-		} else {
-			mav.addObject("boxList", boxList.subList(startRno, endRno));
-		}
-
-
-		// === 페이지바 만들기 === //
-		int blockSize = 10;
-		// blockSize 는 1개 블럭(토막)당 보여지는 페이지번호의 개수이다.
-
-		int loop = 1;
-		/*
-		 * loop는 1부터 증가하여 1개 블럭을 이루는 페이지번호의 개수[ 지금은 10개(== blockSize) ] 까지만 증가하는 용도이다.
-		 */
-
-		int pageNo = ((currentShowPageNo - 1) / blockSize) * blockSize + 1;
-
-		String pageBar = "<ul style='list-style:none;'>";
-		String url = "";
-
-		// === [맨처음][이전] 만들기 === //
-		if (pageNo != 1) {
-			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
-					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
-					+ "&currentShowPageNo=1'>[맨처음]</a></li>";
-			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
-					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
-					+ (pageNo - 1) + "'>[이전]</a></li>";
-		}
-
-		while (!(loop > blockSize || pageNo > totalPage)) {
-
-			if (pageNo == currentShowPageNo) {
-				pageBar += "<li style='display:inline-block; width:30px; font-size:12pt; border:solid 1px gray; color:red; padding:2px 4px;'>"
-						+ pageNo + "</li>";
-			} else {
-				pageBar += "<li style='display:inline-block; width:30px; font-size:12pt;'><a href='" + url
-						+ "?searchType=" + searchType + "&searchWord=" + searchWord + "&orderType=" + orderType
-						+ "&currentShowPageNo=" + pageNo + "'>" + pageNo + "</a></li>";
-			}
-
-			loop++;
-			pageNo++;
-		} // end of while-------------------------
-
-		// === [다음][마지막] 만들기 === //
-		if (pageNo <= totalPage) {
-			pageBar += "<li style='display:inline-block; width:50px; font-size:12pt;'><a href='" + url + "?searchType="
-					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
-					+ pageNo + "'>[다음]</a></li>";
-			pageBar += "<li style='display:inline-block; width:70px; font-size:12pt;'><a href='" + url + "?searchType="
-					+ searchType + "&searchWord=" + searchWord + "&orderType=" + orderType + "&currentShowPageNo="
-					+ totalPage + "'>[마지막]</a></li>";
-		}
-
-		pageBar += "</ul>";
-
-		mav.addObject("pageBar", pageBar);
-		mav.addObject("totalCount", totalCount);
-		mav.addObject("orderType", orderType);
-
-		mav.setViewName("document_box_" + type + ".approval");
-
-		return mav;
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	/** 

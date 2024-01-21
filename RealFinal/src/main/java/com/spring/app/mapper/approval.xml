@@ -7,105 +7,6 @@
 <mapper namespace="approval">
 
 
-
-
-
-
-
-
-
-
-	<!-- 전자결재절차 테이블에서 유저의 사원번호가 등록되어있는 컬럼의 전자결재Id만 가져옴 !!!! -->
-	<select id="getApprovalAllIngList_withSearchAndPaging"
-		parameterType="HashMap"
-		resultType="com.spring.app.approval.domain.ApprovalVO">
-		select
-        apd.fk_approvalId,
-        a.title,
-        apd.procedureId,
-        e.empName,
-        ap.sequence,
-		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
-		ap.procedureType,
-		ap.status,
-		ap.isReadReturn,
-		nvl2(af.fk_approvalId, 1, 0) as isFile,
-		a.fk_formId
-		
-		from tbl_approval a
-        join 
-        (
-        select
-        fk_approvalId,
-        isReadReturn,
-        status,
-        procedureType,
-        sequence
-        from tbl_approvalProcedure
-        where fk_empId = #{empId}
-        order by fk_approvalId
-        ) ap
-        on a.approvalid = ap.fk_approvalid
-        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId
-        join tbl_employee e on apd.fk_empId = e.empId
-        join tbl_form f on a.fk_formId = f.formId
-		join tbl_team t on e.fk_teamId = t.teamId
-		join tbl_department d on t.fk_depid = d.depId
-		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
-		
-		where
-		isTemporary = 0
-		and isDelete = 0
-
-
-		<if test='searchType != "" and searchWord != ""'>
-			<if test='searchType == "all" and searchWord != ""'>
-				and (approvalId like '%'||lower(#{searchWord})||'%'
-				or title like
-				'%'||lower(#{searchWord})||'%'
-				or empName like
-				'%'||lower(#{searchWord})||'%'
-				or formName like
-				'%'||lower(#{searchWord})||'%'
-				or depName like
-				'%'||lower(#{searchWord})||'%' )
-			</if>
-
-			<if test='searchType != "all" and searchWord != ""'>
-				and ${searchType} like '%'||lower(#{searchWord})||'%'
-			</if>
-		</if>
-
-		<if test='orderType == "desc"'>order by draftDay desc</if>
-		<if test='orderType == "asc"'>order by draftDay asc</if>
-	</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<!-- 전자결재절차 테이블에서 해당 전자결재id 반려 존재여부 -->
 	<select id="hasReturn" parameterType="Long" resultType="int">
 
@@ -119,88 +20,6 @@
 
 	</select>
 
-
-
-	<!-- 유저보다 하위 신청 or 기안자들이 전원 승인하였는지 확인용 (0 : 전원 승인) -->
-	<select id="hasLowerApplicantAllAccept" parameterType="HashMap"
-		resultType="int">
-
-		select
-		count(*)
-		from
-		tbl_approvalProcedure
-		where fk_approvalId =
-		#{fk_approvalId}
-		and (procedureType = 1 or procedureType = 2)
-		and status != 2
-		and <![CDATA[ sequence < #{sequence} ]]>
-
-	</select>
-
-	<!-- 유저보다 하위 신청 or 기안자들 중에 대기가 있는지 확인 (0 : 대기 없음) -->
-	<select id="hasLowerApplicantWait" parameterType="HashMap"
-		resultType="int">
-		select
-		count(*)
-		from tbl_approvalProcedure
-		where fk_approvalId = #{fk_approvalId}
-		and (procedureType = 1 or procedureType = 2)
-		and status = 1
-		and <![CDATA[ sequence < #{sequence} ]]>
-	</select>
-
-	<!-- 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우 -->
-	<select id="hasUpperApplicantAndApproverWait"
-		parameterType="HashMap" resultType="int">
-
-		select count(*) from tbl_approvalProcedure where fk_approvalId =
-		#{fk_approvalId} and status = 1 and <![CDATA[ sequence > #{sequence} ]]>
-
-	</select>
-
-	<!-- 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0: 전원 승인) -->
-	<select id="hasLowerApplicantAndApproverAllAccept"
-		parameterType="HashMap" resultType="int">
-
-		select 
-		count(*) 
-		from tbl_approvalProcedure 
-		where fk_approvalId = #{fk_approvalId}
-		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 )
-		and status != 2
-		and <![CDATA[ sequence < #{sequence} ]]>
-
-	</select>
-
-
-	<!-- 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우 -->
-	<select id="hasLowerApplicantAndApproverWait"
-		parameterType="HashMap" resultType="int">
-		<![CDATA[ 
-		select 
-		count(*) 
-		from 
-		tbl_approvalProcedure 
-		where 
-		fk_approvalId = #{fk_approvalId} 
-		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4) 
-		and status = 1 and sequence < #{sequence} 
-		]]>
-	</select>
-
-	<!-- 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우 -->
-	<select id="hasUpperApproverWait" parameterType="HashMap"
-		resultType="int">
-
-		select 
-		count(*) 
-		from tbl_approvalProcedure
-		where fk_approvalId = #{fk_approvalId}
-		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4)
-		and status = 1
-		and <![CDATA[ sequence > #{sequence} ]]>
-
-	</select>
 
 	<!-- 결재자와 신청자, 합의자, 재무합의자가 모두 승인했는지 확인한다 (0일 경우 모두 승인, 그 외의 경우 모두 승인하기 전) -->
 	<select id="hasApplicantAndApproverAllAccept"
@@ -217,305 +36,6 @@
 
 	</select>
 
-
-	<!-- 하위 순서가 모두 승인했는지 확인한다 (0: 전원 승인) -->
-	<select id="hasUnderRankerAllAccept" parameterType="HashMap"
-		resultType="int">
-
-		select
-		count(*)
-		from
-		tbl_approvalProcedure
-		where fk_approvalId = #{fk_approvalId}
-		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 or procedureType = 8 or procedureType = 9)
-		and status != 2
-		and <![CDATA[ sequence < #{sequence} ]]>
-
-	</select>
-
-
-	<!-- 하위 순서 중에 대기가 있을 경우 -->
-	<select id="hasUnderRankerWait" parameterType="HashMap"
-		resultType="int">
-
-		select
-		count(*)
-		from
-		tbl_approvalProcedure
-		where fk_approvalId = #{fk_approvalId} 
-		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 or procedureType = 8 or procedureType = 9 )
-		and status = 1
-		and <![CDATA[ sequence < #{sequence} ]]>
-
-	</select>
-
-
-	<!-- 상위 순서 중에 대기가 있을 경우 -->
-	<select id="hasUpperRankerWait" parameterType="HashMap"
-		resultType="int">
-
-		select
-		count(*)
-		from
-		tbl_approvalProcedure
-		where fk_approvalId = #{fk_approvalId}
-		and (procedureType = 1 or procedureType = 2 or procedureType = 3 or procedureType = 4 or procedureType = 8 or procedureType = 9 )
-		and status = 1
-		and <![CDATA[ sequence > #{sequence} ]]>
-
-	</select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!-- 전자결재절차 테이블에서 유저의 사원번호가 등록되어있는 컬럼의 전자결재Id만 가져옴 !!!! -->
-	<select id="getApprovalAllBox_withViewAllAndSearchAndPaging"
-		parameterType="HashMap"
-		resultType="com.spring.app.approval.domain.ApprovalVO">
-		select
-		*
-		from
-		(
-		(
-		select
-        apd.procedureId,
-        apd.fk_approvalId,
-        a.title,
-        e.empName,
-		e.empId,
-        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
-		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
-        a.fk_formId,
-        formName,
-        s.fk_positionId,
-        ap.procedureType,
-		ap.status,
-        ap.sequence,
-		nvl2(importantApprovalId, 1, 0) as isImportant,
-		nvl2(af.fk_approvalId, 1, 0) as isFile,
-		ap.isReadReturn
-		
-		from tbl_approval a
-        join 
-        (
-        select
-        fk_approvalId,
-        fk_empId,
-        isReadReturn,
-        status,
-        procedureType,
-        sequence
-        from tbl_approvalProcedure
-        where fk_empId = #{empId}
-        order by fk_approvalId
-        ) ap
-        on a.approvalid = ap.fk_approvalid
-        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId
-        join tbl_employee e on apd.fk_empId = e.empId
-        join tbl_form f on a.fk_formId = f.formId
-		join tbl_team t on e.fk_teamId = t.teamId
-		join tbl_department d on t.fk_depid = d.depId
-		join tbl_security s on s.securityId = a.fk_securityId
-		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
-		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
-		
-		where
-		isTemporary = 0
-		and isDelete = 0
-		
-		<if test='searchType != "" and searchWord != ""'>
-			<if test='searchType == "all" and searchWord != ""'>
-				and (approvalId like '%'||lower(#{searchWord})||'%'
-				or title like
-				'%'||lower(#{searchWord})||'%'
-				or empName like
-				'%'||lower(#{searchWord})||'%'
-				or formName like
-				'%'||lower(#{searchWord})||'%'
-				or depName like
-				'%'||lower(#{searchWord})||'%' )
-			</if>
-
-			<if test='searchType != "all" and searchWord != ""'>
-				and ${searchType} like '%'||lower(#{searchWord})||'%'
-			</if>
-		</if>
-		)
-		union
-		(
-		select
-        apd.procedureId,
-        apd.fk_approvalId,
-        a.title,
-        e.empName,
-        e.empId,
-        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
-		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
-        a.fk_formId,
-        formName,
-        s.fk_positionId,
-        apd.procedureType,
-		apd.status,
-        apd.sequence,
-		nvl2(importantApprovalId, 1, 0) as isImportant,
-		nvl2(af.fk_approvalId, 1, 0) as isFile,
-		apd.isReadReturn
-		
-		from tbl_approval a
-        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId
-        join tbl_employee e on apd.fk_empId = e.empId
-        join tbl_form f on a.fk_formId = f.formId
-		join tbl_team t on e.fk_teamId = t.teamId
-		join tbl_department d on t.fk_depid = d.depId
-        join tbl_security s on s.securityId = a.fk_securityId
-		left join tbl_importantApproval ia on a.approvalId = ia.fk_approvalId
-		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
-
-		where
-		approvalId not in (select fk_approvalId from tbl_approvalProcedure where fk_empId = #{empId})
-		and sequence = 1
-		and s.securityLevel != 'S'
-		and isDelete = 0
-		
-		<if test='searchType != "" and searchWord != ""'>
-			<if test='searchType == "all" and searchWord != ""'>
-				and (approvalId like '%'||lower(#{searchWord})||'%'
-				or title like
-				'%'||lower(#{searchWord})||'%'
-				or empName like
-				'%'||lower(#{searchWord})||'%'
-				or formName like
-				'%'||lower(#{searchWord})||'%'
-				or depName like
-				'%'||lower(#{searchWord})||'%' )
-			</if>
-
-			<if test='searchType != "all" and searchWord != ""'>
-				and ${searchType} like '%'||lower(#{searchWord})||'%'
-			</if>
-		</if>
-		<!-- and <![CDATA[ e.fk_positionId < s.fk_positionId ]]> -->
-		)
-		)
-		<choose>
-			<when test='listType == "1"'>
-				where isImportant = 1
-			</when>
-			<when test='listType == "2"'>
-				where isFile = 1
-			</when>
-		</choose>
-		<if test='orderType == "desc"'>order by draftDay desc</if>
-		<if test='orderType == "asc"'>order by draftDay asc</if>
-
-
-	</select>
-	
-	
-	
-	<select id="getApprovalAllBox_withSearchAndPaging"
-		parameterType="HashMap"
-		resultType="com.spring.app.approval.domain.ApprovalVO">
-		select
-		procedureId,
-		apd.fk_approvalId,
-		title,
-		empName,
-		apd.fk_empId as empId,
-		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
-		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
-		fk_formId,
-		formName,
-		s.fk_positionId,
-		procedureType,
-		apd.status,
-		sequence,
-		nvl2(importantApprovalId, 1, 0) as isImportant,
-		nvl2(af.fk_approvalId, 1, 0) as isFile,
-		isReadReturn
-		
-		
-		from tbl_approval a
-		join tbl_employee e on a.fk_empId = e.empId
-		join tbl_approvalprocedure apd on a.approvalId = apd.fk_approvalId
-		join tbl_form f on a.fk_formId = f.formId
-		join tbl_team t on e.fk_teamId = t.teamId
-		join tbl_department d on t.fk_depid = d.depId
-		join tbl_security s on s.securityId = a.fk_securityId
-		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
-		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
-		
-		where
-		apd.fk_empId = #{empId}
-		and isTemporary = 0
-		and isDelete = 0
-		
-		<choose>
-			<when test='listType == "1"'>
-				and nvl2(importantApprovalId, 1, 0) = 1
-			</when>
-			<when test='listType == "2"'>
-				and nvl2(af.fk_approvalId, 1, 0) = 1
-			</when>
-		</choose>
-		
-		
-		
-		
-		<if test='searchType != "" and searchWord != ""'>
-			<if test='searchType == "all" and searchWord != ""'>
-				and (approvalId like '%'||lower(#{searchWord})||'%'
-				or title like
-				'%'||lower(#{searchWord})||'%'
-				or empName like
-				'%'||lower(#{searchWord})||'%'
-				or formName like
-				'%'||lower(#{searchWord})||'%'
-				or depName like
-				'%'||lower(#{searchWord})||'%' )
-			</if>
-
-			<if test='searchType != "all" and searchWord != ""'>
-				and ${searchType} like '%'||lower(#{searchWord})||'%'
-			</if>
-		</if>
-		<if test='orderType == "desc"'>order by draftDay desc</if>
-		<if test='orderType == "asc"'>order by draftDay asc</if>
-
-
-	</select>
 
 	<!-- 전원 승인했는지 확인 -->
 	<select id="hasAllAccept" parameterType="HashMap"
@@ -536,75 +56,67 @@
 	</select>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	<!-- 임시저장함 -->
 	<select id="getApprovalTempBox_withSearchAndPaging"
 		parameterType="HashMap"
 		resultType="com.spring.app.approval.domain.ApprovalVO">
 		select
-		apd.fk_approvalId,
-		title,
-		formName,
-		nvl2(importantApprovalId, 1, 0) as isImportant,
-		nvl2(fileId, 1, 0) as isFile
-		
-		from tbl_approval a
-		join tbl_employee e on a.fk_empId = e.empId
-		join tbl_approvalprocedure apd on a.approvalId = apd.fk_approvalId
-		join tbl_form f on a.fk_formId = f.formId
-		join tbl_team t on e.fk_teamId = t.teamId
-		join tbl_department d on t.fk_depid = d.depId
-		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
-		left join tbl_approvalFile af on apd.fk_approvalId = af.fk_approvalId
-		
-		where
-		apd.fk_empId = #{empId}
-		and ( procedureType = 1 or procedureType = 2 )
-		and sequence = 1
-		and isTemporary = 1
-		and isDelete = 0
-		<if test='searchType != "" and searchWord != ""'>
-			<if test='searchType == "all" and searchWord != ""'>
-				and (approvalId like '%'||lower(#{searchWord})||'%'
-				or title like
-				'%'||lower(#{searchWord})||'%'
-				or empName like
-				'%'||lower(#{searchWord})||'%'
-				or formName like
-				'%'||lower(#{searchWord})||'%'
-				or depName like
-				'%'||lower(#{searchWord})||'%' )
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+			apd.fk_approvalId,
+			title,
+			fk_formId,
+			formName,
+			nvl2(importantApprovalId, 1, 0) as isImportant,
+			nvl2(fileId, 1, 0) as isFile
+			
+			from tbl_approval a
+			join tbl_employee e on a.fk_empId = e.empId
+			join tbl_approvalprocedure apd on a.approvalId = apd.fk_approvalId
+			join tbl_form f on a.fk_formId = f.formId
+			join tbl_team t on e.fk_teamId = t.teamId
+			join tbl_department d on t.fk_depid = d.depId
+			left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
+			left join tbl_approvalFile af on apd.fk_approvalId = af.fk_approvalId
+			
+			where
+			apd.fk_empId = #{empId}
+			and ( procedureType = 1 or procedureType = 2 )
+			and sequence = 1
+			and isTemporary = 1
+			and isDelete = 0
+			<if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
 			</if>
-
-			<if test='searchType != "all" and searchWord != ""'>
-				and ${searchType} like '%'||lower(#{searchWord})||'%'
-			</if>
-		</if>
-		<choose>
-			<when test='listType == "1"'>
-				and nvl2(importantApprovalId, 1, 0) = 1
-			</when>
-			<when test='listType == "2"'>
-				and nvl2(af.fk_approvalId, 1, 0) = 1
-			</when>
-		</choose>
-		<if test='orderType == "desc"'>order by draftDay desc</if>
-		<if test='orderType == "asc"'>order by draftDay asc</if>
+			<choose>
+				<when test='listType == "1"'>
+					and nvl2(importantApprovalId, 1, 0) = 1
+				</when>
+				<when test='listType == "2"'>
+					and nvl2(af.fk_approvalId, 1, 0) = 1
+				</when>
+			</choose>
+		)
 	</select>
 
 
@@ -746,17 +258,16 @@
 		to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
 		to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
 		apd.status,
-		nvl2(fileId, 1, 0) as isFile
+		nvl2(af.fk_approvalId, 1, 0) as isFile
+		
 		from tbl_approval a
 		join tbl_approvalProcedure apd on a.approvalId = apd.fk_approvalId
 		join tbl_employee e on a.fk_empId = e.empId
 		join tbl_form f on a.fk_formId = f.formId
-		join tbl_team t on e.fk_teamId =
-		t.teamId
+		join tbl_team t on e.fk_teamId = t.teamId
 		join tbl_department d on t.fk_depid = d.depId
-		left join
-		tbl_approvalFile af on
-		apd.fk_approvalId = af.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
 		where isTemporary = 0
 		and sequence = 1
 		and isDelete = 0
@@ -1008,7 +519,6 @@
 		title,
 		
 		
-		<!-- 수정필  -->
 		<choose>
 		   <when test='formId == 101 or formId == 102 or formId == 104 or formId == 109'>
 		      reason as content,
@@ -1036,7 +546,6 @@
 		join tbl_department d on t.fk_depid = d.depId
 		join tbl_security s on a.fk_securityid = s.securityid
 		
-		<!-- 수정필  -->
 		<choose>
 		   <when test='formId == 101 or formId == 102'>
 		      left join tbl_workApplication wa on a.approvalid = wa.fk_approvalid
@@ -1924,4 +1433,3746 @@
 		where fk_formId = #{formId} and approvalId = #{approvalId}
 	</select>
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_진행 -->
+	<select id="getApprovalProgressList_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        a.approvalId as fk_approvalId,
+	        a.title,
+	        apd.procedureId,
+	        e.empName,
+	        ap.sequence,
+			to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			ap.procedureType,
+			'진행' as status, 
+			ap.isReadReturn,
+			nvl2(af.fk_approvalId, 1, 0) as isFile, 
+			a.fk_formId 
+	
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId}
+	        order by fk_approvalId
+	        ) ap 
+	        on a.approvalid = ap.fk_approvalid
+	        
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId
+	        join tbl_team t on e.fk_teamId = t.teamId
+	        join tbl_department d on t.fk_depId = d.depId
+	        join tbl_form f on a.fk_formId = f.formId 
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+			
+	        
+	        
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        and a.approvalId in (
+	            select
+	            apd.fk_approvalId
+	            from tbl_approvalProcedure apd
+	            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	            where
+	            apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+	            and ((apd2.status = 2 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)) or (apd2.status = 4 and apd2.procedureType = 5))
+	            and apd.fk_approvalId not in (
+	                select
+	                apd.fk_approvalId
+	                from tbl_approvalProcedure apd
+	                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                where
+	                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+	                group by apd.fk_approvalId
+	            )
+	            group by apd.fk_approvalId
+	        
+	        )
+	        
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+        )
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	<!-- 전자결재_진행중인 문서함_예정 -->
+	<select id="getApprovalScheduleList_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        a.approvalId as fk_approvalId, 
+	        a.title, 
+	        apd.procedureId, 
+	        e.empName, 
+	        ap.sequence, 
+			to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+			ap.procedureType, 
+			'예정' as status,
+			ap.isReadReturn, 
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			a.fk_formId 
+	        
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId}
+	        order by fk_approvalId
+	        ) ap 
+	        on a.approvalid = ap.fk_approvalid
+	        
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_team t on e.fk_teamId = t.teamId
+	        join tbl_department d on t.fk_depId = d.depId
+	        join tbl_form f on a.fk_formId = f.formId 
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        and a.approvalId in (
+	            select
+	            fk_approvalId
+	            from
+	            (
+	            
+	                (
+	                    select
+	                    apd.fk_approvalId
+	                    from tbl_approvalProcedure apd
+	                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                    where
+	                    <![CDATA[ apd.sequence < apd2.sequence ]]>
+	                    and apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+	                    and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+	                    group by apd.fk_approvalId
+	                )
+	                union
+	                (
+	                    select
+	                    apd.fk_approvalId
+	                    from tbl_approvalProcedure apd
+	                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                    where 
+	                    apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+	                    and apd2.status = 5 and apd2.procedureType = 5 
+	                    group by apd.fk_approvalId
+	                )
+	            )
+	            where fk_approvalId not in (
+	                select
+	                apd.fk_approvalId
+	                from tbl_approvalProcedure apd
+	                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                where
+	                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+	                group by apd.fk_approvalId
+	            )
+	        
+	        )
+	        
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+        )
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_확인 -->
+	<select id="getApprovalCheckList_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+			select
+			*
+			from
+			(
+			    select
+			    row_number() over(
+				<if test='orderType == "desc"'>order by draftDay desc</if>
+				<if test='orderType == "asc"'>order by draftDay asc</if>
+				) AS rno,
+			    fk_approvalId,
+	            title, 
+	            procedureId,
+	            empName,
+	            sequence, 
+	            draftDay, 
+	            procedureType, 
+	            status, 
+	            isReadReturn, 
+	            isFile,
+	            fk_formId 
+	            
+			    from
+			    (
+				    (
+			            select
+			            a.approvalId as fk_approvalId,
+			            a.title, 
+			            apd.procedureId,
+			            e.empName,
+			            ap.sequence, 
+			            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+			            ap.procedureType, 
+			            '확인' as status, 
+			            ap.isReadReturn, 
+			            nvl2(af.fk_approvalId, 1, 0) as isFile,
+			            a.fk_formId 
+			    
+			            
+			            from tbl_approval a
+			            join 
+			            (
+			            select
+			            fk_approvalId,
+			            isReadReturn,
+			            status,
+			            procedureType,
+			            sequence
+			            from tbl_approvalProcedure
+			            where fk_empId = #{empId}
+			            order by fk_approvalId
+			            ) ap
+			            on a.approvalid = ap.fk_approvalid
+			            
+			            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			            join tbl_employee e on apd.fk_empId = e.empId 
+			            join tbl_team t on e.fk_teamId = t.teamId
+			            join tbl_department d on t.fk_depId = d.depId 
+			            join tbl_form f on a.fk_formId = f.formId 
+			            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+			            
+			            where
+			            isTemporary = 0
+			            and isDelete = 0
+			            and a.approvalId in (
+			               
+			                select
+			                apd.fk_approvalId
+			                from tbl_approvalProcedure apd
+			                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                where
+			                apd.fk_approvalId not in 
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where 
+			                    apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			                    and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+			                    group by apd.fk_approvalId
+			                )
+			                and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+			                group by apd.fk_approvalId
+			            )
+			            <if test='searchType != "" and searchWord != ""'>
+							<if test='searchType == "all" and searchWord != ""'>
+								and (approvalId like '%'||lower(#{searchWord})||'%'
+								or title like
+								'%'||lower(#{searchWord})||'%'
+								or empName like
+								'%'||lower(#{searchWord})||'%'
+								or formName like
+								'%'||lower(#{searchWord})||'%'
+								or depName like
+								'%'||lower(#{searchWord})||'%' )
+							</if>
+				
+							<if test='searchType != "all" and searchWord != ""'>
+								and ${searchType} like '%'||lower(#{searchWord})||'%'
+							</if>
+						</if>
+		        	)
+		        
+		        	union
+		
+			        (
+			            select
+			            a.approvalId as fk_approvalId,
+			            a.title, 
+			            apd.procedureId,
+			            e.empName,
+			            ap.sequence, 
+			            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+			            ap.procedureType, 
+			            '반려' as status, 
+			            ap.isReadReturn, 
+			            nvl2(af.fk_approvalId, 1, 0) as isFile,
+			            a.fk_formId 
+			            
+			            from tbl_approval a
+			            join 
+			            (
+			            select
+			            fk_approvalId,
+			            isReadReturn,
+			            status,
+			            procedureType,
+			            sequence
+			            from tbl_approvalProcedure
+			            where fk_empId = #{empId}
+			            order by fk_approvalId
+			            ) ap
+			            on a.approvalid = ap.fk_approvalid
+			            
+			            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			            join tbl_employee e on apd.fk_empId = e.empId 
+			            join tbl_team t on e.fk_teamId = t.teamId
+	        			join tbl_department d on t.fk_depId = d.depId
+			            join tbl_form f on a.fk_formId = f.formId 
+			            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+			            
+			            where
+			            isTemporary = 0
+			            and isDelete = 0
+			            and a.approvalId in (
+			               
+			                select
+			                apd.fk_approvalId
+			                from tbl_approvalProcedure apd
+			                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                where
+			                apd.fk_approvalId in 
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where 
+			                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			                    and apd2.isReadReturn = 0 
+			                    group by apd.fk_approvalId
+			                )
+			                group by apd.fk_approvalId
+			            )
+			            <if test='searchType != "" and searchWord != ""'>
+							<if test='searchType == "all" and searchWord != ""'>
+								and (approvalId like '%'||lower(#{searchWord})||'%'
+								or title like
+								'%'||lower(#{searchWord})||'%'
+								or empName like
+								'%'||lower(#{searchWord})||'%'
+								or formName like
+								'%'||lower(#{searchWord})||'%'
+								or depName like
+								'%'||lower(#{searchWord})||'%' )
+							</if>
+				
+							<if test='searchType != "all" and searchWord != ""'>
+								and ${searchType} like '%'||lower(#{searchWord})||'%'
+							</if>
+						</if>
+			        )
+	        	)
+	        
+		        
+        )
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_대기 -->
+	<select id="getApprovalWaitingList_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        a.approvalId as fk_approvalId,
+	        a.title, 
+	        apd.procedureId,
+	        e.empName,
+	        ap.sequence, 
+			to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+			ap.procedureType, 
+			'대기' as status, 
+			ap.isReadReturn, 
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			a.fk_formId 
+	
+	        
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId}
+	        order by fk_approvalId
+	        ) ap
+	        on a.approvalid = ap.fk_approvalid
+	        
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_team t on e.fk_teamId = t.teamId
+	        join tbl_department d on t.fk_depId = d.depId
+	        join tbl_form f on a.fk_formId = f.formId 
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        and a.approvalId in (
+	           
+	           select
+	            apd.fk_approvalId
+	            from tbl_approvalProcedure apd
+	            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	            where
+	            apd.fk_approvalId not in 
+	            (
+	                select
+	                apd.fk_approvalId
+	                from tbl_approvalProcedure apd
+	                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                where 
+	                <![CDATA[ apd.sequence < apd2.sequence ]]>
+	                and apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+	                and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+	                group by apd.fk_approvalId
+	            )
+	            and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+	            group by apd.fk_approvalId
+	        )
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+        )
+        where rno between #{startRno} and #{endRno}
+        
+	</select>
+	
+	
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_전체 -->
+	<select id="getApprovalAllIngList_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+			fk_approvalId,
+	        title,
+	        procedureId,
+	        empName,
+	        sequence,
+			draftDay,
+			procedureType,
+			status, 
+			isReadReturn,
+			isFile, 
+			fk_formId 
+			
+			from
+			(
+				<!-- 진행 -->
+				(
+					select
+			        a.approvalId as fk_approvalId,
+			        a.title,
+			        apd.procedureId,
+			        e.empName,
+			        ap.sequence,
+					to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+					ap.procedureType,
+					'진행' as status, 
+					ap.isReadReturn,
+					nvl2(af.fk_approvalId, 1, 0) as isFile, 
+					a.fk_formId 
+			
+					from tbl_approval a
+			        join 
+			        (
+			        select
+			        fk_approvalId,
+			        isReadReturn,
+			        status,
+			        procedureType,
+			        sequence
+			        from tbl_approvalProcedure
+			        where fk_empId = #{empId}
+			        order by fk_approvalId
+			        ) ap 
+			        on a.approvalid = ap.fk_approvalid
+			        
+			        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			        join tbl_employee e on apd.fk_empId = e.empId
+			        join tbl_team t on e.fk_teamId = t.teamId
+			        join tbl_department d on t.fk_depId = d.depId
+			        join tbl_form f on a.fk_formId = f.formId 
+					left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+					
+					where
+					isTemporary = 0
+					and isDelete = 0
+			        and a.approvalId in (
+			            select
+			            apd.fk_approvalId
+			            from tbl_approvalProcedure apd
+			            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			            where
+			            apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			            and ((apd2.status = 2 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)) or (apd2.status = 4 and apd2.procedureType = 5))
+			            and apd.fk_approvalId not in (
+			                select
+			                apd.fk_approvalId
+			                from tbl_approvalProcedure apd
+			                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                where
+			                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+			                group by apd.fk_approvalId
+			            )
+			            group by apd.fk_approvalId
+			        
+			        )
+			        <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+				
+				
+				)
+				
+				union
+				
+				<!-- 예정 -->
+				(
+					select
+			        a.approvalId as fk_approvalId, 
+			        a.title, 
+			        apd.procedureId, 
+			        e.empName, 
+			        ap.sequence, 
+					to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+					ap.procedureType, 
+					'예정' as status,
+					ap.isReadReturn, 
+					nvl2(af.fk_approvalId, 1, 0) as isFile,
+					a.fk_formId 
+			        
+					from tbl_approval a
+			        join 
+			        (
+			        select
+			        fk_approvalId,
+			        isReadReturn,
+			        status,
+			        procedureType,
+			        sequence
+			        from tbl_approvalProcedure
+			        where fk_empId = #{empId}
+			        order by fk_approvalId
+			        ) ap 
+			        on a.approvalid = ap.fk_approvalid
+			        
+			        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			        join tbl_employee e on apd.fk_empId = e.empId 
+			        join tbl_team t on e.fk_teamId = t.teamId
+			        join tbl_department d on t.fk_depId = d.depId
+			        join tbl_form f on a.fk_formId = f.formId 
+					left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+					
+					where
+					isTemporary = 0
+					and isDelete = 0
+			        and a.approvalId in (
+			            select
+			            fk_approvalId
+			            from
+			            (
+			            
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where
+			                    <![CDATA[ apd.sequence < apd2.sequence ]]>
+			                    and apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+			                    and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+			                    group by apd.fk_approvalId
+			                )
+			                union
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where 
+			                    apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+			                    and apd2.status = 5 and apd2.procedureType = 5 
+			                    group by apd.fk_approvalId
+			                )
+			            )
+			            where fk_approvalId not in (
+			                select
+			                apd.fk_approvalId
+			                from tbl_approvalProcedure apd
+			                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                where
+			                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+			                group by apd.fk_approvalId
+			            )
+			        
+			        )
+			        <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+				)
+			
+			
+				union
+				<!-- 확인 -->
+				(
+					select
+				    *
+				    from
+				    (
+			            select
+			            a.approvalId as fk_approvalId,
+			            a.title, 
+			            apd.procedureId,
+			            e.empName,
+			            ap.sequence, 
+			            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+			            ap.procedureType, 
+			            '확인' as status, 
+			            ap.isReadReturn, 
+			            nvl2(af.fk_approvalId, 1, 0) as isFile,
+			            a.fk_formId 
+			    
+			            
+			            from tbl_approval a
+			            join 
+			            (
+			            select
+			            fk_approvalId,
+			            isReadReturn,
+			            status,
+			            procedureType,
+			            sequence
+			            from tbl_approvalProcedure
+			            where fk_empId = #{empId}
+			            order by fk_approvalId
+			            ) ap
+			            on a.approvalid = ap.fk_approvalid
+			            
+			            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			            join tbl_employee e on apd.fk_empId = e.empId 
+			            join tbl_team t on e.fk_teamId = t.teamId
+			        	join tbl_department d on t.fk_depId = d.depId
+			            join tbl_form f on a.fk_formId = f.formId 
+			            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+			            
+			            where
+			            isTemporary = 0
+			            and isDelete = 0
+			            and a.approvalId in (
+			               
+			                select
+			                apd.fk_approvalId
+			                from tbl_approvalProcedure apd
+			                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                where
+			                apd.fk_approvalId not in 
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where 
+			                    apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			                    and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+			                    group by apd.fk_approvalId
+			                )
+			                and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+			                group by apd.fk_approvalId
+			            )
+			            <if test='searchType != "" and searchWord != ""'>
+							<if test='searchType == "all" and searchWord != ""'>
+								and (approvalId like '%'||lower(#{searchWord})||'%'
+								or title like
+								'%'||lower(#{searchWord})||'%'
+								or empName like
+								'%'||lower(#{searchWord})||'%'
+								or formName like
+								'%'||lower(#{searchWord})||'%'
+								or depName like
+								'%'||lower(#{searchWord})||'%' )
+							</if>
+				
+							<if test='searchType != "all" and searchWord != ""'>
+								and ${searchType} like '%'||lower(#{searchWord})||'%'
+							</if>
+						</if>
+			        )
+			        
+			        union
+			
+			        (
+			            select
+			            a.approvalId as fk_approvalId,
+			            a.title, 
+			            apd.procedureId,
+			            e.empName,
+			            ap.sequence, 
+			            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+			            ap.procedureType, 
+			            '반려' as status, 
+			            ap.isReadReturn, 
+			            nvl2(af.fk_approvalId, 1, 0) as isFile,
+			            a.fk_formId 
+			            
+			            from tbl_approval a
+			            join 
+			            (
+			            select
+			            fk_approvalId,
+			            isReadReturn,
+			            status,
+			            procedureType,
+			            sequence
+			            from tbl_approvalProcedure
+			            where fk_empId = #{empId}
+			            order by fk_approvalId
+			            ) ap
+			            on a.approvalid = ap.fk_approvalid
+			            
+			            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			            join tbl_employee e on apd.fk_empId = e.empId 
+			            join tbl_team t on e.fk_teamId = t.teamId
+			        	join tbl_department d on t.fk_depId = d.depId
+			            join tbl_form f on a.fk_formId = f.formId 
+			            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+			            
+			            where
+			            isTemporary = 0
+			            and isDelete = 0
+			            and a.approvalId in (
+			               
+			                select
+			                apd.fk_approvalId
+			                from tbl_approvalProcedure apd
+			                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                where
+			                apd.fk_approvalId in 
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where 
+			                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			                    and apd2.isReadReturn = 0 
+			                    group by apd.fk_approvalId
+			                )
+			                group by apd.fk_approvalId
+			            )
+			            <if test='searchType != "" and searchWord != ""'>
+							<if test='searchType == "all" and searchWord != ""'>
+								and (approvalId like '%'||lower(#{searchWord})||'%'
+								or title like
+								'%'||lower(#{searchWord})||'%'
+								or empName like
+								'%'||lower(#{searchWord})||'%'
+								or formName like
+								'%'||lower(#{searchWord})||'%'
+								or depName like
+								'%'||lower(#{searchWord})||'%' )
+							</if>
+				
+							<if test='searchType != "all" and searchWord != ""'>
+								and ${searchType} like '%'||lower(#{searchWord})||'%'
+							</if>
+						</if>
+			        )
+				)
+				union
+				(
+					select
+			        a.approvalId as fk_approvalId,
+			        a.title, 
+			        apd.procedureId,
+			        e.empName,
+			        ap.sequence, 
+					to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+					ap.procedureType, 
+					'대기' as status, 
+					ap.isReadReturn, 
+					nvl2(af.fk_approvalId, 1, 0) as isFile,
+					a.fk_formId 
+			
+			        
+					from tbl_approval a
+			        join 
+			        (
+			        select
+			        fk_approvalId,
+			        isReadReturn,
+			        status,
+			        procedureType,
+			        sequence
+			        from tbl_approvalProcedure
+			        where fk_empId = #{empId}
+			        order by fk_approvalId
+			        ) ap
+			        on a.approvalid = ap.fk_approvalid
+			        
+			        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			        join tbl_employee e on apd.fk_empId = e.empId 
+			        join tbl_team t on e.fk_teamId = t.teamId
+			        join tbl_department d on t.fk_depId = d.depId
+			        join tbl_form f on a.fk_formId = f.formId 
+					left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+					
+					where
+					isTemporary = 0
+					and isDelete = 0
+			        and a.approvalId in (
+			           
+			           select
+			            apd.fk_approvalId
+			            from tbl_approvalProcedure apd
+			            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			            where
+			            apd.fk_approvalId not in 
+			            (
+			                select
+			                apd.fk_approvalId
+			                from tbl_approvalProcedure apd
+			                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                where 
+			                <![CDATA[ apd.sequence < apd2.sequence ]]>
+			                and apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			                and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+			                group by apd.fk_approvalId
+			            )
+			            and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+			            group by apd.fk_approvalId
+			            
+			        
+			        )
+			        <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+				
+				)
+			
+			)
+			
+		
+        )
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_진행 총 갯수 -->
+	<select id="getTotalCountApprovalProgressList" parameterType="HashMap"
+		resultType="int">
+		select
+        count(*)
+
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId}
+        order by fk_approvalId
+        ) ap 
+        on a.approvalid = ap.fk_approvalid
+        
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId
+        join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+        join tbl_form f on a.fk_formId = f.formId 
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+		
+        
+        
+		where
+		isTemporary = 0
+		and isDelete = 0
+        and a.approvalId in (
+            select
+            apd.fk_approvalId
+            from tbl_approvalProcedure apd
+            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+            where
+            apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+            and ((apd2.status = 2 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)) or (apd2.status = 4 and apd2.procedureType = 5))
+            and apd.fk_approvalId not in (
+                select
+                apd.fk_approvalId
+                from tbl_approvalProcedure apd
+                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                where
+                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+                group by apd.fk_approvalId
+            )
+            group by apd.fk_approvalId
+        
+        )
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+	</select>
+	
+	
+	<!-- 전자결재_진행중인 문서함_예정 총 갯수 -->
+	<select id="getTotalCountApprovalScheduleList" parameterType="HashMap"
+		resultType="int">
+		select
+        count(*)
+        
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId}
+        order by fk_approvalId
+        ) ap 
+        on a.approvalid = ap.fk_approvalid
+        
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+        join tbl_form f on a.fk_formId = f.formId 
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        and a.approvalId in (
+            select
+            fk_approvalId
+            from
+            (
+            
+                (
+                    select
+                    apd.fk_approvalId
+                    from tbl_approvalProcedure apd
+                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                    where
+                    <![CDATA[ apd.sequence < apd2.sequence ]]>
+                    and apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+                    and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+                    group by apd.fk_approvalId
+                )
+                union
+                (
+                    select
+                    apd.fk_approvalId
+                    from tbl_approvalProcedure apd
+                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                    where 
+                    apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+                    and apd2.status = 5 and apd2.procedureType = 5 
+                    group by apd.fk_approvalId
+                )
+            )
+            where fk_approvalId not in (
+                select
+                apd.fk_approvalId
+                from tbl_approvalProcedure apd
+                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                where
+                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+                group by apd.fk_approvalId
+            )
+        
+        )
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+	</select>
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_확인 총 갯수 -->
+	<select id="getTotalCountApprovalCheckList" parameterType="HashMap"
+		resultType="int">
+		
+		    select
+		    count(*)
+		    
+		    from
+		    (
+	            (
+		            select
+		            a.approvalId as fk_approvalId,
+		            a.title, 
+		            apd.procedureId,
+		            e.empName,
+		            ap.sequence, 
+		            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+		            ap.procedureType, 
+		            '확인' as status, 
+		            ap.isReadReturn, 
+		            nvl2(af.fk_approvalId, 1, 0) as isFile,
+		            a.fk_formId 
+		    
+		            
+		            from tbl_approval a
+		            join 
+		            (
+		            select
+		            fk_approvalId,
+		            isReadReturn,
+		            status,
+		            procedureType,
+		            sequence
+		            from tbl_approvalProcedure
+		            where fk_empId = #{empId}
+		            order by fk_approvalId
+		            ) ap
+		            on a.approvalid = ap.fk_approvalid
+		            
+		            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		            join tbl_employee e on apd.fk_empId = e.empId 
+			        join tbl_team t on e.fk_teamId = t.teamId
+					join tbl_department d on t.fk_depid = d.depId
+		            join tbl_form f on a.fk_formId = f.formId 
+		            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+		            
+		            where
+		            isTemporary = 0
+		            and isDelete = 0
+		            and a.approvalId in (
+		               
+		                select
+		                apd.fk_approvalId
+		                from tbl_approvalProcedure apd
+		                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                where
+		                apd.fk_approvalId not in 
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where 
+		                    apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		                    and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+		                    group by apd.fk_approvalId
+		                )
+		                and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+		                group by apd.fk_approvalId
+		            )
+		            <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+	        	)
+	        
+		        union
+		
+		        (
+		            select
+		            a.approvalId as fk_approvalId,
+		            a.title, 
+		            apd.procedureId,
+		            e.empName,
+		            ap.sequence, 
+		            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+		            ap.procedureType, 
+		            '반려' as status, 
+		            ap.isReadReturn, 
+		            nvl2(af.fk_approvalId, 1, 0) as isFile,
+		            a.fk_formId 
+		            
+		            from tbl_approval a
+		            join 
+		            (
+		            select
+		            fk_approvalId,
+		            isReadReturn,
+		            status,
+		            procedureType,
+		            sequence
+		            from tbl_approvalProcedure
+		            where fk_empId = #{empId}
+		            order by fk_approvalId
+		            ) ap
+		            on a.approvalid = ap.fk_approvalid
+		            
+		            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		            join tbl_employee e on apd.fk_empId = e.empId 
+		            join tbl_team t on e.fk_teamId = t.teamId
+					join tbl_department d on t.fk_depid = d.depId
+		            join tbl_form f on a.fk_formId = f.formId 
+		            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+		            
+		            where
+		            isTemporary = 0
+		            and isDelete = 0
+		            and a.approvalId in (
+		               
+		                select
+		                apd.fk_approvalId
+		                from tbl_approvalProcedure apd
+		                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                where
+		                apd.fk_approvalId in 
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where 
+		                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		                    and apd2.isReadReturn = 0 
+		                    group by apd.fk_approvalId
+		                )
+		                group by apd.fk_approvalId
+		            )
+		            <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+	        	)	
+        	)
+        
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_대기 총 갯수 -->
+	<select id="getTotalCountApprovalWaitingList" parameterType="HashMap"
+		resultType="int">
+		
+		
+		select
+        count(*)
+
+        
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId}
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+        join tbl_form f on a.fk_formId = f.formId 
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        and a.approvalId in (
+           
+           select
+            apd.fk_approvalId
+            from tbl_approvalProcedure apd
+            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+            where
+            apd.fk_approvalId not in 
+            (
+                select
+                apd.fk_approvalId
+                from tbl_approvalProcedure apd
+                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                where 
+                <![CDATA[ apd.sequence < apd2.sequence ]]>
+                and apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+                and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+                group by apd.fk_approvalId
+            )
+            and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+            group by apd.fk_approvalId
+            
+        
+        )
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+	
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+        
+	</select>
+	
+	
+	
+	
+	
+	<!-- 전자결재_진행중인 문서함_전체 총 갯수-->
+	<select id="getTotalCountApprovalAllIngList" parameterType="HashMap"
+		resultType="int">
+		
+		select
+		count(*)
+		
+		from
+		(
+			(
+				select
+		        a.approvalId as fk_approvalId,
+		        a.title,
+		        apd.procedureId,
+		        e.empName,
+		        ap.sequence,
+				to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+				ap.procedureType,
+				'진행' as status, 
+				ap.isReadReturn,
+				nvl2(af.fk_approvalId, 1, 0) as isFile, 
+				a.fk_formId 
+		
+				from tbl_approval a
+		        join 
+		        (
+		        select
+		        fk_approvalId,
+		        isReadReturn,
+		        status,
+		        procedureType,
+		        sequence
+		        from tbl_approvalProcedure
+		        where fk_empId = #{empId}
+		        order by fk_approvalId
+		        ) ap 
+		        on a.approvalid = ap.fk_approvalid
+		        
+		        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		        join tbl_employee e on apd.fk_empId = e.empId
+		        join tbl_team t on e.fk_teamId = t.teamId
+				join tbl_department d on t.fk_depid = d.depId
+		        join tbl_form f on a.fk_formId = f.formId 
+				left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+				
+				where
+				isTemporary = 0
+				and isDelete = 0
+		        and a.approvalId in (
+		            select
+		            apd.fk_approvalId
+		            from tbl_approvalProcedure apd
+		            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		            where
+		            apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		            and ((apd2.status = 2 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)) or (apd2.status = 4 and apd2.procedureType = 5))
+		            and apd.fk_approvalId not in (
+		                select
+		                apd.fk_approvalId
+		                from tbl_approvalProcedure apd
+		                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                where
+		                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+		                group by apd.fk_approvalId
+		            )
+		            group by apd.fk_approvalId
+		        
+		        )
+		        <if test='searchType != "" and searchWord != ""'>
+					<if test='searchType == "all" and searchWord != ""'>
+						and (approvalId like '%'||lower(#{searchWord})||'%'
+						or title like
+						'%'||lower(#{searchWord})||'%'
+						or empName like
+						'%'||lower(#{searchWord})||'%'
+						or formName like
+						'%'||lower(#{searchWord})||'%'
+						or depName like
+						'%'||lower(#{searchWord})||'%' )
+					</if>
+		
+					<if test='searchType != "all" and searchWord != ""'>
+						and ${searchType} like '%'||lower(#{searchWord})||'%'
+					</if>
+				</if>
+			
+			)
+			
+			union
+			
+			(
+				select
+		        a.approvalId as fk_approvalId, 
+		        a.title, 
+		        apd.procedureId, 
+		        e.empName, 
+		        ap.sequence, 
+				to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+				ap.procedureType, 
+				'예정' as status,
+				ap.isReadReturn, 
+				nvl2(af.fk_approvalId, 1, 0) as isFile,
+				a.fk_formId 
+		        
+				from tbl_approval a
+		        join 
+		        (
+		        select
+		        fk_approvalId,
+		        isReadReturn,
+		        status,
+		        procedureType,
+		        sequence
+		        from tbl_approvalProcedure
+		        where fk_empId = #{empId}
+		        order by fk_approvalId
+		        ) ap 
+		        on a.approvalid = ap.fk_approvalid
+		        
+		        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		        join tbl_employee e on apd.fk_empId = e.empId 
+		        join tbl_team t on e.fk_teamId = t.teamId
+				join tbl_department d on t.fk_depid = d.depId
+		        join tbl_form f on a.fk_formId = f.formId 
+				left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+				
+				where
+				isTemporary = 0
+				and isDelete = 0
+		        and a.approvalId in (
+		            select
+		            fk_approvalId
+		            from
+		            (
+		            
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where
+		                    <![CDATA[ apd.sequence < apd2.sequence ]]>
+		                    and apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+		                    and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+		                    group by apd.fk_approvalId
+		                )
+		                union
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where 
+		                    apd.status = 1 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+		                    and apd2.status = 5 and apd2.procedureType = 5 
+		                    group by apd.fk_approvalId
+		                )
+		            )
+		            where fk_approvalId not in (
+		                select
+		                apd.fk_approvalId
+		                from tbl_approvalProcedure apd
+		                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                where
+		                apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7) 
+		                group by apd.fk_approvalId
+		            )
+		        
+		        )
+		        <if test='searchType != "" and searchWord != ""'>
+					<if test='searchType == "all" and searchWord != ""'>
+						and (approvalId like '%'||lower(#{searchWord})||'%'
+						or title like
+						'%'||lower(#{searchWord})||'%'
+						or empName like
+						'%'||lower(#{searchWord})||'%'
+						or formName like
+						'%'||lower(#{searchWord})||'%'
+						or depName like
+						'%'||lower(#{searchWord})||'%' )
+					</if>
+		
+					<if test='searchType != "all" and searchWord != ""'>
+						and ${searchType} like '%'||lower(#{searchWord})||'%'
+					</if>
+				</if>
+			)
+		
+		
+			union
+			(
+				select
+			    *
+			    from
+			    (
+		            select
+		            a.approvalId as fk_approvalId,
+		            a.title, 
+		            apd.procedureId,
+		            e.empName,
+		            ap.sequence, 
+		            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+		            ap.procedureType, 
+		            '확인' as status, 
+		            ap.isReadReturn, 
+		            nvl2(af.fk_approvalId, 1, 0) as isFile,
+		            a.fk_formId 
+		    
+		            
+		            from tbl_approval a
+		            join 
+		            (
+		            select
+		            fk_approvalId,
+		            isReadReturn,
+		            status,
+		            procedureType,
+		            sequence
+		            from tbl_approvalProcedure
+		            where fk_empId = #{empId}
+		            order by fk_approvalId
+		            ) ap
+		            on a.approvalid = ap.fk_approvalid
+		            
+		            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		            join tbl_employee e on apd.fk_empId = e.empId 
+		            join tbl_team t on e.fk_teamId = t.teamId
+					join tbl_department d on t.fk_depid = d.depId
+		            join tbl_form f on a.fk_formId = f.formId 
+		            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+		            
+		            where
+		            isTemporary = 0
+		            and isDelete = 0
+		            and a.approvalId in (
+		               
+		                select
+		                apd.fk_approvalId
+		                from tbl_approvalProcedure apd
+		                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                where
+		                apd.fk_approvalId not in 
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where 
+		                    apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		                    and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+		                    group by apd.fk_approvalId
+		                )
+		                and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7)
+		                group by apd.fk_approvalId
+		            )
+		            <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+		        )
+		        
+		        union
+		
+		        (
+		            select
+		            a.approvalId as fk_approvalId,
+		            a.title, 
+		            apd.procedureId,
+		            e.empName,
+		            ap.sequence, 
+		            to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+		            ap.procedureType, 
+		            '반려' as status, 
+		            ap.isReadReturn, 
+		            nvl2(af.fk_approvalId, 1, 0) as isFile,
+		            a.fk_formId 
+		            
+		            from tbl_approval a
+		            join 
+		            (
+		            select
+		            fk_approvalId,
+		            isReadReturn,
+		            status,
+		            procedureType,
+		            sequence
+		            from tbl_approvalProcedure
+		            where fk_empId = #{empId}
+		            order by fk_approvalId
+		            ) ap
+		            on a.approvalid = ap.fk_approvalid
+		            
+		            join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		            join tbl_employee e on apd.fk_empId = e.empId 
+		            join tbl_team t on e.fk_teamId = t.teamId
+					join tbl_department d on t.fk_depid = d.depId
+		            join tbl_form f on a.fk_formId = f.formId 
+		            left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+		            
+		            where
+		            isTemporary = 0
+		            and isDelete = 0
+		            and a.approvalId in (
+		               
+		                select
+		                apd.fk_approvalId
+		                from tbl_approvalProcedure apd
+		                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                where
+		                apd.fk_approvalId in 
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where 
+		                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		                    and apd2.isReadReturn = 0 
+		                    group by apd.fk_approvalId
+		                )
+		                group by apd.fk_approvalId
+		            )
+		            <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+		        )
+			)
+			union
+			(
+				select
+		        a.approvalId as fk_approvalId,
+		        a.title, 
+		        apd.procedureId,
+		        e.empName,
+		        ap.sequence, 
+				to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay, 
+				ap.procedureType, 
+				'대기' as status, 
+				ap.isReadReturn, 
+				nvl2(af.fk_approvalId, 1, 0) as isFile,
+				a.fk_formId 
+		
+		        
+				from tbl_approval a
+		        join 
+		        (
+		        select
+		        fk_approvalId,
+		        isReadReturn,
+		        status,
+		        procedureType,
+		        sequence
+		        from tbl_approvalProcedure
+		        where fk_empId = #{empId}
+		        order by fk_approvalId
+		        ) ap
+		        on a.approvalid = ap.fk_approvalid
+		        
+		        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		        join tbl_employee e on apd.fk_empId = e.empId
+		        join tbl_team t on e.fk_teamId = t.teamId
+				join tbl_department d on t.fk_depid = d.depId 
+		        join tbl_form f on a.fk_formId = f.formId 
+				left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId 
+				
+				where
+				isTemporary = 0
+				and isDelete = 0
+		        and a.approvalId in (
+		           
+		           select
+		            apd.fk_approvalId
+		            from tbl_approvalProcedure apd
+		            join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		            where
+		            apd.fk_approvalId not in 
+		            (
+		                select
+		                apd.fk_approvalId
+		                from tbl_approvalProcedure apd
+		                join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                where 
+		                <![CDATA[ apd.sequence < apd2.sequence ]]>
+		                and apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		                and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+		                group by apd.fk_approvalId
+		            )
+		            and apd2.status = 1 and (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+		            group by apd.fk_approvalId
+		            
+		        
+		        )
+		        <if test='searchType != "" and searchWord != ""'>
+					<if test='searchType == "all" and searchWord != ""'>
+						and (approvalId like '%'||lower(#{searchWord})||'%'
+						or title like
+						'%'||lower(#{searchWord})||'%'
+						or empName like
+						'%'||lower(#{searchWord})||'%'
+						or formName like
+						'%'||lower(#{searchWord})||'%'
+						or depName like
+						'%'||lower(#{searchWord})||'%' )
+					</if>
+		
+					<if test='searchType != "all" and searchWord != ""'>
+						and ${searchType} like '%'||lower(#{searchWord})||'%'
+					</if>
+				</if>
+			
+			)
+		
+		)
+		
+        
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_전체 + 열람보기 -->
+	<select id="getApprovalAllBox_withViewAllAndSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+			procedureId,
+	        fk_approvalId,
+	        title, 
+	        empName, 
+			empId, 
+	        draftDay,
+			completeDay,
+	        fk_formId,
+	        formName,
+	        fk_positionId, 
+	        procedureType, 
+			status, 
+	        sequence, 
+			isImportant,
+			isFile,
+			isReadReturn
+			from
+			
+			(
+			    (
+			        select
+			        apd.procedureId,
+			        a.approvalId as fk_approvalId,
+			        a.title, 
+			        e.empName, 
+					e.empId, 
+			        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+					to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+			        a.fk_formId,
+			        formName,
+			        s.fk_positionId, 
+			        ap.procedureType, 
+					ap.status, 
+			        ap.sequence, 
+					nvl2(importantApprovalId, 1, 0) as isImportant,
+					nvl2(af.fk_approvalId, 1, 0) as isFile,
+					ap.isReadReturn 
+					
+					from tbl_approval a
+			        join 
+			        (
+			        select
+			        fk_approvalId,
+			        fk_empId,
+			        isReadReturn,
+			        status,
+			        procedureType,
+			        sequence
+			        from tbl_approvalProcedure
+			        where fk_empId = #{empId} 
+			        order by fk_approvalId
+			        ) ap
+			        on a.approvalid = ap.fk_approvalid
+			        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			        join tbl_employee e on apd.fk_empId = e.empId 
+			        join tbl_form f on a.fk_formId = f.formId
+					join tbl_team t on e.fk_teamId = t.teamId
+					join tbl_department d on t.fk_depid = d.depId
+					join tbl_security s on s.securityId = a.fk_securityId
+					left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+					left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+					
+					where
+					isTemporary = 0
+					and isDelete = 0
+			        
+			        and approvalId in 
+			        (
+			            select
+			            fk_approvalId
+			            from
+			            (
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where 
+			                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			                    and apd2.isReadReturn = 1
+			                    group by apd.fk_approvalId
+			                )
+			                
+			                union
+			                
+			                (
+			                    select
+			                    apd.fk_approvalId
+			                    from tbl_approvalProcedure apd
+			                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                    where
+			                    apd.fk_approvalId not in 
+			                    (
+			                        select
+			                        apd.fk_approvalId
+			                        from tbl_approvalProcedure apd
+			                        join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			                        where 
+			                        
+			                        (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+			                        
+			                        or
+			                        (apd.status = 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+			                        and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7))
+			                        
+			                        group by apd.fk_approvalId
+			                    )
+			                    group by apd.fk_approvalId
+			                )
+			            )
+			        )
+			        <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+					<choose>
+						<when test='listType == "1"'>
+							and nvl2(importantApprovalId, 1, 0) = 1
+						</when>
+						<when test='listType == "2"'>
+							and nvl2(af.fk_approvalId, 1, 0) = 1
+						</when>
+					</choose>
+			
+			    )
+			    
+			    union
+			    
+			    (
+			    
+			        select
+			        apd.procedureId,
+			        a.approvalId as fk_approvalId, 
+			        a.title,
+			        e.empName, 
+			        e.empId, 
+			        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			        to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+			        a.fk_formId,
+			        formName,
+			        s.fk_positionId, 
+			        '열람' as procedureType, 
+			        apd.status,
+			        apd.sequence, 
+			        nvl2(importantApprovalId, 1, 0) as isImportant, 
+			        nvl2(af.fk_approvalId, 1, 0) as isFile,
+			        apd.isReadReturn 
+			        
+			        from tbl_approval a
+			        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+			        join tbl_employee e on apd.fk_empId = e.empId
+			        join tbl_form f on a.fk_formId = f.formId
+			        join tbl_team t on e.fk_teamId = t.teamId
+			        join tbl_department d on t.fk_depid = d.depId
+			        join tbl_security s on s.securityId = a.fk_securityId
+			        left join tbl_importantApproval ia on a.approvalId = ia.fk_approvalId
+			        left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+			        
+			        where
+			        approvalId not in (select fk_approvalId from tbl_approvalProcedure where fk_empId = #{empId}) 
+			        and sequence = 1
+			        and s.securityLevel != 'S' 
+			        and isDelete = 0
+			        
+			        and <![CDATA[ (select fk_positionId from tbl_employee where empId = #{empId}) <= s.fk_positionId  ]]> 
+			        and completeDay is not null
+			        <if test='searchType != "" and searchWord != ""'>
+						<if test='searchType == "all" and searchWord != ""'>
+							and (approvalId like '%'||lower(#{searchWord})||'%'
+							or title like
+							'%'||lower(#{searchWord})||'%'
+							or empName like
+							'%'||lower(#{searchWord})||'%'
+							or formName like
+							'%'||lower(#{searchWord})||'%'
+							or depName like
+							'%'||lower(#{searchWord})||'%' )
+						</if>
+			
+						<if test='searchType != "all" and searchWord != ""'>
+							and ${searchType} like '%'||lower(#{searchWord})||'%'
+						</if>
+					</if>
+					<choose>
+						<when test='listType == "1"'>
+							and nvl2(importantApprovalId, 1, 0) = 1
+						</when>
+						<when test='listType == "2"'>
+							and nvl2(af.fk_approvalId, 1, 0) = 1
+						</when>
+					</choose>
+			    )
+			)
+		)
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_전체  -->
+	<select id="getApprovalAllBox_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+        select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        apd.procedureId,
+	        a.approvalId as fk_approvalId,
+	        a.title,
+	        e.empName,
+			e.empId, 
+	        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+	        a.fk_formId,
+	        formName,
+	        s.fk_positionId, 
+	        ap.procedureType, 
+			ap.status, 
+	        ap.sequence,
+			nvl2(importantApprovalId, 1, 0) as isImportant,
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			ap.isReadReturn
+			
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        fk_empId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId} 
+	        order by fk_approvalId
+	        ) ap
+	        on a.approvalid = ap.fk_approvalid
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_form f on a.fk_formId = f.formId
+			join tbl_team t on e.fk_teamId = t.teamId
+			join tbl_department d on t.fk_depid = d.depId
+			join tbl_security s on s.securityId = a.fk_securityId
+			left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        
+	        and approvalId in 
+	        (
+	            select
+	            fk_approvalId
+	            from
+	            (
+	                (
+	                    select
+	                    apd.fk_approvalId
+	                    from tbl_approvalProcedure apd
+	                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                    where 
+	                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+	                    and apd2.isReadReturn = 1
+	                    group by apd.fk_approvalId
+	                )
+	                
+	                union
+	                
+	                (
+	                    select
+	                    apd.fk_approvalId
+	                    from tbl_approvalProcedure apd
+	                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                    where
+	                    apd.fk_approvalId not in 
+	                    (
+	                        select
+	                        apd.fk_approvalId
+	                        from tbl_approvalProcedure apd
+	                        join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                        where 
+	                        
+	                        (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+	                        
+	                        or
+	                        (apd.status = 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+	                        and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7))
+	                        
+	                        group by apd.fk_approvalId
+	                    )
+	                    group by apd.fk_approvalId
+	                )
+	            )
+	        )
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+			<choose>
+				<when test='listType == "1"'>
+					and nvl2(importantApprovalId, 1, 0) = 1
+				</when>
+				<when test='listType == "2"'>
+					and nvl2(af.fk_approvalId, 1, 0) = 1
+				</when>
+			</choose>
+		)
+		where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_기안  -->
+	<select id="getApprovalWriterBox_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+        select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        apd.procedureId,
+	        a.approvalId as fk_approvalId,
+	        a.title, 
+	        e.empName,
+			e.empId, 
+	        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+	        a.fk_formId,
+	        formName,
+	        s.fk_positionId, 
+	        ap.procedureType, 
+			ap.status, 
+	        ap.sequence, 
+			nvl2(importantApprovalId, 1, 0) as isImportant,
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			ap.isReadReturn 
+			
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        fk_empId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId} 
+	        order by fk_approvalId
+	        ) ap
+	        on a.approvalid = ap.fk_approvalid
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_form f on a.fk_formId = f.formId
+			join tbl_team t on e.fk_teamId = t.teamId
+			join tbl_department d on t.fk_depid = d.depId
+			join tbl_security s on s.securityId = a.fk_securityId
+			left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        
+	        and approvalId in 
+	        (
+	            select
+				apd.fk_approvalId
+				from tbl_approvalProcedure apd
+				join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+				where 
+				apd.fk_approvalId not in 
+				(
+				    select
+				    apd.fk_approvalId
+				    from tbl_approvalProcedure apd
+				    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+				    where 
+				    apd.fk_approvalId in (
+				        select
+				        apd.fk_approvalId
+				        from tbl_approvalProcedure apd
+				        join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+				        where (apd2.procedureType = 1 or apd2.procedureType = 2)
+				        group by apd.fk_approvalId
+				    )
+				    and
+				    (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+				    group by apd.fk_approvalId
+				)  
+				and (apd2.procedureType = 1 or apd2.procedureType = 2)
+				group by apd.fk_approvalId
+	        )
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+			<choose>
+				<when test='listType == "1"'>
+					and nvl2(importantApprovalId, 1, 0) = 1
+				</when>
+				<when test='listType == "2"'>
+					and nvl2(af.fk_approvalId, 1, 0) = 1
+				</when>
+			</choose>
+		)
+		where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_결재  -->
+	<select id="getApprovalApprovalBox_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        apd.procedureId,
+	        a.approvalId as fk_approvalId,
+	        a.title, 
+	        e.empName,
+			e.empId,
+	        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+	        a.fk_formId,
+	        formName,
+	        s.fk_positionId, 
+	        ap.procedureType, 
+			ap.status, 
+	        ap.sequence, 
+			nvl2(importantApprovalId, 1, 0) as isImportant,
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			ap.isReadReturn
+			
+			from tbl_approval a
+	        join 
+	        (
+		        select
+		        fk_approvalId,
+		        fk_empId,
+		        isReadReturn,
+		        status,
+		        procedureType,
+		        sequence
+		        from tbl_approvalProcedure
+		        where fk_empId = #{empId} 
+		        order by fk_approvalId
+	        ) ap
+	        on a.approvalid = ap.fk_approvalid
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_form f on a.fk_formId = f.formId
+			join tbl_team t on e.fk_teamId = t.teamId
+			join tbl_department d on t.fk_depid = d.depId
+			join tbl_security s on s.securityId = a.fk_securityId
+			left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        
+	        and approvalId in 
+	        (
+	            select
+	            apd.fk_approvalId
+	            from tbl_approvalProcedure apd
+	            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	            where 
+	            apd.fk_approvalId not in 
+	            (
+	                select
+	                apd.fk_approvalId
+	                from tbl_approvalProcedure apd
+	                join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                where 
+	                apd.fk_approvalId in (
+	                    select
+	                    apd.fk_approvalId
+	                    from tbl_approvalProcedure apd
+	                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                    where (apd2.procedureType = 3 or apd2.procedureType = 4 or apd2.procedureType = 8 or apd2.procedureType = 9)
+	                    group by apd.fk_approvalId
+	                )
+	                and
+	                (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+	                group by apd.fk_approvalId
+	            )  
+	            and (apd2.procedureType = 3 or apd2.procedureType = 4 or apd2.procedureType = 8 or apd2.procedureType = 9)
+	            group by apd.fk_approvalId
+	        )
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+			<choose>
+				<when test='listType == "1"'>
+					and nvl2(importantApprovalId, 1, 0) = 1
+				</when>
+				<when test='listType == "2"'>
+					and nvl2(af.fk_approvalId, 1, 0) = 1
+				</when>
+			</choose>
+		)
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_참조  -->
+	<select id="getApprovalReadBox_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        apd.procedureId,
+	        a.approvalId as fk_approvalId,
+	        a.title, 
+	        e.empName,
+			e.empId, 
+	        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+	        a.fk_formId,
+	        formName,
+	        s.fk_positionId, 
+	        ap.procedureType, 
+			ap.status, 
+	        ap.sequence, 
+			nvl2(importantApprovalId, 1, 0) as isImportant,
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			ap.isReadReturn 
+			
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        fk_empId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId} 
+	        order by fk_approvalId
+	        ) ap
+	        on a.approvalid = ap.fk_approvalid
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_form f on a.fk_formId = f.formId
+			join tbl_team t on e.fk_teamId = t.teamId
+			join tbl_department d on t.fk_depid = d.depId
+			join tbl_security s on s.securityId = a.fk_securityId
+			left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        
+	        and approvalId in 
+	        (
+	            select
+	            apd.fk_approvalId
+	            from tbl_approvalProcedure apd
+	            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	            where 
+	            apd.fk_approvalId not in 
+	            (
+	                select
+	                apd.fk_approvalId
+	                from tbl_approvalProcedure apd
+	                join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                where 
+	                apd.fk_approvalId in (
+	                    select
+	                    apd.fk_approvalId
+	                    from tbl_approvalProcedure apd
+	                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                    where apd2.procedureType = 5 and apd2.status = 4
+	                    group by apd.fk_approvalId
+	                )
+	                and
+	                (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+	                group by apd.fk_approvalId
+	            )  
+	            and apd2.procedureType = 5 and apd2.status = 4
+	            group by apd.fk_approvalId
+	        )
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+			<choose>
+				<when test='listType == "1"'>
+					and nvl2(importantApprovalId, 1, 0) = 1
+				</when>
+				<when test='listType == "2"'>
+					and nvl2(af.fk_approvalId, 1, 0) = 1
+				</when>
+			</choose>
+		)
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	<!-- 전자결재_문서함_수신, 수신참조  -->
+	<select id="getApprovalReferBox_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        apd.procedureId,
+	        a.approvalId as fk_approvalId,
+	        a.title, 
+	        e.empName,
+			e.empId, 
+	        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+	        a.fk_formId,
+	        formName,
+	        s.fk_positionId, 
+	        ap.procedureType, 
+			ap.status, 
+	        ap.sequence, 
+			nvl2(importantApprovalId, 1, 0) as isImportant,
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			ap.isReadReturn 
+			
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        fk_empId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId} 
+	        order by fk_approvalId
+	        ) ap
+	        on a.approvalid = ap.fk_approvalid
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_form f on a.fk_formId = f.formId
+			join tbl_team t on e.fk_teamId = t.teamId
+			join tbl_department d on t.fk_depid = d.depId
+			join tbl_security s on s.securityId = a.fk_securityId
+			left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        
+	        and approvalId in 
+	        (
+	            select
+	            apd.fk_approvalId
+	            from tbl_approvalProcedure apd
+	            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	            where 
+	            apd.fk_approvalId not in 
+	            (
+	                select
+	                apd.fk_approvalId
+	                from tbl_approvalProcedure apd
+	                join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                where 
+	                apd.fk_approvalId in (
+	                    select
+	                    apd.fk_approvalId
+	                    from tbl_approvalProcedure apd
+	                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	                    where (apd2.procedureType = 6 or apd2.procedureType = 7) and apd2.status = 4
+	                    group by apd.fk_approvalId
+	                )
+	                and
+	                (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+	                group by apd.fk_approvalId
+	            )  
+	            and (apd2.procedureType = 6 or apd2.procedureType = 7) and apd2.status = 4
+	            group by apd.fk_approvalId
+	        )	
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+			<choose>
+				<when test='listType == "1"'>
+					and nvl2(importantApprovalId, 1, 0) = 1
+				</when>
+				<when test='listType == "2"'>
+					and nvl2(af.fk_approvalId, 1, 0) = 1
+				</when>
+			</choose>
+		)	
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_반려 -->
+	<select id="getApprovalReturnBox_withSearchAndPaging" parameterType="HashMap"
+		resultType="com.spring.app.approval.domain.ApprovalVO">
+		
+		select
+		*
+		from
+		(
+			select
+			row_number() over(
+			<if test='orderType == "desc"'>order by draftDay desc</if>
+			<if test='orderType == "asc"'>order by draftDay asc</if>
+			) AS rno,
+	        apd.procedureId,
+	        a.approvalId as fk_approvalId,
+	        a.title, 
+	        e.empName,
+			e.empId, 
+	        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+			to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+	        a.fk_formId,
+	        formName,
+	        s.fk_positionId, 
+	        ap.procedureType, 
+			ap.status, 
+	        ap.sequence, 
+			nvl2(importantApprovalId, 1, 0) as isImportant,
+			nvl2(af.fk_approvalId, 1, 0) as isFile,
+			ap.isReadReturn 
+			
+			from tbl_approval a
+	        join 
+	        (
+	        select
+	        fk_approvalId,
+	        fk_empId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId} 
+	        order by fk_approvalId
+	        ) ap
+	        on a.approvalid = ap.fk_approvalid
+	        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+	        join tbl_employee e on apd.fk_empId = e.empId 
+	        join tbl_form f on a.fk_formId = f.formId
+			join tbl_team t on e.fk_teamId = t.teamId
+			join tbl_department d on t.fk_depid = d.depId
+			join tbl_security s on s.securityId = a.fk_securityId
+			left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+			left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+			
+			where
+			isTemporary = 0
+			and isDelete = 0
+	        
+	        and approvalId in 
+	        (
+	            select
+	            apd.fk_approvalId
+	            from tbl_approvalProcedure apd
+	            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+	            where 
+	            apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+	            and 
+	            (
+		            (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+		            or
+		            (apd2.status = 4 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7))
+	            )
+	            
+	            and apd2.isReadReturn = 1
+	            
+	            group by apd.fk_approvalId
+	        )
+	        <if test='searchType != "" and searchWord != ""'>
+				<if test='searchType == "all" and searchWord != ""'>
+					and (approvalId like '%'||lower(#{searchWord})||'%'
+					or title like
+					'%'||lower(#{searchWord})||'%'
+					or empName like
+					'%'||lower(#{searchWord})||'%'
+					or formName like
+					'%'||lower(#{searchWord})||'%'
+					or depName like
+					'%'||lower(#{searchWord})||'%' )
+				</if>
+	
+				<if test='searchType != "all" and searchWord != ""'>
+					and ${searchType} like '%'||lower(#{searchWord})||'%'
+				</if>
+			</if>
+			<choose>
+				<when test='listType == "1"'>
+					and nvl2(importantApprovalId, 1, 0) = 1
+				</when>
+				<when test='listType == "2"'>
+					and nvl2(af.fk_approvalId, 1, 0) = 1
+				</when>
+			</choose>
+		)
+        where rno between #{startRno} and #{endRno}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_전체 + 열람보기 총 갯수 -->
+	<select id="getTotalCountApprovalAllBox_withViewAll" parameterType="HashMap"
+		resultType="int">
+		select
+		count(*)
+		from
+		
+		(
+		    (
+		        select
+		        apd.procedureId,
+		        a.approvalId as fk_approvalId,
+		        a.title, 
+		        e.empName, 
+				e.empId, 
+		        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+				to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+		        a.fk_formId,
+		        formName,
+		        s.fk_positionId, 
+		        ap.procedureType, 
+				ap.status, 
+		        ap.sequence, 
+				nvl2(importantApprovalId, 1, 0) as isImportant,
+				nvl2(af.fk_approvalId, 1, 0) as isFile,
+				ap.isReadReturn 
+				
+				from tbl_approval a
+		        join 
+		        (
+		        select
+		        fk_approvalId,
+		        fk_empId,
+		        isReadReturn,
+		        status,
+		        procedureType,
+		        sequence
+		        from tbl_approvalProcedure
+		        where fk_empId = #{empId} 
+		        order by fk_approvalId
+		        ) ap
+		        on a.approvalid = ap.fk_approvalid
+		        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		        join tbl_employee e on apd.fk_empId = e.empId 
+		        join tbl_form f on a.fk_formId = f.formId
+				join tbl_team t on e.fk_teamId = t.teamId
+				join tbl_department d on t.fk_depid = d.depId
+				join tbl_security s on s.securityId = a.fk_securityId
+				left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+				left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+				
+				where
+				isTemporary = 0
+				and isDelete = 0
+		        
+		        and approvalId in 
+		        (
+		            select
+		            fk_approvalId
+		            from
+		            (
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where 
+		                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		                    and apd2.isReadReturn = 1
+		                    group by apd.fk_approvalId
+		                )
+		                
+		                union
+		                
+		                (
+		                    select
+		                    apd.fk_approvalId
+		                    from tbl_approvalProcedure apd
+		                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                    where
+		                    apd.fk_approvalId not in 
+		                    (
+		                        select
+		                        apd.fk_approvalId
+		                        from tbl_approvalProcedure apd
+		                        join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+		                        where 
+		                        
+		                        (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+		                        
+		                        or
+		                        (apd.status = 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+		                        and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7))
+		                        
+		                        group by apd.fk_approvalId
+		                    )
+		                    group by apd.fk_approvalId
+		                )
+		            )
+		        )
+		        <if test='searchType != "" and searchWord != ""'>
+					<if test='searchType == "all" and searchWord != ""'>
+						and (approvalId like '%'||lower(#{searchWord})||'%'
+						or title like
+						'%'||lower(#{searchWord})||'%'
+						or empName like
+						'%'||lower(#{searchWord})||'%'
+						or formName like
+						'%'||lower(#{searchWord})||'%'
+						or depName like
+						'%'||lower(#{searchWord})||'%' )
+					</if>
+		
+					<if test='searchType != "all" and searchWord != ""'>
+						and ${searchType} like '%'||lower(#{searchWord})||'%'
+					</if>
+				</if>
+				<choose>
+					<when test='listType == "1"'>
+						and nvl2(importantApprovalId, 1, 0) = 1
+					</when>
+					<when test='listType == "2"'>
+						and nvl2(af.fk_approvalId, 1, 0) = 1
+					</when>
+				</choose>
+		
+		    )
+		    
+		    union
+		    
+		    (
+		    
+		        select
+		        apd.procedureId,
+		        a.approvalId as fk_approvalId, 
+		        a.title,
+		        e.empName, 
+		        e.empId, 
+		        to_char(draftDay, 'yyyy-mm-dd hh24:mi:ss') as draftDay,
+		        to_char(completeDay, 'yyyy-mm-dd hh24:mi:ss') as completeDay,
+		        a.fk_formId,
+		        formName,
+		        s.fk_positionId, 
+		        '열람' as procedureType, 
+		        apd.status,
+		        apd.sequence, 
+		        nvl2(importantApprovalId, 1, 0) as isImportant, 
+		        nvl2(af.fk_approvalId, 1, 0) as isFile,
+		        apd.isReadReturn 
+		        
+		        from tbl_approval a
+		        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+		        join tbl_employee e on apd.fk_empId = e.empId
+		        join tbl_form f on a.fk_formId = f.formId
+		        join tbl_team t on e.fk_teamId = t.teamId
+		        join tbl_department d on t.fk_depid = d.depId
+		        join tbl_security s on s.securityId = a.fk_securityId
+		        left join tbl_importantApproval ia on a.approvalId = ia.fk_approvalId
+		        left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		        
+		        where
+		        approvalId not in (select fk_approvalId from tbl_approvalProcedure where fk_empId = #{empId}) 
+		        and sequence = 1
+		        and s.securityLevel != 'S' 
+		        and isDelete = 0
+		        
+		        and <![CDATA[ (select fk_positionId from tbl_employee where empId = #{empId}) <= s.fk_positionId  ]]> 
+		        and completeDay is not null
+		        <if test='searchType != "" and searchWord != ""'>
+					<if test='searchType == "all" and searchWord != ""'>
+						and (approvalId like '%'||lower(#{searchWord})||'%'
+						or title like
+						'%'||lower(#{searchWord})||'%'
+						or empName like
+						'%'||lower(#{searchWord})||'%'
+						or formName like
+						'%'||lower(#{searchWord})||'%'
+						or depName like
+						'%'||lower(#{searchWord})||'%' )
+					</if>
+		
+					<if test='searchType != "all" and searchWord != ""'>
+						and ${searchType} like '%'||lower(#{searchWord})||'%'
+					</if>
+				</if>
+				<choose>
+					<when test='listType == "1"'>
+						and nvl2(importantApprovalId, 1, 0) = 1
+					</when>
+					<when test='listType == "2"'>
+						and nvl2(af.fk_approvalId, 1, 0) = 1
+					</when>
+				</choose>
+		    )
+		)
+		
+        
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_전체 총 갯수 -->
+	<select id="getTotalCountApprovalAllBox" parameterType="HashMap"
+		resultType="int">
+        select
+        count(*)
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        fk_empId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId} 
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        
+        and approvalId in 
+        (
+            select
+            fk_approvalId
+            from
+            (
+                (
+                    select
+                    apd.fk_approvalId
+                    from tbl_approvalProcedure apd
+                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                    where 
+                    apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+                    and apd2.isReadReturn = 1
+                    group by apd.fk_approvalId
+                )
+                
+                union
+                
+                (
+                    select
+                    apd.fk_approvalId
+                    from tbl_approvalProcedure apd
+                    join (select fk_approvalId, sequence, status, procedureType from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                    where
+                    apd.fk_approvalId not in 
+                    (
+                        select
+                        apd.fk_approvalId
+                        from tbl_approvalProcedure apd
+                        join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                        where 
+                        
+                        (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+                        
+                        or
+                        (apd.status = 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+                        and apd2.status = 5 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7))
+                        
+                        group by apd.fk_approvalId
+                    )
+                    group by apd.fk_approvalId
+                )
+            )
+        )
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+	</select>
+	
+	
+	<!-- 전자결재_문서함_기안 총 갯수  -->
+	<select id="getTotalCountApprovalWriterBox" parameterType="HashMap"
+		resultType="int">
+        select
+        count(*)
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        fk_empId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId} 
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        
+        and approvalId in 
+        (
+            select
+			apd.fk_approvalId
+			from tbl_approvalProcedure apd
+			join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			where 
+			apd.fk_approvalId not in 
+			(
+			    select
+			    apd.fk_approvalId
+			    from tbl_approvalProcedure apd
+			    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			    where 
+			    apd.fk_approvalId in (
+			        select
+			        apd.fk_approvalId
+			        from tbl_approvalProcedure apd
+			        join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+			        where (apd2.procedureType = 1 or apd2.procedureType = 2)
+			        group by apd.fk_approvalId
+			    )
+			    and
+			    (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+			    group by apd.fk_approvalId
+			)  
+			and (apd2.procedureType = 1 or apd2.procedureType = 2)
+			group by apd.fk_approvalId
+        )
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 전자결재_문서함_결재 총 갯수 -->
+	<select id="getTotalCountApprovalApprovalBox" parameterType="HashMap"
+		resultType="int">
+		
+		select
+        count(*)
+		
+		from tbl_approval a
+        join 
+        (
+	        select
+	        fk_approvalId,
+	        fk_empId,
+	        isReadReturn,
+	        status,
+	        procedureType,
+	        sequence
+	        from tbl_approvalProcedure
+	        where fk_empId = #{empId} 
+	        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        
+        and approvalId in 
+        (
+            select
+            apd.fk_approvalId
+            from tbl_approvalProcedure apd
+            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+            where 
+            apd.fk_approvalId not in 
+            (
+                select
+                apd.fk_approvalId
+                from tbl_approvalProcedure apd
+                join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                where 
+                apd.fk_approvalId in (
+                    select
+                    apd.fk_approvalId
+                    from tbl_approvalProcedure apd
+                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                    where (apd2.procedureType = 3 or apd2.procedureType = 4 or apd2.procedureType = 8 or apd2.procedureType = 9)
+                    group by apd.fk_approvalId
+                )
+                and
+                (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+                group by apd.fk_approvalId
+            )  
+            and (apd2.procedureType = 3 or apd2.procedureType = 4 or apd2.procedureType = 8 or apd2.procedureType = 9)
+            group by apd.fk_approvalId
+        )
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+	</select>
+	
+	
+	
+	<!-- 전자결재_문서함_참조 총 갯수  -->
+	<select id="getTotalCountApprovalReadBox" parameterType="HashMap"
+		resultType="int">
+		
+		select
+        count(*)
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        fk_empId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId} 
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        
+        and approvalId in 
+        (
+            select
+            apd.fk_approvalId
+            from tbl_approvalProcedure apd
+            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+            where 
+            apd.fk_approvalId not in 
+            (
+                select
+                apd.fk_approvalId
+                from tbl_approvalProcedure apd
+                join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                where 
+                apd.fk_approvalId in (
+                    select
+                    apd.fk_approvalId
+                    from tbl_approvalProcedure apd
+                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                    where apd2.procedureType = 5 and apd2.status = 4
+                    group by apd.fk_approvalId
+                )
+                and
+                (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+                group by apd.fk_approvalId
+            )  
+            and apd2.procedureType = 5 and apd2.status = 4
+            group by apd.fk_approvalId
+        )
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+        <choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 전자결재_문서함_수신, 수신참조 총 갯수  -->
+	<select id="getTotalCountApprovalReferBox" parameterType="HashMap"
+		resultType="int">
+		
+		select
+        count(*)
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        fk_empId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId} 
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        
+        and approvalId in 
+        (
+            select
+            apd.fk_approvalId
+            from tbl_approvalProcedure apd
+            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+            where 
+            apd.fk_approvalId not in 
+            (
+                select
+                apd.fk_approvalId
+                from tbl_approvalProcedure apd
+                join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                where 
+                apd.fk_approvalId in (
+                    select
+                    apd.fk_approvalId
+                    from tbl_approvalProcedure apd
+                    join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+                    where (apd2.procedureType = 6 or apd2.procedureType = 7) and apd2.status = 4
+                    group by apd.fk_approvalId
+                )
+                and
+                (apd.status != 2 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7))
+                group by apd.fk_approvalId
+            )  
+            and (apd2.procedureType = 6 or apd2.procedureType = 7) and apd2.status = 4
+            group by apd.fk_approvalId
+        )		
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+        <choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+	</select>
+	
+	
+	
+	<!-- 전자결재_문서함_반려 총 갯수 -->
+	<select id="getTotalCountApprovalReturnBox" parameterType="HashMap"
+		resultType="int">
+		
+		select
+        count(*)
+		
+		from tbl_approval a
+        join 
+        (
+        select
+        fk_approvalId,
+        fk_empId,
+        isReadReturn,
+        status,
+        procedureType,
+        sequence
+        from tbl_approvalProcedure
+        where fk_empId = #{empId} 
+        order by fk_approvalId
+        ) ap
+        on a.approvalid = ap.fk_approvalid
+        join (select * from tbl_approvalProcedure where sequence = 1) apd on a.approvalId = apd.fk_approvalId 
+        join tbl_employee e on apd.fk_empId = e.empId 
+        join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		join tbl_security s on s.securityId = a.fk_securityId
+		left join tbl_importantApproval ia on ap.fk_empId = ia.fk_empid and ap.fk_approvalId = ia.fk_approvalId
+		left join (select fk_approvalId from tbl_approvalFile group by fk_approvalId) af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		isTemporary = 0
+		and isDelete = 0
+        
+        and approvalId in 
+        (
+            select
+            apd.fk_approvalId
+            from tbl_approvalProcedure apd
+            join (select fk_approvalId, sequence, status, procedureType, isReadReturn from tbl_approvalProcedure where fk_empId = #{empId}) apd2 on apd.fk_approvalId = apd2.fk_approvalId
+            where 
+            apd.status = 3 and (apd.procedureType != 5 and apd.procedureType != 6 and apd.procedureType != 7)
+            and 
+            (
+	            (apd2.procedureType != 5 and apd2.procedureType != 6 and apd2.procedureType != 7)
+	            or
+	            (apd2.status = 4 and (apd2.procedureType = 5 or apd2.procedureType = 6 or apd2.procedureType = 7))
+            )
+            
+            and apd2.isReadReturn = 1
+            
+            group by apd.fk_approvalId
+        )
+        <if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+	</select>
+	
+	
+	
+	<!-- 임시저장함 총 갯수-->
+	<select id="getTotalCountApprovalTempBox"
+		parameterType="HashMap"
+		resultType="int">
+		select
+		count(*)
+		
+		from tbl_approval a
+		join tbl_employee e on a.fk_empId = e.empId
+		join tbl_approvalprocedure apd on a.approvalId = apd.fk_approvalId
+		join tbl_form f on a.fk_formId = f.formId
+		join tbl_team t on e.fk_teamId = t.teamId
+		join tbl_department d on t.fk_depid = d.depId
+		left join tbl_importantApproval ia on apd.fk_empId = ia.fk_empid and apd.fk_approvalId = ia.fk_approvalId
+		left join tbl_approvalFile af on apd.fk_approvalId = af.fk_approvalId
+		
+		where
+		apd.fk_empId = #{empId}
+		and ( procedureType = 1 or procedureType = 2 )
+		and sequence = 1
+		and isTemporary = 1
+		and isDelete = 0
+		<if test='searchType != "" and searchWord != ""'>
+			<if test='searchType == "all" and searchWord != ""'>
+				and (approvalId like '%'||lower(#{searchWord})||'%'
+				or title like
+				'%'||lower(#{searchWord})||'%'
+				or empName like
+				'%'||lower(#{searchWord})||'%'
+				or formName like
+				'%'||lower(#{searchWord})||'%'
+				or depName like
+				'%'||lower(#{searchWord})||'%' )
+			</if>
+
+			<if test='searchType != "all" and searchWord != ""'>
+				and ${searchType} like '%'||lower(#{searchWord})||'%'
+			</if>
+		</if>
+		<choose>
+			<when test='listType == "1"'>
+				and nvl2(importantApprovalId, 1, 0) = 1
+			</when>
+			<when test='listType == "2"'>
+				and nvl2(af.fk_approvalId, 1, 0) = 1
+			</when>
+		</choose>
+	</select>
 </mapper>

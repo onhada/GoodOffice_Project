@@ -7,10 +7,7 @@
 %>
 
 <%-- 스피너 및 datepicker 를 사용하기 위해 jQueryUI CSS 및 JS --%>
-<%--  <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.css" /> --%>
 <script type="text/javascript" src="<%=ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-<%-- 검색할 때 필요한 datepicker 의 색상을 기본값으로 사용하기 위한 것임 --%>
-<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">  -->
 <script>
 $(document).ready(function() {
 	
@@ -71,7 +68,6 @@ $(document).ready(function() {
 				 	return; // 종료
 				 
 				}else { // formData 속에 첨부파일 넣어주기
-					console.log("첨부파일 넣어주기")
 					
 					file_arr.forEach(function(item){
 					       formData.append("file_arr", item);  // 첨부파일 추가하기. // "file_arr" 이 키값이고  item 이 밸류값인데 file_arr 배열속에 저장되어진 배열요소인 파일첨부되어진 파일이 되어진다.
@@ -95,8 +91,6 @@ $(document).ready(function() {
 					dataType:"json",
 					success:function(text){
 						if(text.isSuccess) {
-						/* contextPath를 ctxPath로 변경하기 */
-						console.log("통과!")
 						let type = '';
 						if(text.viewType == 'list'){
 							type = 'A';
@@ -154,7 +148,6 @@ $(document).ready(function() {
 				 	return; // 종료
 				 
 				}else { // formData 속에 첨부파일 넣어주기
-					console.log("첨부파일 넣어주기")
 					
 					file_arr.forEach(function(item){
 					       formData.append("file_arr", item);  // 첨부파일 추가하기. // "file_arr" 이 키값이고  item 이 밸류값인데 file_arr 배열속에 저장되어진 배열요소인 파일첨부되어진 파일이 되어진다.
@@ -226,10 +219,8 @@ $(document).ready(function() {
 
     // 발행일 초기설정
     <c:if test="${not empty requestScope.empProofDetail}">
-    	console.log("일단 값은 있어요")
     	let dateArr = "${requestScope.empProofDetail.issueDay}".split(". ");
     	var x = new Date(dateArr[0], Number(dateArr[1])-1, dateArr[2], 0, 0, 0, 0);
-    	console.log(x)
     	$('input#issueDay').datepicker('setDate', x); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, +1M:한달후, +1Y:일년후)
     </c:if>
     	
@@ -258,20 +249,8 @@ $(document).ready(function() {
     // == 파일 Drag & Drop 만들기 == //
     $("div#dragZone").on("dragenter", function(e){ /* "dragenter" 이벤트는 드롭대상인 박스 안에 Drag 한 파일이 최초로 들어왔을 때 */ 
         e.preventDefault();
-        <%-- 
-        	브라우저에 어떤 파일을 drop 하면 브라우저 기본 동작이 실행된다. 
-        	이미지를 drop 하면 바로 이미지가 보여지게되고, 만약에 pdf 파일을 drop 하게될 경우도 각 브라우저의 pdf viewer 로 브라우저 내에서 pdf 문서를 열어 보여준다. 
-            이것을 방지하기 위해 preventDefault() 를 호출한다. 
-            즉, e.preventDefault(); 는 해당 이벤트 이외에 별도로 브라우저에서 발생하는 행동을 막기 위해 사용하는 것이다.
-        --%>
-        
         e.stopPropagation();
-        <%--
-            propagation 의 사전적의미는 전파, 확산이다.
-            stopPropagation 은 부모태그로의 이벤트 전파를 stop 중지하라는 의미이다.
-            즉, 이벤트 버블링을 막기위해서 사용하는 것이다. 
-            사용예제 사이트 https://devjhs.tistory.com/142 을 보면 이해가 될 것이다. 
-        --%>
+        
     }).on("dragover", function(e){ /* "dragover" 이벤트는 드롭대상인 박스 안에 Drag 한 파일이 머물러 있는 중일 때. 필수이벤트이다. dragover 이벤트를 적용하지 않으면 drop 이벤트가 작동하지 않음 */ 
         e.preventDefault();
         e.stopPropagation();
@@ -284,50 +263,12 @@ $(document).ready(function() {
         e.preventDefault();
 
         var files = e.originalEvent.dataTransfer.files;  
-        <%--  
-            jQuery 에서 이벤트를 처리할 때는 W3C 표준에 맞게 정규화한 새로운 객체를 생성하여 전달한다.
-            이 전달된 객체는 jQuery.Event 객체 이다. 이렇게 정규화된 이벤트 객체 덕분에, 
-            웹브라우저별로 차이가 있는 이벤트에 대해 동일한 방법으로 사용할 수 있습니다. (크로스 브라우징 지원)
-            순수한 dom 이벤트 객체는 실제 웹브라우저에서 발생한 이벤트 객체로, 네이티브 객체 또는 브라우저 내장 객체 라고 부른다.
-        --%>
-        /*  Drag & Drop 동작에서 파일 정보는 DataTransfer 라는 객체를 통해 얻어올 수 있다. 
-            jQuery를 이용하는 경우에는 event가 순수한 DOM 이벤트(각기 다른 웹브라우저에서 해당 웹브라우저의 객체에서 발생되는 이벤트)가 아니기 때문에,
-            event.originalEvent를 사용해서 순수한 원래의 DOM 이벤트 객체를 가져온다.
-            Drop 된 파일은 드롭이벤트가 발생한 객체(여기서는 $("div#fileDrop")임)의 dataTransfer 객체에 담겨오고, 
-            담겨진 dataTransfer 객체에서 files 로 접근하면 드롭된 파일의 정보를 가져오는데 그 타입은 FileList 가 되어진다. 
-            그러므로 for문을 사용하든지 또는 [0]을 사용하여 파일의 정보를 알아온다. 
-		*/
-	//  console.log(typeof files); // object
-    //  console.log(files);
-        /*
-			FileList {0: File, length: 1}
-			0: File {name: 'berkelekle단가라포인트03.jpg', lastModified: 1605506138000, lastModifiedDate: Mon Nov 16 2020 14:55:38 GMT+0900 (한국 표준시), webkitRelativePath: '', size: 57641, …}
-			         length:1
-			[[Prototype]]: FileList
-        */
+
         if(files != null && files != undefined){
-        <%-- console.log("files.length 는 => " + files.length);  
-             // files.length 는 => 1 이 나온다. 
-        --%>    
-        	
-        <%--
-        	for(let i=0; i<files.length; i++){
-                const f = files[i];
-                const fileName = f.name;  // 파일명
-                const fileSize = f.size;  // 파일크기
-                console.log("파일명 : " + fileName);
-                console.log("파일크기 : " + fileSize);
-            } // end of for------------------------
-        --%>
             
             let html = $("table#tableApprovalAttach tbody").html();
             const f = files[0]; // 파일 정보 어차피 files.length 의 값이 1 이므로 위의 for문을 사용하지 않고 files[0] 을 사용하여 1개만 가져오면 된다. 
         	let fileSize = f.size/1024/1024;  /* 파일의 크기는 MB로 나타내기 위하여 /1024/1024 하였음 */
-        	
-        	console.log("f 정보 ? : ", f)
-        	
-        	console.log("file Name : ", f.name)
-        	console.log("file Size : ", fileSize)
         	
         	
         	if(fileSize >= 10) {
@@ -339,23 +280,10 @@ $(document).ready(function() {
         		
         		file_arr.push(f); //  드롭대상인 박스 안에 첨부파일을 드롭하면 파일들을 담아둘 배열인 file_arr 에 파일들을 저장시키도록 한다.
 	        	const fileName = f.name; // 파일명	
-	        	console.log(file_arr);
-	        	console.log(fileName)
         	
         	    fileSize = fileSize < 1 ? fileSize.toFixed(3) : fileSize.toFixed(1);
         	    // fileSize 가 1MB 보다 작으면 소수부는 반올림하여 소수점 3자리까지 나타내며, 
                 // fileSize 가 1MB 이상이면 소수부는 반올림하여 소수점 1자리까지 나타낸다. 만약에 소수부가 없으면 소수점은 0 으로 표시한다.
-                /* 
-                     numObj.toFixed([digits]) 의 toFixed() 메서드는 숫자를 고정 소수점 표기법(fixed-point notation)으로 표시하여 나타난 수를 문자열로 반환해준다. 
-                                     파라미터인 digits 는 소수점 뒤에 나타날 자릿수 로써, 0 이상 20 이하의 값을 사용할 수 있으며, 구현체에 따라 더 넓은 범위의 값을 지원할 수도 있다. 
-                     digits 값을 지정하지 않으면 0 을 사용한다.
-                     
-                     var numObj = 12345.6789;
-
-					 numObj.toFixed();       // 결과값 '12346'   : 반올림하며, 소수 부분을 남기지 않는다.
-					 numObj.toFixed(1);      // 결과값 '12345.7' : 반올림한다.
-					 numObj.toFixed(6);      // 결과값 '12345.678900': 빈 공간을 0 으로 채운다.
-                */
                 
                 
                 
@@ -392,11 +320,8 @@ $(document).ready(function() {
 
 	// 첨부파일
 	$('input#fileApprovalAttachWriteForm').change(function(e) {
-		console.log('hi')
-		
 		
 	    fileList = $(this)[0].files;  //파일 대상이 리스트 형태로 넘어온다.
-	    console.log("fileList : " , fileList)
 	    
 	    html = '';
 	    for(var i=0;i < fileList.length;i++){
@@ -404,8 +329,6 @@ $(document).ready(function() {
 	    	
 	        var file = fileList[i]; // 파일 정보 자체
 	        
-	        console.log("//////////////////////////////////")
-	    	console.log("file : ", file)
 	        let fileSize = file.size/1024/1024; // 파일 사이즈 (MB로 변환)
 	        
 	        if(fileSize >= 10) {
@@ -449,21 +372,17 @@ $(document).ready(function() {
 	// 파일 모달에서 삭제 버튼 클릭시 ------------------------------------------------------------------------------
 	$(document).on("click", "button.js-approval-attach-delete", function(e){
 		var this_fileDetail = $(e.target).parent().find("span").html();
-		console.log(this_fileDetail);
 		for(var i=0;i < file_arr.length;i++){
 			// file_arr에서 삭제하기 위해
-			console.log('// file_arr에서 삭제하기 위해')
 			
 			var file = file_arr[i]; // 파일 정보 자체
 			
-			console.log('file : ',file)
 			var fileName = file.name;
 			var fileSize = file.size/1024/1024;
 			fileSize = fileSize < 1 ? fileSize.toFixed(3) : fileSize.toFixed(1);
 			
 			var fileDetail = fileName.substring(fileName.lastIndexOf("\\") +1, fileName.length) + " (" + fileSize +"MB)";
 			if(fileDetail == this_fileDetail){
-				console.log("삭제!")
 				file_arr.splice(i, 1);
 				break;
 			}
@@ -494,8 +413,6 @@ $(document).ready(function() {
 		if($("input#inputApprovalLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalLineSetting").val())
-			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
 				data: { "empName": $("input#inputApprovalLineSetting").val().trim()},
@@ -503,8 +420,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
-					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
 						html += `<li class="ui-menu-item" id="ui-id-11" tabindex="-1"><div><span class="team-membername">` + text[i]['empName'] + `</span><span class="team-name">` + [text[i]['depName']] + ` ` +  text[i]['teamName'] + `</span></div></li>`;
@@ -539,8 +454,6 @@ $(document).ready(function() {
 		
 		if($("input#inputApprovalLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
-			
-			console.log($("input#inputApprovalLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -603,7 +516,6 @@ $(document).ready(function() {
 		
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			if("${procedure.procedureType}" != '처리' && ${procedure.empId} == empId){
-				console.log("hi", ${procedure.empId});
 				isExist = true;
 				
 			}
@@ -652,7 +564,7 @@ $(document).ready(function() {
 			alert("이미 포함된 결재자는 중복으로 설정할 수 없습니다.")
 			$("input#inputApprovalLineSetting").val('');
 		}else{
-			html += `<li class="js-approval-line-setting processLine-li unsortable" id="processLineSettingEmpId_` + empId +`" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;">
+			html += `<li class="js-approval-line-setting processLine-li unsortable" id="processLineSettingEmpId_` + empId +`" style="cursor: auto;">
 						<span>` + empName 
 						+ `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(processLineSettingEmpId_` + empId + `)"></span>
 						</span>
@@ -673,14 +585,12 @@ $(document).ready(function() {
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			<c:if test="${procedure.procedureType eq '처리'}">
 				cnt--;
-				console.log("cnt : ", cnt);
 			</c:if>
 		</c:forEach>
 		
 		if(cnt > 0){
 			let html_position = $("tr#approvalProcedureData_position").html();
 			let html_stamp = $("tr#approvalProcedureData_stamp").html();
-			console.log(html_stamp);
 			let html_empName = $("tr#approvalProcedureData_empName").html();
 			
 			while(cnt != 0){
@@ -711,7 +621,6 @@ $(document).ready(function() {
 		if($("input#inputApplicationLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApplicationLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -720,7 +629,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -820,7 +728,6 @@ $(document).ready(function() {
 		
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			if("${procedure.procedureType}" != '신청' && ${procedure.empId} == empId){
-				console.log("hi", ${procedure.empId});
 				isExist = true;
 				
 			}
@@ -869,7 +776,7 @@ $(document).ready(function() {
 			$("input#inputApplicationLineSetting").val('');
 		}else{
 			
-			html += `<li class="js-approval-line-setting applicationLine-li unsortable" id="applicationLineSettingEmpId_` + empId +`" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;">
+			html += `<li class="js-approval-line-setting applicationLine-li unsortable" id="applicationLineSettingEmpId_` + empId +`" style="cursor: auto;">
 						<span>` + empName 
 						+ `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(applicationLineSettingEmpId_` + empId + `)"></span>
 						</span>
@@ -899,7 +806,6 @@ $(document).ready(function() {
 		if(cnt > 0){
 			let html_position = $("tr#appProcedureData_position").html();
 			let html_stamp = $("tr#appProcedureData_stamp").html();
-			console.log(html_stamp);
 			let html_empName = $("tr#appProcedureData_empName").html();
 			
 			while(cnt != 0){
@@ -925,13 +831,11 @@ $(document).ready(function() {
 	// 참조 + 버튼_입력시
 	
 	let prev_refAutoComplete = $("ul.reference_autocomplete").html();
-	console.log("prev_refAutoComplete", prev_refAutoComplete)
 	$(document).on("focus", "input#inputApprovalThirdLine", function(){
 		
 		if($("input#inputApprovalThirdLine").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalThirdLine").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -940,7 +844,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -979,7 +882,6 @@ $(document).ready(function() {
 		if($("input#inputApprovalThirdLine").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalThirdLine").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -988,7 +890,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -1046,7 +947,6 @@ $(document).ready(function() {
 		
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			if(${procedure.empId} == empId){
-				console.log("hi", ${procedure.empId});
 				isExist = true;
 				
 			}
@@ -1147,7 +1047,7 @@ function approvalLineSetting(){
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			<c:if test="${procedure.procedureType eq '처리'}">
 				
-				html += `<li class="js-approval-line-setting processLine-li unsortable" id ="processLineSettingEmpId_${procedure.empId}" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;">`
+				html += `<li class="js-approval-line-setting processLine-li unsortable" id ="processLineSettingEmpId_${procedure.empId}" style="cursor: auto;">`
 				        + `<span>${procedure.empName}`
 						+ `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(processLineSettingEmpId_${procedure.empId})"></span></span>`
 						+ `<span style="display:none;">${procedure.positionName}</span></li>`;
@@ -1168,7 +1068,7 @@ function approvalLineSetting(){
 				let empName = $(this).text();
 				let positionName = $($("tr#approvalProcedureData_position td")[i]).text();
 				
-				html += `<li class="js-approval-line-setting processLine-li unsortable" id ="processLineSettingEmpId_`+ empId + `" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;">`
+				html += `<li class="js-approval-line-setting processLine-li unsortable" id ="processLineSettingEmpId_`+ empId + `" style="cursor: auto;">`
 						+ `<span>` + empName;
 				if(empId != ${sessionScope.loginUser.empId}){
 					html += `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(processLineSettingEmpId_` + empId +`)"></span>`;
@@ -1193,11 +1093,6 @@ function approvalLineSetting(){
 
 /* 처리 + 버튼 눌러 모달창에서 확인 버튼 눌렀을 경우 */
 function updateApprovalLineSetting(){
-	/* contextPath 생성용 */
-	const pathname = "/" + window.location.pathname.split("/")[1];
-	const origin = window.location.origin;
-	const contextPath = origin + pathname;
-	/* end of contextPath 생성용 */
 	
 	
 	 if($("li.processLine-li").length > 0  && $("li.processLine-li").length <= 4){
@@ -1208,8 +1103,6 @@ function updateApprovalLineSetting(){
 			let empId = id.substring(id.indexOf('_') +1,id.length);
 			let empName = $(this).find('span:eq(0)').text();
 			let positionName = $(this).find('span:eq(2)').html();
-			console.log("이번엔 empName : " + empName)
-			console.log("이번엔 positionName : " + positionName)
 			 // 결재 table태그에 이름 넣기
 			 
 			 let classApproval = $($("tr#approvalProcedureData_empName td")[index]).attr("class");
@@ -1229,7 +1122,6 @@ function updateApprovalLineSetting(){
 			let className = $($("tr#approvalProcedureData_empName td")[i]).attr("class");
 			if(className.indexOf('approvalEmpId_') != -1){
 				// 값이 있을 경우
-				console.log(className.substring(className.indexOf('approvalEmpId_'), className.length));
 				$($("tr#approvalProcedureData_empName td")[i]).removeClass(className.substring(className.indexOf('approvalEmpId_'), className.length));
 			}
 			
@@ -1261,14 +1153,13 @@ function applicationLineSetting(){
 	<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 		<c:if test="${procedure.procedureType eq '신청'}">
 		
-			html += `<li class="js-approval-line-setting applicationLine-li unsortable" id ="applicationLineSettingEmpId_${procedure.empId}" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;">`
+			html += `<li class="js-approval-line-setting applicationLine-li unsortable" id ="applicationLineSettingEmpId_${procedure.empId}" style="cursor: auto;">`
 		        + `<span>${procedure.empName}`
 				+ `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(applicationLineSettingEmpId_${procedure.empId})"></span></span>`
 				+ `<span style="display:none;">${procedure.positionName}</span></li>`;
 			
 		</c:if>
 		
-		console.log(html);
 	</c:forEach>
 	
 	
@@ -1283,7 +1174,7 @@ function applicationLineSetting(){
 				let empName = $(this).text();
 				let positionName = $($("tr#appProcedureData_position td")[i]).text();
 				
-				html += `<li class="js-approval-line-setting applicationLine-li unsortable" id ="applicationLineSettingEmpId_`+ empId + `" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;">`
+				html += `<li class="js-approval-line-setting applicationLine-li unsortable" id ="applicationLineSettingEmpId_`+ empId + `" style="cursor: auto;">`
 						+ `<span>` + empName;
 				if(empId != ${sessionScope.loginUser.empId}){
 					html += `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(applicationLineSettingEmpId_` + empId +`)"></span>`;
@@ -1317,8 +1208,6 @@ function updateApplicationLineSetting(){
 			let empId = id.substring(id.indexOf('_') +1,id.length);
 			let empName = $(this).find('span:eq(0)').text();
 			let positionName = $(this).find('span:eq(2)').html();
-			console.log("이번엔 empName : " + empName)
-			console.log("이번엔 positionName : " + positionName)
 			 // 결재 table태그에 이름 넣기
 			 
 			 
@@ -1341,7 +1230,6 @@ function updateApplicationLineSetting(){
 			let className = $($("tr#appProcedureData_empName td")[i]).attr("class");
 			if(className.indexOf('approvalEmpId_') != -1){
 				// 값이 있을 경우
-				console.log(className.substring(className.indexOf('approvalEmpId_'), className.length));
 				$($("tr#appProcedureData_empName td")[i]).removeClass(className.substring(className.indexOf('approvalEmpId_'), className.length));
 			}
 			
@@ -1415,7 +1303,6 @@ function clickTriggerToFileApprovalAttachWriteForm() {
 				<div class="approval-wrap write">
 					<h4 style="display: inline-block">
 						기본 설정
-						<!-- <a href="수정필" class="mgl_20 weakblue hide" id="approvalFormRule" onclick="ApprovalDocument.showApprovalFormRule('');" style="display: none;">사내전자결재규정</a> -->
 					</h4>
 					<table class="tableType02">
 						<caption>전자결재 기본 설정</caption>
@@ -1569,7 +1456,6 @@ function clickTriggerToFileApprovalAttachWriteForm() {
 															${sessionScope.loginUser.empName}
 														</td>
 
-														<%-- <td class="name gt-position-relative">${sessionScope.loginUser.empName}</td> --%>
 														<td class="name gt-position-relative"></td>
 														<td class="name gt-position-relative"></td>
 														<td class="name gt-position-relative"></td>
@@ -1652,11 +1538,6 @@ function clickTriggerToFileApprovalAttachWriteForm() {
 													</c:if>
 
 													<c:if test="${empty requestScope.approvalDetail}">
-														<%-- <td class="name gt-position-relative approvalEmpId_${sessionScope.loginUser.empId}" id="approvalEmpId_${sessionScope.loginUser.empId}">
-														<input type="hidden" name="approvalEmpId" value="${sessionScope.loginUser.empId}" />
-														${sessionScope.loginUser.empName}
-													</td> --%>
-
 														<td class="name gt-position-relative"></td>
 														<td class="name gt-position-relative"></td>
 														<td class="name gt-position-relative"></td>

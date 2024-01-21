@@ -110,7 +110,6 @@ function showDetailPrivatePayrollModal(salaryId){
 		async: true,
 		dataType: "json",
 		success: function(text) {
-			console.log(JSON.stringify(text));
 			if(text.isExist){
 				
 				$("section.detailMonth").html(text.month + ' 급여명세서');

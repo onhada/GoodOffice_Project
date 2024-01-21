@@ -51,8 +51,23 @@ public class CommonController {
 	*/
 	@GetMapping("login.gw")
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
-
-		mav.setViewName("common/login");
+		
+		
+		// 예진 코드 시작 ----------------------------------------------------------
+		
+		HttpSession session = request.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
+		
+		
+		if(loginUser == null) {
+			mav.setViewName("common/login");
+		} else {
+			// 이미 로그인한 상태인데 로그인 페이지에 접속하려고 했을 경우 인덱스 페이지를 보여준다
+			mav.setViewName("redirect:/index/index.gw");
+		}
+		
+		// 예진 코드 끝 -----------------------------------------------------------
+		
 		
 		return mav;
 	}	

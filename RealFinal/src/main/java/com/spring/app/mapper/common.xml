@@ -24,7 +24,7 @@
         join tbl_department D on T.fk_depId = D.depId
         join tbl_position P  on E.fk_positionId = P.positionId
         left join (select adminType, isReadAllDocument, fk_empID from tbl_admin a join tbl_employee e on a.fk_empId = e.empId where email = #{loginId} and a.isDelete = 0 )  A on E.empId = A.fk_empId
-        where status = 1 and email = #{loginId}
+        where status = 1 and email = #{loginId} and pwd = #{loginPasswd}
     </select>
 	
  	

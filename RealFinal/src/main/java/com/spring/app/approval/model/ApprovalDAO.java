@@ -31,18 +31,6 @@ import com.spring.app.common.domain.EmployeeVO;
 public interface ApprovalDAO {
 
 	/** 
-	* @Method Name  : getApprovalAllIngList_withSearchAndPaging 
-	* @작성일   : 2023. 12. 6 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 진행 중인 문서 취득
-	* @param paraMap
-	* @return 
-	*/
-	List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap);
-
-	
-	/** 
 	* @Method Name  : hasReturn 
 	* @작성일   : 2023. 12. 8 
 	* @작성자   : 신예진 (yejjinny)
@@ -52,74 +40,6 @@ public interface ApprovalDAO {
 	* @return 
 	*/
 	int hasReturn(Long fk_approvalId);
-
-	
-	/** 
-	* @Method Name  : hasLowerApplicantAllAccept 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 유저보다 하위 신청 or 기안자들이 전원 승인하였는지 확인용 (0 : 전원 승인)
-	* @param paramMap
-	* @return 
-	*/
-	int hasLowerApplicantAllAccept(Map<String, Long> paramMap);
-
-	
-	/** 
-	* @Method Name  : hasLowerApplicantWait 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 대기 중인 유저가 있는지 확인
-	* @param paramMap
-	* @return 
-	*/
-	int hasLowerApplicantWait(Map<String, Long> paramMap);
-
-	/** 
-	* @Method Name  : hasUpperApplicantAndApproverWait 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우
-	* @param paramMap
-	* @return 
-	*/
-	int hasUpperApplicantAndApproverWait(Map<String, Long> paramMap);
-
-	/** 
-	* @Method Name  : hasLowerApplicantAndApproverAllAccept 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0: 전원 승인)
-	* @param paramMap
-	* @return 
-	*/
-	int hasLowerApplicantAndApproverAllAccept(Map<String, Long> paramMap);
-
-	/** 
-	* @Method Name  : hasLowerApplicantAndApproverWait 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-	* @param paramMap
-	* @return 
-	*/
-	int hasLowerApplicantAndApproverWait(Map<String, Long> paramMap);
-
-	/** 
-	* @Method Name  : hasUpperApproverWait 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-	* @param paramMap
-	* @return 
-	*/
-	int hasUpperApproverWait(Map<String, Long> paramMap);
 
 	/** 
 	* @Method Name  : hasApplicantAndApproverAllAccept 
@@ -131,53 +51,6 @@ public interface ApprovalDAO {
 	* @return 
 	*/
 	int hasApplicantAndApproverAllAccept(Map<String, Long> paramMap);
-
-	/** 
-	* @Method Name  : hasUnderRankerAllAccept 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 하위 순서가 모두 승인하였는지 확인 (0: 전원 승인)
-	* @param paramMap
-	* @return 
-	*/
-	int hasUnderRankerAllAccept(Map<String, Long> paramMap);
-
-	/** 
-	* @Method Name  : hasUnderRankerWait 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 하위 순서 중에 대기가 있을 경우
-	* @param paraMap
-	* @return 
-	*/
-	int hasUnderRankerWait(Map<String, Long> paramMap);
-
-	/** 
-	* @Method Name  : hasUpperRankerWait 
-	* @작성일   : 2023. 12. 9 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 상위 순서 중에 대기가 있을 경우
-	* @param paramMap
-	* @return 
-	*/
-	int hasUpperRankerWait(Map<String, Long> paramMap);
-
-
-
-	/** 
-	* @Method Name  : getApprovalAllBox_withViewAllAndSearchAndPaging 
-	* @작성일   : 2023. 12. 10 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 문서함 전체보기 문서 취득
-	* @param paraMap
-	* @return 
-	*/
-	List<ApprovalVO> getApprovalAllBox_withViewAllAndSearchAndPaging(Map<String, String> paraMap);
-
 
 	/** 
 	* @Method Name  : hasAllAccept 
@@ -336,18 +209,6 @@ public interface ApprovalDAO {
 	* @return 
 	*/
 	List<AdminVO> getAdminList();
-
-
-	/** 
-	* @Method Name  : getApprovalAllBox_withSearchAndPaging 
-	* @작성일   : 2023. 12. 16 
-	* @작성자   : 신예진 (yejjinny)
-	* @변경이력  : 
-	* @Method 설명 : 전자결재_문서함 문서 취득
-	* @param paraMap
-	* @return 
-	*/
-	List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap);
 
 	/** 
 	* @Method Name  : getApprovalDocumentView 
@@ -1291,6 +1152,334 @@ public interface ApprovalDAO {
 	* @return 
 	*/
 	int isExistApproval(Map<String, Long> paraMap);
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/** 
+	* @Method Name  : getApprovalProgressList_withSearchAndPaging 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_진행 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalProgressList_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalScheduleList_withSearchAndPaging 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_예정 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalScheduleList_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalCheckList_withSearchAndPaging 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_확인 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalCheckList_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalWaitingList_withSearchAndPaging 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_대기 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalWaitingList_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalAllIngList_withSearchAndPaging 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_전체 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap);
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	/** 
+	* @Method Name  : getTotalCountApprovalAllIngList 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_전체 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalAllIngList(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalWaitingList 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_대기 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalWaitingList(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalCheckList 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_확인 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalCheckList(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalScheduleList 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_예정 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalScheduleList(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalProgressList 
+	* @작성일   : 2024. 1. 19 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_진행중인 문서_진행 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalProgressList(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalAllBox_withViewAllAndSearchAndPaging 
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_전체 문서 + 열람문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalAllBox_withViewAllAndSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalAllBox_withSearchAndPaging 
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_전체 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalWriterBox_withSearchAndPaging 
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_기안/신청 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalWriterBox_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalApprovalBox_withSearchAndPaging 
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_결재/처리/합의/재무합의 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalApprovalBox_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalReferBox_withSearchAndPaging 
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_참조 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalReferBox_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalReadBox_withSearchAndPaging 
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_수신/수신참조 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalReadBox_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getApprovalReturnBox_withSearchAndPaging 
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_반려 문서 목록 취득
+	* @param paraMap
+	* @return 
+	*/
+	List<ApprovalVO> getApprovalReturnBox_withSearchAndPaging(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalAllBox_withViewAll
+	* @작성일   : 2024. 1. 20 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_전체 문서 + 열람 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalAllBox_withViewAll(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalAllBox
+	* @작성일   : 2024. 1. 21 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_전체 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalAllBox(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalWriterBox 
+	* @작성일   : 2024. 1. 21 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_기안/신청 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalWriterBox(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalApprovalBox 
+	* @작성일   : 2024. 1. 21 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_결재/처리/합의/재무합의 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalApprovalBox(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalReferBox 
+	* @작성일   : 2024. 1. 21 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_참조 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalReferBox(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalReadBox 
+	* @작성일   : 2024. 1. 21 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_수신/수신참조 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalReadBox(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalReturnBox 
+	* @작성일   : 2024. 1. 21 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_반려 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalReturnBox(Map<String, String> paraMap);
+
+
+	/** 
+	* @Method Name  : getTotalCountApprovalTempBox 
+	* @작성일   : 2024. 1. 21 
+	* @작성자   : 신예진 (yejjinny)   
+	* @변경이력  : 
+	* @Method 설명 : 전자결재_문서함_임시문서 문서 총 갯수 취득
+	* @param paraMap
+	* @return 
+	*/
+	int getTotalCountApprovalTempBox(Map<String, String> paraMap);
 
 
 }

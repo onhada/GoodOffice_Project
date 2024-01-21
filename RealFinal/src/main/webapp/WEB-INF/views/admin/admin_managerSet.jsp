@@ -25,8 +25,6 @@ $(document).ready(function(){
 	
 	$("img.insertFullAdmin").click(function(){
 		
-		console.log("등록!!!!")
-		
 		if($("select#searchList").val() == ''){
 			// 사원을 선택하지 않았을 경우
 			alert("선택된 사원이 없습니다.")
@@ -58,8 +56,6 @@ $(document).ready(function(){
 	
 	
 	$("img.deleteFullAdmin").click(function(){
-		
-		console.log("삭제!!!!")
 		
 		if($("select#managerList").val() == ''){
 			// 사원을 선택하지 않았을 경우
@@ -100,16 +96,6 @@ $(document).ready(function(){
 	
 	// 전체 관리자 확정	
 	$("img.confirmFullAdmin").click(function(){
-		
-		
-		for(let i = 0; i < addAdminList.length ; i++){
-			console.log("add : ", addAdminList[i]);
-		}
-		
-		for(let i = 0; i < delAdminList.length ; i++){
-			console.log("del : ", delAdminList[i]);
-		}
-		
 		
 		$.ajax({
 			url: "<%=ctxPath%>/approval/confirmFullAdmin.gw",

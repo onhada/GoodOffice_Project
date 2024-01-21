@@ -46,809 +46,6 @@ public class ApprovalService_imple implements ApprovalService {
 	private ApprovalDAO dao;
 
 	@Override
-	public List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap) {
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllIngList = dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
-
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllIngList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "미읽음".equals(avo.getIsReadReturn())) {
-				// 반려가 있으면서 미읽음일 경우
-
-				avo.setStatus("확인");
-				personalApprovalList.add(avo);
-
-			} else {
-				// 반려가 없을 경우
-
-				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
-					// 유저가 신청 혹은 기안자일 경우
-
-					if ("대기".equals(userStatus)) {
-
-						if (dao.hasLowerApplicantAllAccept(paramMap) == 0) {
-							// 유저보다 하위 신청 or 기안자들이 다 승인한 경우
-
-							avo.setStatus("대기");
-							personalApprovalList.add(avo);
-
-						} else {
-							if (dao.hasLowerApplicantWait(paramMap) != 0) {
-								// 하위 신청 or 기안자 중에 대기가 있을 경우
-
-								avo.setStatus("예정");
-								personalApprovalList.add(avo);
-							}
-
-						}
-					} else if ("승인".equals(userStatus)) {
-
-						if (dao.hasLowerApplicantWait(paramMap) != 0) {
-							// 하위 신청 or 기안자 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						} else {
-							if (dao.hasUpperApplicantAndApproverWait(paramMap) != 0) {
-								// 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우
-
-								avo.setStatus("진행");
-								personalApprovalList.add(avo);
-							}
-						}
-					}
-				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
-					// 유저가 결재 or 처리자일 경우
-
-					if ("대기".equals(userStatus)) {
-						// 유저가 대기상태일 경우
-
-						if (dao.hasLowerApplicantAndApproverAllAccept(paramMap) == 0) {
-							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0:전원 승인)
-
-							avo.setStatus("대기");
-							personalApprovalList.add(avo);
-
-						} else if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
-							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							avo.setStatus("예정");
-							personalApprovalList.add(avo);
-						}
-
-					} else if ("승인".equals(userStatus)) {
-
-						if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
-							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						} else if (dao.hasUpperApproverWait(paramMap) != 0) {
-							// 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				} else if ("참조".equals(userProcedureType)) {
-					// 유저가 참조자일 경우
-
-					if ("미확인".equals(userStatus)) {
-						// 미확인하였을 경우
-
-						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
-							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							avo.setStatus("예정");
-							personalApprovalList.add(avo);
-						} else {
-							// 결재자와 신청자가 모두 승인하였을 경우
-
-							avo.setStatus("완료");
-							personalApprovalList.add(avo);
-						}
-					} else if ("확인".equals(userStatus)) {
-						// 확인하였을 경우
-
-						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
-							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						}
-					}
-				} else if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
-					// 유저가 수신 혹은 수신참조일경우
-
-					if ("미확인".equals(userStatus)) {
-						// 미확인하였을 경우
-
-						if (dao.hasApplicantAndApproverAllAccept(paramMap) == 0) {
-							// 결재자와 신청자 모두 승인하였을 경우
-
-							avo.setStatus("완료");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
-					// 유저가 재무합의 혹은 합의일 경우
-
-					if ("대기".equals(userStatus)) {
-						// 대기 상태일 경우
-
-						if (dao.hasUnderRankerAllAccept(paramMap) == 0) {
-							// 하위 순서가 모두 승인하였을 경우 (0: 전원 승인)
-
-							avo.setStatus("대기");
-							personalApprovalList.add(avo);
-						} else if (dao.hasUnderRankerWait(paramMap) != 0) {
-							// 하위 순서 중에 대기가 있을 경우
-
-							avo.setStatus("예정");
-							personalApprovalList.add(avo);
-						}
-					} else if ("승인".equals(userStatus)) {
-
-						if (dao.hasUnderRankerWait(paramMap) != 0) {
-							// 하위 순서 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						} else if (dao.hasUpperRankerWait(paramMap) != 0) {
-							// 상위 순서 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalWaitingList_withSearchAndPaging(Map<String, String> paraMap) {
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllIngList = dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllIngList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
-				// 반려가 없을 경우
-
-				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
-					// 유저가 신청 혹은 기안자일 경우
-
-					if ("대기".equals(userStatus)) {
-
-						if (dao.hasLowerApplicantAllAccept(paramMap) == 0) {
-							// 유저보다 하위 신청 or 기안자들이 다 승인한 경우
-
-							avo.setStatus("대기");
-							personalApprovalList.add(avo);
-
-						}
-					}
-				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
-					// 유저가 결재 or 처리자일 경우
-
-					if ("대기".equals(userStatus)) {
-						// 유저가 대기상태일 경우
-
-						if (dao.hasLowerApplicantAndApproverAllAccept(paramMap) == 0) {
-							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0:전원 승인)
-
-							avo.setStatus("대기");
-							personalApprovalList.add(avo);
-
-						}
-
-					}
-
-				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
-					// 유저가 재무합의 혹은 합의일 경우
-
-					if ("대기".equals(userStatus)) {
-						// 대기 상태일 경우
-
-						if (dao.hasUnderRankerAllAccept(paramMap) == 0) {
-							// 하위 순서가 모두 승인하였을 경우 (0: 전원 승인)
-
-							avo.setStatus("대기");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalCheckList_withSearchAndPaging(Map<String, String> paraMap) {
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllIngList = dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllIngList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "미읽음".equals(avo.getIsReadReturn())) {
-				// 반려가 있으면서 미확인일 경우
-
-				avo.setStatus("반려");
-				personalApprovalList.add(avo);
-
-			} else {
-				// 반려가 없을 경우
-
-				if ("참조".equals(userProcedureType)) {
-					// 유저가 참조자일 경우
-
-					if ("미확인".equals(userStatus)) {
-						// 미확인하였을 경우
-
-						if (dao.hasApplicantAndApproverAllAccept(paramMap) == 0) {
-							// 결재자와 신청자가 모두 승인하였을 경우
-
-							avo.setStatus("승인");
-							personalApprovalList.add(avo);
-						}
-					}
-				} else if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
-					// 유저가 수신 혹은 수신참조일경우
-
-					if ("미확인".equals(userStatus)) {
-						// 미확인하였을 경우
-
-						if (dao.hasApplicantAndApproverAllAccept(paramMap) == 0) {
-							// 결재자와 신청자 모두 승인하였을 경우
-
-							avo.setStatus("승인");
-							personalApprovalList.add(avo);
-						}
-					}
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalScheduleList_withSearchAndPaging(Map<String, String> paraMap) {
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllIngList = dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllIngList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
-				// 반려가 없을 경우
-
-				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
-					// 유저가 신청 혹은 기안자일 경우
-
-					if ("대기".equals(userStatus)) {
-
-						if (dao.hasLowerApplicantWait(paramMap) != 0) {
-							// 하위 신청 or 기안자 중에 대기가 있을 경우
-
-							avo.setStatus("예정");
-							personalApprovalList.add(avo);
-						}
-
-					}
-				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
-					// 유저가 결재 or 처리자일 경우
-
-					if ("대기".equals(userStatus)) {
-						// 유저가 대기상태일 경우
-
-						if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
-							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							avo.setStatus("예정");
-							personalApprovalList.add(avo);
-						}
-
-					}
-
-				} else if ("참조".equals(userProcedureType)) {
-					// 유저가 참조자일 경우
-
-					if ("미확인".equals(userStatus)) {
-						// 미확인하였을 경우
-
-						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
-							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							avo.setStatus("예정");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
-					// 유저가 재무합의 혹은 합의일 경우
-					if ("대기".equals(userStatus)) {
-						// 대기 상태일 경우
-
-						if (dao.hasUnderRankerWait(paramMap) != 0) {
-							// 하위 순서 중에 대기가 있을 경우
-
-							avo.setStatus("예정");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalProgressList_withSearchAndPaging(Map<String, String> paraMap) {
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllIngList = dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllIngList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
-				// 반려가 없을 경우
-
-				if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
-					// 유저가 신청 혹은 기안자일 경우
-
-					if ("승인".equals(userStatus)) {
-
-						if (dao.hasLowerApplicantWait(paramMap) != 0) {
-							// 하위 신청 or 기안자 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						} else if (dao.hasUpperApplicantAndApproverWait(paramMap) != 0) {
-							// 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						}
-					}
-				} else if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType)) {
-					// 유저가 결재 or 처리자일 경우
-
-					if ("승인".equals(userStatus)) {
-
-						if (dao.hasLowerApplicantAndApproverWait(paramMap) != 0) {
-							// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-
-						} else if (dao.hasUpperApproverWait(paramMap) != 0) {
-							// 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				} else if ("참조".equals(userProcedureType)) {
-					// 유저가 참조자일 경우
-
-					if ("확인".equals(userStatus)) {
-						// 확인하였을 경우
-
-						if (dao.hasApplicantAndApproverAllAccept(paramMap) != 0) {
-							// 결재자와 신청자가 모두 승인하기 전일 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				} else if ("재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
-					// 유저가 재무합의 혹은 합의일 경우
-
-					if ("승인".equals(userStatus)) {
-
-						if (dao.hasUnderRankerWait(paramMap) != 0) {
-							// 하위 순서 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						} else if (dao.hasUpperRankerWait(paramMap) != 0) {
-							// 상위 순서 중에 대기가 있을 경우
-
-							avo.setStatus("진행");
-							personalApprovalList.add(avo);
-						}
-					}
-
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함_전체
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllBoxList = new ArrayList<>();
-		if ("1".equals(paraMap.get("isViewAll"))) {
-			approvalAllBoxList = dao.getApprovalAllBox_withViewAllAndSearchAndPaging(paraMap);
-		} else {
-			approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
-		}
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllBoxList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "읽음".equals(avo.getIsReadReturn())) {
-				// 반려가 있으면서 읽음일 경우
-
-				if ("읽음".equals(avo.getIsReadReturn())) {
-					// 반려 내용을 읽었을 경우
-
-					personalApprovalList.add(avo);
-				}
-
-			} else {
-				// 반려가 없을 경우
-
-				if (avo.getEmpId() == Long.parseLong(paraMap.get("empId"))) {
-					// 유저가 관련되어있는 전자결재의 경우
-
-					if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)
-							|| "결재".equals(userProcedureType) || "처리".equals(userProcedureType)
-							|| "재무합의".equals(userProcedureType) || "합의".equals(userProcedureType)) {
-						// 유저가 신청 or 기안 or 결재 or 처리 or 재무합의 or 합의일 경우
-
-						if (dao.hasAllAccept(paramMap) == 0) {
-							// 전원이 승인했다면
-
-							personalApprovalList.add(avo);
-						}
-
-					} else if ("참조".equals(userProcedureType)) {
-						// 유저가 참조자일 경우
-
-						if ("확인".equals(userStatus)) {
-							// 확인하였을 경우
-
-							if (dao.hasAllAccept(paramMap) == 0) {
-								// 전원이 승인했다면
-
-								personalApprovalList.add(avo);
-							}
-						}
-					} else if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
-						// 유저가 수신 혹은 수신참조일경우
-
-						if ("확인".equals(userStatus)) {
-							// 미확인하였을 경우
-
-							if (dao.hasAllAccept(paramMap) == 0) {
-								// 전원이 승인했다면
-
-								personalApprovalList.add(avo);
-							}
-						}
-					}
-
-				} else {
-					// 유저와 관계 없으나 보안단계에서 허용된 경우
-
-					if (Long.parseLong(paraMap.get("positionId")) <= avo.getFk_positionId()) {
-						if (dao.hasAllAccept(paramMap) == 0) {
-							// 전원이 승인했다면
-							avo.setProcedureType("열람");
-							personalApprovalList.add(avo);
-						}
-
-					}
-
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalWriterBox_withSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함_기안
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllBoxList) {
-
-			String userProcedureType = avo.getProcedureType();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-			if (avo.getEmpId() == Long.parseLong(paraMap.get("empId"))) {
-				if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
-					// 반려가 없을 경우
-
-					if ("신청".equals(userProcedureType) || "기안".equals(userProcedureType)) {
-						// 유저가 신청 or 기안 or 결재 or 처리 or 재무합의 or 합의일 경우
-
-						if (dao.hasAllAccept(paramMap) == 0) {
-							// 전원이 승인했다면
-
-							personalApprovalList.add(avo);
-						}
-
-					}
-
-				}
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalApprovalBox_withSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함_결재
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllBoxList) {
-
-			String userProcedureType = avo.getProcedureType();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
-				// 반려가 없을 경우
-
-				if ("결재".equals(userProcedureType) || "처리".equals(userProcedureType) || "재무합의".equals(userProcedureType)
-						|| "합의".equals(userProcedureType)) {
-					// 유저가 결재 or 처리 or 재무합의 or 합의일 경우
-
-					if (dao.hasAllAccept(paramMap) == 0) {
-						// 전원이 승인했다면
-
-						personalApprovalList.add(avo);
-					}
-				}
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalReferBox_withSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함_수신
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllBoxList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
-				// 반려가 없을 경우
-
-				if ("수신".equals(userProcedureType) || "수신참조".equals(userProcedureType)) {
-					// 유저가 수신 혹은 수신참조일경우
-
-					if ("확인".equals(userStatus)) {
-						// 확인하였을 경우
-
-						if (dao.hasAllAccept(paramMap) == 0) {
-							// 전원이 승인했다면
-
-							personalApprovalList.add(avo);
-						}
-					}
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalReadBox_withSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함_참조
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllBoxList) {
-
-			String userProcedureType = avo.getProcedureType();
-			String userStatus = avo.getStatus();
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) == 0) {
-				// 반려가 없을 경우
-
-				if ("참조".equals(userProcedureType)) {
-					// 유저가 참조자일 경우
-
-					if ("확인".equals(userStatus)) {
-						// 확인하였을 경우
-
-						if (dao.hasAllAccept(paramMap) == 0) {
-							// 전원이 승인했다면
-
-							personalApprovalList.add(avo);
-						}
-					}
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalReturnBox_withSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함_반려
-
-		// 전자결재절차 테이블 속 fk_empId 중에 존재하는 전자결재 id만 찾기
-		List<ApprovalVO> approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
-
-		// 전체 결과값 저장용
-		List<ApprovalVO> personalApprovalList = new ArrayList<>();
-		Map<String, Long> paramMap = new HashMap<>();
-
-		for (ApprovalVO avo : approvalAllBoxList) {
-
-			int userSequence = avo.getSequence();
-
-			paramMap.put("fk_approvalId", avo.getFk_approvalId());
-			paramMap.put("sequence", (long) userSequence);
-
-			if (dao.hasReturn(avo.getFk_approvalId()) != 0 && "읽음".equals(avo.getIsReadReturn())) {
-				// 반려가 있으면서 읽음일 경우
-
-				if ("읽음".equals(avo.getIsReadReturn())) {
-					// 반려 내용을 읽었을 경우
-
-					personalApprovalList.add(avo);
-				}
-
-			}
-
-		}
-
-		return personalApprovalList;
-	}
-
-	@Override
 	public List<ApprovalVO> getApprovalTempBox_withSearchAndPaging(Map<String, String> paraMap) {
 		// 임시저장함
 		return dao.getApprovalTempBox_withSearchAndPaging(paraMap);
@@ -1373,7 +570,6 @@ public class ApprovalService_imple implements ApprovalService {
 									// 삭제일 경우
 									// delete
 
-									// 수정필
 									if (dao.deleteWorkHistoryByRequest(mdvo) != 1) {
 										return false;
 									}
@@ -2704,6 +1900,180 @@ public class ApprovalService_imple implements ApprovalService {
 		}else {
 			return false;
 		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<ApprovalVO> getApprovalProgressList_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalProgressList_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalScheduleList_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalScheduleList_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalCheckList_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalCheckList_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalWaitingList_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalWaitingList_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalAllIngList_withSearchAndPaging(paraMap);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public int getTotalCountApprovalAllIngList(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalAllIngList(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalWaitingList(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalWaitingList(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalCheckList(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalCheckList(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalScheduleList(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalScheduleList(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalProgressList(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalProgressList(paraMap);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap) {
+		List<ApprovalVO> approvalAllBoxList = new ArrayList<>();
+		if ("1".equals(paraMap.get("isViewAll"))) {
+			approvalAllBoxList = dao.getApprovalAllBox_withViewAllAndSearchAndPaging(paraMap);
+		} else {
+			approvalAllBoxList = dao.getApprovalAllBox_withSearchAndPaging(paraMap);
+		}
+		return approvalAllBoxList;
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalWriterBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalWriterBox_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalApprovalBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalApprovalBox_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalReferBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalReferBox_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalReadBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalReadBox_withSearchAndPaging(paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalReturnBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return dao.getApprovalReturnBox_withSearchAndPaging(paraMap);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public int getTotalCountApprovalAllBox(Map<String, String> paraMap) {
+		
+		if ("1".equals(paraMap.get("isViewAll"))) {
+			return dao.getTotalCountApprovalAllBox_withViewAll(paraMap);
+		} else {
+			return dao.getTotalCountApprovalAllBox(paraMap);
+		}
+	}
+
+	@Override
+	public int getTotalCountApprovalWriterBox(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalWriterBox(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalApprovalBox(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalApprovalBox(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalReferBox(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalReferBox(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalReadBox(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalReadBox(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalReturnBox(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalReturnBox(paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalTempBox(Map<String, String> paraMap) {
+		return dao.getTotalCountApprovalTempBox(paraMap);
 	}
 
 }

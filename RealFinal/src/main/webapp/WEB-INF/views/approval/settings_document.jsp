@@ -28,9 +28,6 @@ $(document).ready(function() {
 			
 			let status = $(this).parent().find("td.docu-type div").html();
 			
-			console.log(status)
-			
-			
 			if(status == '결재 중'){
 				$(location).attr('href', '<%=ctxPath%>/approval/documentDetail/list/A/view.gw?formId=' + formId + '&approvalId=' + $(this).parent().find("td.docu-num div").html());
 			}else{
@@ -164,14 +161,6 @@ function batchDelete(){
 <div id="contents">
 	<div class="setting_title">
 		<h3 class="fl">전체 문서 목록</h3>
-		<!-- <a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
-			<span class="blind">세부 설명</span>
-		</a>
-		<div class="tooltip hide" style="left: 25px; top: 0;">
-			<div class="tooltip-box color-set-6" style="width: 400px;">
-				<p>모든 결재자가 작성한 결재 문서의 목록을 확인하는 곳입니다. 선택 후 참조자를 추가하거나 삭제 문서 목록으로 보낼 수 있습니다.</p>
-			</div>
-		</div> -->
 	</div>
 
 	<div class="content_inbox approval-admin">
@@ -200,12 +189,12 @@ function batchDelete(){
 						</c:when>
 					</c:choose>
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -237,12 +226,12 @@ function batchDelete(){
 
 
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -326,25 +315,25 @@ function batchDelete(){
 													<input type="checkbox" name="checkApproval"  class="js-checkbox-document-list" value="${approvalVo.fk_approvalId}">
 												</label>
 											</td>
-											<td class="docu-num tableData" data-href="수정필">
+											<td class="docu-num tableData">
 												<div title="${approvalVo.fk_approvalId}">${approvalVo.fk_approvalId}</div>
 											</td>
-											<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData" data-href="수정필">
-												<span class="icon h_new span-new-link" style="margin-top: 0px; display: none;" data-link-url="수정필"></span>
+											<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData">
+												<span class="icon h_new span-new-link" style="margin-top: 0px; display: none;"></span>
 											</td>
 											<td class="title new-window tableData" id="${approvalVo.fk_formId}">
 												${approvalVo.title}
 												<c:if test="${approvalVo.isFile eq 1}">
-													<a href="수정필" class="icon file fr">
+													<a href="javascript:void(0)" class="icon file fr">
 														<span class="blind">첨부 파일 표시</span>
 													</a>
 												</c:if>
 											</td>
-											<td class="docu-register tableData" data-href="수정필">
+											<td class="docu-register tableData">
 												<div title="${approvalVo.empName}">${approvalVo.empName}</div>
 											</td>
-											<td class="tableData" title="${approvalVo.draftDay}" data-href="수정필">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
-											<td class="tableData" title="${approvalVo.completeDay}" data-href="수정필">${fn:substring(approvalVo.completeDay, 0, fn:indexOf(approvalVo.completeDay, " "))}</td>
+											<td class="tableData" title="${approvalVo.draftDay}">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
+											<td class="tableData" title="${approvalVo.completeDay}">${fn:substring(approvalVo.completeDay, 0, fn:indexOf(approvalVo.completeDay, " "))}</td>
 											<td class="docu-type tableData" >
 												<div title="${approvalVo.status}">${approvalVo.status}</div>
 											</td>
@@ -367,36 +356,14 @@ function batchDelete(){
 					<div class="listbottom bt0 resize-with-div" id="pageApprovalDocumentList" style="width: 1604px;">
 						<p class="number">
 							문서 수 :
-							<!-- 수정필  -->
 							<span>${requestScope.totalCount}</span>
 						</p>
-						<!-- 수정필  -->
 						<div class="documentListPagination">
 							<nav>
 								<ul class="pagination">${requestScope.pageBar}
 								</ul>
 							</nav>
 						</div>
-						<!-- <div class="paginate">
-					<span class="icon pagenav4">
-								<em class="blind">PREVIOUS PAGE</em>
-							</span>
-						<strong>1</strong>
-						<a href="수정필" onclick="수정필">2</a>
-						<a href="수정필" class="space" onclick="수정필">
-							<span class="icon pagenav4">
-								<em class="blind">NEXT PAGE</em>
-							</span>
-						</a>
-					</div> -->
-						<!-- 페이지네이션 수정필 -->
-						<!-- <div class="page_select">
-						<label class="blind" for="pageCurrent">SELECT CURRENT PAGE</label>
-						<select onchange="수정필">
-							<option value="1" selected="">1</option>
-						</select>
-						/ 1
-					</div> -->
 					</div>
 				</fieldset>
 			</div>

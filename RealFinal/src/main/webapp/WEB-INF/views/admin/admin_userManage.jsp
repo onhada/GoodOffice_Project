@@ -642,7 +642,6 @@
 					</div>
 					<div data-v-1f83c670="" class="right">
 
-						<!-- 수정필 민경 언니 -->
 						<a data-v-1f83c670="" href="<%=ctxPath%>/organization/organizationManage.gw">
 							<object data-v-1f83c670="" type="image/svg+xml" data="/svg/blue/chart-hr(s).svg" alt="icon"></object>
 							<span data-v-1f83c670=""> 조직관리 </span>
@@ -1022,7 +1021,6 @@
 							</table>
 						</div>
 						<section data-v-5c8be384="" class="pagination mt-24">
-							<!-- 수정필  -->
 							<div class="documentListPagination">
 								<nav>
 									<ul class="pagination">${requestScope.pageBar}

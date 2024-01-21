@@ -178,7 +178,6 @@ function fixPayroll(salaryId){
 			async: true,
 			dataType: "json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isFix){
 					location.reload();
 				}else{
@@ -207,7 +206,6 @@ function unFixPayroll(salaryId){
 			async: true,
 			dataType: "json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isFix){
 					location.reload();
 				}else{
@@ -237,7 +235,6 @@ function deletePayroll(salaryId){
 			async: true,
 			dataType: "json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isDelete){
 					location.reload();
 				}else{
@@ -286,7 +283,6 @@ function insertPayroll(){
 			async: false,
 			dataType: "json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isExist){
 					alert("해당 귀속월에는 작성한 급여대장이 있습니다.\n삭제한 후 진행해주세요.")
 					isCheck = false;
@@ -345,7 +341,6 @@ function insertPayroll(){
 	          async: false,
 	          dataType:"json",
 	          success:function(json){
-	        	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
 	              // ~~~ 확인용 : {"result":1}
 	              if(typeof json.isInsert != 'undefined') {
 	            	  

@@ -83,7 +83,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					if(text.isDelete){
 						location.reload();
 					}else{
@@ -109,7 +108,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					if(text.isAdd){
 						location.reload();
 					}else{
@@ -258,12 +256,12 @@ $(document).ready(function() {
 						</c:when>
 						</c:choose>
 						${requestScope.searchWord}
-						<a class="icon file_delete" onclick="수정필">
+						<a class="icon file_delete">
 							<span class="blind"></span>
 						</a>
 					</li>
 					<li class="tag-button">
-						<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+						<button type="button" class="point_color tag-refresh">초기화</button>
 					</li>
 				</ul>
 			</c:if>
@@ -295,12 +293,12 @@ $(document).ready(function() {
 
 
 						${requestScope.searchWord}
-						<a class="icon file_delete" onclick="수정필">
+						<a class="icon file_delete">
 							<span class="blind"></span>
 						</a>
 					</li>
 					<li class="tag-button">
-						<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+						<button type="button" class="point_color tag-refresh">초기화</button>
 					</li>
 				</ul>
 			</c:if>
@@ -308,34 +306,25 @@ $(document).ready(function() {
 				<div class="approval-wrap pdt_0">
 					<table class="tableType01 listbox" id="tableApprovalDocumentBox" style="width: 1604px;">
 						<caption>문서함 리스트</caption>
-						<!-- <colgroup>
-					<col width="38">
-					<col width="170">
-					<col>
-					<col width="33">
-					<col width="120">
-					<col width="110">
-					<col width="140">
-				</colgroup> -->
 						<thead>
 							<tr>
 								<th style="width: 5px; white-space: nowrap;" class="resizable-false"></th>
 								<th style="width: 170px; white-space: nowrap;" class="resizable-pdr-0">
 									<div class="column-resizer ui-resizable" style="width: 170px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_code">문서 번호</a>
+										<a href="javascript:void(0)" class="js-approval-order updown" value="document_code">문서 번호</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
 								<th style="width: 6px; white-space: nowrap;" class="resizable-false resizable-pdl-0 resizable-pdr-0"></th>
 								<th class="resizable-pdr-0" style="white-space: nowrap; width: 778px;">
 									<div class="column-resizer ui-resizable" style="width: 778px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_title">제목</a>
+										<a href="javascript:void(0)" class="js-approval-order updown" value="document_title">제목</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
 								<th style="width: 120px; white-space: nowrap;">
 									<div class="column-resizer ui-resizable" style="width: 120px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_register">기안자</a>
+										<a href="javascript:void(0)" class="js-approval-order updown" value="document_register">기안자</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
@@ -351,18 +340,17 @@ $(document).ready(function() {
 									</button>
 								</th>
 								<th style="width: 100px; white-space: nowrap;" class="resizable-false">
-									<a href="수정필" class="js-approval-order updown" value="completedate">완료일</a>
+									<a href="javascript:void(0)" class="js-approval-order updown" value="completedate">완료일</a>
 								</th>
 								<th style="width: 140px; white-space: nowrap;">
 									<div class="column-resizer ui-resizable" style="width: 140px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_form">문서 종류</a>
+										<a href="수정javascript:void(0)필" class="js-approval-order updown" value="document_form">문서 종류</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
 							</tr>
 
 							<c:if test="${not empty requestScope.boxList}">
-								<!-- c:for -->
 
 								<c:forEach var="approvalVo" items="${requestScope.boxList}">
 									<tr>
@@ -378,24 +366,24 @@ $(document).ready(function() {
 												</button>
 											</c:if>
 										</td>
-										<td class="docu-num tableData" data-href="수정필">
+										<td class="docu-num tableData">
 											<div title="${approvalVo.fk_approvalId}">${approvalVo.fk_approvalId}</div>
 										</td>
-										<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData" data-href="수정필">
-											<span class="icon h_new span-new-link" style="margin-top: 0px; display: none;" data-link-url="수정필"></span>
+										<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData">
+											<span class="icon h_new span-new-link" style="margin-top: 0px; display: none;"></span>
 										</td>
-										<td class="title new-window tableData" data-href="수정필">${approvalVo.title}
+										<td class="title new-window tableData">${approvalVo.title}
 											<c:if test="${approvalVo.isFile eq 1}">
-												<a href="수정필" class="icon file fr">
+												<a href="javascript:void(0)" class="icon file fr">
 													<span class="blind">첨부 파일 표시</span>
 												</a>
 											</c:if>
 										</td>
-										<td class="docu-register tableData" data-href="수정필">
+										<td class="docu-register tableData">
 											<div title="${approvalVo.empName}">${approvalVo.empName}</div>
 										</td>
-										<td class="tableData" title="${approvalVo.draftDay}" data-href="수정필">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
-										<td class="tableData" title="${approvalVo.completeDay}" data-href="수정필">${fn:substring(approvalVo.completeDay, 0, fn:indexOf(approvalVo.completeDay, " "))}</td>
+										<td class="tableData" title="${approvalVo.draftDay}">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
+										<td class="tableData" title="${approvalVo.completeDay}">${fn:substring(approvalVo.completeDay, 0, fn:indexOf(approvalVo.completeDay, " "))}</td>
 										<td class="docu-form tableData" id="${approvalVo.fk_formId}">
 											<div title="${approvalVo.formName}">${approvalVo.formName}</div>
 										</td>
@@ -416,42 +404,17 @@ $(document).ready(function() {
 					<div class="listbottom bt0" id="pageApprovalDocument" style="width: 1604px;">
 						<p class="number">
 							문서 수 :
-							<!-- 수정필  -->
 							<span>${requestScope.totalCount}</span>
 						</p>
-						<!-- 수정필  -->
 						<div class="documentListPagination">
 							<nav>
 								<ul class="pagination">${requestScope.pageBar}
 								</ul>
 							</nav>
 						</div>
-						<!-- <div class="paginate">
-					<span class="icon pagenav4">
-								<em class="blind">PREVIOUS PAGE</em>
-							</span>
-						<strong>1</strong>
-						<a href="수정필" onclick="수정필">2</a>
-						<a href="수정필" class="space" onclick="수정필">
-							<span class="icon pagenav4">
-								<em class="blind">NEXT PAGE</em>
-							</span>
-						</a>
-					</div> -->
-						<!-- 페이지네이션 수정필 -->
-						<!-- <div class="page_select">
-						<label class="blind" for="pageCurrent">SELECT CURRENT PAGE</label>
-						<select onchange="수정필">
-							<option value="1" selected="">1</option>
-						</select>
-						/ 1
-					</div> -->
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-
 </div>

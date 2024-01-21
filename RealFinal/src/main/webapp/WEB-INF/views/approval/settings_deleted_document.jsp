@@ -171,14 +171,6 @@ function batchRestore(){
 <div id="contents">
 	<div class="setting_title">
 		<h3 class="fl">삭제 문서 목록</h3>
-		<!-- <a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
-			<span class="blind">세부 설명</span>
-		</a>
-		<div class="tooltip hide" style="left: 25px; top: 0;">
-			<div class="tooltip-box color-set-6" style="width: 400px;">
-				<p>전체 문서 목록에서 삭제했거나 보존 연한이 만료된 문서들을 확인하는 곳입니다. 선택 후 복원하거나 완전 삭제할 수 있습니다. 복원 후에는 더 이상 자동 삭제되지 않으며, 관리자가 삭제해야 삭제 상태가 됩니다.</p>
-			</div>
-		</div> -->
 	</div>
 	<div class="content_inbox approval-admin">
 		<c:if test="${not empty requestScope.searchWord}">
@@ -206,12 +198,12 @@ function batchRestore(){
 						</c:when>
 					</c:choose>
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -243,7 +235,7 @@ function batchRestore(){
 
 
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
@@ -262,60 +254,35 @@ function batchRestore(){
 								<input type="checkbox" class="js-approval-all-checkbox">
 							</label>
 							<a class="js-approval-btn-state js-approval-check-before" id="anchorApprovalState">선택</a>
-							<%-- <img src="<%= ctxPath %>/resources/image/icon/btn_drop.gif" class="open_drop vm js-approval-check-before">
-							<ul class="dropdown-menu hide" id="menuApprovalState">
-								<li>
-									<a href="수정필" class="js-approval-li-state" value="all_deleted">모든 삭제 사유</a>
-								</li>
-								<li>
-									<a href="수정필" class="js-approval-li-state" value="deleted_by_preserved">보존 연한 경과</a>
-								</li>
-								<li>
-									<a href="수정필" class="js-approval-li-state" value="deleted_by_admin">관리자에 의한 삭제</a>
-								</li>
-							</ul> --%>
 							<span class="mgl_10 check-number js-approval-check-after hide" id="countCheckApprovalDocumentList" style="display: none;"></span>
 							<span class="mgl_10 js-approval-check-after hide" style="display: none;">
 								<button type="button" onclick="batchRestore()">복원</button>
 							</span>
-							
-							
-							<!-- <span>
-								<button type="button" onclick="수정필" class="approval-document-history-button ml-16 xs">완전 삭제 이력</button>
-							</span> -->
 						</div>
 					</div>
 				</fieldset>
 				<fieldset>
 					<table class="tableType01 mgt_10" id="tableApprovalDocumentList" style="width: 1604px;">
 						<caption>삭제 문서 목록</caption>
-						<!-- <colgroup>
-						<col style="width:38px">
-						<col style="width:200px">
-						<col style="width:28%">
-						<col style="width: 150px">
-						<col style="width:100px;">
-						<col style="width:180px;"> -->
-
 						<thead>
 							<tr>
 								<th style="width: 5px; white-space: nowrap;" class="resizable-false"></th>
 								<th style="width: 200px; white-space: nowrap;" class="resizable-pdr-0">
 									<div class="column-resizer ui-resizable" style="width: 200px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_code">문서 번호</a>
+										<a href="javascript:void(0)" class="js-approval-order updown" value="document_code">문서 번호</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
 								<th style="width: 6px; white-space: nowrap;" class="resizable-false resizable-pdl-0 resizable-pdr-0"></th>
 								<th class="resizable-pdr-0" style="white-space: nowrap; width: 833px;">
 									<div class="column-resizer ui-resizable" style="width: 833px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_title">제목</a>
+										<a href="javascript:void(0)" class="js-approval-order updown" value="document_title">제목</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
 								<th style="width: 150px; white-space: nowrap;">
 									<div class="column-resizer ui-resizable" style="width: 150px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-										<a href="수정필" class="js-approval-order updown" value="document_register">기안자</a>
+										<a href="javascript:void(0)" class="js-approval-order updown" value="document_register">기안자</a>
 										<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 									</div>
 								</th>
@@ -346,20 +313,20 @@ function batchRestore(){
 													<input type="checkbox" name="checkApproval" class="js-checkbox-document-list" value="${approvalVo.fk_approvalId}">
 												</label>
 											</td>
-											<td class="docu-num tableData" data-href="수정필">
+											<td class="docu-num tableData">
 												<div title="${approvalVo.fk_approvalId}">${approvalVo.fk_approvalId}</div>
 											</td>
-											<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData" data-href="수정필">
-												<span class="icon h_new span-new-link" style="display: none; margin-top: 0px;" data-link-url="수정필"></span>
+											<td class="new-open-window resizable-pdl-0 resizable-pdr-0 tableData">
+												<span class="icon h_new span-new-link" style="display: none; margin-top: 0px;"></span>
 											</td>
 											<td class="title new-window tableData" id="${approvalVo.fk_formId}">
 												<div title="${approvalVo.title}">${approvalVo.title}</div>
 											</td>
-											<td class="docu-register tableData" data-href="수정필">
+											<td class="docu-register tableData">
 												<div title="${approvalVo.empName}">${approvalVo.empName}</div>
 											</td>
-											<td class="undefined tableData" data-href="수정필">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
-											<td class="docu-reason tableData" data-href="수정필">
+											<td class="undefined tableData">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
+											<td class="docu-reason tableData">
 												<div>${approvalVo.isDelete}</div>
 											</td>
 										</tr>
@@ -382,10 +349,8 @@ function batchRestore(){
 					<div class="listbottom bt0" id="pageApprovalDocumentList" style="width: 1604px;">
 						<p class="number">
 							문서 수 :
-							<!-- 수정필  -->
 							<span>${requestScope.totalCount}</span>
 						</p>
-						<!-- 수정필  -->
 						<div class="documentListPagination">
 							<nav>
 								<ul class="pagination">${requestScope.pageBar}

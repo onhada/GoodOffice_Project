@@ -81,40 +81,7 @@ $(document).ready(function() {
 
 <div id="contents">
 	<div class="content_title">
-		<!-- <label class="fl mgr_10 mgl_5">
-			<input type="checkbox" class="js-approval-all-checkbox">
-		</label> -->
-		<%-- <span class="detail_select js-approval-lists-first-type">
-			<a href="수정필" class="js-approval-btn-list-status-mode" id="anchorApprovalListStatus">보기: 모든 문서</a>
-			<img src="<%=ctxPath%>/resources/image/icon/btn_drop.gif" alt="DROPDOWN" class="open_drop vm">
-			<ul class="dropdown-menu hide js-approval-lists-first-type-layer" id="menuApprovalListStatusMode" style="max-height: 550px; overflow-y: auto; padding-right: 8px;">
-				<li>
-					<a href="수정필" class="js-approval-li-liststatus" value="A">모든 문서</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-liststatus" value="W">대기</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-liststatus" value="E">예정</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-liststatus" value="P">진행</a>
-				</li>
-				<li>
-					<a href="수정필" class="js-approval-li-liststatus" value="V">확인</a>
-				</li>
-			</ul>
-		</span> --%>
-		<!-- 체크박스 클릭시 나옴 수정필 -->
-		<!-- 선택한 갯수 -->
-		<span class="detail_select js-approval-lists-second-type hide" id="countCheckApprovalLists" style="display: none;">수정필</span>
-		<span class="detail_select js-approval-lists-second-type hide" style="display: none;">
-			<a href="수정필" onclick="수정필">결재</a>
-			&nbsp;&nbsp;
-			<a href="수정필" onclick="수정필">확인</a>
-		</span>
-
-	</div>
+ 	</div>
 	<div class="content_inbox approval approval-admin">
 
 
@@ -142,12 +109,12 @@ $(document).ready(function() {
 						</c:when>
 					</c:choose>
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -179,12 +146,12 @@ $(document).ready(function() {
 
 
 					 ${requestScope.searchWord}
-					<a class="icon file_delete" onclick="수정필">
+					<a class="icon file_delete">
 						<span class="blind"></span>
 					</a>
 				</li>
 				<li class="tag-button">
-					<button type="button" class="point_color tag-refresh" onclick="수정필">초기화</button>
+					<button type="button" class="point_color tag-refresh">초기화</button>
 				</li>
 			</ul>
 		</c:if>
@@ -196,23 +163,22 @@ $(document).ready(function() {
 					<caption></caption>
 					<thead>
 						<tr>
-							<!-- <th style="width: 5px; white-space: nowrap;" class="resizable-false"></th> -->
 							<th style="width: 200px; white-space: nowrap;" class="resizable-pdr-0">
 								<div class="column-resizer ui-resizable" style="width: 200px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="document_code">문서 번호</a>
+									<a href="javascript:void(0)" class="js-approval-order updown" value="document_code">문서 번호</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
 							<th style="width: 6px; white-space: nowrap;" class="resizable-false resizable-pdr-0 resizable-pdl-0"></th>
 							<th class="resizable-pdr-0" style="white-space: nowrap; width: 758px;">
 								<div class="column-resizer ui-resizable" style="width: 758px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="document_title">제목</a>
+									<a href="javascript:void(0)" class="js-approval-order updown" value="document_title">제목</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
 							<th style="width: 120px; white-space: nowrap;">
 								<div class="column-resizer ui-resizable" style="width: 120px; float: left; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-									<a href="수정필" class="js-approval-order updown" value="document_register">기안자</a>
+									<a href="javascript:void(0)" class="js-approval-order updown" value="document_register">기안자</a>
 									<div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
 								</div>
 							</th>
@@ -238,11 +204,6 @@ $(document).ready(function() {
 
 							<c:forEach var="approvalVo" items="${requestScope.ingList}">
 								<tr class="tableData">
-									<%-- <td>
-										<label>
-											<input type="checkbox" class="js-checkbox-approval-lists" value="${approvalVo.fk_approvalId}">
-										</label>
-									</td> --%>
 									<td class="docu-num" >
 										<div title="${approvalVo.fk_approvalId}">${approvalVo.fk_approvalId}</div>
 									</td>
@@ -255,14 +216,14 @@ $(document).ready(function() {
 												<span class="blind">첨부 파일 표시</span>
 										</c:if>
 									</td>
-									<td class="docu-register" data-href="수정필">
+									<td class="docu-register">
 										<div title="${approvalVo.empName}">${approvalVo.empName}</div>
 									</td>
 									<td title="${approvalVo.draftDay}">${fn:substring(approvalVo.draftDay, 0, fn:indexOf(approvalVo.draftDay, " "))}</td>
 									<td class="docu-type">
 										<div title="${approvalVo.procedureType}">${approvalVo.procedureType}</div>
 									</td>
-									<td data-href="수정필">${approvalVo.status}</td>
+									<td>${approvalVo.status}</td>
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -281,10 +242,8 @@ $(document).ready(function() {
 				<div class="listbottom bt0" id="pageApprovalDocument" style="width: 1604px;">
 					<p class="number">
 						문서 수 :
-						<!-- 수정필  -->
 						<span>${requestScope.totalCount}</span>
 					</p>
-					<!-- 수정필  -->
 					<div class="documentListPagination">
 						<nav>
 							<ul class="pagination">${requestScope.pageBar}

@@ -26,7 +26,6 @@ $(document).ready(function() {
 			async: true,
 			dataType: "json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isDelete){
 					// 이전 페이지로 돌아간다
 					window.location = document.referrer;
@@ -56,14 +55,12 @@ $(document).ready(function() {
 	<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 		<c:if test="${procedure.procedureType eq '결재'}">
 			cnt--;
-			console.log("cnt : ", cnt);
 		</c:if>
 	</c:forEach>
 	
 	if(cnt > 0){
 		let html_position = $("tr#approvalProcedureData_position").html();
 		let html_stamp = $("tr#approvalProcedureData_stamp").html();
-		console.log(html_stamp);
 		let html_empName = $("tr#approvalProcedureData_empName").html();
 		
 		while(cnt != 0){
@@ -88,7 +85,6 @@ $(document).ready(function() {
 	<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 		<c:if test="${procedure.procedureType eq '재무합의'}">
 			cnt--;
-			console.log("cnt : ", cnt);
 		</c:if>
 	</c:forEach>
 	
@@ -129,7 +125,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					if(text.isUpdate == true){
 						alert("변경되었습니다!")
 						$("select[name=security_level]").val(text.securityId).prop("selected", true);
@@ -164,7 +159,6 @@ $(document).ready(function() {
 		if($("input#inputApprovalLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -173,7 +167,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -210,7 +203,6 @@ $(document).ready(function() {
 		if($("input#inputApprovalLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -266,13 +258,11 @@ $(document).ready(function() {
 		let empName = $(this).find('span:eq(0)').html();
 		let positionName = $(this).find('span:eq(2)').html();
 		
-		console.log("html : ", html);
 		
 		let isExist = false;
 		
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			if("${procedure.procedureType}" != '결재' && ${procedure.empId} == empId){
-				console.log("hi", ${procedure.empId});
 				isExist = true;
 				
 			}
@@ -295,7 +285,7 @@ $(document).ready(function() {
 			alert("이미 포함된 결재자는 중복으로 설정할 수 없습니다.")
 			$("input#inputApprovalLineSetting").val('');
 		}else{
-			html += `<li class="js-approval-line-setting unsortable" id="approvalLineSettingEmpId_` + empId +`" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span></li>`;
+			html += `<li class="js-approval-line-setting unsortable" id="approvalLineSettingEmpId_` + empId +`" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span></li>`;
 			$("ul#sortApprovalLineSetting").html(html);
 			$("input#inputApprovalLineSetting").val('');
 			
@@ -317,7 +307,6 @@ $(document).ready(function() {
 		if($("input#inputAgreeLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputAgreeLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -326,7 +315,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -363,7 +351,6 @@ $(document).ready(function() {
 		if($("input#inputAgreeLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputAgreeLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -423,7 +410,6 @@ $(document).ready(function() {
 		
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			if("${procedure.procedureType}" != '합의' && ${procedure.empId} == empId){
-				console.log("hi", ${procedure.empId});
 				isExist = true;
 				
 			}
@@ -446,7 +432,7 @@ $(document).ready(function() {
 			alert("이미 포함된 결재자는 중복으로 설정할 수 없습니다.")
 			$("input#inputAgreeLineSetting").val('');
 		}else{
-			html += `<li class="js-approval-line-setting agreeLine-li unsortable" id="agreeLineSettingEmpId_` + empId +`" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span>`;
+			html += `<li class="js-approval-line-setting agreeLine-li unsortable" id="agreeLineSettingEmpId_` + empId +`" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span>`;
 			$("ul#sortAgreeLineSetting").html(html);
 			$("input#inputAgreeLineSetting").val('');
 			
@@ -466,7 +452,6 @@ $(document).ready(function() {
 		if($("input#inputFiAgreeLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputFiAgreeLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -475,7 +460,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -512,7 +496,6 @@ $(document).ready(function() {
 		if($("input#inputFiAgreeLineSetting").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputFiAgreeLineSetting").val())
 			
 			$.ajax({
 				url: "<%=ctxPath%>/approval/searchEmpName.gw",
@@ -572,7 +555,6 @@ $(document).ready(function() {
 		
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			if("${procedure.procedureType}" != '재무합의' && ${procedure.empId} == empId){
-				console.log("hi", ${procedure.empId});
 				isExist = true;
 				
 			}
@@ -595,7 +577,7 @@ $(document).ready(function() {
 			alert("이미 포함된 결재자는 중복으로 설정할 수 없습니다.")
 			$("input#inputFiAgreeLineSetting").val('');
 		}else{
-			html += `<li class="js-approval-line-setting fiAgreeLine-li unsortable" id="fiAgreeLineSettingEmpId_` + empId +`" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span>`;
+			html += `<li class="js-approval-line-setting fiAgreeLine-li unsortable" id="fiAgreeLineSettingEmpId_` + empId +`" style="cursor: auto;"><span>` + empName + `<span class="icon file_delete js-approval-line-setting-delete"></span></span><span style="display:none;">` + positionName + `</span>`;
 			$("ul#sortFiAgreeLineSetting").html(html);
 			$("input#inputFiAgreeLineSetting").val('');
 			
@@ -611,13 +593,11 @@ $(document).ready(function() {
 	// 참조 + 버튼_입력시
 	
 	let prev_refAutoComplete = $("ul.reference_autocomplete").html();
-	console.log("prev_refAutoComplete", prev_refAutoComplete)
 	$(document).on("focus", "input#inputApprovalFourthLine", function(){
 		
 		if($("input#inputApprovalFourthLine").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalFourthLine").val())
 			
 			$.ajax({
 				url: "<%= ctxPath%>/approval/searchEmpName.gw",
@@ -626,7 +606,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -665,7 +644,6 @@ $(document).ready(function() {
 		if($("input#inputApprovalFourthLine").val().trim() != ''){
 			// 검색값이 있을 경우
 			
-			console.log($("input#inputApprovalFourthLine").val())
 			
 			$.ajax({
 				url: "<%= ctxPath%>/approval/searchEmpName.gw",
@@ -674,7 +652,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					
 					let html = '';
 					for(let i = 0 ; i < text.length ; i++){
@@ -726,7 +703,6 @@ $(document).ready(function() {
 		
 		<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 			if(${procedure.empId} == empId){
-				console.log("hi", ${procedure.empId});
 				isExist = true;
 				
 			}
@@ -763,7 +739,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
 						location.reload()
 					}else{
@@ -792,20 +767,8 @@ $(document).ready(function() {
     // == 파일 Drag & Drop 만들기 == //
     $("div#dragZone").on("dragenter", function(e){ /* "dragenter" 이벤트는 드롭대상인 박스 안에 Drag 한 파일이 최초로 들어왔을 때 */ 
         e.preventDefault();
-        <%-- 
-        	브라우저에 어떤 파일을 drop 하면 브라우저 기본 동작이 실행된다. 
-        	이미지를 drop 하면 바로 이미지가 보여지게되고, 만약에 pdf 파일을 drop 하게될 경우도 각 브라우저의 pdf viewer 로 브라우저 내에서 pdf 문서를 열어 보여준다. 
-            이것을 방지하기 위해 preventDefault() 를 호출한다. 
-            즉, e.preventDefault(); 는 해당 이벤트 이외에 별도로 브라우저에서 발생하는 행동을 막기 위해 사용하는 것이다.
-        --%>
-        
         e.stopPropagation();
-        <%--
-            propagation 의 사전적의미는 전파, 확산이다.
-            stopPropagation 은 부모태그로의 이벤트 전파를 stop 중지하라는 의미이다.
-            즉, 이벤트 버블링을 막기위해서 사용하는 것이다. 
-            사용예제 사이트 https://devjhs.tistory.com/142 을 보면 이해가 될 것이다. 
-        --%>
+        
     }).on("dragover", function(e){ /* "dragover" 이벤트는 드롭대상인 박스 안에 Drag 한 파일이 머물러 있는 중일 때. 필수이벤트이다. dragover 이벤트를 적용하지 않으면 drop 이벤트가 작동하지 않음 */ 
         e.preventDefault();
         e.stopPropagation();
@@ -818,50 +781,12 @@ $(document).ready(function() {
         e.preventDefault();
 
         var files = e.originalEvent.dataTransfer.files;  
-        <%--  
-            jQuery 에서 이벤트를 처리할 때는 W3C 표준에 맞게 정규화한 새로운 객체를 생성하여 전달한다.
-            이 전달된 객체는 jQuery.Event 객체 이다. 이렇게 정규화된 이벤트 객체 덕분에, 
-            웹브라우저별로 차이가 있는 이벤트에 대해 동일한 방법으로 사용할 수 있습니다. (크로스 브라우징 지원)
-            순수한 dom 이벤트 객체는 실제 웹브라우저에서 발생한 이벤트 객체로, 네이티브 객체 또는 브라우저 내장 객체 라고 부른다.
-        --%>
-        /*  Drag & Drop 동작에서 파일 정보는 DataTransfer 라는 객체를 통해 얻어올 수 있다. 
-            jQuery를 이용하는 경우에는 event가 순수한 DOM 이벤트(각기 다른 웹브라우저에서 해당 웹브라우저의 객체에서 발생되는 이벤트)가 아니기 때문에,
-            event.originalEvent를 사용해서 순수한 원래의 DOM 이벤트 객체를 가져온다.
-            Drop 된 파일은 드롭이벤트가 발생한 객체(여기서는 $("div#fileDrop")임)의 dataTransfer 객체에 담겨오고, 
-            담겨진 dataTransfer 객체에서 files 로 접근하면 드롭된 파일의 정보를 가져오는데 그 타입은 FileList 가 되어진다. 
-            그러므로 for문을 사용하든지 또는 [0]을 사용하여 파일의 정보를 알아온다. 
-		*/
-	//  console.log(typeof files); // object
-    //  console.log(files);
-        /*
-			FileList {0: File, length: 1}
-			0: File {name: 'berkelekle단가라포인트03.jpg', lastModified: 1605506138000, lastModifiedDate: Mon Nov 16 2020 14:55:38 GMT+0900 (한국 표준시), webkitRelativePath: '', size: 57641, …}
-			         length:1
-			[[Prototype]]: FileList
-        */
+
         if(files != null && files != undefined){
-        <%-- console.log("files.length 는 => " + files.length);  
-             // files.length 는 => 1 이 나온다. 
-        --%>    
-        	
-        <%--
-        	for(let i=0; i<files.length; i++){
-                const f = files[i];
-                const fileName = f.name;  // 파일명
-                const fileSize = f.size;  // 파일크기
-                console.log("파일명 : " + fileName);
-                console.log("파일크기 : " + fileSize);
-            } // end of for------------------------
-        --%>
             
             let html = $("table#tableApprovalAttach tbody").html();
             const f = files[0]; // 파일 정보 어차피 files.length 의 값이 1 이므로 위의 for문을 사용하지 않고 files[0] 을 사용하여 1개만 가져오면 된다. 
         	let fileSize = f.size/1024/1024;  /* 파일의 크기는 MB로 나타내기 위하여 /1024/1024 하였음 */
-        	
-        	console.log("f 정보 ? : ", f)
-        	
-        	console.log("file Name : ", f.name)
-        	console.log("file Size : ", fileSize)
         	
         	
         	if(fileSize >= 10) {
@@ -877,17 +802,6 @@ $(document).ready(function() {
         	    fileSize = fileSize < 1 ? fileSize.toFixed(3) : fileSize.toFixed(1);
         	    // fileSize 가 1MB 보다 작으면 소수부는 반올림하여 소수점 3자리까지 나타내며, 
                 // fileSize 가 1MB 이상이면 소수부는 반올림하여 소수점 1자리까지 나타낸다. 만약에 소수부가 없으면 소수점은 0 으로 표시한다.
-                /* 
-                     numObj.toFixed([digits]) 의 toFixed() 메서드는 숫자를 고정 소수점 표기법(fixed-point notation)으로 표시하여 나타난 수를 문자열로 반환해준다. 
-                                     파라미터인 digits 는 소수점 뒤에 나타날 자릿수 로써, 0 이상 20 이하의 값을 사용할 수 있으며, 구현체에 따라 더 넓은 범위의 값을 지원할 수도 있다. 
-                     digits 값을 지정하지 않으면 0 을 사용한다.
-                     
-                     var numObj = 12345.6789;
-
-					 numObj.toFixed();       // 결과값 '12346'   : 반올림하며, 소수 부분을 남기지 않는다.
-					 numObj.toFixed(1);      // 결과값 '12345.7' : 반올림한다.
-					 numObj.toFixed(6);      // 결과값 '12345.678900': 빈 공간을 0 으로 채운다.
-                */
         	   html += 
                     `<tr>
 						<td>
@@ -914,10 +828,8 @@ $(document).ready(function() {
 	// 파일 모달에서 삭제 버튼 클릭시 ------------------------------------------------------------------------------
 	$(document).on("click", "button.js-approval-attach-delete", function(e){
 		var this_fileDetail = $(e.target).parent().find("span").html();
-		console.log(this_fileDetail);
 		for(var i=0;i < file_arr.length;i++){
 			// file_arr에서 삭제하기 위해
-			console.log('// file_arr에서 삭제하기 위해')
 			
 			var file = file_arr[i]; // 파일 정보 자체
 			var fileName = file.name;
@@ -937,36 +849,6 @@ $(document).ready(function() {
 	// -------------------------------------------------------------------------------------------------		
 	
 	
-	
-	
-	
-	
-	
-	
-	
-    /*  // == Drop 되어진 파일목록 제거하기 == // 
-    $(document).on("click", "span.delete", function(e){
-    	let idx = $("span.delete").index($(e.target));
-    //	alert("인덱스 : " + idx );
-    
-    	file_arr.splice(idx,1); // 드롭대상인 박스 안에 첨부파일을 드롭하면 파일들을 담아둘 배열인 file_arr 에서 파일을 제거시키도록 한다.
-    //	console.log(file_arr);
-    
-    /* 	배열명.splice() : 배열의 특정 위치에 배열 요소를 추가하거나 삭제하는데 사용한다. 
-	    삭제할 경우 리턴값은 삭제한 배열 요소이다. 삭제한 요소가 없으면 빈 배열( [] )을 반환한다.
-	
-	    배열명.splice(start, 0, element);  // 배열의 특정 위치에 배열 요소를 추가하는 경우 
-		start   - 수정할 배열 요소의 인덱스
-        0       - 요소를 추가할 경우
-        element - 배열에 추가될 요소
-
-     	배열명.splice(start, deleteCount); // 배열의 특정 위치의 배열 요소를 삭제하는 경우    
-        start   - 수정할 배열 요소의 인덱스
-        deleteCount - 삭제할 요소 개수 */
-	
-    
-       /* $(e.target).parent().remove(); // <div class='fileList'> 태그를 삭제하도록 한다.	    
-    }); */
 	<%-- === jQuery 를 사용하여 드래그앤드롭(DragAndDrop)을 통한 파일 업로드 끝 === --%>
 	
 	
@@ -991,7 +873,6 @@ $(document).ready(function() {
 	// 첨부파일
 	$('input#fileApprovalAttach').change(function(e) {
 	    fileList = $(this)[0].files;  //파일 대상이 리스트 형태로 넘어온다.
-	    console.log("fileList : " , fileList)
 	    
 	    html = '';
 	    for(var i=0;i < fileList.length;i++){
@@ -999,8 +880,6 @@ $(document).ready(function() {
 	    	
 	        var file = fileList[i]; // 파일 정보 자체
 	        
-	        console.log("//////////////////////////////////")
-	    	console.log("file : ", file)
 	        let fileSize = file.size/1024/1024; // 파일 사이즈 (MB로 변환)
 	        
 	        if(fileSize >= 10) {
@@ -1112,7 +991,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					if(text.isDelete == true){
 						location.reload()
 					}else{
@@ -1138,7 +1016,6 @@ $(document).ready(function() {
 				async: true,
 				dataType: "json",
 				success: function(text) {
-					console.log(JSON.stringify(text));
 					if(text.isAdd == true){
 						location.reload()
 					}else{
@@ -1197,7 +1074,6 @@ function deleteFile(event){
 /* 첨부 파일칸에서 버튼 눌렀을 경우 */
 function deleteSavedFile(fileId){
 	
-	console.log("fileId : ", fileId)
 	
 	if(confirm("삭제하시겠습니까?")){
 		$.ajax({
@@ -1207,7 +1083,6 @@ function deleteSavedFile(fileId){
 		async: true,
 		dataType: "json",
 		success: function(text) {
-			console.log(JSON.stringify(text));
 			if(text.isDelete == true){
 				location.reload()
 			}else{
@@ -1226,7 +1101,6 @@ function deleteSavedFile(fileId){
 
 /* 파일 첨부 확인 버튼 눌렀을 경우 */
 function updateApprovalFile(file_arr){
-	console.log('확인 눌렀ㄸ따')
 	
 	 var formData = new FormData($("form[name='addFrm']").get(0)); // $("form[name='addFrm']").get(0) 폼 에 작성된 모든 데이터 보내기 
      
@@ -1243,7 +1117,6 @@ function updateApprovalFile(file_arr){
 		 return; // 종료
 		 
 		}else { // formData 속에 첨부파일 넣어주기
-			console.log("첨부파일 넣어주기")
 			
 			file_arr.forEach(function(item){
 			       formData.append("file_arr", item);  // 첨부파일 추가하기. // "file_arr" 이 키값이고  item 이 밸류값인데 file_arr 배열속에 저장되어진 배열요소인 파일첨부되어진 파일이 되어진다.
@@ -1259,7 +1132,6 @@ function updateApprovalFile(file_arr){
 				dataType:"json",
 				success:function(text){
 				if(text.isUpdate == true) {
-					/* contextPath를 ctxPath로 변경하기 */
 					location.reload()
 					}else {
 						alert("파일 첨부가 실패했습니다.");
@@ -1280,7 +1152,6 @@ function updateApprovalFile(file_arr){
 			dataType:"json",
 			success:function(text){
 			if(text.isUpdate == true) {
-				/* contextPath를 ctxPath로 변경하기 */
 				location.reload()
 				}else {
 					alert("파일 첨부가 실패했습니다.");
@@ -1327,7 +1198,6 @@ function deleteRefOrIncOrIncR(id){
 			async: true,
 			dataType:"json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isDelete){
 					location.reload()
 				}else{
@@ -1335,7 +1205,6 @@ function deleteRefOrIncOrIncR(id){
 				}
 			},
 			error: function(request, status, error) {
-				// 수정필
 				alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 			}
 		});
@@ -1361,7 +1230,6 @@ function insertOpinion(){
 			async: true,
 			dataType:"json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isInsert){
 					location.reload()
 				}else{
@@ -1369,7 +1237,6 @@ function insertOpinion(){
 				}
 			},
 			error: function(request, status, error) {
-				// 수정필
 				alert("등록에 실패하였습니다. 다시 시도해주세요.")
 			}
 		});
@@ -1390,7 +1257,6 @@ function deleteOpinion(opinionId){
 			async: true,
 			dataType:"json",
 			success: function(text) {
-				console.log(JSON.stringify(text));
 				if(text.isDelete){
 					location.reload()
 				}else{
@@ -1398,7 +1264,6 @@ function deleteOpinion(opinionId){
 				}
 			},
 			error: function(request, status, error) {
-				// 수정필
 				alert("삭제에 실패하였습니다. 다시 시도해주세요.")
 			}
 		});
@@ -1450,7 +1315,6 @@ function enterActionOfApproval(){
 		async: true,
 		dataType:"json",
 		success: function(text) {
-			console.log(JSON.stringify(text));
 			if(text.isUpdate){
 				location.reload()
 			}else{
@@ -1458,7 +1322,6 @@ function enterActionOfApproval(){
 			}
 		},
 		error: function(request, status, error) {
-			// 수정필
 			alert("등록에 실패하였습니다. 다시 시도해주세요.")
 		}
 	});
@@ -1474,7 +1337,6 @@ function updateRefRead(){
 		async: true,
 		dataType:"json",
 		success: function(text) {
-			console.log(JSON.stringify(text));
 			if(text.isUpdate){
 				location.reload()
 			}else{
@@ -1482,7 +1344,6 @@ function updateRefRead(){
 			}
 		},
 		error: function(request, status, error) {
-			// 수정필
 			alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 		}
 	});
@@ -1505,7 +1366,7 @@ function approvalLineSetting(){
 	<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 		<c:if test="${procedure.procedureType eq '결재'}">
 			
-			html += `<li class="js-approval-line-setting unsortable" id ="approvalLineSettingEmpId_${procedure.empId}" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>${procedure.empName}</span>`
+			html += `<li class="js-approval-line-setting unsortable" id ="approvalLineSettingEmpId_${procedure.empId}" style="cursor: auto;"><span>${procedure.empName}</span>`
 	
 				<c:if test="${procedure.status eq '대기'}">
 					html += `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(approvalLineSettingEmpId_${procedure.empId})"></span>`;
@@ -1515,7 +1376,6 @@ function approvalLineSetting(){
 			
 		</c:if>
 		
-		console.log(html);
 	</c:forEach>
 	
 	$("ul#sortApprovalLineSetting").html(html);
@@ -1528,11 +1388,6 @@ function approvalLineSetting(){
 
 /* 결재 + 버튼 눌러 모달창에서 확인 버튼 눌렀을 경우 */
 function updateApprovalLineSetting(){
-	/* contextPath 생성용 */
-	const pathname = "/" + window.location.pathname.split("/")[1];
-	const origin = window.location.origin;
-	const contextPath = origin + pathname;
-	/* end of contextPath 생성용 */
 	
 	 let approvalList = [];
 	 let listdata;
@@ -1556,8 +1411,6 @@ function updateApprovalLineSetting(){
 			dataType:"json",
 			contentType: "application/json; charset=utf-8",
 			success: function(text) {
-				console.log(JSON.stringify(text));
-				console.log(text.isSuccess);
 				if(text.isSuccess){
 					location.reload()
 				}else{
@@ -1565,7 +1418,6 @@ function updateApprovalLineSetting(){
 				}
 			},
 			error: function(request, status, error) {
-				// 수정필
 				alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 			}
 		});
@@ -1590,7 +1442,7 @@ function agreeLineSetting(){
 	<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 		<c:if test="${procedure.procedureType eq '합의'}">
 			
-			html += `<li class="js-approval-line-setting agreeLine-li unsortable" id ="agreeLineSettingEmpId_${procedure.empId}" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>${procedure.empName}</span>`
+			html += `<li class="js-approval-line-setting agreeLine-li unsortable" id ="agreeLineSettingEmpId_${procedure.empId}" style="cursor: auto;"><span>${procedure.empName}</span>`
 	
 				<c:if test="${procedure.status eq '대기'}">
 					html += `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(agreeLineSettingEmpId_${procedure.empId})"></span>`;
@@ -1600,7 +1452,6 @@ function agreeLineSetting(){
 			
 		</c:if>
 		
-		console.log(html);
 	</c:forEach>
 	
 	$("ul#sortAgreeLineSetting").html(html);
@@ -1613,12 +1464,6 @@ function agreeLineSetting(){
 
 /* 합의 + 버튼 눌러 모달창에서 확인 버튼 눌렀을 경우 */
 function updateAgreeLineSetting(){
-	/* contextPath 생성용 */
-	const pathname = "/" + window.location.pathname.split("/")[1];
-	const origin = window.location.origin;
-	const contextPath = origin + pathname;
-	/* end of contextPath 생성용 */
-	
 	 let approvalList = [];
 	 let listdata;
 	 
@@ -1631,7 +1476,6 @@ function updateAgreeLineSetting(){
 		 approvalList.push(listdata);
 	 })
 	 
-	   console.log(approvalList)
 	if(approvalList.length > 0 && approvalList.length <= 6){
 		$.ajax({
 			url: "<%=ctxPath%>/approval/updateRoundRobinApprovalLineSetting.gw",
@@ -1641,8 +1485,6 @@ function updateAgreeLineSetting(){
 			dataType:"json",
 			contentType: "application/json; charset=utf-8",
 			success: function(text) {
-				console.log(JSON.stringify(text));
-				console.log(text.isSuccess);
 				if(text.isSuccess){
 					location.reload()
 				}else{
@@ -1650,7 +1492,6 @@ function updateAgreeLineSetting(){
 				}
 			},
 			error: function(request, status, error) {
-				// 수정필
 				alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 			}
 		});
@@ -1674,7 +1515,7 @@ function fiAgreeLineSetting(){
 	<c:forEach var="procedure" items="${requestScope.approvalDetail.apvo}">
 		<c:if test="${procedure.procedureType eq '재무합의'}">
 			
-			html += `<li class="js-approval-line-setting fiAgreeLine-li unsortable" id ="fiAgreeLineSettingEmpId_${procedure.empId}" user_no="수정필" node_id="수정필" old_new="old" style="cursor: auto;"><span>${procedure.empName}</span>`
+			html += `<li class="js-approval-line-setting fiAgreeLine-li unsortable" id ="fiAgreeLineSettingEmpId_${procedure.empId}" style="cursor: auto;"><span>${procedure.empName}</span>`
 	
 				<c:if test="${procedure.status eq '대기'}">
 					html += `<span class="icon file_delete js-approval-line-setting-delete" onclick ="deleteThis(fiAgreeLineSettingEmpId_${procedure.empId})"></span>`;
@@ -1684,7 +1525,6 @@ function fiAgreeLineSetting(){
 			
 		</c:if>
 		
-		console.log(html);
 	</c:forEach>
 	
 	$("ul#sortFiAgreeLineSetting").html(html);
@@ -1697,11 +1537,6 @@ function fiAgreeLineSetting(){
 
 /* 재무합의 + 버튼 눌러 모달창에서 확인 버튼 눌렀을 경우 */
 function updateFiAgreeLineSetting(){
-	/* contextPath 생성용 */
-	const pathname = "/" + window.location.pathname.split("/")[1];
-	const origin = window.location.origin;
-	const contextPath = origin + pathname;
-	/* end of contextPath 생성용 */
 	
 	 let approvalList = [];
 	 let listdata;
@@ -1715,7 +1550,6 @@ function updateFiAgreeLineSetting(){
 		 approvalList.push(listdata);
 	 })
 	 
-	   console.log(approvalList)
 	   
 	if(approvalList.length > 0 && approvalList.length <= 4){
 		$.ajax({
@@ -1726,8 +1560,6 @@ function updateFiAgreeLineSetting(){
 			dataType:"json",
 			contentType: "application/json; charset=utf-8",
 			success: function(text) {
-				console.log(JSON.stringify(text));
-				console.log(text.isSuccess);
 				if(text.isSuccess){
 					location.reload()
 				}else{
@@ -1735,7 +1567,6 @@ function updateFiAgreeLineSetting(){
 				}
 			},
 			error: function(request, status, error) {
-				// 수정필
 				alert("업데이트에 실패하였습니다. 다시 시도해주세요.")
 			}
 		});
@@ -1771,63 +1602,25 @@ function deleteThis(id) {
 
 <div id="contents">
 	<div class="content_title">
-		<!-- <form >
-			<fieldset> -->
 		<style>
-				.content_title .detail_select>button {
-				    color: #2985db;
-				}
-				</style>
+		.content_title .detail_select>button {
+		    color: #2985db;
+		}
+		</style>
 			
 				<c:if test="${not empty requestScope.isDraftEmp && requestScope.isDraftEmp eq 1}">
-					<!-- <span class="detail_select">
-						<button class="fl" onclick="수정필" style="font-size: 16px">내용수정</button>
-						<a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
-							<span class="blind">세부 설명</span>
-						</a>
-						<div class="tooltip hide" style="left: 45px; top: 0; color: #676767;">
-							<div class="tooltip-box" style="width: 400px;">
-								<p>ㆍ내용이 수정되면, 기존 승인 내역은 모두 초기화됩니다.</p>
-							</div>
-						</div>
-					</span> -->
 					<span class="detail_select">
 						<button class="fl" id="cancelApproval" style="font-size: 16px">기안취소</button>
-						<!-- <a href="수정필" class="icon question tipsIcon" style="position: relative; top: 0; margin-left: 10px">
-							<span class="blind">세부 설명</span>
-						</a>
-						<div class="tooltip hide" style="left: 0; top: 0; color: #676767;">
-							<div class="tooltip-box" style="width: 360px;">
-								<p>ㆍ기안자가 기안 자체를 삭제하고 싶을 때 사용할 수 있습니다.</p>
-								<p>ㆍ기존 결재 내역 뿐만 아니라 문서 번호 자체가 없어지게 됩니다.</p>
-								<p>ㆍ관리자 설정에 따라 반려 처리될 수 있습니다.</p>
-							</div>
-						</div> -->
 					</span>
 				</c:if>
-		<!-- </fieldset>
-		</form> -->
 		<div class="setting_box">
 			<button type="button" class="hw-icon outlined list_bt" onclick="history.go(-1)" title="목록보기">
 				<i class="gi gi-list"></i>
 			</button>
-			<!-- <button type="button" class="hw-icon outlined next_bt" onclick="수정필" title="다음으로 이동">
-				<i class="gi gi-short-arrow-down"></i>
-			</button> -->
 		</div>
 
 	</div>
 
-	<!-- <input type="hidden" name="approval_document_no" value="30332">
-	<input type="hidden" name="approval_first_line" value="3847">
-	<input type="hidden" name="approval_second_line" value="3848">
-	<input type="hidden" name="approval_third_line" value="3855">
-	<input type="hidden" name="approval_fourth_line" value="3879">
-	<input type="hidden" name="approval_fifth_line" value="3847,3848,3855,3879">
-	<input type="hidden" name="approval_preserved_term" value="5">
-	<input type="hidden" name="approval_security_level" value="A">
-	<input type="hidden" name="approval_list_view" value="/tempfinal.onhiworks.com/approval/document/box/all/?&amp;box_mode=include_line">
- -->
 	<div class="content_inbox">
 		<!-- Contents -->
 		<div class="cont_box view">
@@ -1949,7 +1742,7 @@ function deleteThis(id) {
 													<c:if test="${procedure.status eq '대기'}">
 
 														<td class="stamp">
-															<c:if test="${procedure.empId eq sessionScope.loginUser.empId}">
+															<c:if test="${requestScope.viewType eq 'list' && requestScope.isReturn eq false && procedure.empId eq sessionScope.loginUser.empId}">
 																<span class="bt_left pdt_0 pdb_0">
 																	<button type="button" onclick="showApprovalInsertModal()">결재</button>
 																</span>
@@ -2023,7 +1816,7 @@ function deleteThis(id) {
 															<c:if test="${requestScope.viewType eq 'list' && requestScope.isReturn eq false && requestScope.agreeList[cnt].status eq '대기'}">
 																<c:if test="${requestScope.agreeList[cnt].empId eq sessionScope.loginUser.empId}">
 																	<span class="bt_left pdt_0 pdb_0">
-																		<button type="button" class="small-button" onclick="수정필">결재</button>
+																		<button type="button" class="small-button">결재</button>
 																	</span>
 																</c:if>
 															</c:if>
@@ -2110,7 +1903,7 @@ function deleteThis(id) {
 													<c:if test="${procedure.status eq '대기'}">
 
 														<td class="stamp">
-															<c:if test="${procedure.empId eq sessionScope.loginUser.empId}">
+															<c:if test="${requestScope.viewType eq 'list' && requestScope.isReturn eq false && procedure.empId eq sessionScope.loginUser.empId}">
 																<span class="bt_left pdt_0 pdb_0">
 																	<button type="button" onclick="showApprovalInsertModal()">결재</button>
 																</span>
@@ -2160,20 +1953,20 @@ function deleteThis(id) {
 									<c:if test="${procedure.procedureType eq '참조'}">
 
 										<c:if test="${procedure.status eq '확인'}">
-											<span class="refer-list" id="referEmpId_${procedure.empId}" user_no="수정필" node_id="수정필" type="F">
+											<span class="refer-list" id="referEmpId_${procedure.empId}">
 												${procedure.empName}
 												<img src="<%= ctxPath %>/resources/image/approval/readCheck.png" alt="확인" title="${procedure.registerDay}" class="vm js-approval-confirm-check">
 											</span>
 										</c:if>
 
 										<c:if test="${procedure.status eq '미확인'}">
-											<span class="refer-list" id="referEmpId_${procedure.empId}" user_no="3855" node_id="2816" type="F">
+											<span class="refer-list" id="referEmpId_${procedure.empId}">
 												${procedure.empName}
 												<c:if test="${requestScope.userProcedureType eq 1 || requestScope.userProcedureType eq 3 || requestScope.userProcedureType eq 8 || requestScope.userProcedureType eq 9}">
 													<span class="icon file_delete js-approval-line-delete" onclick="deleteRefOrIncOrIncR(referEmpId_${procedure.empId})" style="display: inline-block;"></span>
 												</c:if>
 
-												<c:if test="${procedure.empId eq sessionScope.loginUser.empId}">
+												<c:if test="${requestScope.viewType eq 'list' && requestScope.isReturn eq false && procedure.empId eq sessionScope.loginUser.empId}">
 													<span class="bt_left pdt_0 pdb_0 mgl_5">
 														<button type="button" class="small-button" onclick="updateRefRead();">확인</button>
 													</span>
@@ -2242,7 +2035,7 @@ function deleteThis(id) {
 			<c:if test="${requestScope.userProcedureType ne 6 && requestScope.userProcedureType ne 7}">
 
 				<div class="approval-comment-tab" id="approvalCommentsTab">
-					<a href="수정필" class="gt-nav-item gt-active approval-comments-tab1" data-id="tab1-1" onclick="수정필">의견</a>
+					<a href="javascript:void(0)" class="gt-nav-item gt-active approval-comments-tab1" data-id="tab1-1">의견</a>
 				</div>
 
 

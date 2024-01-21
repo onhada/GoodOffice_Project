@@ -220,20 +220,20 @@ public class CommonAOP {
 		ModelAndView mav = (ModelAndView) joinPoint.getArgs()[2];
 
 		HttpSession session = req.getSession();
+		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		
-		
-		Map<String, String> sizeMap = new HashMap<>();
-		sizeMap.put("searchType", "");
-		sizeMap.put("searchWord", "");
-		sizeMap.put("orderType", "desc");
-		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
+		if (loginUser != null) {
+			Map<String, String> sizeMap = new HashMap<>();
+			sizeMap.put("searchType", "");
+			sizeMap.put("searchWord", "");
+			sizeMap.put("empId", String.valueOf(loginUser.getEmpId()));
 
-		mav.addObject("aSize", service.getApprovalAllIngList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
-		
+			mav.addObject("aSize", service.getTotalCountApprovalAllIngList(sizeMap));
+			mav.addObject("wSize", service.getTotalCountApprovalWaitingList(sizeMap));
+			mav.addObject("vSize", service.getTotalCountApprovalCheckList(sizeMap));
+			mav.addObject("eSize", service.getTotalCountApprovalScheduleList(sizeMap));
+			mav.addObject("pSize", service.getTotalCountApprovalProgressList(sizeMap));
+		}
 
 	}
 

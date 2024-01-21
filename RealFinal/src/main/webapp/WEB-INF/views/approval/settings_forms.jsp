@@ -21,8 +21,6 @@ $(document).ready(function() {
 		$(this).click(function(){
 			let formId = $(this).parent().find("td.docu-num").text();
 			
-			console.log(formId)
-			
 			$(location).attr('href', `<%=ctxPath%>/approval/formDetail.gw?formId=` + formId);
 		})
 	})
@@ -95,15 +93,6 @@ function resetSearchForm(){
 
 				<table class="tableType01 listbox sapceT" id="tableApprovalForm" style="width: 1464px;">
 					<caption>결재 등록 양식 리스트</caption>
-					<!-- <colgroup>
-					<col style="width:38px;">
-					<col style="width:100px;">
-					<col style="width:120px;">
-					<col style="width:110px;">
-					<col style="width:260px;">
-					<col style="width:100px;">
-					<col>
-				</colgroup> -->
 					<thead>
 						<tr>
 							<th style="width: 14px; white-space: nowrap;" class="resizable-false"></th>
@@ -136,8 +125,6 @@ function resetSearchForm(){
 
 
 						<c:if test="${not empty requestScope.formList}">
-							<!-- c:for -->
-
 							<c:forEach var="formVo" items="${requestScope.formList}">
 								<tr>
 									<td>
@@ -175,40 +162,16 @@ function resetSearchForm(){
 				<div class="listbottom bt0" id="pageApprovalForm" style="width: 1464px;">
 					<p class="number">
 						문서 수 :
-						<!-- 수정필  -->
 						<span>${requestScope.totalCount}</span>
 					</p>
-					<!-- 수정필  -->
 					<div class="documentListPagination">
 						<nav>
 							<ul class="pagination">${requestScope.pageBar}
 							</ul>
 						</nav>
 					</div>
-					<!-- <div class="paginate">
-					<span class="icon pagenav4">
-								<em class="blind">PREVIOUS PAGE</em>
-							</span>
-						<strong>1</strong>
-						<a href="수정필" onclick="수정필">2</a>
-						<a href="수정필" class="space" onclick="수정필">
-							<span class="icon pagenav4">
-								<em class="blind">NEXT PAGE</em>
-							</span>
-						</a>
-					</div> -->
-					<!-- 페이지네이션 수정필 -->
-					<!-- <div class="page_select">
-						<label class="blind" for="pageCurrent">SELECT CURRENT PAGE</label>
-						<select onchange="수정필">
-							<option value="1" selected="">1</option>
-						</select>
-						/ 1
-					</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 </div>

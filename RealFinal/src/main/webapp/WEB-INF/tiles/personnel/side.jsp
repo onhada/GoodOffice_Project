@@ -51,14 +51,6 @@
 				<i data-v-3c987196="" class="far fa-plus mr-8"></i>
 				<span data-v-3c987196="" class="flex-truncate">휴가 신청</span>
 			</a>
-			<!---->
-			<!-- 
-			<a data-v-3c987196=""
-				href="https://hr-work.office.hiworks.com/approval/work-staggered/2023-12"
-				class="menu-item"><i data-v-3c987196=""
-				class="far fa-plus link-prefix-icon primary-color"></i><span
-				data-v-3c987196="">시차출퇴근제 신청</span></a>
-			-->
 		</div>
 		<hr data-v-3c987196="">
 		<div data-v-3c987196="" class="vb vb-visible" style="width: auto; height: calc(100% - 135px); position: relative; overflow: hidden;">
@@ -93,11 +85,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- <a data-v-3c987196="" href="https://hr.office.hiworks.com/gabia.biz/insa/info/member/lists" class="menu-item mt-8">
-						<i data-v-3c987196="" class="gis gi-chart-hr link-prefix-icon"></i>
-						<span data-v-3c987196="" class="collapse-title">임직원정보</span>
-					</a>
- -->
 					<a data-v-3c987196="" id="payAnnualList" href="<%=ctxPath%>/personnel/payAnnualList.gw" class="menu-item mt-8">
 						<span data-v-3492dd16="" data-v-3c987196="" class="link-prefix-icon" style="e9135: #909090;">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">

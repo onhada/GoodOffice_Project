@@ -59,10 +59,10 @@ public class IndexController {
 		sizeMap.put("orderType", "desc");
 		sizeMap.put("empId", String.valueOf(((EmployeeVO) session.getAttribute("loginUser")).getEmpId()));
 
-		mav.addObject("wSize", service.getApprovalWaitingList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("vSize", service.getApprovalCheckList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("eSize", service.getApprovalScheduleList_withSearchAndPaging(sizeMap).size());
-		mav.addObject("pSize", service.getApprovalProgressList_withSearchAndPaging(sizeMap).size());
+		mav.addObject("wSize", service.getTotalCountApprovalWaitingList(sizeMap));
+		mav.addObject("vSize", service.getTotalCountApprovalCheckList(sizeMap));
+		mav.addObject("eSize", service.getTotalCountApprovalScheduleList(sizeMap));
+		mav.addObject("pSize", service.getTotalCountApprovalProgressList(sizeMap));
 		
 		// 예진 코드 끝    -----------------------------------------------------------
 		

@@ -50,85 +50,15 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap) {
-		return sqlSession.selectList("approval.getApprovalAllIngList_withSearchAndPaging", paraMap);
-	}
-
-	@Override
 	public int hasReturn(Long fk_approvalId) {
 		// 전자결재절차 테이블에서 해당 전자결재id 반려 존재여부
 		return sqlSession.selectOne("approval.hasReturn", fk_approvalId);
 	}
 
 	@Override
-	public int hasLowerApplicantAllAccept(Map<String, Long> paramMap) {
-		// 유저보다 하위 신청 or 기안자들이 전원 승인하였는지 확인용 (0 : 전원 승인)
-		return sqlSession.selectOne("approval.hasLowerApplicantAllAccept", paramMap);
-	}
-
-	@Override
-	public int hasLowerApplicantWait(Map<String, Long> paramMap) {
-		// 유저보다 하위 신청 or 기안자들 중에 대기가 있는지 확인 (0 : 대기 없음)
-		return sqlSession.selectOne("approval.hasLowerApplicantWait", paramMap);
-	}
-
-	@Override
-	public int hasUpperApplicantAndApproverWait(Map<String, Long> paramMap) {
-		// 상위 신청 or 기안자 및 결재자 중에 대기가 있을 경우
-		return sqlSession.selectOne("approval.hasUpperApplicantAndApproverWait", paramMap);
-	}
-
-	@Override
-	public int hasLowerApplicantAndApproverAllAccept(Map<String, Long> paramMap) {
-		// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자가 다 승인했을 경우 (0:전원 승인)
-		return sqlSession.selectOne("approval.hasLowerApplicantAndApproverAllAccept", paramMap);
-	}
-
-	@Override
-	public int hasLowerApplicantAndApproverWait(Map<String, Long> paramMap) {
-		// 유저보다 하위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-		return sqlSession.selectOne("approval.hasLowerApplicantAndApproverWait", paramMap);
-	}
-
-	@Override
-	public int hasUpperApproverWait(Map<String, Long> paramMap) {
-		// 유저보다 상위의 신청 or 기안자 및 결재 or 처리자 중에 대기가 있을 경우
-		return sqlSession.selectOne("approval.hasUpperApproverWait", paramMap);
-	}
-
-	@Override
 	public int hasApplicantAndApproverAllAccept(Map<String, Long> paramMap) {
 		// 결재자와 신청자가 모두 승인했는지 확인한다 (0: 전원 승인, 그 외의 경우 모두 승인하기 전)
 		return sqlSession.selectOne("approval.hasApplicantAndApproverAllAccept", paramMap);
-	}
-
-	@Override
-	public int hasUnderRankerAllAccept(Map<String, Long> paramMap) {
-		// 하위 순서가 모두 승인하였을 경우 (0: 전원 승인)
-		return sqlSession.selectOne("approval.hasUnderRankerAllAccept", paramMap);
-	}
-
-	@Override
-	public int hasUnderRankerWait(Map<String, Long> paramMap) {
-		// 하위 순서 중에 대기가 있을 경우
-		return sqlSession.selectOne("approval.hasUnderRankerWait", paramMap);
-	}
-
-	@Override
-	public int hasUpperRankerWait(Map<String, Long> paramMap) {
-		// 상위 순서 중에 대기가 있을 경우
-		return sqlSession.selectOne("approval.hasUpperRankerWait", paramMap);
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalAllBox_withViewAllAndSearchAndPaging(Map<String, String> paraMap) {
-		// 문서함
-		return sqlSession.selectList("approval.getApprovalAllBox_withViewAllAndSearchAndPaging", paraMap);
-	}
-
-	@Override
-	public List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap) {
-		return sqlSession.selectList("approval.getApprovalAllBox_withSearchAndPaging", paraMap);
 	}
 
 	@Override
@@ -340,20 +270,10 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 		return sqlSession.selectOne("approval.getEmpProofDetail", paraMap);
 	}
 
-//	@Override
-//	public int insertProcessLineSetting(Map<String, String> paraMap) {
-//		return sqlSession.insert("approval.insertProcessLineSetting", paraMap);
-//	}
-
 	@Override
 	public List<ApprovalProcedureVO> getProcedureTypeApplication(Long approvalId) {
 		return sqlSession.selectList("approval.getProcedureTypeApplication", approvalId);
 	}
-
-//	@Override
-//	public int insertApplicationLineSetting(Map<String, String> paraMap) {
-//		return sqlSession.insert("approval.insertApplicationLineSetting", paraMap);
-//	}
 
 	@Override
 	public List<ApprovalProcedureVO> getProcedureTypeAgree(Long approvalId) {
@@ -591,6 +511,142 @@ public class ApprovalDAO_imple implements ApprovalDAO {
 	@Override
 	public int isExistApproval(Map<String, Long> paraMap) {
 		return sqlSession.selectOne("approval.isExistApproval", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalProgressList_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalProgressList_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalScheduleList_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalScheduleList_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalCheckList_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalCheckList_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalWaitingList_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalWaitingList_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalAllIngList_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalAllIngList_withSearchAndPaging", paraMap);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public int getTotalCountApprovalAllIngList(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalAllIngList", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalWaitingList(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalWaitingList", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalCheckList(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalCheckList", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalScheduleList(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalScheduleList", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalProgressList(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalProgressList", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalAllBox_withViewAllAndSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalAllBox_withViewAllAndSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalAllBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalAllBox_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalWriterBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalWriterBox_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalApprovalBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalApprovalBox_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalReferBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalReferBox_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalReadBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalReadBox_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public List<ApprovalVO> getApprovalReturnBox_withSearchAndPaging(Map<String, String> paraMap) {
+		return sqlSession.selectList("approval.getApprovalReturnBox_withSearchAndPaging", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalAllBox_withViewAll(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalAllBox_withViewAll", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalAllBox(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalAllBox", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalWriterBox(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalWriterBox", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalApprovalBox(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalApprovalBox", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalReferBox(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalReferBox", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalReadBox(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalReadBox", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalReturnBox(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalReturnBox", paraMap);
+	}
+
+	@Override
+	public int getTotalCountApprovalTempBox(Map<String, String> paraMap) {
+		return sqlSession.selectOne("approval.getTotalCountApprovalTempBox", paraMap);
 	}
 
 }
