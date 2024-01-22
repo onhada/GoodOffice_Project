@@ -26,6 +26,8 @@ public class ReservationDAO_imple implements ReservationDAO {
 	private SqlSessionTemplate sqlsession;
 
 	
+	/////////////////////////////////////////////////////////
+	
 	
 	// === 자원카테고리 목록 가져오기 === //
 	@Override
@@ -162,14 +164,6 @@ public class ReservationDAO_imple implements ReservationDAO {
 	}
 	
 	
-	// === 로그인 사원이 인사관리자인지 확인 === //
-//	@Override
-//	public String isAdmin(Map<String, Object> paraMap) {
-//		String rsvAdminEmpId = sqlsession.selectOne("reservation.isAdmin", paraMap);
-//		return rsvAdminEmpId;
-//	}
-
-
 	// === 총 예약 건수 가져오기 === //
 	@Override
 	public int getTotalCount(Map<String, Object> paraMap) {
@@ -287,9 +281,6 @@ public class ReservationDAO_imple implements ReservationDAO {
 		int n = sqlsession.update("reservation.updateAdminHistory", paraMap);
 		return n;
 	}
-	
-	
-	
 	
 	
 	

@@ -33,10 +33,12 @@ import com.spring.app.organization.service.OrganizationService;
 @RequestMapping(value = "/organization/*")
 public class OrganizationController {
 	
-	
 	@Autowired
 	private OrganizationService service;
 
+	
+	/////////////////////////////////////////////////////////////////////
+	
 		
 	/** 
 	* @Method Name  : organizationManage 
@@ -77,7 +79,6 @@ public class OrganizationController {
 		mav.setViewName("organizationManage.organization");
 		
 		return mav;
-		
 	}	
 	
 	
@@ -103,7 +104,6 @@ public class OrganizationController {
 		teamList = service.getTeamList(); // 팀 목록 가져오기
 		mav.addObject("teamList", teamList);
 		
-		
 		List<EmployeeVO> empInfoList = null;
 		empInfoList = service.getEmpInfoList(); // 임직원 정보 목록 가져오기
 		mav.addObject("empInfoList", empInfoList);	
@@ -113,7 +113,6 @@ public class OrganizationController {
 		mav.setViewName("empInfo.organization");
 		
 		return mav;
-		
 	}	
 	
 	
@@ -130,7 +129,6 @@ public class OrganizationController {
 	*/
 	@GetMapping("myInfoViewPage.gw")
 	public ModelAndView myinfoViewPage(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
-
 
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
@@ -162,7 +160,6 @@ public class OrganizationController {
 		mav.setViewName("empInfo_myInfo.organization");
 		
 		return mav;
-		
 	}	
 	
 	
@@ -207,10 +204,9 @@ public class OrganizationController {
 				jsonObj.put("fk_teamId", empInfo.getFk_teamId());
 				jsonObj.put("teamName", empInfo.getTeamName());
 				
-				
 				jsonArr.put(jsonObj); // [{},{},{}]
 			}// end of for------------
-		}
+		}// end of if(empInfoList != null) -------------
 		
 		return jsonArr.toString();
 	}
@@ -245,7 +241,6 @@ public class OrganizationController {
 		mav.setViewName("positionManage.organization");
 		
 		return mav;
-		
 	}	
 	
 	
@@ -277,11 +272,9 @@ public class OrganizationController {
 			result = service.insertNewJob(paraMap);
 		}
 		
-
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -319,8 +312,7 @@ public class OrganizationController {
 		
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -364,8 +356,7 @@ public class OrganizationController {
 
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -420,8 +411,7 @@ public class OrganizationController {
 		
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -454,11 +444,9 @@ public class OrganizationController {
 			result = service.insertNewDep(paraMap); // 부서 추가하기
 		}
 		
-
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -491,11 +479,9 @@ public class OrganizationController {
 			result = service.deleteDep(paraMap); // 부서 삭제하기
 		}
 		
-
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -531,11 +517,9 @@ public class OrganizationController {
 			result = service.insertNewTeam(paraMap); // 팀 추가하기
 		}
 		
-
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -545,7 +529,7 @@ public class OrganizationController {
 	* @작성일   : Jan 11, 2024 
 	* @작성자   : 김민경 
 	* @변경이력  : 
-	* @Method 설명 : 팀 삭제하기
+	* @Method 설명 : 팀 삭제하기 
 	* @param request
 	* @param response
 	* @param mav
@@ -568,11 +552,9 @@ public class OrganizationController {
 			result = service.deleteTeam(paraMap); // 팀 삭제하기
 		}
 		
-
 		JSONObject jsonObj = new JSONObject(); // {} 
 		jsonObj.put("result", result);
-		
-				
+			
 		return jsonObj.toString();
 	}
 	
@@ -619,14 +601,9 @@ public class OrganizationController {
 		if(result == 1) {
 			mav.setViewName("redirect:/organization/myInfoViewPage.gw"); 
 		}
-		else {
-			
-		}
 	
 		return mav;
 	}
-	
-	
 	
 	
 }

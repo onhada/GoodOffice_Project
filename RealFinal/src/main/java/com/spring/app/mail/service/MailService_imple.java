@@ -40,6 +40,8 @@ public class MailService_imple implements MailService {
 	private FileManager fileManager;
 
 	
+	/////////////////////////////////////////////////////////////////////////////////
+	
 	
 	// === employee 중 해당 이메일이 존재하는지 확인 === //
 	@Override
@@ -48,25 +50,15 @@ public class MailService_imple implements MailService {
 		return employee;
 	}
 
+	
 	// === 메일쓰기 === //
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = { Throwable.class })
 	public int mailWrite(MailVO mailvo, MultipartHttpServletRequest mrequest) throws Throwable {
 
-		// 메일쓰기가 원메일쓰기인지 아니면 답장메일쓰기인지를 구분하여?? tbl_mail 테이블에 insert 를 해주어야 한다.
-
-		/*
-		 * @ 메일은 묶어서 보여줄 필요가 없으니까 아래 코드 필요 없는듯? // === 원글쓰기인지, 답변글쓰기인지 구분하기 시작 === //
-		 * if(mailvo.getOrgMailId()==0) { // 원글쓰기인 경우 // groupno 컬럼의 값은 groupno 컬럼의
-		 * 최대값(max)+1 로 해야한다. int groupno = dao.getGroupnoMax()+1;
-		 * boardvo.setGroupno(String.valueOf(groupno)); } // === 원글쓰기인지, 답변글쓰기인지 구분하기 끝
-		 * === //
-		 */
-
 		int n1=0, n2=0, n3=0, n4=0, n5=0, n6=0, result = 1;
 		// n1 하나의 mail, n2 메일첨부파일, n3 수신메일, n4 참조메일, n5 숨은참조메일, n6 발신메일 
 
-		
 		
 		
 		/* --------------- 하나의메일 --------------- */
@@ -76,40 +68,28 @@ public class MailService_imple implements MailService {
 		
 		
 		/* --------------- 메일첨부파일 --------------- */
-		List<MultipartFile> fileList = mrequest.getFiles("file_arr"); // "file_arr" 은 /board/src/main/webapp/WEB-INF/views/mail/mailWrite.jsp 페이지의 464 라인에 보여지는 formData.append("file_arr", item); 의 값이다.
-		// MultipartFile interface는 Spring에서 업로드된 파일을 다룰 때 사용되는 인터페이스로 파일의 이름과 실제 데이터, 파일 크기 등을 구할 수 있다.
+		List<MultipartFile> fileList = mrequest.getFiles("file_arr"); 
 		
-		
-		if(fileList.size()>0) {		
-			
+		if(fileList.size()>0) {	
 			/*
 		        >>>> 첨부파일이 업로드 되어질 특정 경로(폴더)지정해주기
-		                   우리는 WAS 의 webapp/resources/mail_attacFile 라는 폴더로 지정해준다.
+		                   여기서는 webapp/resources/mail_attacFile 라는 폴더로 지정해준다.
 		    */
-		    // WAS 의 webapp 의 절대경로를 알아와야 한다.
 		    HttpSession session = mrequest.getSession();
 		    String root = session.getServletContext().getRealPath("/");
 		    String path = root + "resources"+File.separator+"mail_attacFile";
-		    // path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다.
 	
-		 // System.out.println("~~~~ 확인용 path => " + path);
-		    // ~~~~ 확인용  path 의 절대경로 => /Users/hada/dev/NCS/workspace_spring_framework/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/board/email_attach_file
-		     
 		    File dir = new File(path);
 		    if(!dir.exists()) {
 		    	dir.mkdirs();
 		    }
 		    
-		    
 		    String newFileName = "";
 			// WAS(톰캣)의 디스크에 저장될 파일명 
-			
 			byte[] bytes = null;
 			// 첨부파일의 내용물을 담는 것
-			
 			long fileSize = 0;
 			// 첨부파일의 크기 
-			
 			
 			for(int i=0; i<fileList.size(); i++) {
 				
@@ -118,37 +98,30 @@ public class MailService_imple implements MailService {
 					
 					bytes = attach.getBytes();
 					// 첨부파일의 내용물을 읽어오는 것
-					
 					String originalFilename = attach.getOriginalFilename();
-					// attach.getOriginalFilename() 이 첨부파일명의 파일명(예: 강아지.png) 이다.
-					
+					// attach.getOriginalFilename() 이 첨부파일명의 파일명(예: 예시사진.png) 이다.
 					newFileName = fileManager.doFileUpload(bytes, originalFilename, path); 
 					// 첨부되어진 파일을 업로드 하는 것이다.
 				
-					
 					mailvo.setFileName(newFileName);
 					// WAS(톰캣)에 저장된 파일명(20231124113600755016855987700.pdf)
 					
 					mailvo.setOrgFileName(originalFilename);
-					// 게시판 페이지에서 첨부된 파일(LG_싸이킹청소기_사용설명서.pdf)을 보여줄 때 사용.
-					// 또한 사용자가 파일을 다운로드 할때 사용되어지는 파일명으로 사용.
+					// 첨부된 파일(예시사진.pdf)을 보여줄 때 사용.
 					
 					fileSize = attach.getSize();  // 첨부파일의 크기(단위는 byte임) 
 					mailvo.setFileSize(String.valueOf(fileSize));
 					
-					
 					n2 = dao.insertFile(mailvo); // 메일첨부파일을 tbl_mailFile 테이블에 insert
 					result *= n2;
-					System.out.println("엔투"+n2);
-					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-			}// end of for---------------------------------------
+			}// end of for ---------------------------------------
 					
-		}	
+		}// if(fileList.size()>0) ---------------------------------	
 
 		
 		
@@ -163,7 +136,7 @@ public class MailService_imple implements MailService {
 			n3 = dao.insertIncomeMail(incomeMail_map); // 수신메일을 tbl_incomemail 테이블에 insert
 			result *= n3;
 
-		}
+		}// end of for (int i = 0; i < arr_incomeEmpId.length; i++) ------------
 		
 		
 		
@@ -174,20 +147,18 @@ public class MailService_imple implements MailService {
 	
 				Map<String, Object> referenceMail_map = new HashMap<>();
 				referenceMail_map.put("referenceEmpId", arr_referenceEmpId[i]);
-				// System.out.println("확인용(참조empID) arr_referenceEmpId[" + i + "] : " + arr_referenceEmpId[i]);
 				
 				n4 = dao.insertReferenceMail(referenceMail_map); // 참조메일을 tbl_referenceMail 테이블에 insert
 				result *= n4;
 				
-			}
-		}
+			}// end of for (int i = 0; i < arr_referenceEmpId.length; i++) -----------------
+		}// end of if(arr_referenceEmpId != null) --------------------
 		
 		
 		
 		/* --------------- 숨은참조메일 --------------- */
 		String[] arr_hiddenReferenceEmpId = mrequest.getParameterValues("hiddenReferenceEmpId");
 		if(arr_hiddenReferenceEmpId != null) {
-			System.out.println(arr_hiddenReferenceEmpId);
 			for (int i = 0; i < arr_hiddenReferenceEmpId.length; i++) {
 	
 				Map<String, Object> hiddenReferenceMail_map = new HashMap<>();
@@ -197,12 +168,12 @@ public class MailService_imple implements MailService {
 				n5 = dao.insertHiddenReferenceMail(hiddenReferenceMail_map); // 숨은참조메일을 tbl_referenceMail 테이블에 insert
 				result *= n5;
 				
-			}
-		}
+			}// end of for (int i = 0; i < arr_hiddenReferenceEmpId.length; i++) -----------
+		}// end of if(arr_hiddenReferenceEmpId != null) -------------------
 		
 		
 		
-		/* --------------- 발신메일(보낸편지함, 보낼편지함, 임시보관함) --------------- */
+		/* --------------- 발신메일(보낸편지함, 임시보관함) --------------- */
 		String isTemporary = (String) mrequest.getAttribute("isTemporary");
 	
 		Map<String, Object> sendMail_map = new HashMap<>();
@@ -210,7 +181,6 @@ public class MailService_imple implements MailService {
 		sendMail_map.put("isTemporary", isTemporary);
 
 		String mailId = mrequest.getParameter("mailId");
-System.out.println("$$"+mailId);	
 		if(mailId != null) {
 			dao.deleteTempMail(mailId); // 임시저장메일을 이어서 작성하는 경우, tbl_tempMail 테이블에서 delete
 		}
@@ -219,7 +189,6 @@ System.out.println("$$"+mailId);
 		n6 = dao.insertSendMail(sendMail_map); 
 		result *= n6;
 		
-			
 
 		return result;
 	}
@@ -287,8 +256,7 @@ System.out.println("$$"+mailId);
 			n1 = dao.deleteOrgMailbox(paraMap); // 기존편지함에서 삭제(delete)
 			result *= n1;
 		}
-	System.out.println("1"+result);	
-	System.out.println("1"+paraMap.get("mailType"));		
+		
 		/* ~~~~~ 개인편지함에 추가(insert 또는 update) ~~~~~ */
 		if(!paraMap.get("mailType").equals("6")) { // 기존편지함이 개인편지함이 아닐 경우 
 			System.out.println("ddddd");
@@ -300,13 +268,13 @@ System.out.println("$$"+mailId);
 			n2 = dao.updatePersonalMailbox(paraMap); // 개인편지함에 추가(update) : fk_personalMailboxTypeId 컬럼을 새로 이동한 메일함으로 update 
 			result *= n2;
 		}
-System.out.println("2"+result);					
+		
 		String isMemo = dao.selectMemo(paraMap); // 메일메모 조회(select)
 		if(isMemo != null) { //메일메모가 있다면 
 			n3 = dao.updateMailMemoMailType(paraMap); // 메일메모의 mailType 변경(update) 
 			result *= n3;
 		}
-System.out.println("3"+result);			
+		
 		return result;
 	}
 	

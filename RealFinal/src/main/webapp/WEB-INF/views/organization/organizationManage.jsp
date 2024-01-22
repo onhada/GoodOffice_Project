@@ -98,6 +98,7 @@ function addNewDep(){
 	}	
 }
 
+
 <%-- 부서 삭제하기 --%>
 function delDep(depId){
 	$.ajax({
@@ -153,6 +154,7 @@ function addNewTeam(){
 		});	
 	}	
 }
+
 
 <%-- 팀 삭제하기 --%>
 function delTeam(teamId){
@@ -235,10 +237,6 @@ function delTeam(teamId){
 					<li class="1depth">
 						<div class="wrap1" style="z-index: 0;">
 							<span class="name" title="그룹웨어오피스">그룹웨어오피스</span>
-							<!-- <div class="name_modify" style="display: none;">
-								<input type="text">
-								<a href="javascript:void(0)" class="btn_enter"></a>
-							</div> -->
 						</div>
 						<ol>
 
@@ -252,10 +250,6 @@ function delTeam(teamId){
 												<span class="icon file_delete" style="cursor: pointer;" onclick="delDep(${dep.depId})"></span>
 												&nbsp;
 											</div>
-											<!-- <div class="name_modify" style="display: none;">
-										<input type="text">
-										<a href="javascript:void(0)" class="btn_enter"></a>
-									</div> -->
 										</div>
 
 										<ol>
@@ -270,10 +264,6 @@ function delTeam(teamId){
 																	<span class="icon file_delete" style="cursor: pointer;" onclick="delTeam(${team.teamId})"></span>
 																	&nbsp;
 																</div>
-																<!-- <div class="name_modify" style="display: none;">
-												<input type="text">
-												<a href="javascript:void(0)" class="btn_enter"></a>
-											</div> -->
 															</div>
 														</li>
 													</c:if>

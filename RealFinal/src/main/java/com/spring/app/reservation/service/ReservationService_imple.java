@@ -1,6 +1,5 @@
 package com.spring.app.reservation.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.app.common.domain.EmployeeVO;
 import com.spring.app.reservation.domain.ReservationVO;
 import com.spring.app.reservation.model.ReservationDAO;
 
@@ -28,6 +26,8 @@ public class ReservationService_imple implements ReservationService {
 	@Autowired
 	private ReservationDAO dao;
 
+	
+	///////////////////////////////////////////////
 	
 	
 	// === 자원카테고리 목록 가져오기 === //
@@ -162,13 +162,6 @@ public class ReservationService_imple implements ReservationService {
 	}
 	
 
-	// === 로그인 사원이 인사관리자인지 확인 === //
-//	@Override
-//	public String isAdmin(Map<String, Object> paraMap) {
-//		String rsvAdminEmpId = dao.isAdmin(paraMap); 
-//		return rsvAdminEmpId;
-//	}
-
 	// === 총 예약 건수 가져오기 === //
 	@Override
 	public int getTotalCount(Map<String, Object> paraMap) {
@@ -287,14 +280,9 @@ public class ReservationService_imple implements ReservationService {
 		result *= n2;
 		System.out.println("n2="+n2+"result="+result);
 		
-		
-		
 		return result;
 	}
 
 	
-	
-	
-
 	
 }

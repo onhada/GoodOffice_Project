@@ -215,7 +215,7 @@ function changeDate(){
 			}// end of if(json.length > 0)----------------------
 			
 			else{ // 자원 반납 실패한 경우
-				alert("승인에ddd 실패했습니다.");
+				alert("반납에 실패했습니다.");
 			}
 			
 		},// end of success-----
@@ -226,9 +226,6 @@ function changeDate(){
 }
 
 </script>
-
-
-
 
 
 <div id="contents" style="left: 276px;">

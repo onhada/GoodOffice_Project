@@ -27,9 +27,8 @@ public interface ReservationService {
 	*/
 	List<Map<String, String>> getAdminResourceCategoryList();
 	
-
 	/** 
-	 * @param paraMap 
+	* @param paraMap 
 	* @Method Name  : getResourceList 
 	* @작성일   : Dec 29, 2023 
 	* @작성자   : 김민경 
@@ -191,17 +190,6 @@ public interface ReservationService {
 	* @return 
 	*/
 	int returnRsource(Map<String, Object> paraMap);
-	
-	/** 
-	* @Method Name  : isAdmin 
-	* @작성일   : Jan 1, 2024 
-	* @작성자   : 김민경 
-	* @변경이력  : 
-	* @Method 설명 : 로그인 사원이 인사관리자인지 확인
-	* @param paraMap
-	* @return 
-	*/
-//	String isAdmin(Map<String, Object> paraMap);
 
 	/** 
 	* @Method Name  : getTotalCount 

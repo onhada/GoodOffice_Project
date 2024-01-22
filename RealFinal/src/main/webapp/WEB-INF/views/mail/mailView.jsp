@@ -50,13 +50,6 @@
 	
 	// Function Declaration
 	function replyWrite(writeType, mailId){
-		/* 
-		console.log(writeType + ":" + mailId);
-		
-		if("reply" == writeType){
-			console.log("답장");
-		}
-		 */
 		
 		// 폼(form)을 전송(submit)
 	  	const frm = document.mailViewFrm;
@@ -65,15 +58,6 @@
 	  	frm.submit();
 		
 	}// end of function replyWrite()-----------
-	
-	
-	
-	
-	
-	
-
-	
-	
 	
 </script>
 
@@ -91,20 +75,6 @@
 					<a href="javascript:void(0)" onclick="replyWrite('reply', '${requestScope.paraMap.mailId}');">답장</a>
 				</span>
 				</c:if>
-				<%-- 
-				<c:if test="${requestScope.paraMap.mailType != 5}">
-				<span class="detail_select">
-					<a href="javascript:void(0)" onclick="replyWrite('replyall','${requestScope.paraMap.mailId}');">전체답장</a>
-				</span>
-				</c:if>
-				 --%>
-				<%-- 
-				<c:if test="${requestScope.paraMap.mailType != 5}">
-				<span class="detail_select">
-					<a href="javascript:void(0)" onclick="replyWrite('forward','${requestScope.paraMap.mailId}');">전달</a>
-				</span> 
-				</c:if>
-				--%>
 				<c:if test="${requestScope.paraMap.mailType != 5}">
 				<span class="detail_select">
 					<a href="javascript:void(0)" onclick="moveToTrashbox('${requestScope.paraMap.mailId}', '${requestScope.paraMap.mailType}');">삭제</a>
@@ -146,11 +116,6 @@
 			</c:if>
 				<span class="blind">목록보기</span>
 			</a>
-			<!-- 
-			<a class="icon next_bt deg90" href="/tempfinal.onhiworks.com/officemail/main/m_view/b0/205/" title="sdf">
-				<span class="blind">다음으로 이동</span>
-			</a>
-			 -->
 		</div>
 		<!-- Title End -->
 	</div>
@@ -180,15 +145,14 @@
 					</c:if>		
 							
 						<span class="title">${requestScope.mailInfo.subject}</span>
-						<%-- <a href="javascript:void(0)" id="spMemoDisplay" onclick="showMemo('${requestScope.mailId}');" class="memo">
+						<a href="javascript:void(0)" id="spMemoDisplay" onclick="showMemo('${requestScope.mailId}');" class="memo">
 							<c:if test="${empty fn:trim(requestScope.mailInfo.memoContent)}">
 							메모 추가
 							</c:if>
 							<c:if test="${not empty fn:trim(requestScope.mailInfo.memoContent)}">
 							메모 수정 
 							</c:if>
-						</a>	 --%>
-						<!-- <a href="javascript:void(0)" id="spMemoDisplay" onclick="Memo.showMemo(217);" class="memo">메모 수정</a> -->
+						</a>	
 					</h3>
 					<p class="date">${requestScope.mailInfo.sendDay}</p>
 					<div class="top_link">
@@ -198,7 +162,6 @@
 					</div>
 					<div class="sender">
 						보낸 사람: ${requestScope.sendEmp_str}
-						<!-- <span id="from_addr" name="관리자" &lt="">관리자 &lt;admin&gt;</span> --> <!-- 지워도될듯..? -->
 					</div>
 					<div class="addressee">
 						받는 사람: ${requestScope.incomeEmp_str}
@@ -224,24 +187,18 @@
 							<div class="filebox" style="display: block;">
 									<c:forEach var="mailFile" items="${requestScope.mailFileList}">
 										<span class="cont_file">
-											<!-- 수정필) 파일타입별 아이콘 넣을 거임? --> 
 											<img src="<%= ctxPath%>/resources/image/icon/txt.png">
 											<a href="javascript:Common.Download('/tempfinal.onhiworks.com/officemail/main/m_download_attached/217/1.2',this)">${mailFile.orgFileName}</a>
 											(<a id="mailFileSize">${mailFile.fileSize}</a>MB)
 										</span>
 									</c:forEach>
 							</div>
-							<!-- <a class="icon submit" id="btn_zip_all" href="javascript:Common.Download('/tempfinal.onhiworks.com/officemail/main/m_download_attached_zip/216',$('btn_zip_all'))" title="첨부파일 모두 저장" style="display: block;">
-								<span class="blind">첨부 파일 다운로드</span>
-							</a> -->
 						</div>
 					</c:if>
-					<!-- tnef start -->
 
-					<!-- tnef -->
+					
 					<div class="mailbody" id="mailbody" style="padding-right: 30px;">
 						${requestScope.mailInfo.mailContent}
-						<%-- <iframe src="<%=ctxPath%>/mail/mailView.gw?mailId=${mailId}" height="300px" style="width: 100%; height: 300px;" scrolling="no" frameborder="0" id="ifMailContent" name="ifMailContent"> </iframe> --%>
 					</div>
 
 				</div>

@@ -11,108 +11,102 @@
 
 <script type="text/javascript">
 
-	$(document).ready(function() {
+$(document).ready(function() {
 	
-		
-		
-	});
+});
 	
 	
-	// Function Declaration
-	
-	// ===== 개인편지함 만들기 ===== //
-	function makePersonalMailbox(){
-		if($("input[id='newPersonalMailboxName']").val().trim()==""){
-			alert("추가할 개인편지함 이름을 입력하세요.");
-			window.location.reload();	
-		}
-		else{
-			$.ajax({
-	        	url : "<%=ctxPath%>/mail/makePersonalMailbox.gw",
-				type : "post",
-				data : { "personalMailboxTypeName" : $("input[id='newPersonalMailboxName']").val() },
-				dataType : "json",
-				async : false,
-				success : function(json) {
-				 	if(json.n == 1) {
-						alert("개인편지함을 추가했습니다.");
-						window.location.reload();
-					}
-				},
-				error : function(request, status, error) {
-					alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+// Function Declaration
+
+// ===== 개인편지함 만들기 ===== //
+function makePersonalMailbox(){
+	if($("input[id='newPersonalMailboxName']").val().trim()==""){
+		alert("추가할 개인편지함 이름을 입력하세요.");
+		window.location.reload();	
+	}
+	else{
+		$.ajax({
+        	url : "<%=ctxPath%>/mail/makePersonalMailbox.gw",
+			type : "post",
+			data : { "personalMailboxTypeName" : $("input[id='newPersonalMailboxName']").val() },
+			dataType : "json",
+			async : false,
+			success : function(json) {
+			 	if(json.n == 1) {
+					alert("개인편지함을 추가했습니다.");
+					window.location.reload();
 				}
-			});
-		}	
-	}// end of function makePersonalMailbox()------------
+			},
+			error : function(request, status, error) {
+				alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
+			}
+		});
+	}	
+}// end of function makePersonalMailbox()------------
 
 	
-	// ===== 개인편지함 삭제하기 ===== //
-	function deletePersonalMailbox(personalMailboxTypeId){	
-		if (confirm("삭제 시 복구할 수 없습니다. \n메일을 모두 삭제하시겠습니까?") == true){ 
-			$.ajax({
-	        	url : "<%=ctxPath%>/mail/deletePersonalMailbox.gw",
-				type : "post",
-				data : { "personalMailboxTypeId" : personalMailboxTypeId },
-				dataType : "json",
-				async : false,
-				success : function(json) {
-					if (json.n != 0) {
-						window.location.reload();
-						alert("개인편지함을 삭제했습니다.");
-					}
+// ===== 개인편지함 삭제하기 ===== //
+function deletePersonalMailbox(personalMailboxTypeId){	
+	if (confirm("삭제 시 복구할 수 없습니다. \n메일을 모두 삭제하시겠습니까?") == true){ 
+		$.ajax({
+        	url : "<%=ctxPath%>/mail/deletePersonalMailbox.gw",
+			type : "post",
+			data : { "personalMailboxTypeId" : personalMailboxTypeId },
+			dataType : "json",
+			async : false,
+			success : function(json) {
+				if (json.n != 0) {
 					window.location.reload();
-				},
-				error : function(request, status, error) {
-					alert("code: " + request.status + "\n" + "message: "
-							+ request.responseText + "\n" + "error: " + error);
+					alert("개인편지함을 삭제했습니다.");
 				}
-			});
-		}
-	}// end of function deletePersonalMailbox(personalMailboxTypeId)----------------
-	
-	
-	// ===== 편지함 비우기 ===== //
-	function emptyMailbox(mailType, personalMailboxId){
-		console.log("mailType : " + mailType);
-		console.log("personalMailboxId : " + personalMailboxId);
-		if (confirm("편지함을 비우면 삭제된 메일을 복구할 수 없습니다. \n비우시겠습니까?") == true){ 
-			$.ajax({
-	        	url : "<%=ctxPath%>/mail/emptyMailbox.gw",
-				type : "post",
-				data : { "mailType" : mailType,
-						 "personalMailboxId" : personalMailboxId },
-				dataType : "json",
-				async : false,
-				success : function(json) {
-					if (json.n == 1) {
-						alert("편지함을 비웠습니다.");
-						window.location.reload();
-					}
-					else if(json.n == 0){
-						alert("편지함에 메일이 존재하지 않습니다.");
-						window.location.reload();
-					}
-				},
-				error : function(request, status, error) {
-					alert("code: " + request.status + "\n" + "message: "
-							+ request.responseText + "\n" + "error: " + error);
+				window.location.reload();
+			},
+			error : function(request, status, error) {
+				alert("code: " + request.status + "\n" + "message: "
+						+ request.responseText + "\n" + "error: " + error);
+			}
+		});
+	}
+}// end of function deletePersonalMailbox(personalMailboxTypeId)----------------
+
+
+// ===== 편지함 비우기 ===== //
+function emptyMailbox(mailType, personalMailboxId){
+	console.log("mailType : " + mailType);
+	console.log("personalMailboxId : " + personalMailboxId);
+	if (confirm("편지함을 비우면 삭제된 메일을 복구할 수 없습니다. \n비우시겠습니까?") == true){ 
+		$.ajax({
+        	url : "<%=ctxPath%>/mail/emptyMailbox.gw",
+			type : "post",
+			data : { "mailType" : mailType,
+					 "personalMailboxId" : personalMailboxId },
+			dataType : "json",
+			async : false,
+			success : function(json) {
+				if (json.n == 1) {
+					alert("편지함을 비웠습니다.");
+					window.location.reload();
 				}
-			});
-		}
-	}// end of function emptyMailbox(mailType)-----------
-	
-	
+				else if(json.n == 0){
+					alert("편지함에 메일이 존재하지 않습니다.");
+					window.location.reload();
+				}
+			},
+			error : function(request, status, error) {
+				alert("code: " + request.status + "\n" + "message: "
+						+ request.responseText + "\n" + "error: " + error);
+			}
+		});
+	}
+}// end of function emptyMailbox(mailType)-----------
+
+
 </script>
 
 
 
 
 <div id="contents">
-<!-- 
-	<input type="hidden" id="hid_empty_space_m" value="9999">
-	<input type="hidden" id="hid_mail_limit_type" value="U">
- -->
 
 	<div class="setting_title">
 		<h3>편지함 관리</h3>
@@ -185,23 +179,10 @@
 							</c:forEach>
 						</c:if>
 					</thead>
-					<tbody>
-
-					</tbody>
+					
 				</table>
 			</div>
 		</div>
 	</div>
 	
-	<!-- 
-	<input type="hidden" id="USER_INFO_NO" value="2812">
-
-	<div class="mailbox_manage_layer middle hide" id="mailbox-organize-info" style="display: none;">정리할 메일함 기간을 조회하여 한 번에 메일을 정리합니다.</div>
-
-	<form name="gabia_mail" action="mail/mail_eml_down.php">
-		<input type="hidden" name="mail_mbox" value="">
-		<input type="hidden" name="gubun" value="all">
-	</form>
- -->
-
 </div>

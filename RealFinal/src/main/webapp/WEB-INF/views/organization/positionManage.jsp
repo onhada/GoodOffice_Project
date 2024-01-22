@@ -8,14 +8,9 @@
 %>
 
 
-
-
-
 <script type="text/javascript">
 
 $(document).ready(function() {
-	
-	
 	
 })// end of $(document).ready(function(){})-------------------------
 

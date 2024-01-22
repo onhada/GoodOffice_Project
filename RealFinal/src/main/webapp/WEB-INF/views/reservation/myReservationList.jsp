@@ -7,9 +7,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-
-
-
 <div id="contents" style="left: 276px;">
 	<div class="setting_title">
 		<h3>나의 예약 목록</h3>

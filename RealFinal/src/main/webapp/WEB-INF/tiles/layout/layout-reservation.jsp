@@ -20,8 +20,6 @@
 
 
 
-
-
 <%-- Bootstrap CSS --%>
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/bootstrap-4.6.2-dist/css/bootstrap.min.css">
 
@@ -32,7 +30,6 @@
 <%-- 스피너 및 datepicker 를 사용하기 위해 jQueryUI CSS 및 JS --%>
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
 <script type="text/javascript" src="<%=ctxPath%>/resources/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script>
-
 
 <!-- official css -->
 <link rel="stylesheet" type="text/css" href="<%=ctxPath%>/resources/css/common/inHTML.css">
@@ -106,24 +103,13 @@ $(document).ready(function() {
 	
 	// 초기값을 오늘 날짜로 설정
 	$("input.datepicker").datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, +1M:한달후, +1Y:일년후) 
-
-	
-	 // 수정필) 이거누른 게 잘 작동하는 지 확인해봐야할듯 
-	 // ---------- 컨트롤러로 자원예약id 값 넘겨주기 ---------- //
-	/*  $("button.del_reservation_btn").attr("id", $(".rsv_detail_view").attr("rsvResourceId")); // 삭제하기 위한 자원예약id 넣기 (from 나의예 : 상세보기 ) */
-	/*  $("button.del_reservation_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 삭제하기 위한 자원예약id 넣기 (from 승인관리) */
-/* 	 $("button.reservation_return_btn").attr("id", $(".rsv_detail_view").attr("rsvResourceId")); // 반납하기 위한 자원예약id 넣기 (from 나의예약)
-	 $("button.reservation_return_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 반납하기 위한 자원예약id 넣기 (from 반납관리) */
-	 /* $("button.reservation_approve_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); // 승인하기 위한 자원예약id 넣기 (from 승인관리)
-	 $("button.reservation_reject_btn").attr("id", $(".rsv_detail_view_btn").attr("id")); */ // 반려하기 위한 자원예약id 넣기 (from 승인관리)
-
-	
-	 
+ 
 	 
 })// end of $(document).ready(function(){})-------------------------
 
 //Function Declaration
-<%-- 데이터피커 날짜 이동 --%> // 수정필.. 이거 버릴 거면 지워 ..
+
+<%-- 데이터피커 날짜 이동 --%> 
 function moveDate(when){
 	
 	if(when == 'prev'){
@@ -135,24 +121,14 @@ function moveDate(when){
 	else if (when == 'next'){
 		$("input#viewReservationDate").datepicker('setDate', '+1D');
 	}	
-		
-	/* 	
-	date2 = $('.check1').datepicker('getDate', '+1d'); 
-	  date2.setDate(date2.getDate()+1); 
-	  $('.check1').datepicker('setDate', date2);
-	  */
-	console.log($("input#viewReservationDate").val());
+	
 }
-
-
-
 
 <%-- 모달 닫기 --%>
 function layerClose(id) {
 	$('div#' + id + '_layer').addClass("hide");
 	window.location.reload();
 }
-
 
 <%-- 예약하기 모달 열기 --%>
 function resourceReserve() {
@@ -166,7 +142,6 @@ function resourceReserve() {
 			dataType : "json",
 			async : false,
 			success : function(json) {
-			 //	console.log(JSON.stringify(json));
 				let html = "";
 				if(json.length > 0) {
 					$.each(json, function(index, item){
@@ -199,52 +174,29 @@ function addReservation(){
 		return;
 	}
 	else if(rsvStartHour - rsvEndHour == 0 && rsvStartHour == 0){
-		
-		 // 0시부터 0시까지 예약했을 경우(=하루종일예약)
-			// rsvEndDayTime을 하루 뒤로 설정해야함
-			/* alert("gdgddd");
-			console.log("rsvStartDayTime"+rsvStartDayTime);
-			console.log("rsvEndDayTime"+rsvEndDayTime);
-			console.log($("input#reservationDate").val());
-			 */
-			let d = new Date($("input#reservationDate").val());
-			let sel_day = +1;
-			d.setDate(d.getDate() + sel_day );
-			let year    = d.getFullYear();
-			let month   = ('0' + (d.getMonth() +  1 )).slice(-2);
-			let day     = ('0' + d.getDate()).slice(-2);
-			dt = year+"-"+month+"-"+day;
-			console.log(dt);
-		//	return;
-			/* let d = new Date();
-			let sel_day = -1; //일자를 조절하시면 됩니다. -1이면 하루전/ +1이면 내일
-			d.setDate(d.getDate() + sel_day );
-
-
-			let year    = d.getFullYear();
-			let month   = ('0' + (d.getMonth() +  1 )).slice(-2);
-			let day     = ('0' + d.getDate()).slice(-2);
-			dt = year+"-"+month+"-"+day;
-			document.write(dt); */
-		
+		let d = new Date($("input#reservationDate").val());
+		let sel_day = +1;
+		d.setDate(d.getDate() + sel_day );
+		let year    = d.getFullYear();
+		let month   = ('0' + (d.getMonth() +  1 )).slice(-2);
+		let day     = ('0' + d.getDate()).slice(-2);
+		dt = year+"-"+month+"-"+day;
+		console.log(dt);
+	
 		var rsvStartDayTime = $("input#reservationDate").val() + " " + $("select#rsvStartDayTime").val();
 		var rsvEndDayTime = dt + " " + $("select#rsvEndDayTime").val();
-		 
-		
 	}
 	else{
 		var rsvStartDayTime = $("input#reservationDate").val() + " " + $("select#rsvStartDayTime").val();
 		var rsvEndDayTime = $("input#reservationDate").val() + " " + $("select#rsvEndDayTime").val();
-		
 	}
 	// ---------- 예약일시가 올바른지 확인 끝 ---------- //
+	
 	
 	if( $("textarea#rsvReason").val().trim() == "" ){ // 예약사유를 입력하지 않았을 경우
 		alert("예약 사유가 없습니다.");
 		return;
 	}
-	
-	
 	
 	$.ajax({
     	url : "<%=ctxPath%>/reservation/addReservation.gw",
@@ -287,7 +239,6 @@ function reservation_info_detail_open(rsvResourceId) {
 		dataType : "json",
 		async : false,
 		success : function(json) {
-		//	console.log(JSON.stringify(json));
 			$.each(json, function(index, item){
 				
 				$("dd#resourceName").text(item.resourceName);
@@ -334,25 +285,13 @@ function reservation_info_detail_open(rsvResourceId) {
 				// --- 예약 반려인 경우 시작 --- //
 				$("dl#rejectReason").remove();	
 				if(item.rejectReason != null){ 
-					<%-- $.ajax({
-				    	url : "<%=ctxPath%>/reservation/getEmpInfo.gw",
-						type : "get",
-						data : {"empId":item.fk_approvalEmpId},				
-						dataType : "json",
-						async : false,
-						success : function(employeevo) { --%>
-							let html = "<dl class='after' id='rejectReason'>" +
-									   		"<dt>"+
-									   			"<label for=''>반려 사유</label>"+
-									   		"</dt>"+
-									   		"<dd id='rejectReason'>"+item.rejectReason+"</dd>"+ 
-									   	"</dl>";
-							$("div#rsvInfoDetail").append(html);	
-						/* },
-						error : function(request, status, error) {
-							alert("code: " + request.status + "\n" + "message: " + request.responseText + "\n" + "error: " + error);
-						}
-					});	 */
+					let html = "<dl class='after' id='rejectReason'>" +
+							   		"<dt>"+
+							   			"<label for=''>반려 사유</label>"+
+							   		"</dt>"+
+							   		"<dd id='rejectReason'>"+item.rejectReason+"</dd>"+ 
+							   "</dl>";
+				 	$("div#rsvInfoDetail").append(html);
 				}
 				
 				// --- 반납 버튼 삭제하는 경우 --- //
@@ -360,9 +299,7 @@ function reservation_info_detail_open(rsvResourceId) {
 				   item.approvalStatus == 1 || item.approvalStatus == 3){ // 결재상태가 대기, 반려인 경우
 					$("button#returnStatus").remove();	
 				}
-			//	console.log(item.rsvResourceId);
-			//	$("button.del_reservation_btn").attr("id", item.rsvResourceId);
-				
+			
 			});
 		},
 		error : function(request, status, error) {
@@ -580,52 +517,7 @@ function rsvAdminAddModalOpen(){
 }
 
 	
-/* 수정필) 이전날, 다음날, 오늘 누르면 바로 이동한느 것?  
-function moveDate(type){
-		
-	const today = new Date();                               // 오늘 날짜
-    let datePicker = $(".datepicker");                      // DatePicker 에서 선택된 날짜
-    let datePickerToDate = new Date(datePicker.val());      // DatePicker 에서 선택되어 Date 타입으로 변경된 날짜
-
-    // [CASE1] 이전 버튼을 눌렀을 경우
-    if (type == "prev") {
-    	alert("gdgd");
-        datePickerToDate.setDate(datePickerToDate.getDate() - 1);       // DatePicker 날짜를 하루 뺍니다.
-        datePicker.val(datePickerFormatting(datePickerToDate));         // 화면상에 보이는 DatePicker 날짜를 변경합니다.
-        $('#moveDate').attr("disabled", false);                          // 이전 버튼을 누르면 disalbed가 사라집니다.
-    }
-    // [CASE2] 이후 버튼을 눌렀을 경우
-    else if (type == "next") {
-        // [CASE2-1] 오늘 이후 날짜는 처리하지 않습니다. (년 월 일에 비교를 합니다)
-        if (datePickerToDate.getFullYear() === today.getFullYear()
-            && datePickerToDate.getMonth() === today.getMonth()
-            && datePickerToDate.getDate() === today.getDate()) {
-            alert('오늘 이후 날짜는 선택할 수 없습니다.');
-						$('#postDate').attr("disabled", true)                       // 이후날짜 버튼 disabled
-        }
-        // [CASE2-2] 오늘 이후 날짜는 변경합니다.
-        else {
-            datePickerToDate.setDate(datePickerToDate.getDate() + 1);   // DatePicker 날짜를 하루 더합니다.
-            datePicker.val(datePickerFormatting(datePickerToDate));          // 화면상에 보이는 DatePicker 날짜를 변경합니다.
-        }
-    }
-    
-    
-    // yyyy.mm.dd(요일) 형식으로 포맷팅
-	const datePickerFormatting = (date) => {
-	    return date.getFullYear() + '.' + (date.getMonth() + 1).toString().padStart(2, '0') + '.' + date.getDate().toString().padStart(2, '0') + '(' + ['일', '월', '화', '수', '목', '금', '토'][date.getDay()] + ')';
-	}
-}	
-*/	  
-    
-
- 
 </script>
-
-
-
- 
-
 
 
 
@@ -636,9 +528,6 @@ function moveDate(type){
 </head>
 
 
-
-
-
 <body class="vsc-initialized">
 	<div id="wrap">
 
@@ -647,40 +536,21 @@ function moveDate(type){
 		<tiles:insertAttribute name="header" />
 		<!-- 헤더 끝  -->
 
-
-		<!--
-		<script type="text/javascript" src="https://gnb.office.hiworks.com/main.js?v=20220215"></script>
-		-->
-
 		<div id="container">
-
-			<!--
-			<div id="drag_wrap">
-				<div id="drag" class="ui-draggable ui-draggable-handle"
-					style="left: 0px;"></div>
-			</div>
-			-->
-
 
 
 			<!-- 사이드바 시작  -->
 			<tiles:insertAttribute name="side" />
 			<!-- 사이드바 끝  -->
 
-
-
 			<!-- 컨텐츠 시작 -->
 			<tiles:insertAttribute name="content" />
 			<!-- 컨텐츠 끝 -->
 
 
-
-
 		</div>
 		<div id="dimmed"></div>
 		<div id="dimmed2"></div>
-
-
 
 
 		<!-- /////////////////////// 모달 시작 /////////////////////// -->
@@ -693,9 +563,7 @@ function moveDate(type){
 					<div class="title_layer text_variables">카테고리 설명</div>
 					<div class="scroll ta_c">
 						<div class="rs-detail-img">
-							<%-- <img src="<%=ctxPath%>/resources/image/reservation/${requestScope.resourceCategoryInfo_map.imageFile}" alt=""> --%>
 							<img src="<%= ctxPath%>${requestScope.viewPath}${requestScope.resourceCategoryInfo_map.imageFile}" alt="">
-						
 						</div>
 						<div class="rs-name">${requestScope.resourceCategoryInfo_map.resourceCategoryName}</div>
 						<div class="rs-detail-text">${requestScope.resourceCategoryInfo_map.description}</div>
@@ -732,17 +600,6 @@ function moveDate(type){
 						</div>
 						<div class="rs-name"></div>
 						<div class="rs-detail-text"></div>
-						<!-- 
-						<div class="rs-tag after">
-							<div class="title">
-								<strong>자원 속성</strong>
-							</div>
-							<ul>
-								<li>오후 02:00부터 오후 05:00까지 이용 불가</li>
-								<li>수요일 이용 불가</li>
-							</ul>
-						</div>
-						-->
 					</div>
 					<div class="layer_button">
 						<button type="button" class="btn_variables booking_layer_close" onclick="layerClose('resource_detail');">확인</button>
@@ -770,22 +627,7 @@ function moveDate(type){
 								</dt>
 								<dd>
 									<select id="resource_list_select" name="resource_no[]" class="select-box" style="width: 270px" onchange="bookingMain.selectResource();">
-										<%-- js에서 html 넣음 --%>	
 										
-										<!-- <optgroup label="회의실" cate_no="1163" resource_type="T">
-											<option value="1390">회의실 B2</option>
-											<option value="1393">회의실 A1</option>
-											<option value="1394">회의실 M5</option>
-										</optgroup>
-										<optgroup label="법인 차량" cate_no="1164" resource_type="T">
-											<option value="1391">차량(4인)</option>
-											<option value="1395">차량(6인)</option>
-										</optgroup>
-										<optgroup label="사내 콘도" cate_no="1166" resource_type="D">
-											<option value="1396">콘도1(제주)</option>
-											<option value="1397">콘도2(속초)</option>
-										</optgroup>
-										-->
 									</select>
 								</dd>
 							</dl>
@@ -797,9 +639,8 @@ function moveDate(type){
 									<dd>
 										<div class="fl">
 											<input type="text" name="reservationDate" id="reservationDate" class="datepicker" style="width: 147px;">
-											<!-- <input type="text" name="date" id="booking_date_in_layer" onchange="bookingMain.selectResource();" class="datepicker hasDatepicker" style="width: 147px;" value="2023-11-30">
-									 -->	<label for="reservationDate">
-											<img class="ui-datepicker-trigger icon month" src="<%=ctxPath%>/resources/image/icon/sp_icon.png" alt="예약 날짜 선택" title="예약 날짜 선택">
+											<label for="reservationDate">
+												<img class="ui-datepicker-trigger icon month" src="<%=ctxPath%>/resources/image/icon/sp_icon.png" alt="예약 날짜 선택" title="예약 날짜 선택">
 											</label>
 										</div>
 									</dd>
@@ -885,7 +726,6 @@ function moveDate(type){
 							</dt>
 							<dd id="rsvStatus"></dd>
 						</dl>
-						<!-- 승인필수자원만 승인필수자원 관련 정보 보여주기 -->
 					</div>
 
 					<div class="layer_button">
@@ -956,8 +796,7 @@ function moveDate(type){
 				<div class="layer_box middle popup8" style="margin-left: -175px; margin-top: -95.5px; display: block; z-index: 1005;">
 					<div class="title_layer text_variables">예약 승인</div>
 					<div class="font12">
-						<!-- 수정필 <span class="point_color">대표이사</span> -->
-						<!-- 님의  -->예약 내용을 확인했으며 예약을 승인합니다.
+						예약 내용을 확인했으며 예약을 승인합니다.
 					</div>
 					<div class="layer_button">
 						<button type="button" class="btn_variables reservation_approve_btn" onclick="rsvApprove(this.id)">확인</button>
@@ -979,8 +818,7 @@ function moveDate(type){
 				<div class="layer_box middle popup10" style="margin-left: -175px; margin-top: -126.5px; display: block; z-index: 1005;">
 					<div class="title_layer text_variables">예약 반려</div>
 					<div class="font12">
-						<!-- 수정필 <span class="point_color">대표이사</span> -->
-						<!-- 님의  -->예약을 아래의 사유로 반려합니다.
+						예약을 아래의 사유로 반려합니다.
 					</div>
 					<div class="pdt_30">
 						<strong>메모 추가</strong>
@@ -1041,222 +879,11 @@ function moveDate(type){
 		<%-- ========== 자원 삭제 모달 끝 ========== --%>
 
 
-		<%-- ========== 관리자추가 모달 시작 ========== --%>
-		<!-- <div class="layer_box large address hide" id -->
-		<%-- <div id="rsvAdmin_add_layer" class="large address hide" style="margin-left: -411px; margin-top: -310px; display: block; width: 820px;">
-			<div class="title_layer text_variables">관리자 추가</div>
-			<div class="search-address">
-				<div class="hidden">
-					<input type="hidden" id="booking_order_key" value="N">
-					<dl class="dvdLayer" id="searchP" style="display: block;">
-						<dt style="width: 45%">
-							<input type="radio" value="name" name="searchField" id="rdo_sch_name" onclick="$j('#keyword').focus();" checked="checked">
-							<label for="rdo_sch_name">이름 , 아이디</label>
-							&nbsp;&nbsp;
-							<input type="radio" value="group" name="searchField" id="rdo_sch_group" onclick="$j('#keyword').focus();">
-							<label for="rdo_sch_group">그룹</label>
-							&nbsp;&nbsp;
-
-						</dt>
-						<dd style="width: 55%">
-							<input type="text" style="height: 21px; width: 140px;" class="text-box" title="검색어 입력" id="keyword" onkeypress="if(event.keyCode == 13) addressbook.click_searchBtn();">
-							<a href="javascript:void(0);" class="btn-search" onclick="addressbook.click_searchBtn();">검색</a>
-						</dd>
-					</dl>
-				</div>
-				<div class="after">
-					<p class="pdb_10">이미 추가된 관리자는 추가해도 추가되지 않습니다.</p>
-					<!-- 관리자 추가일 경우 노출 -->
-					<p class="pdb_10 fl" id="searchMessage" style="display: none;">
-						<span id="searchKeyword"></span>
-						검색결과 :
-						<span id="searchCount"></span>
-						<a href="javascript:void(0);" class="search_bt weakblue" onclick="addressbook.setTab(addressbook.currentTab);">
-							<span class="sp_menu searchCancel"></span>
-							검색 취소
-						</a>
-					</p>
-				</div>
-			</div>
-
-			<div class="address-choice-form after">
-				<!-- 1. type2를 떼면 관리자 추가
-	2. type2를 붙이면 결재선 설정, 결재선 추가, 부서 결재선 등록, 
-	3. sign을 붙이면 결재선 설정 (결재, 합의만 있는)
- -->
-				<div class="fl">
-					<div class="category_list" style="overflow-y: scroll;">
-						<select id="leftList" size="19" frameborder="0" style="display: none;" onclick="addressbook.click_leftList(this)">
-						</select>
-						<div id="treeDiv" style="" class="treeDiv OrgTree">
-							<ul>
-								<li id="addressTreeNode_57182" class="last">
-									<div class="container">
-										<img onclick="addressbook.ToggleTree(this);" src="https://booking.office.hiworks.com/assets/images/common/tree_images/tree_m.gif" class="plus"><strong onclick="addressbook.selectNode(this);" class="selectedNode">Good Office <span style="font-weight: normal; color: silver; font-size: 8pt">(11)</span>
-										</strong>
-									</div>
-									<ul style="">
-										<li id="addressTreeNode_57184">
-											<div class="container">
-												<img onclick="addressbook.ToggleTree(this);" src="https://booking.office.hiworks.com/assets/images/common/tree_images/tree_p.gif" class="plus"><strong onclick="addressbook.selectNode(this);">관리부 <span style="font-weight: normal; color: silver; font-size: 8pt">(4)</span></strong>
-											</div>
-											<ul style="display: none;">
-												<li id="addressTreeNode_57187">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">인사팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-												<li id="addressTreeNode_57188">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">구매총무팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-												<li id="addressTreeNode_57189" class="last">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">재무회계팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(2)</span>
-														</strong>
-													</div>
-												</li>
-											</ul>
-										</li>
-										<li id="addressTreeNode_57185">
-											<div class="container">
-												<img onclick="addressbook.ToggleTree(this);" src="https://booking.office.hiworks.com/assets/images/common/tree_images/tree_p.gif" class="plus"><strong onclick="addressbook.selectNode(this);">생산부 <span style="font-weight: normal; color: silver; font-size: 8pt">(3)</span></strong>
-											</div>
-											<ul style="display: none;">
-												<li id="addressTreeNode_57190">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">생산1팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-												<li id="addressTreeNode_57191">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">생산2팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-												<li id="addressTreeNode_57192" class="last">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">품질관리팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-											</ul>
-										</li>
-										<li id="addressTreeNode_57186" class="last">
-											<div class="container">
-												<img onclick="addressbook.ToggleTree(this);" src="https://booking.office.hiworks.com/assets/images/common/tree_images/tree_p.gif" class="plus"><strong onclick="addressbook.selectNode(this);">영업부 <span style="font-weight: normal; color: silver; font-size: 8pt">(3)</span></strong>
-											</div>
-											<ul style="display: none;">
-												<li id="addressTreeNode_57193">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">영업1팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-												<li id="addressTreeNode_57194">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">영업2팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-												<li id="addressTreeNode_57195" class="last">
-													<div class="container">
-														<strong onclick="addressbook.selectNode(this);">고객지원팀 <span style="font-weight: normal; color: silver; font-size: 8pt">(1)</span>
-														</strong>
-													</div>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-						<div id="leftProgressDiv" style="display: none;" class="progressDiv">
-							<img src="/assets/images/common/icon/progress_big.gif">
-						</div>
-					</div>
-					<div class="list">
-						<select multiple="" id="rightList" style="">
-							<c:forEach var="adminVo" items="${requestScope.fullAdminList}">
-								<option class="adminId" value="${adminVo.adminId}">${adminVo.empName}(${adminVo.id}) - ${adminVo.team}</option>
-							</c:forEach>
-							
-							<option value="86920" title="과장 강과장 <영업2팀>">과장 강과장 &lt;영업2팀&gt;</option>
-							<option value="86917" title="이사 김이사 <생산1팀>">이사 김이사 &lt;생산1팀&gt;</option>
-							<option value="86914" title="대표이사 대표이사 <굿오피스산업>">대표이사 대표이사 &lt;하이웍스산업&gt;</option>
-							<option value="86916" title="상무 박상무 <구매총무팀>">상무 박상무 &lt;구매총무팀&gt;</option>
-							<option value="86922" title="주임 안주임 <품질관리팀>">주임 안주임 &lt;품질관리팀&gt;</option>
-							<option value="86921" title="대리 양대리 <재무회계팀>">대리 양대리 &lt;재무회계팀&gt;</option>
-							<option value="86918" title="부장 오부장 <생산2팀>">부장 오부장 &lt;생산2팀&gt;</option>
-							<option value="86923" title="사원 이사원 <고객지원팀>">사원 이사원 &lt;고객지원팀&gt;</option>
-							<option value="86919" title="차장 조차장 <영업1팀>">차장 조차장 &lt;영업1팀&gt;</option>
-							<option value="86924" title="계약직 주알바 <재무회계팀>">계약직 주알바 &lt;재무회계팀&gt;</option>
-							<option value="86915" title="사장 최사장 <인사팀>">사장 최사장 &lt;인사팀&gt;</option>
-						</select>
-						<div class="add-btn">
-							<a href="javascript:void(0);" class="blind icon btn-to" onclick="bookingAdmin.addAdminClick();" id="approval_add">추가</a>
-						</div>
-						<div class="choice-area approve">
-							<a class="text_variables" href="javascript:void(0);" onclick="addressbook.click_rightSelect('select');">전체</a>
-							<a class="text_variables" href="javascript:void(0);" onclick="addressbook.click_rightSelect('deselect');">선택안함</a>
-							<a class="text_variables" href="javascript:void(0);" onclick="addressbook.click_orderBtn('name', 'asc');">이름순</a>
-							<!--a class="text_variables" href="javascript:void(0);" onclick="addressbook.click_orderBtn('name', 'desc');">설정순</a-->
-						</div>
-					</div>
-					<div class="after page_select_wrap">
-						<div class="page_select" id="pagingP"></div>
-					</div>
-					<div id="rightProgressDiv" style="display: none;" class="progressDiv">
-						<img src="/assets/images/common/icon/progress_big.gif">
-					</div>
-				</div>
-
-				<div class="to-item approve">
-					<h5 class="fl">
-						<span>관리자</span>
-						<span id="sp_eaApproval">0</span>
-					</h5>
-					<div class="fr updown-wrap first" id="approval_swap"></div>
-					<div class="to clear" style="height: 294px;">
-						<select multiple="" id="select_admin_user_list" ondblclick="" style="height: 296px">
-							<option value="86914" disabled="">대표이사 대표이사&lt;굿오피스산업&gt;</option>
-							<option value="86915" disabled="">사장 최사장&lt;인사팀&gt;</option>
-						</select>
-						<div class="del-btn" id="approval_delete">
-							<a href="javascript:void(0);" class="blind icon btn-to" onclick="bookingAdmin.delAdminClick();">삭제</a>
-						</div>
-						<!-- disabled -->
-					</div>
-				</div>
-			</div>
-			<div class="layer_button">
-				<button type="button" class="btn_variables" onclick="addressbook.closeApply();">등록</button>
-				<button type="button" onclick="layerClose('rsvAdmin_add');">취소</button>
-			</div>
-			<a href="javascript:void(0)" class="icon btn_closelayer" title="레이어 닫기" onclick="layerClose('rsvAdmin_add');">
-				<span class="blind">레이어 닫기</span>
-			</a>
-		</div> --%>
-		<%-- ========== 관리자추가 모달 끝 ========== --%>
-
-
-
 		<!-- /////////////////////// 모달 끝 /////////////////////// -->
 
 	</div>
 
 
-	
-
-
-
-
-
-	<deepl-input-controller></deepl-input-controller>
 </body>
 </html>
 

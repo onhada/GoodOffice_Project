@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- ==== #29. mapper 기본설정 ==== -->
+<!-- ==== mapper 기본설정 ==== -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<!-- ==== #29. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
 <mapper namespace="organization">
+
 
 	<!-- === 부서 목록 가져오기 === -->
 	<resultMap type="HashMap" id="getDepList_map">
@@ -70,7 +71,7 @@
  	</select>
  	
  	
- 	<!-- === 총/부서별/팀별 사원 수 가져오기 === -->	<!-- 수정필  -->
+ 	<!-- === 총/부서별/팀별 사원 수 가져오기 === -->	
 	<resultMap type="HashMap" id="getEmpCount_map">
 	    <result property="type"		column="type" 		javaType="String" />
 	    <result property="count"	column="count" 		javaType="String" />
@@ -298,31 +299,14 @@
  	<update id="editMyinfo" parameterType="HashMap">
  		update tbl_employee 
  		set fk_jobId = #{jobId}
- 			<if test="companyTel != null">
-    			, companyTel = #{companyTel}
-    		</if>
-    		<if test="tel != null">
-    			, tel = #{tel}
-    		</if>
-    		<if test="birth != null">
-    			, birth = #{birth}
-    		</if>
-    		<if test="postCode != null">
-    			, postCode = #{postCode}
-    		</if>
-    		<if test="address != null">
-    			, address = #{address}
-    		</if>
-    		<if test="detailAddress != null">
-    			, detailAddress = #{detailAddress}
-    		</if>
+ 			<if test="companyTel != null">, companyTel = #{companyTel}</if>
+    		<if test="tel != null">, tel = #{tel}</if>
+    		<if test="birth != null">, birth = #{birth}</if>
+    		<if test="postCode != null">, postCode = #{postCode}</if>
+    		<if test="address != null">, address = #{address}</if>
+    		<if test="detailAddress != null">, detailAddress = #{detailAddress}</if>
  			where empId = #{empId}
  	</update>
 	
 	
-	
-
-	
-	
- 	
 </mapper>	

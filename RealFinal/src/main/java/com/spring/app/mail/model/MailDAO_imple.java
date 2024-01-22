@@ -26,6 +26,8 @@ public class MailDAO_imple implements MailDAO {
 	private SqlSessionTemplate sqlsession;
 	
 	
+	//////////////////////////////////////////////////////////////////////////////
+	
 	
 	// === employee 중 해당 이메일이 존재하는지 확인 === //
 	@Override
@@ -82,15 +84,6 @@ public class MailDAO_imple implements MailDAO {
 		int n = sqlsession.insert("mail.insertSendMail", sendMail_map);
 		return n;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 	// === personalmailboxtype 테이블에서 개인편지함 가져오기 === //

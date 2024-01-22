@@ -51,7 +51,6 @@ $(document).ready(function() {
 
 		// 이미지 미리보기
 		$("img#resource_default_img").attr("src", '<%= ctxPath%><%= request.getAttribute("viewPath") %><%= request.getAttribute("imageFile") %>');
-		console.log(<%= request.getAttribute("isApproval") %>+"dd+"+<%= request.getAttribute("isReturn") %>);
 		// 관리자승인필수 여부
 		if(<%= request.getAttribute("isApproval") %> == 0){
 			$("input#is_Approval_N").attr("checked", "");
@@ -131,9 +130,6 @@ function addResource(type){ // 아마 파라미터에 add 또는 mod 들어오�
 	
 }
 </script>
-
-
-
 
 
 <div id="contents" style="left: 276px;">

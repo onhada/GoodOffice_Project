@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- ==== #29. mapper 기본설정 ==== -->
+<!-- ==== mapper 기본설정 ==== -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<!-- ==== #29. 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
+<!-- ==== 루트 엘리먼트 & 네임스페이스 설정(프로젝트 전체내에서 유일해야 한다.) ==== -->
 <mapper namespace="mail">
 	
 
@@ -85,10 +85,6 @@
 			values(tempmailSeq.nextval, #{mailId}, #{loginEmpId}, default, default)
 		</if>
 	</insert>
-
-
-
-
 
 
 	<!-- === personalmailboxtype 테이블에서 개인편지함 가져오기 === --> 
@@ -199,7 +195,7 @@
 				    select O.empId as empId, empName, email, O.mailId as mailId, subject, sendDay, orgMailId, isImportant, nvl2(f.fk_mailId, 1, 0) as hasFile
 				    from
 				    (
-				        select I.fk_empId as empId, I.fk_mailId as mailId, I.isImportant
+				        select S.fk_empId as empId, I.fk_mailId as mailId, I.isImportant
 				        from tbl_incomeMail I
 				        join tbl_sendMail S
 				        on I.fk_mailId = S.fk_mailId
@@ -466,10 +462,6 @@
 				update tbl_sendMail set isDelete = 1
 				where fk_mailId = #{mailId}
 			</when>
-			<when test='mailType == "3"'>
-				update tbl_reservationmail set isDelete = 1
-				where fk_mailId = #{mailId}
-			</when>
 			<when test='mailType == "4"'>
 				update tbl_tempMail set isDelete = 1
 				where fk_mailId = #{mailId}
@@ -491,9 +483,6 @@
 			<when test='mailType == "2"'>
 				delete from tbl_sendMail 
 			</when>
-			<when test='mailType == "3"'>
-				delete tbl_reservationmail
-			</when>
 			<when test='mailType == "4"'>
 				delete tbl_tempMail set
 			</when>
@@ -504,9 +493,6 @@
 					</when>
 					<when test='fromOrgMailbox == "send"'>
 						delete from tbl_sendMail
-					</when>
-					<when test='fromOrgMailbox == "reservation"'>
-						delete from tbl_reservationMail
 					</when>
 					<when test='fromOrgMailbox == "temp"'>
 						delete from tbl_tempMail
@@ -891,8 +877,4 @@
 	</delete>
 	
 	
-	
-	
-	
-
 </mapper>

@@ -42,8 +42,6 @@ function delRsvAdmin(adminId){
 
 
 
-
-
 <div id="contents" style="left: 276px;">
 	<div class="setting_title">
 		<h3>예약 관리자</h3>
@@ -51,10 +49,6 @@ function delRsvAdmin(adminId){
 	<div class="content_inbox">
 		<!-- Contents -->
 		<div class="setting_field">
-			<!-- <a href="javascript:void(0)" onclick="rsvAdminAddModalOpen();" class="weakblue">
-				<span class="sms_plus"></span>
-				관리자 추가
-			</a> -->
 			<div class="pdt_20">
 				<table class="tableType01 rs-table">
 					<colgroup>

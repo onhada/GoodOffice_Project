@@ -1,6 +1,5 @@
 package com.spring.app.mail.controller;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.json.JSONParser;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,13 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.spring.app.common.FileManager;
 import com.spring.app.common.MyUtil;
 import com.spring.app.common.domain.EmployeeVO;
 import com.spring.app.mail.domain.MailVO;
@@ -45,10 +38,9 @@ public class MailController {
 
 	@Autowired
 	private MailService service;
-	
-//	@Autowired  // Type에 따라 알아서 Bean 을 주입해준다.
-//	private FileManager fileManager;
 
+	
+	/////////////////////////////////////////////////////////////
 	
 	
 	/**
@@ -73,16 +65,13 @@ public class MailController {
 		String mailType = request.getParameter("mailType"); 
 		String mailId = request.getParameter("mailId"); 
 		mav.addObject("mailId", mailId);
-		String orgMailId = request.getParameter("orgMailId");
 	
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);
 		paraMap.put("mailType",  mailType);
 		paraMap.put("mailId", mailId);
 		
-		
 		mav.addObject("mailType", mailType);
-		
 		mav.addObject("orgMailId", mailId);
 		
 		
@@ -96,19 +85,17 @@ public class MailController {
 		Map<String, String> orgMailInfo_map = new HashMap<>(); // 원메일id, 발신자, 제목, 내용 
 		if(mailId == null) { // 원메일 쓰기인 경우
 			orgMailInfo_map.put("mailId", "0");
-			
 		}
-		else if(mailId != null) { // 답장메일 쓰기인 경우 (답장/전체답장/전달)
+		else if(mailId != null) { // 답장메일 쓰기인 경우
 			if("4".equals(mailType)) {
 				orgMailInfo_map = service.getTempMailInfo(paraMap); // 임시저장 메일 가져오기
 			}
 			else {
-				orgMailInfo_map = service.getOrgMailInfo(paraMap); // 답장메일을 쓰기 위해 필요한 원메일 정보 가져오기 
+				orgMailInfo_map = service.getOrgMailInfo(paraMap); // 답장메일 쓰기인 경우 : 필요한 원메일 정보 가져오기 
 			}
 		}
 		mav.addObject("orgMailInfo_map", orgMailInfo_map);
 
-		
 		
 		mav.setViewName("mailWrite.mail");
 
@@ -171,7 +158,6 @@ public class MailController {
 	@PostMapping("mailWriteEnd.gw")
 	public String mailWriteEnd(MultipartHttpServletRequest mrequest, HttpServletResponse response, ModelAndView mav, Map<String, String> paraMap, MailVO mailvo) {
 
-		
 		HttpSession session = mrequest.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		Long loginEmpId = loginUser.getEmpId();
@@ -184,10 +170,7 @@ public class MailController {
 		String orgMailId = mrequest.getParameter("orgMailId"); 
 		if(orgMailId.equals("")) { // 답장메일이 아닌, 원메일일 경우
 			orgMailId = "0";
-		}
-		
-		String mailId = mrequest.getParameter("mailId");		
-	
+		}		
 
 		int n = 0;
 		try {
@@ -196,12 +179,9 @@ public class MailController {
 			e.printStackTrace();
 		}
 		
-		
-		JSONObject jsonObj = new JSONObject(); // {}
-
-			jsonObj.put("result", n);
-			
-			jsonObj.put("isTemporary", isTemporary);
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("result", n);
+		jsonObj.put("isTemporary", isTemporary);
 
 		return jsonObj.toString();
 	
@@ -222,7 +202,6 @@ public class MailController {
 	@PostMapping(value="mailWriteResult.gw")
 	public ModelAndView mailWriteResult(HttpServletRequest request, HttpServletResponse response, ModelAndView mav, MailVO mailvo) {
 		
-		
 		String isTemporary = request.getParameter("isTemporary");
 		mav.addObject("isTemporary", isTemporary);
 		
@@ -239,8 +218,8 @@ public class MailController {
 		mav.addObject("incomeEmp_str", incomeEmp_str);
 		request.setAttribute("incomeEmp_str", incomeEmp_str);
 		
-		mav.setViewName("mailWriteResult.mail");
 		
+		mav.setViewName("mailWriteResult.mail");
 		
 		return mav;
 	}
@@ -319,17 +298,16 @@ public class MailController {
 		}
 	 	
 		
-		 int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 
-		 int endRno = startRno + sizePerPage - 1; // 끝 행번호 
+		int startRno = ((currentShowPageNo - 1) * sizePerPage) + 1; // 시작 행번호 
+		int endRno = startRno + sizePerPage - 1; // 끝 행번호 
 			
-		 paraMap.put("startRno", String.valueOf(startRno));
-		 paraMap.put("endRno", String.valueOf(endRno));
-		 
-		 mailList = service.mailList_withPaging(paraMap); // 페이징 처리한 메일목록 가져오기
+		paraMap.put("startRno", String.valueOf(startRno));
+		paraMap.put("endRno", String.valueOf(endRno));
+		
+		mailList = service.mailList_withPaging(paraMap); // 페이징 처리한 메일목록 가져오기
 	 
-		 mav.addObject("mailList", mailList);
-		 mav.addObject("paraMap", paraMap);
-		 
+		mav.addObject("mailList", mailList);
+		mav.addObject("paraMap", paraMap);
 		 
 		 
 		// === 페이지바 만들기 === //
@@ -348,14 +326,12 @@ public class MailController {
 		}
 		
 		while( !(loop > blockSize || pageNo > totalPage) ) {
-			
 			if(pageNo == currentShowPageNo) {
 				pageBar += "<span class='paging_numbers'><strong>"+pageNo+"</strong></span>";
 			}
 			else {
 				pageBar += "<a href='"+url+"?mailType="+mailType+"&currentShowPageNo="+pageNo+"' style='cursor: pointer;'><span>"+pageNo+"</span></a>";
 			}
-			
 			loop++;
 			pageNo++;
 		}// end of while-------------------------
@@ -368,9 +344,7 @@ public class MailController {
 		
 		mav.addObject("pageBar", pageBar);
 		
-		
 		String goBackURL = MyUtil.getCurrentURL(request);
-	 
 		mav.addObject("goBackURL", goBackURL);
 		
 		mav.setViewName("mailList.mail");
@@ -588,9 +562,7 @@ public class MailController {
 	
 		
 		mav.addObject("paraMap", paraMap);
-		
 		mav.addObject("mailInfo", mailInfo); 
-		
 		mav.addObject("mailFileList", mailFileList);
 		mav.addObject("sendEmp_str", sendEmp_str);
 		mav.addObject("incomeEmp_str", incomeEmp_str);
@@ -692,7 +664,6 @@ public class MailController {
 	}
 	
 	
-	
 	/** 
 	* @Method Name  : mailPreview 
 	* @작성일   : Jan 12, 2024 
@@ -714,7 +685,6 @@ public class MailController {
 	}	
 	
 	
-	
 	/** 
 	* @Method Name  : mailboxManage 
 	* @작성일   : Dec 26, 2023 
@@ -729,11 +699,9 @@ public class MailController {
 	@GetMapping("mailboxManage.gw")
 	public ModelAndView mailboxManage(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
-
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 		long loginEmpId = loginUser.getEmpId();
-		
 		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);
@@ -744,7 +712,6 @@ public class MailController {
 		mav.addObject("personalMailboxList", personalMailboxList);
 		// ----- 개인편지함 가져오기 끝 ----- //
 		
-
 		mav.setViewName("mailboxManage.mail");
 		
 		return mav;
@@ -776,7 +743,6 @@ public class MailController {
 		paraMap.put("loginEmpId", loginEmpId);
 		paraMap.put("personalMailboxTypeName", personalMailboxTypeName);
 	
-		
 		int n = 0;
 		n = service.makePersonalMailbox(paraMap); // 개인편지함 만들기
 		
@@ -817,10 +783,8 @@ public class MailController {
 		int n = 0;
 		n = service.deletePersonalMailbox(paraMap); // 개인편지함 삭제하기 
 		
-		
 		JSONObject jsonObj = new JSONObject(); // {}
 		jsonObj.put("n", n);	
-		
 		
 		return jsonObj.toString();
 	}
@@ -848,7 +812,6 @@ public class MailController {
 		String mailType = request.getParameter("mailType");
 		String personalMailboxId = request.getParameter("personalMailboxId");
 
-		
 		Map<String, Object> paraMap = new HashMap<>();
 		paraMap.put("loginEmpId", loginEmpId);
 		paraMap.put("mailType", mailType);
@@ -858,10 +821,8 @@ public class MailController {
 		int n = 0;
 		n = service.emptyMailbox(paraMap); // 편지함 비우기
 		
-		
 		JSONObject jsonObj = new JSONObject(); // {}
 		jsonObj.put("n", n);	
-		
 		
 		return jsonObj.toString();
 	}

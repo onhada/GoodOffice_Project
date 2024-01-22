@@ -146,6 +146,5 @@ $(document).ready(function() {
 		</div>
 		<!-- Contents End-->
 	</div>
-	<!-- 예약 리스트 생성 -->
 
 </div>

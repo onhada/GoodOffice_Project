@@ -28,6 +28,9 @@ public class OrganizationService_imple implements OrganizationService {
 	private OrganizationDAO dao;
 
 	
+	///////////////////////////////////////////////////////////
+	
+	
 	// === 부서 목록 가져오기 === //
 	@Override
 	public List<Map<String, String>> getDepList() {
@@ -250,11 +253,6 @@ public class OrganizationService_imple implements OrganizationService {
 		int n = dao.editMyinfo(paraMap);
 		return n;
 	}
-
-	
-	
-	
-	
 
 	
 }

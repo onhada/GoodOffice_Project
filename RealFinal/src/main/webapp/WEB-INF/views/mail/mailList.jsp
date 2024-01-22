@@ -41,7 +41,7 @@
 		});
 		
 		
-		// 보기 드롭다운 설정 (수정필!!!!!!!!!안 먹음 ㅋ 왜 안 먹냐 고....)
+		// 보기 드롭다운 설정 
 		$("a#m_list_view_option").click(function(){
 			
 			if($("div#m_list_view_option_detail").hasClass("hide") === true) { // 옵션드롭다운이 보이지 않는 중일 경우
@@ -95,7 +95,7 @@
 	
 	// === 중요메일 여부 업데이트 === //
 	function updateImportant(mailId){
-		//console.log( $("input[id='mailId_'"+mailId+"]").parent().parent().find('input[name="isImportant"]').val() );
+		
 		$.ajax({
         	url : "<%=ctxPath%>/mail/updateImportant.gw",
 			type : "post",
@@ -127,14 +127,6 @@
 		});
 
 	}
-	
-	
-	
-	 
-	 
-	
-	
-	
 	
 	
 	
@@ -231,10 +223,6 @@
 		</fieldset>
 
 		<div class="setting_box">
-			<!-- 수정필 시간되면... -->
-			<!-- <a class="icon order" href="javascript:void(0)" id="m_list_setting_menu" title="정렬">
-				<span class="blind">설정</span>
-			</a> -->
 		</div>
 		<div class="gradient" style="display: none"></div>
 
@@ -329,12 +317,10 @@
 											</c:if>
 										</td>
 										<td>
-											<!-- 수정필 : 다 하고 이것도 해 아마도 원메일 컬럼 관련해서 만들면 될ㄷ스  -->
-											<!-- <span class="icon reply" title="회신 메일 표시"></span> -->
+											
 										</td>
 										<td class="name">
 											<div class="in">
-												<%-- <a href="/tempfinal.onhiworks.com/officemail/main/m_write/new/mail/from_addr/93" title="관리자 <admin>">관리자</a> --%>
 												<a href="#;" title="${mailvo.empName}">${mailvo.empName}<%-- 수정필) &nbsp;${mailvo.email} --%></a>
 											</div>
 										</td>
@@ -407,23 +393,8 @@
 			<%-- === 페이지바 보여주기 === --%>
 			<div class="paginate" id="divMainPaging">${requestScope.pageBar}</div>
 
-			<!-- 
-			<div class="page_select">
-				<label for="pageCurrent" class="blind">현재 페이지 선택</label>
-				<select align="absmiddle" id="pageCurrent" onchange="MailList.MovePage(this.value);" name="selPageSelectBox">
-					<option value="1">1</option>
-					<option value="2">2</option>
-				</select>
-				/
-				<span id="spPageTotalPage">2</span>
-			</div>
-			 -->
 			
 		</div>
 	</div>
-	<!-- <iframe name="ifMailListHistory" id="ifMailListHistory" src="" style="width: 0px; height: 0px; display: none;"></iframe>
- -->
-	<!-- <script language="JavaScript">
-		MailList.EnterInitData('b0');
-	</script> -->
+	
 </div>

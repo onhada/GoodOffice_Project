@@ -53,7 +53,6 @@ function toggleShowHide(id){
 				<span>편지쓰기</span>
 			</a>
 			<nav class="menu-wrap">
-				<!-- 메뉴 활성 시 class="router-link-exact-active" -->
 				<ul>
 				
 					<!-- 받은 편지함 -->
@@ -77,8 +76,6 @@ function toggleShowHide(id){
 										<i class="fal fa-chevron-up" id="toggleIcon"></i>
 									</span>
 									<span class="flex-truncate with-count-badge collapse">개인 편지함</span>
-									<!-- 새 메일이 있을 시 노출 spec out-->
-									<!-- <span class="counting__icon"><i id="personalMailHeader" class='gis'></i></span> -->
 								</span>
 							</div>
 							<!-- 개인편지함 toggle 여부 -->
@@ -155,23 +152,7 @@ function toggleShowHide(id){
 							</div>
 							<div class="el-collapse-item__wrap" id="MailOptionToggle" style="display: block">
 								<ul class="el-collapse-item__content">
-									<!-- 
-												<li class="menu-item"><a
-													href="https://mail.office.hiworks.com/gabia.biz/mail/webmail/s_basic"
-													class="link" id="setting_s_basic"> <span
-														class="link-prefix-icon"><i class="gis gi-cog"></i></span>
-														<span class="flex-truncate with-count-badge">기본 설정</span>
-												</a></li>
-												 
-												 <!-- 
-												<li class="menu-item"><a
-													href="https://mail.office.hiworks.com/gabia.biz/mail/managed/s_secure_options"
-													class="link" id="setting_s_secure_options"> <span
-														class="link-prefix-icon"><i
-															class="gis gi-folder-dots"></i></span> <span
-														class="flex-truncate with-count-badge">암호 메일 설정</span>
-												</a></li>
-												 -->
+									
 									<li class="menu-item">
 										<a href="<%= ctxPath%>/mail/mailboxManage.gw" class="link" id="setting_m_mailbox">
 											<span class="link-prefix-icon">
@@ -180,67 +161,7 @@ function toggleShowHide(id){
 											<span class="flex-truncate with-count-badge">편지함 관리</span>
 										</a>
 									</li>
-									<!-- 
-												<li class="menu-item"><a
-													href="https://mail.office.hiworks.com/gabia.biz/mail/webmail/s_autoreply"
-													class="link" id="setting_s_autoreply"> <span
-														class="link-prefix-icon"><i class="gis gi-mail-out"></i></span>
-														<span class="flex-truncate with-count-badge">부재중 설정</span>
-												</a></li>
-												 -->
-								<!-- 	<li class="menu-item">
-										<a href="수정필" class="link" id="setting_s_sign">
-											<span class="link-prefix-icon">
-												<i class="gis gi-signature"></i>
-											</span>
-											<span class="flex-truncate with-count-badge">서명 설정</span>
-										</a>
-									</li> -->
-									<!-- 
-												<li class="menu-item"><a
-													href="https://mail.office.hiworks.com/gabia.biz/mail/webmail/s_filter"
-													class="link" id="setting_s_filter"> <span
-														class="link-prefix-icon"><i class="gis gi-folder"></i></span>
-														<span class="flex-truncate with-count-badge">수신 메일
-															분류</span>
-												</a></li>
-												 -->
-									<!-- 
-									<li class="menu-item">
-										<a href="https://mail.office.hiworks.com/gabia.biz/mail/webmail/s_spam_main" class="link" id="setting_s_spam">
-											<span class="link-prefix-icon">
-												<i class="gis gi-ban"></i>
-											</span>
-											<span class="flex-truncate with-count-badge">스팸 설정</span>
-										</a>
-									</li>
-									 -->
-									<!-- 
-												<li class="menu-item"><a
-													href="https://mail.office.hiworks.com/gabia.biz/mail/webmail/s_sms_alarm"
-													class="link" id="setting_s_sms_alarm"> <span
-														class="link-prefix-icon"><i class="gis gi-bell"></i></span>
-														<span class="flex-truncate with-count-badge">알림 설정</span>
-												</a></li>
-												 -->
-									<!-- 
-												<li class="menu-item"><a
-													href="https://mail.office.hiworks.com/gabia.biz/mail/webmail/m_pop3"
-													class="link" id="setting_m_pop3"> <span
-														class="link-prefix-icon"><i
-															class="gis gi-bring-mail"></i></span> <span
-														class="flex-truncate with-count-badge">외부 메일 가져오기</span>
-												</a></li>
-												 -->
-									<!-- 
-												<li class="menu-item"><a
-													href="https://mail.office.hiworks.com/gabia.biz/mail/webmail/m_backup"
-													class="link" id="setting_m_backup"> <span
-														class="link-prefix-icon"><i class="gis gi-history"></i></span>
-														<span class="flex-truncate with-count-badge">메일
-															백업/업로드</span>
-												</a></li>
-												 -->
+									
 								</ul>
 							</div>
 						</div>
@@ -253,5 +174,4 @@ function toggleShowHide(id){
 	</div>
 
 
-	<!-- left End -->
 </div>

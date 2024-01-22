@@ -25,6 +25,9 @@ public class OrganizationDAO_imple implements OrganizationDAO {
 	private SqlSessionTemplate sqlsession;
 
 	
+	///////////////////////////////////////////////////////
+	
+	
 	// === 부서 목록 가져오기 === //
 	@Override
 	public List<Map<String, String>> getDepList() {
@@ -248,11 +251,6 @@ public class OrganizationDAO_imple implements OrganizationDAO {
 		return n;
 	}
 
-	
-	
-	
-	
-	
 	
 	
 }

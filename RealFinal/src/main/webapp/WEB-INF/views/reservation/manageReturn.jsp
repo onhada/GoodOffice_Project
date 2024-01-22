@@ -6,7 +6,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -27,9 +26,6 @@ $(document).ready(function() {
 // Function Declaration
 
 </script>
-
-
-
 
 
 <div id="contents" style="left: 276px;">

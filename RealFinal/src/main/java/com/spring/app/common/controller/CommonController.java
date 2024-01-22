@@ -112,12 +112,8 @@ public class CommonController {
 		else { // 아이디와 암호가 존재하는 경우 	
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
-			
-		// 수정필 이거 살려야 하나...?고민해보고 		
-			// 로그인을 해야만 접근할 수 있는 페이지에 로그인을 하지 않은 상태에서 접근을 시도한 경우 
-			// "먼저 로그인을 하세요!!" 라는 메시지를 받고서 사용자가 로그인을 성공했다라면
-			// 화면에 보여주는 페이지는 시작페이지로 가는 것이 아니라
-			// 조금전 사용자가 시도하였던 로그인을 해야만 접근할 수 있는 페이지로 가기 위한 것이다.
+		
+			// 조금전 사용자가 시도하였던 로그인을 해야만 접근할 수 있는 페이지로 가기 위한 것
 			String goBackURL = (String) session.getAttribute("goBackURL");
 			
 			if(goBackURL != null) {

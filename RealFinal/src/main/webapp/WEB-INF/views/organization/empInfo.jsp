@@ -86,7 +86,6 @@ $(document).ready(function() {
 									<div class="container" id="dep" onclick="clickOrganization(${dep.depId}, '${dep.depName}', event);">
 										<i class="far fa-minus" ></i>
 										<span class="title" id="depId" depId="${dep.depId}">${dep.depName} </span>
-									<%-- 	<span class="num">(${dep.count})</span> --%>
 									</div>
 									<ul style="display: block;">
 										<%-- 팀 목록 가져오기 --%>
@@ -127,37 +126,36 @@ $(document).ready(function() {
 					${dep.depName}
 				</h5>
 				<div class="org-members-unit-small after"></div>
-				
-				<%-- 팀 목록 가져오기 --%>
-				<c:if test="${(not empty requestScope.teamList || fn:length(requestScope.teamList) > 0)}">
-				<c:forEach var="team" items="${requestScope.teamList}">
-				<c:if test="${dep.depId == team.fk_depId}">
-				<p>${team.teamName}</p>
-				<div class="org-members-unit-zero after">
-					<div class="org-members-unit-small after">
 					
-					
-						<%-- 팀에 속한 임직원 정보 목록 가져오기 --%>
-						<c:if test="${(not empty requestScope.empInfoList || fn:length(requestScope.empInfoList) > 0)}">
-						<c:forEach var="empInfo" items="${requestScope.empInfoList}">
-						<c:if test="${empInfo.fk_teamId == team.teamId}">
-						<dl title="${empInfo.empName} ${empInfo.positionName} 부서1&gt;${empInfo.teamName}" onclick="OrgMember.getOrgMemberInfo(3848)">
-							<dt class="name">${empInfo.empName}</dt>
-							<dd class="picture">
-								<img class="lazy_img" alt="" width="70px" height="70px" src="<%= ctxPath%>/resources/image/profileImg.png" style="display: inline-block;">
-							</dd>
-							<dd class="teams">${empInfo.teamName}</dd>
-							<dd class="position">${empInfo.positionName}</dd>
-						</dl>
-						</c:if>
-						</c:forEach>
-						</c:if>
+					<%-- 팀 목록 가져오기 --%>
+					<c:if test="${(not empty requestScope.teamList || fn:length(requestScope.teamList) > 0)}">
+					<c:forEach var="team" items="${requestScope.teamList}">
+					<c:if test="${dep.depId == team.fk_depId}">
+					<p>${team.teamName}</p>
+					<div class="org-members-unit-zero after">
+						<div class="org-members-unit-small after">
+						
+							<%-- 팀에 속한 임직원 정보 목록 가져오기 --%>
+							<c:if test="${(not empty requestScope.empInfoList || fn:length(requestScope.empInfoList) > 0)}">
+							<c:forEach var="empInfo" items="${requestScope.empInfoList}">
+							<c:if test="${empInfo.fk_teamId == team.teamId}">
+							<dl title="${empInfo.empName} ${empInfo.positionName} 부서1&gt;${empInfo.teamName}" onclick="OrgMember.getOrgMemberInfo(3848)">
+								<dt class="name">${empInfo.empName}</dt>
+								<dd class="picture">
+									<img class="lazy_img" alt="" width="70px" height="70px" src="<%= ctxPath%>/resources/image/profileImg.png" style="display: inline-block;">
+								</dd>
+								<dd class="teams">${empInfo.teamName}</dd>
+								<dd class="position">${empInfo.positionName}</dd>
+							</dl>
+							</c:if>
+							</c:forEach>
+							</c:if>
+						</div>
 					</div>
-				</div>
-				</c:if>
-				</c:forEach>
-				</c:if>
-				
+					</c:if>
+					</c:forEach>
+					</c:if>
+					
 				</c:forEach>
 				</c:if>
 				
@@ -168,30 +166,6 @@ $(document).ready(function() {
 				</div>
 				<div class="org-members-unit after"></div>
 			</section>
-		</div>
-		<div class="org-list after hide" id="type_of_other">
-			<section class="org-tree">
-				<div class="org-tree-wrap" id="other-tree">
-					<ul class="search-result"></ul>
-				</div>
-			</section>
-
-			<section class="org-members" id="other-members"></section>
-		</div>
-		<div class="org-list after" id="type_of_search" style="display: none;">
-			<section class="org-tree">
-				<div class="org-tree-wrap" id="search-tree">
-					<ul class="search-result">
-						<li>
-							<div class="container">
-								<h3>검색 결과</h3>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</section>
-
-			<section class="org-members" id="search-members"></section>
 		</div>
 	</div>
 

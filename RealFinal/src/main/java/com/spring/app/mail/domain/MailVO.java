@@ -72,9 +72,7 @@ public class MailVO {
 	
 	// ----- 파일 첨부를 위한 필드 시작 ----- //
 	/**
-	 * form 태그에서 type="file" 인 파일을 받아서 저장되는 필드이다. 진짜파일 ==> WAS(톰캣) 디스크에 저장됨. 
-	 * 조심할것은 MultipartFile attach 는 오라클 데이터베이스 tbl_mail 테이블의 컬럼이 아니다.
-	 * /TempFinal/src/main/webapp/WEB-INF/views/mail/mailWrite.jsp 파일에서 input type="file" 인 name 의 이름(attach)과 동일해야만 파일첨부가 가능해진다.!!!!
+	 * form 태그에서 type="file" 인 파일을 받아서 저장되는 필드이다. 
 	 */
 	private List<MultipartFile> attachList; 
 	/**
@@ -82,7 +80,7 @@ public class MailVO {
 	 */
 	private String fileName; 
 	/**
-	 * 진짜 파일명(강아지.png). 사용자가 파일을 업로드 하거나 파일을 다운로드 할때 사용되어지는 파일명.  
+	 * 진짜 파일명(예시사진.png). 사용자가 파일을 업로드 할 때 사용되어지는 파일명.  
 	 */
 	private String orgFileName; 
 	/**
@@ -90,7 +88,6 @@ public class MailVO {
 	 */
 	private String fileSize; 
 	// ----- 파일 첨부를 위한 필드 끝 ----- //
-	
 	
 	/**
 	 * 휴지통에서 메일리스트를 볼 때 어떤 메일함에서 버렸는지 확인하기 위함
@@ -323,8 +320,6 @@ public class MailVO {
 		this.fromMailbox = fromMailbox;
 	}
 
-	
-	
 	//////////////////////////////////////////////////
 
 }
