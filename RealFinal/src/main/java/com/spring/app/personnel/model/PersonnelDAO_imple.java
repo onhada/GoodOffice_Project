@@ -23,13 +23,7 @@ public class PersonnelDAO_imple implements PersonnelDAO {
 	@Resource //bean 이 여러개 일때... bean 이 하나일때는 @Autowired를 사용한다
 	private SqlSessionTemplate sqlsession; //현재 'mymvc' 디비
 
-	@Override
-	public String test_hour(String id) {
-		System.out.println("dao id: "+ id);
-		
-		String id_test= sqlsession.selectOne("personnel.test_hour",id);
-		return id_test;
-	}
+	 
 
 	@Override
 	public String sysdate_get() {
@@ -38,12 +32,7 @@ public class PersonnelDAO_imple implements PersonnelDAO {
 		return sysdate_get;
 	}
 
-	@Override
-	public String day_hour(Map<String, String> paraMap) {
-		String day_hour=sqlsession.selectOne("personnel.day_hour",paraMap);
-		return day_hour;
-	}
-
+	 
 	@Override
 	public String year_hour(Map<String, String> paraMapYear) {
 

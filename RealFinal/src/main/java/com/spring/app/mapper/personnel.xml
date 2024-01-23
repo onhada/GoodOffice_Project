@@ -8,74 +8,14 @@
 <mapper namespace="personnel">
 
 
-
-	<select id="test_hour" parameterType="String" resultType="String" >
-		select   to_char(resisterdaytime,'hh24:mi:ss' ) 
-		from tbl_workhistory
-		where workhistoryid = #{id}
-	</select>
-	
+ 
 	
 	<select id="sysdate_get"   resultType="String" >
 		select to_char(sysdate ,'yyyy-mm-dd')
 		from dual
 	</select>
 	
-	<select id="day_hour" parameterType="HashMap"   resultType="String" >
-		  <![CDATA[ 
-select  dayhh-nvl(dd,0)
-from
-(
-    select fk_empid,worktype,resisterdaytime 
-            ,ROUND((TO_DATE(    case when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >  TO_DATE(  '18:00:00' , 'HH24:MI:SS')then '17:00:00'
-                    when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <  TO_DATE(  '12:00:00' , 'HH24:MI:SS')
-                    then to_char(resisterdaytime,'hh24:mi:ss' )   
-                    when TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') >=  TO_DATE(  '12:00:00' , 'HH24:MI:SS') and 
-                        TO_DATE( to_char(resisterdaytime,'hh24:mi:ss' ), 'HH24:MI:SS') <=  TO_DATE(  '13:00:00' , 'HH24:MI:SS') 
-                    then '12:00:00'  
-                else to_char(resisterdaytime- to_dsinterval('000 01:00:00'),'hh24:mi:ss' ) end    , 'HH24:MI:SS') 
-                - TO_DATE( '09:00:00'   , 'HH24:MI:SS')  ) * 24 , 2) AS dayhh
-    from tbl_workhistory
-    where  (worktype =5 and fk_empid =#{empid} )and( to_char(resisterdaytime,'yyyy-mm-dd' ) = #{sysdate}  )
-     
-) a join   
-(
-    select fk_empid,worktype, resisterdaytime  
-            , case 
-             
-            when  (worktype=2  and LEAD(worktype ) OVER(ORDER BY resisterdaytime) in(1,3,4) ) and( to_date(to_char(resisterdaytime,'hh24:mi:ss' ),'hh24:mi:ss')
-            < to_date('12:00:00','hh24:mi:ss') and  
-            to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) > to_date('13:00:00','hh24:mi:ss'))
-            then ROUND((to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) -
-            to_date( to_char(resisterdaytime,'hh24:mi:ss' ), 'hh24:mi:ss') ) * 24 , 2) -1
-            
-            
-            when( worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) in(1,3,4) )
-             then  
-            ROUND((to_date(LEAD(to_char(resisterdaytime,'hh24:mi:ss' ) ) OVER(ORDER BY resisterdaytime),'hh24:mi:ss' ) -
-            to_date( to_char(resisterdaytime,'hh24:mi:ss' ), 'hh24:mi:ss') ) * 24 , 2)  
-            
-            
-             when( worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) not in(1,3,4) )  
-            and to_date(to_char(resisterdaytime,'hh24:mi:ss' ),'hh24:mi:ss')   < to_date('12:00:00','hh24:mi:ss') 
-             then 
-             ROUND((to_date ('18:00:00', 'hh24:mi:ss' ) -
-            to_date(   to_char(resisterdaytime,'hh24:mi:ss' )  ,'hh24:mi:ss') ) * 24 , 2) -1
-            
-            when worktype=2 and LEAD(worktype ) OVER(ORDER BY resisterdaytime) not in(1,3,4) then  
-             ROUND((to_date ('18:00:00', 'hh24:mi:ss' ) -
-            to_date(   to_char(resisterdaytime,'hh24:mi:ss' )  ,'hh24:mi:ss') ) * 24 , 2) 
-            
-      
-            end as dd
-    from tbl_workhistory
-    where   fk_empid =#{empid} and  to_char(resisterdaytime,'yyyy-mm-dd' ) = #{sysdate}
-order by resisterdaytime
-)b
-on to_char(a.resisterdaytime,'yyyy-mm-dd' ) = to_char(b.resisterdaytime,'yyyy-mm-dd' )
-where dd is not null
-]]>
-	</select>
+	 
 	
 	
 	<select id="outingCheck"  parameterType="HashMap"  resultType="String" >
@@ -148,7 +88,7 @@ where
 	<select id="year_hour"  parameterType="HashMap" resultType="int" >
 		<![CDATA[ 
 		
-		select sum(dayhh)
+		select nvl(sum(dayhh),0)
 		from
 		(
 		select fk_empid,worktype,resisterdaytime 
@@ -176,7 +116,7 @@ where
 	   
 	<select id="year_hour_out" parameterType="HashMap"  resultType="int" >
 		<![CDATA[ 
-		select sum(year)
+		select nvl(sum(year),0)
 from
 (
             select  dayhh-nvl(dd,0) as year

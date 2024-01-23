@@ -17,13 +17,13 @@
 	///참조
 	 $("input#referj").keyup(function(){
 	 		
-	 	//alert("Dfsd");
+	 	 
 	 	$("div#referjdiv").show();
 	 	
 	 		if($("input#referj").val().trim() != ''){
 	 			
 	 			
-	 			//alert($("input#inputApprovalLineSetting").val().trim());
+	 			 
 	 			
 	 			   $.ajax({
 	 		          url : "<%= ctxPath%>/personnel/search_name.gw",
@@ -31,26 +31,20 @@
 	 				data : {"empName" : $("input#referj").val().trim()},
 	 				dataType : "json",
 	 				success : function(json) {
-	 					//$("div#ac-serach-result").show();
+	 					 
 						let v_html ="";
 
 						if (json.length > 0) {
 							
-							//let v_html = $("div#referjdiv").html();
+							 
 							 
 							$.each(json,function(index,item) {
 
 								
-								//alert(index);
+							 
 										let id = item.empId;
 										let name = item.empName;
-
-										/* <div data-v-147fd5e4='' index='0' class='result-box clearfix hover'>
-										  <div data-v-147fd5e4='' class='search-keyword clearfix w-100'>
-										  
-										  
-										차은우 (하이웍스오피스)</div> '
-										</div> */
+ 
 										v_html += " <div data-v-147fd5e4='' index='"+ index +"' class='result-box clearfix hover'><div data-v-147fd5e4='' class='search-keyword clearfix w-100' onclick='push_resultRef( "
 												+ item.empId
 												+ ")'>"
@@ -59,20 +53,13 @@
 												+ item.teamName
 												+ ")"
 												+" </div></div>";
-												//+ " </div>";
+												 
 
-										//v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' id='keyclick' class='search-keyword clearfix w-100' onclick='push_result('dd','www')'>"+item.empName+"("+item.teamName+")"+"</div></div>";
-
-										//v_html += `<div data-v-147fd5e4="" index="0" class="result-box clearfix hover"  ><div data-v-147fd5e4="" id="keyclick" class="search-keyword clearfix w-100"  onclick="push_result(${item.empId})" >` +item.empName+ `(`+item.teamName+`)` + `</div></div>`;
-										console.log("~~~ 확인용 : "+ item.empId);
-										console.log("~~~ 확인용 2: "+ item.empName);
-										console.log("~~~ 확인용 3: "+ item.teamName);
+										 
 											});
 							}
 
-													/* v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' class='search-keyword clearfix w-100'>은우(하이웍스오피스)</div></div>";
-													 */
-													// v_html += " </div>";
+													 
 									$("div#referjdiv").html(v_html);
 	 					  
 	 					},
@@ -91,10 +78,7 @@ function push_resultRef(empid){
 	
 	
 	$("div#referjdiv").hide();
-	//$("div#ac-serach-result").hide(); 
-	//alert("ddddpush");
-	//let name=""; $("div#referjdiv").show();
-	//alert(empid);
+	 
 	
 	  $.ajax({
           url : "<%= ctxPath%>/personnel/selct_empid.gw",
@@ -102,16 +86,7 @@ function push_resultRef(empid){
           data : { "empid": empid },		        
           dataType:"json",
           success:function(json){
-        	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
-        	  //alert( json.empname);
-        	    //name+="dddd";
-        	  /*   <div data-v-5dded26b='' class='name'>
-												<span data-v-5dded26b=''>
-												
-												차은우
-												
-												
-												</span></div> */
+        	  
         	    
         	    let v_html = $("div#refresult").html();
         		
@@ -125,14 +100,14 @@ function push_resultRef(empid){
         		
         		$("input#empidcheckRef").val(in_html);
         		
-        		//alert($("input#empidcheck").val());
+        		 
         		//--------------name
         		let name_html=$("input#empnamecheckRef").val();
         		name_html+=","+json.empname;
         		
         		$("input#empnamecheckRef").val(name_html);
         		
-        		//alert($("input#empnamecheck").val());
+        		 
         		
         		$("div#refresult").html(v_html);
      
@@ -215,13 +190,12 @@ function push_resultRef(empid){
 function btncancel(){
 	
 	$("div#layerApplicationLineSetting").hide(); 
-	//alert("dcnlth");
+	 
 }
 
 
 function btncheck(){
-	
-	//alert( $("input#empidcheck").val() );
+ 
 	
 	let empidList=$("input#empidcheck").val();
 	
@@ -229,7 +203,7 @@ function btncheck(){
 	
 	for( let i =0; i<empidList.length; i++){
 		
-		//alert(empidList[i]);
+		 
 	}
 	
 	let empnameList=$("input#empnamecheck").val();
@@ -247,15 +221,12 @@ function btncheck(){
 			
 		let in_div="div#agree"+i;
 		$("div#agree"+i).html(in_html);
-		
-		//in_html+=","+empid;
-		
-		//$("input#empidcheck").val(in_html);
+		 
 		
 		
 		
 		
-		//alert(empnameList[i]);
+		 
 	}
 	
 	$("div#layerApplicationLineSetting").hide();
@@ -264,9 +235,7 @@ function btncheck(){
 function push_result(empid){
 	
 	$("div#ac-serach-result").hide(); 
-	//alert("ddddpush");
-	//let name="";
-	//alert(empid);
+	 
 	
 	  $.ajax({
           url : "<%= ctxPath%>/personnel/selct_empid.gw",
@@ -274,9 +243,7 @@ function push_result(empid){
           data : { "empid": empid },		        
           dataType:"json",
           success:function(json){
-        	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
-        	  //alert( json.empname);
-        	    //name+="dddd";
+        	   ;
         	    
         	    let v_html = $("div#b-content").html();
         		
@@ -290,14 +257,14 @@ function push_result(empid){
         		
         		$("input#empidcheck").val(in_html);
         		
-        		//alert($("input#empidcheck").val());
+        	 
         		//--------------name
         		let name_html=$("input#empnamecheck").val();
         		name_html+=","+json.empname;
         		
         		$("input#empnamecheck").val(name_html);
         		
-        		//alert($("input#empnamecheck").val());
+        		 
         		
         		$("div#b-content").html(v_html);
      
@@ -308,20 +275,14 @@ function push_result(empid){
       });  
 	  
 	  
-	  //alert(name);
-	  
-	/* let v_html = "";
-	
-	v_html +="<div data-v-38b211a8='' class='line-box draggableFlag'><span data-v-38b211a8=''>"+empName +"</span><i data-v-38b211a8=''class='fal fa-times-circle ml-5'></i></div> ";
-	
-	$("div#b-content").html(v_html); */
+	   
 }
 
  
 
 /* 처리 + 버튼 눌렀을 경우 팝업 */
 function applicationLineSetting(){
-	//alert("dd");
+	 
 	
    
 
@@ -332,7 +293,7 @@ function applicationLineSetting(){
 		
 		if($("input#inputApprovalLineSetting").val().trim() != ''){
 			
-			//alert($("input#inputApprovalLineSetting").val().trim());
+			 
 			
 			   $.ajax({
 		          url : "<%= ctxPath%>/personnel/search_name.gw",
@@ -361,17 +322,10 @@ success : function(json) {
 											+ ")"
 											+ "</div></div>";
 
-									//v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' id='keyclick' class='search-keyword clearfix w-100' onclick='push_result('dd','www')'>"+item.empName+"("+item.teamName+")"+"</div></div>";
-
-									//v_html += `<div data-v-147fd5e4="" index="0" class="result-box clearfix hover"  ><div data-v-147fd5e4="" id="keyclick" class="search-keyword clearfix w-100"  onclick="push_result(${item.empId})" >` +item.empName+ `(`+item.teamName+`)` + `</div></div>`;
-									console.log("~~~ 확인용 : "+ item.empId);
-									console.log("~~~ 확인용 2: "+ item.empName);
-									console.log("~~~ 확인용 3: "+ item.teamName);
+									 
 										});
 						}
-
-												/* v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' class='search-keyword clearfix w-100'>은우(하이웍스오피스)</div></div>";
-												 */
+ 
 								$("div#ac-serach-result").html(v_html);
 					},
 							error : function(request, status,error) {
@@ -406,9 +360,7 @@ function subgi(){
 	let empnameListRef=$("input#empnamecheckRef").val();
 	
 	
-	//$("textarea#reason").val();
-	
-	//alert(vtype  );
+	 
 	
 
 	  $.ajax({
@@ -442,56 +394,33 @@ function subgi(){
 function btncancelh(){
 	
 	$("div#layerApplicationLineSettingh").hide(); 
-	//alert("dcnlth");
+ 
 }
 
 
 function btncheckh(){
 	
-	//alert( $("input#empidcheck").val() );
+	 
 	
 	let empidList=$("input#empidcheckh").val();
 	
 	empidList=empidList.split(",");
-	
-	for( let i =0; i<empidList.length; i++){
-		
-		//alert(empidList[i]);
-	}
-	
+	 
 	let empnameList=$("input#empnamecheckh").val();
 	
-	//alert(empnameList.length);
-	/* if(empnameList.length==3){
-		let in_html="<span >"+ empnameList  +"</span>";
-		$("div#agreeh0").html(in_html);
-	} */
-	//let in_html="<span >"+ empnameList  +"</span>";
-	//$("div#agreeh0").html(in_html);
-	//alert(empnameList);
+ 
 	empnameList=empnameList.split(",");
 	
-	//alert('ddd');
+	 
 	for( let i =1; i<empnameList.length; i++){
-		
-		//alert(empnameList[i]);
-		/* if(empnameList[i]=="" ){
-			continue;
-		} */
+	 
 		
 		let in_html="<span >"+ empnameList[i]  +"</span>";
 			
 		let in_div="div#agreeh"+i;
 		$("div#agreeh"+i).html(in_html);
 		
-		//in_html+=","+empid;
-		
-		//$("input#empidcheck").val(in_html);
-		
-		
-		
-		
-		//alert(empnameList[i]);
+	 
 	}
 	
 	$("div#layerApplicationLineSettingh").hide();
@@ -500,9 +429,7 @@ function btncheckh(){
 function push_resulth(empid){
 	
 	$("div#ac-serach-resulth").hide(); 
-	//alert("ddddpush");
-	//let name="";
-	//alert(empid);
+	 
 	
 	  $.ajax({
           url : "<%= ctxPath%>/personnel/selct_empid.gw",
@@ -510,9 +437,7 @@ function push_resulth(empid){
           data : { "empid": empid },		        
           dataType:"json",
           success:function(json){
-        	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
-        	  //alert( json.empname);
-        	    //name+="dddd";
+        	  
         	    
         	    let v_html = $("div#b-contenth").html();
         		
@@ -525,16 +450,14 @@ function push_resulth(empid){
         		in_html+=","+empid;
         		
         		$("input#empidcheckh").val(in_html);
-        		
-        		//alert($("input#empidcheck").val());
+        	 
         		//--------------name
         		let name_html=$("input#empnamecheckh").val();
         		name_html+=","+json.empname;
         		
         		$("input#empnamecheckh").val(name_html);
         		
-        		//alert($("input#empnamecheck").val());
-        		
+        	 
         		$("div#b-contenth").html(v_html);
      
           },
@@ -544,20 +467,14 @@ function push_resulth(empid){
       });  
 	  
 	  
-	  //alert(name);
 	  
-	/* let v_html = "";
-	
-	v_html +="<div data-v-38b211a8='' class='line-box draggableFlag'><span data-v-38b211a8=''>"+empName +"</span><i data-v-38b211a8=''class='fal fa-times-circle ml-5'></i></div> ";
-	
-	$("div#b-content").html(v_html); */
 }
 
  
 
 /*신청 + 버튼 눌렀을 경우 팝업 */
 function applicationLineSettingh(){
-	//alert("dd");
+	 
 	
    
 
@@ -568,7 +485,7 @@ function applicationLineSettingh(){
 		
 		if($("input#inputApprovalLineSettingh").val().trim() != ''){
 			
-			//alert($("input#inputApprovalLineSetting").val().trim());
+			 
 			
 			   $.ajax({
 		          url : "<%= ctxPath%>/personnel/search_name.gw",
@@ -596,18 +513,11 @@ success : function(json) {
 											+ item.teamName
 											+ ")"
 											+ "</div></div>";
-
-									//v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' id='keyclick' class='search-keyword clearfix w-100' onclick='push_result('dd','www')'>"+item.empName+"("+item.teamName+")"+"</div></div>";
-
-									//v_html += `<div data-v-147fd5e4="" index="0" class="result-box clearfix hover"  ><div data-v-147fd5e4="" id="keyclick" class="search-keyword clearfix w-100"  onclick="push_result(${item.empId})" >` +item.empName+ `(`+item.teamName+`)` + `</div></div>`;
-									console.log("~~~ 확인용 : "+ item.empId);
-									console.log("~~~ 확인용 2: "+ item.empName);
-									console.log("~~~ 확인용 3: "+ item.teamName);
+ 
 										});
 						}
 
-												/* v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' class='search-keyword clearfix w-100'>은우(하이웍스오피스)</div></div>";
-												 */
+												 
 								$("div#ac-serach-resulth").html(v_html);
 					},
 							error : function(request, status,error) {

@@ -17,13 +17,12 @@ $(document).ready(function(){
 	///참조
 	 $("input#referj").keyup(function(){
 	 		
-	 	//alert("Dfsd");
+	 	 
 	 	$("div#referjdiv").show();
 	 	
 	 		if($("input#referj").val().trim() != ''){
 	 			
-	 			
-	 			//alert($("input#inputApprovalLineSetting").val().trim());
+	 		 
 	 			
 	 			   $.ajax({
 	 		          url : "<%= ctxPath%>/personnel/search_name.gw",
@@ -31,26 +30,19 @@ $(document).ready(function(){
 	 				data : {"empName" : $("input#referj").val().trim()},
 	 				dataType : "json",
 	 				success : function(json) {
-	 					//$("div#ac-serach-result").show();
+	 				 
 						let v_html ="";
 
 						if (json.length > 0) {
 							
-							//let v_html = $("div#referjdiv").html();
-							 
+						 
 							$.each(json,function(index,item) {
 
 								
-								//alert(index);
+								 
 										let id = item.empId;
 										let name = item.empName;
-
-										/* <div data-v-147fd5e4='' index='0' class='result-box clearfix hover'>
-										  <div data-v-147fd5e4='' class='search-keyword clearfix w-100'>
-										  
-										  
-										차은우 (하이웍스오피스)</div> '
-										</div> */
+ 
 										v_html += " <div data-v-147fd5e4='' index='"+ index +"' class='result-box clearfix hover'><div data-v-147fd5e4='' class='search-keyword clearfix w-100' onclick='push_resultRef( "
 												+ item.empId
 												+ ")'>"
@@ -59,20 +51,11 @@ $(document).ready(function(){
 												+ item.teamName
 												+ ")"
 												+" </div></div>";
-												//+ " </div>";
-
-										//v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' id='keyclick' class='search-keyword clearfix w-100' onclick='push_result('dd','www')'>"+item.empName+"("+item.teamName+")"+"</div></div>";
-
-										//v_html += `<div data-v-147fd5e4="" index="0" class="result-box clearfix hover"  ><div data-v-147fd5e4="" id="keyclick" class="search-keyword clearfix w-100"  onclick="push_result(${item.empId})" >` +item.empName+ `(`+item.teamName+`)` + `</div></div>`;
-										console.log("~~~ 확인용 : "+ item.empId);
-										console.log("~~~ 확인용 2: "+ item.empName);
-										console.log("~~~ 확인용 3: "+ item.teamName);
+												 
 											});
 							}
 
-													/* v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' class='search-keyword clearfix w-100'>은우(하이웍스오피스)</div></div>";
-													 */
-													// v_html += " </div>";
+													 
 									$("div#referjdiv").html(v_html);
 	 					  
 	 					},
@@ -90,7 +73,7 @@ $(document).ready(function(){
 	 
 	 
 	 if( $(e.target).val() != "" ) {
-		// alert($(e.target).val());
+	 
 		 $(e.target).next().hide();
 		 
 		 $.ajax({
@@ -148,7 +131,7 @@ $(document).ready(function(){
 	 				 
 	 			 }
 	 			 
-	 			 //$("ol#statusOL").html(v_html);
+	 			 
 	 			 $("tbody#work_list").html(v_html);
 	          
 	          },
@@ -163,7 +146,7 @@ $(document).ready(function(){
 	
 	  
 	 
- });// 생년월일에 마우스로 달력에 있는 날짜를 선택한 경우 이벤트 처리 한것 
+ }); 
  
  
  
@@ -171,8 +154,7 @@ $(document).ready(function(){
 });// end of $(document).ready(function(){})------------
 
 function push_edit(id){
-	//alert(rr);
-	//alert($("input#"+rr+"hour").val());
+	 
 	let idval=$("input#editvalId").val();
 	
 	idval+=","+id;
@@ -191,25 +173,16 @@ function push_edit(id){
 	
 	$("input#editvalmin").val(editvalminval);
 	/////////////////////
-	//alert($("input#editvalId").val()  );
-	//alert($("input#editvalhour").val()  );
-	//alert($("input#editvalmin").val()  );
+	 
+ 
 	
 	
 	 let v_html = "";
 	 let hour=$("input#"+id+"hour").val();
 	 let minute=$("input#"+id+"minute").val();
-	 //v_html+=" <div data-v-de07ea7a='' class='el-select hour-select'><div class='el-input el-input--suffix'>";
 	 										 
 	 					 v_html+="<span data-v-de07ea7a='' class='ml-5 mr-5'>"+hour+"시 "+ minute +"분</span>";
-	 					/* v_html+="placeholder='선택' class='el-input__inner' value=''></div></div><span data-v-de07ea7a='' class='ml-5 mr-5'>시</span>";
-	 								
-	 								
-	 					v_html+=" <div data-v-de07ea7a=''class='el-select hour-select'><div class='el-input el-input--suffix'>";
-	 										 
-	 					v_html+=" <input type='text'  autocomplete='off' id='"+item.workhistoryid+"minute'";
-	 					v_html+="	 placeholder='선택' class='el-input__inner' value=''></div></div><span data-v-de07ea7a='' class='ml-5 mr-5'>분</span> ";
-	 					 */			
+	 					 		
 
 	$("td#"+id).html(v_html);
 }
@@ -217,7 +190,7 @@ function push_edit(id){
 
 function push_delete(id){
 	
-	//alert(id);
+	 
 	
 	
 	let deleteidval=$("input#deleteid").val();
@@ -225,33 +198,20 @@ function push_delete(id){
 	deleteidval += ","+id;
 	
 	$("input#deleteid").val(deleteidval);
-	//alert( $("input#deleteid").val() ) ;
-	
-	//alert($("input#"+rr+"minute").val());
-	 let v_html = "";
 	 
-	 //v_html+=" <div data-v-de07ea7a='' class='el-select hour-select'><div class='el-input el-input--suffix'>";
-	 										 
-	 					 v_html+="<span data-v-de07ea7a='' class='ml-5 mr-5'>삭제</span>";
-	 					/* v_html+="placeholder='선택' class='el-input__inner' value=''></div></div><span data-v-de07ea7a='' class='ml-5 mr-5'>시</span>";
-	 								
-	 								
-	 					v_html+=" <div data-v-de07ea7a=''class='el-select hour-select'><div class='el-input el-input--suffix'>";
-	 										 
-	 					v_html+=" <input type='text'  autocomplete='off' id='"+item.workhistoryid+"minute'";
-	 					v_html+="	 placeholder='선택' class='el-input__inner' value=''></div></div><span data-v-de07ea7a='' class='ml-5 mr-5'>분</span> ";
-	 					 */			
-
+	 let v_html = "";
+	  v_html+="<span data-v-de07ea7a='' class='ml-5 mr-5'>삭제</span>";
+	 					 
 	$("td#"+id).html(v_html);
 }
 
 function work_add(){
 	
-	//alert("dd");
+	 
 	
 	let seq= $("input#addseq").val();
 	
-	alert(seq);
+	 
 	
 	////
 	 let v_html=$("tbody#work_list").html();
@@ -284,7 +244,7 @@ function work_add(){
 					
 	v_html+="</button> ";
 					
-	//v_html+="<span data-v-f8d3258e='' class='label' onclick='push_delete();'>삭제</span>";
+	 
 					
 	v_html+="			 </p></td></tr>";
 	 $("tbody#work_list").html(v_html);
@@ -314,25 +274,14 @@ function push_add_save(seq){
 	
 	$("input#addmin").val(addminval);
 	/////////////////////
-	//alert($("input#addtype").val()  );
-	//alert($("input#addhour").val()  );
-	//alert($("input#addmin").val()  );
-	
+ 
 	
 	 let v_html = "";
 	 let hour=$("input#"+seq+"hour").val();
 	 let minute=$("input#"+seq+"minute").val();
-	 //v_html+=" <div data-v-de07ea7a='' class='el-select hour-select'><div class='el-input el-input--suffix'>";
-	 										 
+	  										 
 	 					 v_html+="<span data-v-de07ea7a='' class='ml-5 mr-5'>"+hour+"시 "+ minute +"분</span>";
-	 					/* v_html+="placeholder='선택' class='el-input__inner' value=''></div></div><span data-v-de07ea7a='' class='ml-5 mr-5'>시</span>";
-	 								
-	 								
-	 					v_html+=" <div data-v-de07ea7a=''class='el-select hour-select'><div class='el-input el-input--suffix'>";
-	 										 
-	 					v_html+=" <input type='text'  autocomplete='off' id='"+item.workhistoryid+"minute'";
-	 					v_html+="	 placeholder='선택' class='el-input__inner' value=''></div></div><span data-v-de07ea7a='' class='ml-5 mr-5'>분</span> ";
-	 					 */			
+	 			 		
 
 	$("td#"+seq).html(v_html);
 	 					 //////
@@ -361,7 +310,7 @@ function subgi(){
 	let idval=$("input#editvalId").val();
 	let editvalhourval=$("input#editvalhour").val();
 	let editvalminval=$("input#editvalmin").val();
-	//let vtype=   $('input[name=vactype]:checked').val();
+	 
 	
 	let datepi = $("input#datepicker").val();
 	
@@ -380,10 +329,7 @@ function subgi(){
 	let empnameListRef=$("input#empnamecheckRef").val();
 	
 	
-	//$("textarea#reason").val();
-	
-	//alert(vtype  );
-	
+	 
 
 	  $.ajax({
         url : "<%= ctxPath%>/personnel/workmodi_insert.gw",
@@ -418,28 +364,14 @@ function push_resultRef(empid){
 	
 	
 	$("div#referjdiv").hide();
-	//$("div#ac-serach-result").hide(); 
-	//alert("ddddpush");
-	//let name=""; $("div#referjdiv").show();
-	//alert(empid);
-	
+	 
 	  $.ajax({
           url : "<%= ctxPath%>/personnel/selct_empid.gw",
           type : "post",
           data : { "empid": empid },		        
           dataType:"json",
           success:function(json){
-        	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
-        	  //alert( json.empname);
-        	    //name+="dddd";
-        	  /*   <div data-v-5dded26b='' class='name'>
-												<span data-v-5dded26b=''>
-												
-												차은우
-												
-												
-												</span></div> */
-        	    
+        	  
         	    let v_html = $("div#refresult").html();
         		
         		v_html +="<div data-v-5dded26b='' class='name'><span data-v-5dded26b=''>"+json.empname +"</span></div> ";
@@ -452,14 +384,14 @@ function push_resultRef(empid){
         		
         		$("input#empidcheckRef").val(in_html);
         		
-        		//alert($("input#empidcheck").val());
+        		 
         		//--------------name
         		let name_html=$("input#empnamecheckRef").val();
         		name_html+=","+json.empname;
         		
         		$("input#empnamecheckRef").val(name_html);
         		
-        		//alert($("input#empnamecheck").val());
+        	 
         		
         		$("div#refresult").html(v_html);
      
@@ -476,13 +408,13 @@ function push_resultRef(empid){
 function btncancel(){
 	
 	$("div#layerApplicationLineSetting").hide(); 
-	//alert("dcnlth");
+	 
 }
 
 
 function btncheck(){
 	
-	//alert( $("input#empidcheck").val() );
+	 
 	
 	let empidList=$("input#empidcheck").val();
 	
@@ -490,7 +422,7 @@ function btncheck(){
 	
 	for( let i =0; i<empidList.length; i++){
 		
-		//alert(empidList[i]);
+		 
 	}
 	
 	let empnameList=$("input#empnamecheck").val();
@@ -509,14 +441,8 @@ function btncheck(){
 		let in_div="div#agree"+i;
 		$("div#agree"+i).html(in_html);
 		
-		//in_html+=","+empid;
-		
-		//$("input#empidcheck").val(in_html);
-		
-		
-		
-		
-		//alert(empnameList[i]);
+		 
+	 
 	}
 	
 	$("div#layerApplicationLineSetting").hide();
@@ -525,19 +451,14 @@ function btncheck(){
 function push_result(empid){
 	
 	$("div#ac-serach-result").hide(); 
-	//alert("ddddpush");
-	//let name="";
-	//alert(empid);
-	
+	 
 	  $.ajax({
           url : "<%= ctxPath%>/personnel/selct_empid.gw",
           type : "post",
           data : { "empid": empid },		        
           dataType:"json",
           success:function(json){
-        	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
-        	  //alert( json.empname);
-        	    //name+="dddd";
+        	 
         	    
         	    let v_html = $("div#b-content").html();
         		
@@ -551,14 +472,14 @@ function push_result(empid){
         		
         		$("input#empidcheck").val(in_html);
         		
-        		//alert($("input#empidcheck").val());
+        		 
         		//--------------name
         		let name_html=$("input#empnamecheck").val();
         		name_html+=","+json.empname;
         		
         		$("input#empnamecheck").val(name_html);
         		
-        		//alert($("input#empnamecheck").val());
+        		 
         		
         		$("div#b-content").html(v_html);
      
@@ -569,22 +490,14 @@ function push_result(empid){
       });  
 	  
 	  
-	  //alert(name);
-	  
-	/* let v_html = "";
-	
-	v_html +="<div data-v-38b211a8='' class='line-box draggableFlag'><span data-v-38b211a8=''>"+empName +"</span><i data-v-38b211a8=''class='fal fa-times-circle ml-5'></i></div> ";
-	
-	$("div#b-content").html(v_html); */
+	 
 }
 
  
 
 /* 처리 + 버튼 눌렀을 경우 팝업 */
 function applicationLineSetting(){
-	//alert("dd");
-	
-   
+	 
 
   $("div#layerApplicationLineSetting").show(); 
 
@@ -593,8 +506,7 @@ function applicationLineSetting(){
 		
 		if($("input#inputApprovalLineSetting").val().trim() != ''){
 			
-			//alert($("input#inputApprovalLineSetting").val().trim());
-			
+			 
 			   $.ajax({
 		          url : "<%= ctxPath%>/personnel/search_name.gw",
 				type : "post",
@@ -622,17 +534,11 @@ success : function(json) {
 											+ ")"
 											+ "</div></div>";
 
-									//v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' id='keyclick' class='search-keyword clearfix w-100' onclick='push_result('dd','www')'>"+item.empName+"("+item.teamName+")"+"</div></div>";
-
-									//v_html += `<div data-v-147fd5e4="" index="0" class="result-box clearfix hover"  ><div data-v-147fd5e4="" id="keyclick" class="search-keyword clearfix w-100"  onclick="push_result(${item.empId})" >` +item.empName+ `(`+item.teamName+`)` + `</div></div>`;
-									console.log("~~~ 확인용 : "+ item.empId);
-									console.log("~~~ 확인용 2: "+ item.empName);
-									console.log("~~~ 확인용 3: "+ item.teamName);
+									 
 										});
 						}
 
-												/* v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' class='search-keyword clearfix w-100'>은우(하이웍스오피스)</div></div>";
-												 */
+												 
 								$("div#ac-serach-result").html(v_html);
 					},
 							error : function(request, status,error) {
@@ -650,56 +556,35 @@ success : function(json) {
 function btncancelh(){
 	
 	$("div#layerApplicationLineSettingh").hide(); 
-	//alert("dcnlth");
+	 
 }
 
 
 function btncheckh(){
 	
-	//alert( $("input#empidcheck").val() );
+	 
 	
 	let empidList=$("input#empidcheckh").val();
 	
 	empidList=empidList.split(",");
 	
-	for( let i =0; i<empidList.length; i++){
-		
-		//alert(empidList[i]);
-	}
+	 
 	
 	let empnameList=$("input#empnamecheckh").val();
 	
-	//alert(empnameList.length);
-	/* if(empnameList.length==3){
-		let in_html="<span >"+ empnameList  +"</span>";
-		$("div#agreeh0").html(in_html);
-	} */
-	//let in_html="<span >"+ empnameList  +"</span>";
-	//$("div#agreeh0").html(in_html);
-	//alert(empnameList);
+	 
 	empnameList=empnameList.split(",");
 	
-	//alert('ddd');
+ 
 	for( let i =1; i<empnameList.length; i++){
-		
-		//alert(empnameList[i]);
-		/* if(empnameList[i]=="" ){
-			continue;
-		} */
+		 
 		
 		let in_html="<span >"+ empnameList[i]  +"</span>";
 			
 		let in_div="div#agreeh"+i;
 		$("div#agreeh"+i).html(in_html);
 		
-		//in_html+=","+empid;
-		
-		//$("input#empidcheck").val(in_html);
-		
-		
-		
-		
-		//alert(empnameList[i]);
+		 
 	}
 	
 	$("div#layerApplicationLineSettingh").hide();
@@ -708,9 +593,7 @@ function btncheckh(){
 function push_resulth(empid){
 	
 	$("div#ac-serach-resulth").hide(); 
-	//alert("ddddpush");
-	//let name="";
-	//alert(empid);
+	 
 	
 	  $.ajax({
           url : "<%= ctxPath%>/personnel/selct_empid.gw",
@@ -718,10 +601,7 @@ function push_resulth(empid){
           data : { "empid": empid },		        
           dataType:"json",
           success:function(json){
-        	  // console.log("~~~ 확인용 : " + JSON.stringify(json));
-        	  //alert( json.empname);
-        	    //name+="dddd";
-        	    
+        	   
         	    let v_html = $("div#b-contenth").html();
         		
         		v_html +="<div data-v-38b211a8='' class='line-box draggableFlag'><span data-v-38b211a8=''>"+json.empname +"</span><i data-v-38b211a8=''class='fal fa-times-circle ml-5'></i></div> ";
@@ -734,14 +614,14 @@ function push_resulth(empid){
         		
         		$("input#empidcheckh").val(in_html);
         		
-        		//alert($("input#empidcheck").val());
+        		 
         		//--------------name
         		let name_html=$("input#empnamecheckh").val();
         		name_html+=","+json.empname;
         		
         		$("input#empnamecheckh").val(name_html);
         		
-        		//alert($("input#empnamecheck").val());
+        		 
         		
         		$("div#b-contenth").html(v_html);
      
@@ -751,22 +631,14 @@ function push_resulth(empid){
           }
       });  
 	  
-	  
-	  //alert(name);
-	  
-	/* let v_html = "";
-	
-	v_html +="<div data-v-38b211a8='' class='line-box draggableFlag'><span data-v-38b211a8=''>"+empName +"</span><i data-v-38b211a8=''class='fal fa-times-circle ml-5'></i></div> ";
-	
-	$("div#b-content").html(v_html); */
+	 
 }
 
  
 
 /*신청 + 버튼 눌렀을 경우 팝업 */
 function applicationLineSettingh(){
-	//alert("dd");
-	
+	 
    
 
   $("div#layerApplicationLineSettingh").show(); 
@@ -776,8 +648,7 @@ function applicationLineSettingh(){
 		
 		if($("input#inputApprovalLineSettingh").val().trim() != ''){
 			
-			//alert($("input#inputApprovalLineSetting").val().trim());
-			
+		 
 			   $.ajax({
 		          url : "<%= ctxPath%>/personnel/search_name.gw",
 				type : "post",
@@ -805,17 +676,11 @@ success : function(json) {
 											+ ")"
 											+ "</div></div>";
 
-									//v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' id='keyclick' class='search-keyword clearfix w-100' onclick='push_result('dd','www')'>"+item.empName+"("+item.teamName+")"+"</div></div>";
-
-									//v_html += `<div data-v-147fd5e4="" index="0" class="result-box clearfix hover"  ><div data-v-147fd5e4="" id="keyclick" class="search-keyword clearfix w-100"  onclick="push_result(${item.empId})" >` +item.empName+ `(`+item.teamName+`)` + `</div></div>`;
-									console.log("~~~ 확인용 : "+ item.empId);
-									console.log("~~~ 확인용 2: "+ item.empName);
-									console.log("~~~ 확인용 3: "+ item.teamName);
+									 
 										});
 						}
 
-												/* v_html += "<div data-v-147fd5e4='' index='0' class='result-box clearfix hover'  ><div data-v-147fd5e4='' class='search-keyword clearfix w-100'>은우(하이웍스오피스)</div></div>";
-												 */
+												 
 								$("div#ac-serach-resulth").html(v_html);
 					},
 							error : function(request, status,error) {

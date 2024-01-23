@@ -15,7 +15,7 @@ import com.spring.app.personnel.domain.WorkhistoryVO;
 
 public interface PersonnelService {
 
-	String test_hour(String id);
+	 
 
 	/** 
 	* @Method Name  : sysdate_get 
@@ -29,7 +29,7 @@ public interface PersonnelService {
 
 	 
 
-	String day_hour(Map<String, String> paraMap);
+	 
 
 	/** 
 	* @Method Name  : year_hour 
@@ -69,7 +69,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 1 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 사원이름검색
 	* @param empName
 	* @return 
 	*/
@@ -80,7 +80,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 2 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 사원아이디검색
 	* @param empid
 	* @return 
 	*/
@@ -91,7 +91,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 4 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 휴가잔여일
 	* @param empid
 	* @return 
 	*/
@@ -102,7 +102,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 5 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 휴가신청 전자
 	* @param empid
 	* @return 
 	*/
@@ -113,7 +113,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 5 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 휴가신청
 	* @param paraMap
 	* @return 
 	*/
@@ -124,7 +124,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 5 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 전자 기안순서
 	* @param paraMaps
 	* @return 
 	*/
@@ -135,7 +135,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 지각
 	* @param empid
 	* @return 
 	*/
@@ -146,7 +146,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 조기퇴근
 	* @param empid
 	* @return 
 	*/
@@ -157,7 +157,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 :  퇴근미체크
 	* @param empid
 	* @return 
 	*/
@@ -168,7 +168,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 :  근무일
 	* @param empid
 	* @return 
 	*/
@@ -179,7 +179,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 결근 
 	* @param empid
 	* @return 
 	*/
@@ -190,7 +190,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 수정전자
 	* @param empid
 	* @return 
 	*/
@@ -201,7 +201,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 근무수정신청 추가
 	* @param paraMaps
 	* @return 
 	*/
@@ -212,7 +212,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 근무수정신청 삭제
 	* @param paraMaps
 	* @return 
 	*/
@@ -223,7 +223,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 9 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 근무수정신청 수정
 	* @param paraMaps
 	* @return 
 	*/
@@ -234,7 +234,7 @@ public interface PersonnelService {
 	* @작성일   : 2024. 1. 10 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 평균시간
 	* @param paraMapYear
 	* @return 
 	*/

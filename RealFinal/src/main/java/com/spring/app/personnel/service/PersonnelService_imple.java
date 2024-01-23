@@ -41,16 +41,10 @@ public class PersonnelService_imple implements PersonnelService {
 	private PersonnelDAO dao;
 	
 	
-	@Override
-	public String test_hour(String id) {
-		 String id_test= dao.test_hour(id);
-		return id_test;
-	}
+	 
 
 
-	/**
-	 * 현재날짜 가져오기
-	 */
+	 
 	@Override
 	public String sysdate_get() {
 
@@ -60,11 +54,7 @@ public class PersonnelService_imple implements PersonnelService {
 	}
 
 
-	@Override
-	public String day_hour(Map<String, String> paraMap) {
-		String day_hour= dao.day_hour(paraMap);
-		return day_hour;
-	}
+	 
 
 
 	@Override
@@ -76,9 +66,7 @@ public class PersonnelService_imple implements PersonnelService {
 	}
 
 
-	/**
-	 *현재 근무현황 출력
-	 */
+	 
 	@Override
 	public List<WorkhistoryVO> workhistory_print(Map<String, String> paraMap) {
 		

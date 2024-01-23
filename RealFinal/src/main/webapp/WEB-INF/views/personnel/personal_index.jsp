@@ -10,30 +10,18 @@
   $(document).ready(function(){
 	  
 	  loopshowNowTime();
-	  //출근 외근 버튼 누르면 ajax 실행해서 근무현황에 추가 ..근무내역에 insert까지
-	  //새로고침 할 경우 근무현황 그대로 있어야 함
-	  //똑같은 ajax를 쓰되 worktype은 const로 매번 달라짐
-	  //출력하는 거는 empid와 오늘 날짜 로 조회해서 만든다.
+	  
 	  work_status_print();
 	  
-	 // alert("dddddddks");
+	 
 	  
-	  $("button#vacationBtn").click(function(){
-		  
-		  
-		  //alert("dks"); 
-		  
-	  }); 
-	  
-	  
-	
 	  
 	 
 	
 	$('button#work_status').on('click', (e) => {  //출근, 퇴큰 버튼
-		  console.log(e.target.value);
+		   
 		  const type=e.target.parentElement.value;
-		  //alert(type);
+		 
 		  if(type==6){
 			  alert("출근이 등록되었습니다.");
 		  }
@@ -51,22 +39,20 @@
 	$('button#work_status_four').on('click', (e) => {  
 		
 		
-		  console.log(e.target.value);
+		 
 		  const type=e.target.value;
 		  
 		  if(typeof type=="undefined"){
 			  
 			  
 			  const typeRe=e.target.parentElement.value;
-			 // alert(typeRe);
-			  
+			 
 			  workstatus_insert(typeRe);
 			   
 		  }
 		  else{
 			  
-			  //alert(type);
-			  
+		 
 			  workstatus_insert(type);
 			   
 			  
@@ -86,27 +72,7 @@
 		  const type=e.target.value;
 		  
 			$(location).attr("href", `<%=ctxPath%>/personnel/work_modify.gw`)
-			 
-		  /* 
-		  if(typeof type=="undefined"){
-			  
-			  
-			  const typeRe=e.target.parentElement.value;
-			  alert(typeRe);
-			  
-			  //workstatus_insert(typeRe);
-			   
-		  }
-		  else{
-			  
-			  alert(type);
-			  
-			  //workstatus_insert(type);
-			   
-			  
-		  }
-		  
-		   */
+		 
 		 
 		  
 		
@@ -115,53 +81,23 @@
 	$('button#work_vaction').on('click', (e) => {  //휴가신청 버튼 클릭시
 		
 		
-		  console.log(e.target.value);
+	 
 		  const type=e.target.value;
 		  
 			$(location).attr("href", `<%=ctxPath%>/personnel/personal_vaction_application.gw`)
-			 
-		  /* 
-		  if(typeof type=="undefined"){
-			  
-			  
-			  const typeRe=e.target.parentElement.value;
-			  alert(typeRe);
-			  
-			  //workstatus_insert(typeRe);
-			   
-		  }
-		  else{
-			  
-			  alert(type);
-			  
-			  //workstatus_insert(type);
-			   
-			  
-		  }
-		  
-		   */
 		 
-		  
 		
 	 });
-	  
-	 //alert( $("span#tardy").text() );
+	 
 	 const idd=3;
-	 //$("span#tardy").text(idd);
 	 
 	 
 	 
 	 
-	 //alert("dks");
-	 /*  $("span#tardy").val();
-	  const frm = document.attendanceFrm;
-	   frm.tardy.value = 1; */
 	  
 	 const frm=document.attendanceFrm;
 	     
-	    <%--  frm.action=" <%= ctxPath %>/personal_index.gw"; --%>
-	    //frm.method="post";
-	   // frm.submit();
+	    
 	    
   });// end of $(document).ready(function(){})------------
   
@@ -170,17 +106,15 @@
   	function workstatus_insert(type){
 	
 	  
-	  //alert("ee");
+	   
   		 $.ajax({
 	          url : "<%= ctxPath%>/personnel/workstatus_insert.gw",
 	          type : "post",
 	          data : { "worktype":type  },
-	         // processData:false,  // 파일 전송시 설정 
-	          //contentType:false,  // 파일 전송시 설정 
+	          
 	          dataType:"json",
 	          success:function(json){
-	             // console.log("~~~ 확인용 : " + JSON.stringify(json));
-	              // ~~~ 확인용 : {"result":1}
+	            
 	        	  work_status_print();
 	          },
 	          error: function(request, status, error){
@@ -189,19 +123,7 @@
 	      });
   }
   
-	   /* 
-	   function start_img(){
-		   
-		   work_status_print();
-		   alert("dksㄴㄴㄴㄴs");
-		  
-	   }
 	   
-	function end_img(){
-		   
-		   alert("dend");
-		  
-	   } */
 	
 	function work_status_print(){
 		
