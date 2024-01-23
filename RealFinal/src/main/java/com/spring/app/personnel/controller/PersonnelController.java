@@ -78,7 +78,7 @@ public class PersonnelController {
 	* @작성일   : 2024. 1. 7 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 근무수정
+	* @Method 설명 : 근무수정하기
 	* @param request
 	* @param response
 	* @return 
@@ -91,6 +91,7 @@ public class PersonnelController {
 
 		String empid = String.valueOf(loginUser.getEmpId()); // 로그인한 사원 아이디
 
+		 
 		return "work_modify_number_next_MyVacationAndWork.personnel";
 
 	}
