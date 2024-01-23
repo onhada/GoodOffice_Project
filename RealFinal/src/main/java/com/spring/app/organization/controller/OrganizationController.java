@@ -52,7 +52,7 @@ public class OrganizationController {
 	* @return 
 	*/
 	@GetMapping("organizationManage.gw")
-	public ModelAndView organizationManage(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public ModelAndView organizationManageAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
 		List<Map<String, String>> depList = null;
 		depList = service.getDepList(); // 부서 목록 가져오기
@@ -224,7 +224,7 @@ public class OrganizationController {
 	* @return 
 	*/
 	@GetMapping("positionManage.gw")
-	public ModelAndView empManage(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public ModelAndView empManageAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 
 		// 직위 조회하기
 		List<EmployeeVO> positionList = null;
@@ -257,7 +257,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("addJob.gw")
-	public String addJob(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String addJobAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String jobName = request.getParameter("jobName");
 
@@ -292,7 +292,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("delJob.gw")
-	public String delJob(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String delJobAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String jobId = request.getParameter("jobId");
 
@@ -330,7 +330,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("addPosition.gw")
-	public String addPosition(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String addPositionAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String positionId = request.getParameter("positionId");
 		String positionName = request.getParameter("positionName");
@@ -374,7 +374,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("delPosition.gw")
-	public String delPosition(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String delPositionAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String positionId = request.getParameter("positionId");
 
@@ -429,7 +429,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("addNewDep.gw")
-	public String addNewDep(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String addNewDepAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String depName = request.getParameter("depName");
 
@@ -464,7 +464,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("delDep.gw")
-	public String delDep(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String delDepAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String depId = request.getParameter("depId");
 
@@ -499,7 +499,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("addNewTeam.gw")
-	public String addNewTeam(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String addNewTeamAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String depId = request.getParameter("depId");
 		String teamName = request.getParameter("teamName");
@@ -537,7 +537,7 @@ public class OrganizationController {
 	*/
 	@ResponseBody
 	@GetMapping("delTeam.gw")
-	public String delTeam(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	public String delTeamAdmin(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 	
 		String teamId = request.getParameter("teamId");
 

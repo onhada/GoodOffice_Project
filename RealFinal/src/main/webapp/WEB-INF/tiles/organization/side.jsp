@@ -56,6 +56,8 @@ $(document).ready(function(){
 
 
 					<hr data-v-3c987196="" class="mt-18 mb-18">
+					
+					<c:if test="${not empty sessionScope.loginUser && (sessionScope.loginUser.adminType eq 'Personnel' || sessionScope.loginUser.adminType eq 'All')}">
 					<div data-v-3c987196="" role="tablist" aria-multiselectable="true" class="el-collapse">
 						<div data-v-318760de="" data-v-3c987196="" class="el-collapse-item mt-8 is-active">
 							<div role="tab" aria-expanded="true" aria-controls="el-collapse-content-8720" aria-describedby="el-collapse-content-8720">
@@ -81,7 +83,8 @@ $(document).ready(function(){
 							</div>
 						</div>
 					</div>
-
+					</c:if>
+					
 				</nav>
 			</div>
 		</div>
