@@ -76,7 +76,7 @@ public class PersonnelController {
 	* @작성일   : 2024. 1. 7 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 근무수정
 	* @param request
 	* @param response
 	* @return 
@@ -98,7 +98,7 @@ public class PersonnelController {
 	* @작성일   : 2024. 1. 7 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 근무내역 조회
 	* @param request
 	* @param response
 	* @param date
@@ -180,8 +180,8 @@ public class PersonnelController {
 	 * 
 	 * @Method Name  : personal_index 
 	 * @작성일   : 2023. 12. 10 
-	 * @작성자   : db228  @변경이력  : 
-	 * @Method 설명 : 
+	 * @작성자   : db228  @변경이력  :
+	 * @Method 설명 :  인사 인덱스
 	 * @param request
 	 * @param response @return 
 	 */
@@ -234,11 +234,20 @@ public class PersonnelController {
 		String workday_cnt = service.workday_cnt(empid); //근무일수
 		request.setAttribute("workday_cnt", workday_cnt);
 		///
-		int avg_min= Integer.parseInt(avg_hour) /Integer.parseInt(workday_cnt);
-		int  a=  avg_min   /60;
-		 
-		int b=  avg_min  %60;
-		String avg_str= Integer.toString(a)+"시간 "+Integer.toString(b)+"분";
+		String avg_str="";
+		if(Integer.parseInt(avg_hour)==0 ||Integer.parseInt(workday_cnt)==0) {
+			
+			avg_str="0분";
+		}
+		else {
+			int avg_min= Integer.parseInt(avg_hour) /Integer.parseInt(workday_cnt);
+			int  a=  avg_min   /60;
+			 
+			int b=  avg_min  %60;
+			avg_str= Integer.toString(a)+"시간 "+Integer.toString(b)+"분";
+		}
+		
+		
 		request.setAttribute("avg_str", avg_str);
 		////
 		String vaction_cnt = service.vaction_cnt(empid); //잔여 휴가
@@ -259,7 +268,7 @@ public class PersonnelController {
 	 * @Method Name  : workstatus_insert
 	 * @작성일   : 2023. 12. 27 
 	 * @작성자   : db228  @변경이력  : 
-	 * @Method 설명 : 
+	 * @Method 설명 : 근무 내역 추가
 	 * @param request
 	 * @param response
 	 * @param a @return 
@@ -298,7 +307,7 @@ public class PersonnelController {
 	 * @Method Name  : workstatus_print 
 	 * @작성일   : 2023. 12. 27 
 	 * @작성자   : db228  @변경이력  : 
-	 * @Method 설명 : 
+	 * @Method 설명 : 근무내역 출력
 	 * @param request
 	 * @param response
 	 * @param worktype @return 
@@ -382,7 +391,7 @@ public class PersonnelController {
 	* @작성일   : 2024. 1. 7 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 휴가일수
 	* @param request
 	* @param response
 	* @return 
@@ -409,7 +418,7 @@ public class PersonnelController {
 	* @작성일   : 2024. 1. 7 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 휴가 기안 등록
 	* @param request
 	* @param response
 	* @param datepi
@@ -531,6 +540,32 @@ public class PersonnelController {
 	}
 
 	
+	/** 
+	* @Method Name  : personal_workmodi_insert 
+	* @작성일   : 2024. 1. 7 
+	* @작성자   : db228 
+	* @변경이력  : 
+	* @Method 설명 : 근무수정 기안 등록
+	* @param request
+	* @param response
+	* @param mav
+	* @param datepi
+	* @param empidList
+	* @param empnameList
+	* @param reason
+	* @param empidListh
+	* @param empnameListh
+	* @param empidListRef
+	* @param empnameListRef
+	* @param deleteidval
+	* @param addtypeval
+	* @param addhourval
+	* @param addminval
+	* @param idval
+	* @param editvalhourval
+	* @param editvalminval
+	* @return 
+	*/
 	@ResponseBody
 	@PostMapping("/personnel/workmodi_insert.gw")
 	public String personal_workmodi_insert(HttpServletRequest request, HttpServletResponse response, ModelAndView mav,String datepi,
@@ -538,27 +573,7 @@ public class PersonnelController {
 			String empidListRef, String empnameListRef, String deleteidval, String addtypeval,
 			String addhourval, String addminval, String idval, String editvalhourval, String editvalminval) {
  
-
-		System.out.println("dlis datepi: "+datepi);
-		System.out.println("dlis : "+empidList);
-		System.out.println("dlis : "+empnameList);
-		
-		System.out.println("dlis : "+reason);
-		System.out.println("dlis : "+empidListh);
-		System.out.println("dlis : "+empnameListh);
-		System.out.println("dlis : "+empidListRef);
-		System.out.println("dlis : "+empnameListRef);
-		//System.out.println("dlis : "+empnameListh);
-		//System.out.println("dlis : "+empnameList);
-		
-		System.out.println("dlis deleteidval: "+deleteidval);
-		System.out.println("dlis addtypeval: "+addtypeval);
-		System.out.println("dlis addhourval: "+addhourval);
-		System.out.println("dlis addminval: "+addminval);
-		System.out.println("dlis idval: "+idval);
-		System.out.println("dlis editvalhourval: "+editvalhourval);
-		System.out.println("dlis String editvalminval: "+editvalminval);
-		
+ 
 		HttpSession session = request.getSession();
 		EmployeeVO loginUser = (EmployeeVO) session.getAttribute("loginUser");
 
@@ -572,14 +587,14 @@ public class PersonnelController {
 		paraMap.put("empid", empid);
 		paraMap.put("datepi", datepi);
 		paraMap.put("reason", reason);
-		//paraMap.put("vtype", vtype);
+		 
 
-		//int va_dayoff_insert = service.va_dayoff_insert(paraMap);
+	 
 		// 삭제
 		if(deleteidval != "") {
-			//System.out.println("ddds");
+			 
 			String[] deleteidvals = deleteidval.split(",");
-			//String[] empnameLists = empnameList.split(",");
+			 
 
 			for (int i = 0; i < deleteidvals.length; i++) {
 
@@ -587,25 +602,23 @@ public class PersonnelController {
 				
 				if (!deleteidvals[i].equals("")) {
 					 
-					System.out.println("del: "+deleteidvals[i]);
+					 
 					Map<String, String> paraMaps = new HashMap<>();
 					paraMaps.put("deleteid", deleteidvals[i]);
-					//paraMaps.put("ptype", "4");
-					//paraMaps.put("status", "1");
-					//paraMaps.put("seq", Integer.toString(sts));
+					 
 					int n = service.work_modify_del_insert(paraMaps);
-					//sts++;
+					 
 				}
 
 			}
 		}
 		//추가
 		if(addhourval != "") {
-			//System.out.println("ddds");
+			 
 			String[] addhourvals = addhourval.split(",");
 			String[] addminvals = addminval.split(",");
 			String[] addtypevals = addtypeval.split(",");
-			//String[] empnameLists = empnameList.split(",");
+			 
 
 			for (int i = 0; i < addhourvals.length; i++) {
 
@@ -615,7 +628,7 @@ public class PersonnelController {
 					 
 					String time= datepi+" "+addhourvals[i]+":"+addminvals[i];
 					
-					//System.out.println("time : "+time);
+					 
 					////
 					String typemod="";
 					switch (addtypevals[i]) {
@@ -642,16 +655,15 @@ public class PersonnelController {
 					default:
 						break;
 					}
-					//System.out.println("type: "+typemod);
+					 
 				 
 					Map<String, String> paraMaps = new HashMap<>();
-					//paraMaps.put("historyid", addhourvals[i]);
+					 
 					paraMaps.put("time", time);
 					paraMaps.put("typemod", typemod);
-					//paraMaps.put("status", "1");
-					//paraMaps.put("seq", Integer.toString(sts));
+				 
 					int n = service.work_modify_add_insert(paraMaps);
-					//sts++;
+					 
 				}
 
 			}
@@ -660,11 +672,11 @@ public class PersonnelController {
 		/////수정
 		
 		if(idval != null) {
-			//System.out.println("null");
+			 
 			String[] idvals = idval.split(",");
 			String[] editvalhourvals = editvalhourval.split(",");
 			String[] editvalminvals = editvalminval.split(",");
-			//String[] empnameLists = empnameList.split(",");
+			 
 
 			for (int i = 0; i < idvals.length; i++) {
 
@@ -675,11 +687,9 @@ public class PersonnelController {
 					Map<String, String> paraMaps = new HashMap<>();
 					paraMaps.put("editid", idvals[i]);
 					paraMaps.put("time", time);
-					//paraMaps.put("ptype", "4");
-					//paraMaps.put("status", "1");
-					//paraMaps.put("seq", Integer.toString(sts));
+					 
 					int n = service.work_modify_edit_insert(paraMaps);
-					//sts++;
+					 
 				}
 				 
 
@@ -776,7 +786,7 @@ public class PersonnelController {
 	 * @Method Name  : personnel_search_name 
 	 * @작성일   : 2023. 12. 31 
 	 * @작성자   : db228  @변경이력  : 
-	 * @Method 설명 : 
+	 * @Method 설명 : 사원이름검색
 	 * @param request
 	 * @param response
 	 * @param empName @return 
@@ -808,7 +818,7 @@ public class PersonnelController {
 	* @작성일   : 2024. 1. 7 
 	* @작성자   : db228 
 	* @변경이력  : 
-	* @Method 설명 : 
+	* @Method 설명 : 사원아이디 검색
 	* @param request
 	* @param response
 	* @param empid

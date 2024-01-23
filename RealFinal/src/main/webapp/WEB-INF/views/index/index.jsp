@@ -14,9 +14,9 @@
 	  
 	
 	$('button#work_status').on('click', (e) => {  //출근,퇴근 버튼
-		  console.log(e.target.value);
+		  
 		  const type=e.target.parentElement.value;
-		  //alert(type);
+		   
 		  
 		  if(type==6){
 			  alert("출근이 등록되었습니다.");
@@ -36,21 +36,21 @@
 	$('button#work_status_four').on('click', (e) => {  
 		
 		
-		  console.log(e.target.value);
+		  
 		  const type=e.target.value;
 		  
 		  if(typeof type=="undefined"){
 			  
 			  
 			  const typeRe=e.target.parentElement.value;
-			 // alert(typeRe);
+			  
 			  
 			  workstatus_insert(typeRe);
 			   
 		  }
 		  else{
 			  
-			  //alert(type);
+			  
 			  
 			  workstatus_insert(type);
 			   
@@ -73,18 +73,15 @@
 function workstatus_insert(type){
 	
 	  
-	  //alert("ee");
+	   
   		 $.ajax({
 	          url : "<%= ctxPath%>/personnel/workstatus_insert.gw",
 	          type : "post",
 	          data : { "worktype":type  },
-	         // processData:false,  // 파일 전송시 설정 
-	          //contentType:false,  // 파일 전송시 설정 
+	         
 	          dataType:"json",
 	          success:function(json){
-	             // console.log("~~~ 확인용 : " + JSON.stringify(json));
-	              // ~~~ 확인용 : {"result":1}
-	        	  //work_status_print();
+	              
 	          },
 	          error: function(request, status, error){
 	          alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
