@@ -18,7 +18,7 @@
 - **프레임워크** : Spring Framework, MyBatis
 - **DB** : Oracle 18c
 - **IDE** : STS, SQL Developer
-- **API, 라이브러리** : RESTful API (JOSN), Jquery, Naver smarteditor
+- **API, 라이브러리** : RESTful API (JSON), Jquery, Naver smarteditor
 
 
 
