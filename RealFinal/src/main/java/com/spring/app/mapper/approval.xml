@@ -520,7 +520,7 @@
 		
 		
 		<choose>
-		   <when test='formId == #{empId} or formId == 102 or formId == 104 or formId == 109'>
+		   <when test='formId == 101 or formId == 102 or formId == 104 or formId == 109'>
 		      reason as content,
 		   </when>
 		   <when test='formId == 103'>
@@ -547,7 +547,7 @@
 		join tbl_security s on a.fk_securityid = s.securityid
 		
 		<choose>
-		   <when test='formId == #{empId} or formId == 102'>
+		   <when test='formId == 101 or formId == 102'>
 		      left join tbl_workApplication wa on a.approvalid = wa.fk_approvalid
 		   </when>
 		   <when test='formId == 103'>
