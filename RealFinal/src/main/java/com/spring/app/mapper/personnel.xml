@@ -513,7 +513,7 @@ on b.day >=0
 		to_char(startDay, 'YYYY"년 "MM"월 "DD"일"') as startDay,
 		to_char(endDay, 'YYYY"년 "MM"월 "DD"일"') as endDay,
 		to_char(endDay, 'YYYY"년 "MM"월 "DD"일"') as payDay,
-		to_char(registerDay, 'yyyy-mm-dd hh24:mi:iss') as registerDay,
+		to_char(registerDay, 'yyyy-mm-dd hh24:mi:ss') as registerDay,
 		isFix,
         totalPay,
         totalDeduction,

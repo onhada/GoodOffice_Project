@@ -60,7 +60,7 @@ saved from url=(0067)https://office.hiworks.com/gabia.biz/h_admin/Adminconfig/se
 <!-- <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-<title>하이웍스 오피스</title>
+<title>굿오피스</title>
 <meta name="viewport" content="width=1024">
 
 
@@ -225,7 +225,7 @@ function closeModal(id) {
 										src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkRDOUQ1NTBBRjI3MDExRTY5QjZFOTI1QURDNEIxM0VDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkRDOUQ1NTBCRjI3MDExRTY5QjZFOTI1QURDNEIxM0VDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REM5RDU1MDhGMjcwMTFFNjlCNkU5MjVBREM0QjEzRUMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REM5RDU1MDlGMjcwMTFFNjlCNkU5MjVBREM0QjEzRUMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6cjPm+AAAAPElEQVR42mK8cuUKAyHAAsTa2tp4VFy9epWJgQhAPUUscBZH+kE0uR8z7ckyCa6Plg4n2k3AMMWvCCDAACbODOtBj2UVAAAAAElFTkSuQmCC"
 										alt="minus" class="minus"
 									>
-									<span data-v-08bc81b3="" class="name" style="margin-left: 0px;"> 하이웍스오피스 </span>
+									<span data-v-08bc81b3="" class="name" style="margin-left: 0px;"> 굿오피스 </span>
 								</div>
 
 
