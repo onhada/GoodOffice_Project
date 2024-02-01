@@ -1115,7 +1115,7 @@
 	
 	<!-- 전자결재_기안하기_기안하기 (회람) -->
    <insert id="insertApprovalDocument_circular" parameterType="HashMap">
-   		insert into tbl_approval values (#{approvalId}, #{formId}, #{empId}, #{title}, default, default, #{isTemporary}, #{securityId}, 0)
+   		insert into tbl_approval values (#{approvalId}, #{formId}, #{empId}, #{title}, default, sysdate, #{isTemporary}, #{securityId}, 0)
    </insert>
 	
 	<!-- 전자결재_기안하기_본문 정보_회람 -->
